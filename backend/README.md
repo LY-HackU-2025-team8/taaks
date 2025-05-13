@@ -3,7 +3,7 @@
 ポート等の設定は```src/main/resources/application.properties```に記述します。
 
 ## docker-composeを利用する場合
-`taak/backend/compose.yml` にPostgreSQLの設定が記載されています。
+`taak/backend/compose.yaml` にPostgreSQLの設定が記載されています。
 
 ### データベースの起動方法
 ```
