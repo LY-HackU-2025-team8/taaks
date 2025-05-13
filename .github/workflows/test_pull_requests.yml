@@ -12,7 +12,9 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+        working-directory: frontend
       - run: npm run typecheck
+        working-directory: frontend
 
   frontend-format:
     name: Frontend Format
@@ -23,7 +25,9 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+        working-directory: frontend
       - run: npm run format
+        working-directory: frontend
 
   frontend-lint:
     name: Frontend Lint
@@ -34,7 +38,9 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+        working-directory: frontend
       - run: npm run lint
+        working-directory: frontend
 
   frontend-build:
     name: Frontend Build
@@ -45,4 +51,6 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
+        working-directory: frontend
       - run: npm run prebuild
+        working-directory: frontend
