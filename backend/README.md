@@ -12,7 +12,7 @@ docker compose up -d postgres
 
 ### データベースの停止方法
 ```
-docker compose down postgres
+docker compose stop postgres
 ```
 
 # ビルド手順
