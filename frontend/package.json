@@ -4,12 +4,14 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "prebuild": "expo prebuild",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "DARK_MODE=media expo start --android",
     "ios": "DARK_MODE=media expo start --ios",
     "web": "DARK_MODE=media expo start --web",
     "lint": "expo lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit"
   },
   "type": "module",
   "dependencies": {
