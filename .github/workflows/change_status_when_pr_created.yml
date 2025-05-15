@@ -1,5 +1,5 @@
 #
-name: Change status to 実装中 when reviewer assigned
+name: Change status to 実装中 when PR created
 # This workflow runs whenever a pull request is opened.
 on:
   pull_request:
@@ -66,7 +66,7 @@ jobs:
 
           echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
           echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
-          echo 'REVIEW_WAITING_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="実装中") | .id' project_data.json) >> $GITHUB_ENV
+          echo 'IMPLEMENTING_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="実装中") | .id' project_data.json) >> $GITHUB_ENV
 
       # Sets environment variables for this step. `GH_TOKEN` is the token generated in the first step. `PR_ID` is the ID of the pull request that triggered this workflow.
       - name: Add PR to project
@@ -113,4 +113,4 @@ jobs:
                 }
               }
             }' \
-          -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.REVIEW_WAITING_OPTION_ID }} --silent
+          -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.IMPLEMENTING_OPTION_ID }} --silent
