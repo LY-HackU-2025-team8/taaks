@@ -1,1 +1,10 @@
 services:
+  postgres:
+    container_name: 'postgres'
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=taak'
+      - 'POSTGRES_PASSWORD=taak'
+      - 'POSTGRES_USER=taak'
+    ports:
+      - '5432:5432'
