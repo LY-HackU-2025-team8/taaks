@@ -28,8 +28,8 @@ jobs:
       - name: Get project data
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-          ORGANIZATION: YOUR_ORGANIZATION
-          PROJECT_NUMBER: YOUR_PROJECT_NUMBER
+          ORGANIZATION: LY-HackU-2025-team8
+          PROJECT_NUMBER: 1
         # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
         run: |
           gh api graphql -f query='
