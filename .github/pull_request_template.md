@@ -1,3 +1,5 @@
+<!-- I want to review in Japanese. -->
+
 # 概要 & 関連資料
 <!-- issue番号を # の後に入れると PR merge 時に close される -->
 - close #
@@ -24,3 +26,5 @@
 
 # セルフチェック
 - [ ] 環境変数などがPRに含まれていないか
+
+<!-- I want to review in Japanese. -->
