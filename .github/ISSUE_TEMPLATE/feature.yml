@@ -1,8 +1,9 @@
 name: Feature
 description: 新機能の提案や改善を管理するためのチケット
 title: "[Feature]: "
+type: Feature
 body:
-  - type: markdown
+  - type: textarea
     id: abstract
     attributes:
       label: 概要
@@ -11,7 +12,7 @@ body:
         ユーザー登録機能の追加
     validations:
       required: true
-  - type: markdown
+  - type: textarea
     id: reason
     attributes:
       label: 理由
@@ -20,7 +21,7 @@ body:
         ユーザー管理を行うため
     validations:
       required: true
-  - type: markdown
+  - type: textarea
     id: reference
     attributes:
       label: 参考資料

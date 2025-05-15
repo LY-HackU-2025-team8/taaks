@@ -1,8 +1,9 @@
 name: Task
 description: 機能に影響しないタスクを管理するためのチケット
 title: "[Task]: "
+type: Task
 body:
-  - type: markdown
+  - type: textarea
     id: abstract
     attributes:
       label: 概要
@@ -11,7 +12,7 @@ body:
         README.mdの更新
     validations:
       required: true
-  - type: markdown
+  - type: textarea
     id: reason
     attributes:
       label: 理由
@@ -20,7 +21,7 @@ body:
         README.mdが古くなっているため
     validations:
       required: true
-  - type: markdown
+  - type: textarea
     id: reference
     attributes:
       label: 参考資料
