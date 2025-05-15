@@ -1,0 +1,29 @@
+name: Task
+description: 機能に影響しないタスクを管理するためのチケット
+title: "[Task]: "
+body:
+  - type: markdown
+    id: abstract
+    attributes:
+      label: 概要
+      description: タスクの概要
+      placeholder: |
+        README.mdの更新
+    validations:
+      required: true
+  - type: markdown
+    id: reason
+    attributes:
+      label: 理由
+      description: なぜこのタスクが必要なのか
+      placeholder: |
+        README.mdが古くなっているため
+    validations:
+      required: true
+  - type: markdown
+    id: reference
+    attributes:
+      label: 参考資料
+      description: タスクに関連する資料があればリンクを貼る
+      placeholder: |
+        - [README.md](https://github.com/LY-HackU-2025-team8/taak/blob/main/README.md)
