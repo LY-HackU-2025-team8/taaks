@@ -1,18 +1,25 @@
+import { AddTaskDrawer } from '@/feature/ui/add-task/add-task-drawer';
+import { Button } from '@/shared/ui/components/shadcn/button';
 import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { LucidePlus } from 'lucide-react';
 
 export const Route = createRootRoute({
   component: () => (
     <>
       <Outlet />
-      <nav className="bg-background fixed right-0 bottom-0 left-0 flex h-16 gap-4 border-t p-4">
-        <Link to="/">Home</Link>
+      <nav className="bg-background fixed right-0 bottom-0 left-0 flex h-16 items-center justify-center gap-4 border-t px-4">
         <Link to="/diary">Diary</Link>
+        <AddTaskDrawer
+          triggerComponent={
+            <Button size="icon" variant="default" className="rounded-full">
+              <LucidePlus />
+            </Button>
+          }
+        />
         <Link to="/todo">Todo</Link>
       </nav>
-      <TanStackRouterDevtools
-        toggleButtonProps={{ class: 'mb-[calc(64px)]' }}
-      />
+      <TanStackRouterDevtools position="top-right" />
     </>
   ),
 });
