@@ -12,3 +12,5 @@ jobs:
       organization: LY-HackU-2025-team8
       project_number: 1
       status_option: "作業中"
+    secrets:
+      APP_PEM: ${{ secrets.APP_PEM }}

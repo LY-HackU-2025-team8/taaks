@@ -13,3 +13,5 @@ jobs:
       organization: LY-HackU-2025-team8
       project_number: 1
       status_option: "レビュー待ち"
+    secrets:
+      APP_PEM: ${{ secrets.APP_PEM }}
