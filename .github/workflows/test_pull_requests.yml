@@ -12,9 +12,9 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-        working-directory: frontend
+        working-directory: frontend_react-native
       - run: npm run typecheck
-        working-directory: frontend
+        working-directory: frontend_react-native
 
   frontend-format:
     name: Frontend Format
@@ -25,9 +25,9 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-        working-directory: frontend
+        working-directory: frontend_react-native
       - run: npm run format
-        working-directory: frontend
+        working-directory: frontend_react-native
 
   frontend-lint:
     name: Frontend Lint
@@ -38,9 +38,9 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-        working-directory: frontend
+        working-directory: frontend_react-native
       - run: npm run lint
-        working-directory: frontend
+        working-directory: frontend_react-native
 
   frontend-build:
     name: Frontend Build
@@ -51,6 +51,6 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-        working-directory: frontend
+        working-directory: frontend_react-native
       - run: npm run prebuild
-        working-directory: frontend
+        working-directory: frontend_react-native
