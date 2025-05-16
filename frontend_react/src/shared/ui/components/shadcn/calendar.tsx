@@ -1,7 +1,7 @@
 import { cn } from '@/shared/lib/utils';
 import { buttonVariants } from '@/shared/ui/components/shadcn/button';
 import * as React from 'react';
-import { DayPicker } from 'react-day-picker';
+import { DayPicker, type StyledComponent } from 'react-day-picker';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 function Calendar({
@@ -57,10 +57,10 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ className, ...props }) => (
+        IconLeft: ({ className, ...props }: StyledComponent) => (
           <ChevronLeft className={cn('size-4', className)} {...props} />
         ),
-        IconRight: ({ className, ...props }) => (
+        IconRight: ({ className, ...props }: StyledComponent) => (
           <ChevronRight className={cn('size-4', className)} {...props} />
         ),
       }}
