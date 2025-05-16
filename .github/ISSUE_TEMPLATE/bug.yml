@@ -1,24 +1,26 @@
-name: Task
-description: 実際に行う作業
-title: "[Task]: "
-type: Task
+name: Bug
+description: 予期しない問題や動作
+title: "[Bug]: "
+type: Bug
 body:
   - type: textarea
     id: abstract
     attributes:
       label: 概要
-      description: タスクの概要
+      description: バグの概要
       placeholder: |
-        README.mdの更新
+        概要に絵文字を含むタスクが登録できない
     validations:
       required: true
   - type: textarea
-    id: reason
+    id: steps
     attributes:
-      label: 理由
-      description: なぜこのタスクが必要なのか
+      label: 再現手順
+      description: バグを再現するための手順
       placeholder: |
-        README.mdが古くなっているため
+        1. タスク登録画面を開く
+        2. タスクの概要に絵文字を入力する
+        3. タスクを登録する
     validations:
       required: true
   - type: textarea
