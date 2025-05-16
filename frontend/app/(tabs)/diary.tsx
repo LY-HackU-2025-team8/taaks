@@ -4,7 +4,7 @@ import { ThemedView } from "@/components/ThemedView";
 export default function DiaryScreen() {
   return (
     <ThemedView>
-      <ThemedText>DashBoard</ThemedText>
+      <ThemedText>Diary</ThemedText>
     </ThemedView>
   );
 }
