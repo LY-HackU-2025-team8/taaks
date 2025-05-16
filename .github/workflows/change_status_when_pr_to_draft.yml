@@ -4,13 +4,13 @@ name: Change status to レビュー待ち when reviewer assigned
 on:
   pull_request:
     types:
-      - ready_for_review
+      - converted_to_draft
 jobs:
   track_pr:
     uses: ./.github/workflows/project_common.yml
     with:
       organization: LY-HackU-2025-team8
       project_number: 1
-      status_option: "レビュー待ち"
+      status_option: "作業中"
     secrets:
       APP_PEM: ${{ secrets.APP_PEM }}
