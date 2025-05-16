@@ -4,7 +4,6 @@ name: Change status to レビュー待ち when reviewer assigned
 on:
   pull_request:
     types:
-      - review_requested
       - ready_for_review
 jobs:
   track_pr:
