@@ -14,7 +14,7 @@ services:
     depends_on:
       - postgres
     environment:
-    #これはapplication.ymlよりも優先される
+    #これはapplication.propertiesよりも優先される
       - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${DB_NAME}'
       - 'SPRING_DATASOURCE_USERNAME=${DB_USER}'
       - 'SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}'
