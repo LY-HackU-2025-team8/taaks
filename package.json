@@ -3,7 +3,24 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "typecheck:react": "npm run -w taak-react typecheck",
+    "typecheck:react-native": "npm run -w taak-react-native typecheck",
+    "typecheck": "run-s typecheck:*",
+    "format:react": "npm run -w taak-react format",
+    "format:react-native": "npm run -w taak-react-native format",
+    "format": "run-s format:*",
+    "format-check:react": "npm run -w taak-react format-check",
+    "format-check:react-native": "npm run -w taak-react-native format-check",
+    "format-check": "run-s format-check:*",
+    "lint:react": "npm run -w taak-react lint",
+    "lint:react-native": "npm run -w taak-react-native lint",
+    "lint": "run-s lint:*",
+    "lint-check:react": "npm run -w taak-react lint-check",
+    "lint-check:react-native": "npm run -w taak-react-native lint-check",
+    "lint-check": "run-s lint-check:*",
+    "build:react": "npm run -w taak-react build",
+    "build:react-native": "npm run -w taak-react-native prebuild",
+    "build": "run-s build:*"
   },
   "repository": {
     "type": "git",
@@ -16,6 +33,10 @@
   },
   "homepage": "https://github.com/LY-HackU-2025-team8/taak#readme",
   "workspaces": [
-    "frontend_react"
-  ]
+    "frontend_react",
+    "frontend_react-native"
+  ],
+  "devDependencies": {
+    "npm-run-all2": "^8.0.1"
+  }
 }
