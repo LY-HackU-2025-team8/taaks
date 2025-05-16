@@ -42,9 +42,9 @@ java -jar build/libs/taak-0.0.1-SNAPSHOT.jar
 ## Dockerでの起動方法
 ### PostgreSQLも同時に起動させる場合
 ```
-docker-compose up -d
+docker compose up -d
 ```
 ### アプリケーションだけ起動させる場合
 ```
-docker-compose up -d taak-backend
+docker compose up -d taak-backend
 ```
