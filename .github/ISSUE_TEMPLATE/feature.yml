@@ -13,12 +13,22 @@ body:
     validations:
       required: true
   - type: textarea
-    id: reason
+    id: user-story
     attributes:
-      label: 理由
-      description: なぜこの機能が必要なのか
+      label: ユーザーストーリー
+      description: 誰がどんな時にこの機能を必要とするのか
       placeholder: |
-        ユーザー管理を行うため
+        - taakを知ったユーザーが、taakを使うためにユーザー登録を行う
+    validations:
+      required: true
+  - type: textarea
+    id: requirements
+    attributes:
+      label: 要件
+      description: どんな機能が必要なのか
+      placeholder: |
+        - 名前を登録できる
+        - LINEと連携してアカウント登録ができる
     validations:
       required: true
   - type: textarea
