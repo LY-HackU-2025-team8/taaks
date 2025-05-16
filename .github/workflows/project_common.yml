@@ -1,0 +1,75 @@
+on:
+  workflow_call:
+    inputs:
+      organization:
+        required: true
+        type: string
+      project_number:
+        required: true
+        type: number
+      status_option:
+        required: true
+        type: string
+
+jobs:
+  track_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PEM }}
+
+      - name: Get project data
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          ORGANIZATION: ${{ inputs.organization }}
+          PROJECT_NUMBER: ${{ inputs.project_number }}
+        run: |
+          gh api graphql -f query='
+            query($org: String!, $number: Int!) {
+              organization(login: $org){
+                projectV2(number: $number) {
+                  id
+                  fields(first:20) {
+                    nodes {
+                      ... on ProjectV2Field { id name }
+                      ... on ProjectV2SingleSelectField { id name options { id name } }
+                    }
+                  }
+                }
+              }
+            }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+          echo "PROJECT_ID=$(jq -r '.data.organization.projectV2.id' project_data.json)" >> $GITHUB_ENV
+          echo "STATUS_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name==\"Status\") | .id' project_data.json)" >> $GITHUB_ENV
+          echo "STATUS_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name==\"Status\") |.options[] | select(.name==\"${{ inputs.status_option }}\") |.id' project_data.json)" >> $GITHUB_ENV
+
+      - name: Add PR to project
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          PR_ID: ${{ github.event.pull_request.node_id }}
+          PROJECT_ID: ${{ env.PROJECT_ID }}
+        run: |
+          item_id=$(gh api graphql -f query='
+            mutation($project:ID!, $pr:ID!) {
+              addProjectV2ItemById(input:{projectId:$project,contentId:$pr}) { item { id } }
+            }' -f project=$PROJECT_ID -f pr=$PR_ID --jq '.data.addProjectV2ItemById.item.id')
+          echo "ITEM_ID=$item_id" >> $GITHUB_ENV
+
+      - name: Set fields
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          gh api graphql -f query='
+            mutation($project:ID!,$item:ID!,$field:ID!,$opt:ID!) {
+              updateProjectV2ItemFieldValue(input:{
+                projectId:$project,itemId:$item,fieldId:$field,
+                value:{ singleSelectOptionId:$opt }
+              }) { projectV2Item{ id } }
+            }' \
+            -f project=${{ env.PROJECT_ID }} \
+            -f item=${{ env.ITEM_ID }} \
+            -f field=${{ env.STATUS_FIELD_ID }} \
+            -f opt=${{ env.STATUS_OPTION_ID }} --silent
