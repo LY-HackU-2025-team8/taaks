@@ -10,6 +10,9 @@ on:
       status_option:
         required: true
         type: string
+    secrets:
+      APP_PEM:
+        required: true
 
 jobs:
   track_pr:
