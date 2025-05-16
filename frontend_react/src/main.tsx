@@ -4,7 +4,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './index.css';
 import reportWebVitals from './reportWebVitals.ts';
 // Import the generated route tree
-import { routeTree } from './routeTree.gen';
+import { routeTree } from './route-tree.gen';
 
 // Create a new router instance
 const router = createRouter({
