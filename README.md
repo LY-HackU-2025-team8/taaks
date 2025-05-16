@@ -2,7 +2,7 @@
 
 ## 開発フロー
 
-[Figma](https://www.figma.com/board/ecICLBaXowdk7WI72liM6Q/Home-space?node-id=3-6531&t=7JgjMehghL4n5deg-1)も参照
+- [Figma](https://www.figma.com/board/ecICLBaXowdk7WI72liM6Q/Home-space?node-id=3-6531&t=7JgjMehghL4n5deg-1)も参照
 
 1. Issue を立てる
    - プロジェクトの設定をする
