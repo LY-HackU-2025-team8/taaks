@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
+import 'pages/diary.dart';
+import 'pages/todo.dart';
+import 'pages/dashboard.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -27,84 +30,51 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-Artboard? _artboard;
-  SMINumber? _faceParts;
-  SMINumber? _headParts;
-  SMINumber? _fukuParts;
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    Dashboard(),
+    Todo(),
+    Diary(),
+  ];
 
-  Future<void> _load() async {
-    final file = await RiveFile.asset('assets/character.riv');
-    final artboard = file.mainArtboard;
-    final controller = StateMachineController.fromArtboard(
-      artboard,
-      'base State Machine ',
-    );
-    if (controller == null) {
-      print("Failed to find controller");
-      return;
-    }
-    artboard.addController(controller);
-    setState(() {
-      _artboard = artboard;
-      _faceParts = controller.getNumberInput("FaceParts");
-      _headParts = controller.getNumberInput("HeadParts");
-      _fukuParts = controller.getNumberInput("FukuParts");
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _load();
-  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: Column(
+      body: _widgetOptions.elementAt(_selectedIndex),
+      floatingActionButton: Row(
+        // mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: _artboard == null
-                ? const SizedBox()
-                : SizedBox(
-                  height: 400,
-                  width: 400,
-                  child: Rive(
-                      artboard: _artboard!,
-                      fit: BoxFit.contain,
-                  ),
-                )
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _selectedIndex = 0;
+              });
+            },
+            child: Text('Dashboard'),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton(
-                onPressed: () => {
-                  _faceParts?.value = 1,
-                  _headParts?.value = 2,
-                  _fukuParts?.value = 3,
-                },
-                child: const Text('Type 1'),
-              ),
-              ElevatedButton(
-                onPressed: () => {
-                  _faceParts?.value = 2,
-                  _headParts?.value = 3,
-                  _fukuParts?.value = 4,
-                },
-                child: const Text('Type 2'),
-              ),
-              ElevatedButton(
-                onPressed: () => {
-                  _faceParts?.value = 4,
-                  _headParts?.value = 1,
-                  _fukuParts?.value = 2,
-                },
-                child: const Text('Type 3'),
-              ),
-            ],
+          SizedBox(width: 10),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _selectedIndex = 1;
+              });
+            },
+            child: Text('TODO'),
+          ),
+          SizedBox(width: 10),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _selectedIndex = 2;
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue, // Change the background color
+              foregroundColor: Colors.white, // Change the text color
+            ),
+            child: Text('Diary'),
           ),
         ],
       ),
