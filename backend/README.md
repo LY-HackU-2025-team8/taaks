@@ -46,5 +46,5 @@ docker-compose up -d
 ```
 ### アプリケーションだけ起動させる場合
 ```
-docker-compose up -d taak-backend:
+docker-compose up -d taak-backend
 ```
