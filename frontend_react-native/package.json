@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "taak-react-native",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -10,7 +10,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
+    "lint-check": "eslint .",
     "format": "prettier --write .",
+    "format-check": "prettier --check .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

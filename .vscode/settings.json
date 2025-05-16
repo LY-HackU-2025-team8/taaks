@@ -1,0 +1,20 @@
+{
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json": "file:///home/subaru/.ghr/github.com/jagajagahu/hupass/api-spec/output/openapi.yaml"
+  },
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": ["frontend_react"],
+  "files.readonlyInclude": {
+    "**/route-tree.gen.ts": true
+  },
+  "files.watcherExclude": {
+    "**/route-tree.gen.ts": true
+  },
+  "search.exclude": {
+    "**/route-tree.gen.ts": true
+  },
+  "files.associations": {
+    "**/frontend_react/src/index.css": "tailwindcss"
+  },
+  "cSpell.words": ["taak"]
+}
