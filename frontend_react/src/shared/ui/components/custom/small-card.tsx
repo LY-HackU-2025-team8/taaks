@@ -1,69 +1,68 @@
+import { useCallback } from 'react';
 import { Check, Edit, MoreHorizontal } from 'lucide-react';
 
+/**
+ * Props for the SmallCard component.
+ *
+ * @property {string} title - タスクのタイトル (The title of the task)
+ * @property {string} deadline - タスクの締切 (The deadline of the task)
+ */
 export type SmallCardProps = {
+  /* タスクのタイトル */
   title: string;
-  limit: string;
+  /* タスクの締切 */
+  deadline: string;
 };
 
-export const SmallCard = ({ title, limit }: SmallCardProps) => {
-  const BORDER_LENGTH: number = 25;
-  const truncatedTitle: string =
-    title.length > BORDER_LENGTH
-      ? title.slice(0, BORDER_LENGTH) + '...'
-      : title;
+export const SmallCard = ({ title, deadline }: SmallCardProps) => {
+  const handleEdit: React.MouseEventHandler<HTMLButtonElement> =
+    useCallback(() => {
+      console.log('edit');
+    }, []);
 
-  const edit = () => {
-    console.log('edit');
-  };
+  const handleMore: React.MouseEventHandler<HTMLButtonElement> =
+    useCallback(() => {
+      console.log('more');
+    }, []);
 
-  const more = () => {
-    console.log('moreInfo');
-  };
-
-  const done = () => {
-    console.log('done');
-  };
+  const handleDone: React.MouseEventHandler<HTMLButtonElement> =
+    useCallback(() => {
+      console.log('done');
+    }, []);
 
   return (
-    <div className="relative flex h-[155px] w-[179px]">
-      {/* TODO: `bg-[#fbfbfb]` をカラーテーマ使って書き換える */}
-      <div className="small-card-container relative z-0 flex h-[155px] w-[179px] bg-[#fbfbfb]">
+    <div className="relative flex h-38.75 w-44.75">
+      <div className="small-card-container bg-taaks-white relative z-0 flex h-38.75 w-44.75">
         <div className="z-10 p-3">
-          <p className="pt-1 text-[12px] font-bold text-[#909489]">{limit}</p>
-          <p className="max-w-[155px] pt-6 font-[Noto_Sans_JP] text-[15px] leading-[20px] font-[600]">
-            {truncatedTitle}
+          <p className="text-taaks-subtitle pt-1 text-[12px] font-bold">
+            {deadline}
+          </p>
+          <p className="max-w-37.85 font-noto-sans-jp line-clamp-3 pt-6 text-[15px] leading-5 font-[600]">
+            {title}
           </p>
         </div>
         <button
-          onClick={() => {
-            more();
-          }}
-          className="absolute bottom-[10px] left-[15px] z-10"
+          onClick={handleMore}
+          className="absolute bottom-2.25 left-4 z-10"
         >
-          <MoreHorizontal size={20} />
+          <MoreHorizontal className="size-5" />
         </button>
         <button
-          onClick={() => {
-            edit();
-          }}
-          className="absolute right-[10px] bottom-[10px] z-10"
+          onClick={handleEdit}
+          className="absolute right-4 bottom-2.25 z-10"
         >
-          <Edit size={20} />
+          <Edit className="size-5" />
         </button>
       </div>
 
       {/* 右上のボタン */}
-      {/* TODO: `bg-[#fbfbfb]` をカラーテーマ使って書き換える */}
       <button
-        onClick={() => {
-          done();
-        }}
-        className="small-card-button hover:bg-primary absolute top-0 right-0 z-10 flex h-[45px] w-[53px] items-center justify-center rounded-full bg-[#fbfbfb]"
+        onClick={handleDone}
+        className="bg-taaks-white hover:bg-primary absolute top-0 right-0 z-10 flex h-11.25 w-13.25 items-center justify-center rounded-full"
       >
-        <Check size={30} />
+        <Check className="size-7.5" />
       </button>
 
-      {/* TODO: tailwindのテーマに #FBFBFB を追加 */}
       <style>
         {`
           .small-card-container {
