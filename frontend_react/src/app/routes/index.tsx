@@ -8,7 +8,7 @@ export const Route = createFileRoute('/')({
 function RouteComponent() {
   return (
     <div className="flex h-full flex-col p-7">
-      <div className="mt-auto flex gap-4">
+      <div className="mt-auto mb-[env(safe-area-inset-bottom)] flex gap-4">
         <Button className="flex-1" size="lg" asChild>
           <Link to="/login">はじめて使う</Link>
         </Button>

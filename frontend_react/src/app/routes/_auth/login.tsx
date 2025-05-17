@@ -73,7 +73,7 @@ function RouteComponent() {
   return (
     <div className="flex h-full flex-col p-7">
       <Form {...form}>
-        <form onSubmit={handleSubmit} className="mt-auto space-y-7">
+        <form onSubmit={handleSubmit} className="mt-auto space-y-7 mb-[env(safe-area-inset-bottom)]">
           <Card>
             <CardContent>
               <FormField
