@@ -18,7 +18,7 @@ body:
       label: ユーザーストーリー
       description: 誰がどんな時にこの機能を必要とするのか
       placeholder: |
-        - taakを知ったユーザーが、taakを使うためにユーザー登録を行う
+        - taaksを知ったユーザーが、taaksを使うためにユーザー登録を行う
     validations:
       required: true
   - type: textarea
