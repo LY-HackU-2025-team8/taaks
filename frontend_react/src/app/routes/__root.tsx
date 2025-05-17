@@ -1,4 +1,4 @@
-import { AddTaskDrawer } from '@/feature/ui/add-task/add-task-drawer';
+import { AddTaskDrawer } from '@/features/add-task/ui/add-task-drawer';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
