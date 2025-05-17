@@ -4,15 +4,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team8.taak.model.TaakUser;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 
 @RestController
 public class ApiController {
     @GetMapping("/")
-    public String getAuthenticatedUsername(@AuthenticationPrincipal TaakUser user) {
-        return String.format("Authenticated: %s", user.getUsername());
+    public ResponseEntity<String> Hello() {
+        return ResponseEntity.ok("Hello, World!");
     }
     
+    @GetMapping("/auth-check")
+    public String getAuthenticatedUsername(@AuthenticationPrincipal TaakUser user, @RequestParam(name = "param", required = false) String param) {
+        return String.format("Authenticated!\nusername: %s\nparam: %s", user.getUsername(), param);
+    }
+
+    @PostMapping("/auth-check")
+    public String getAuthenticatedUsernamePost(@AuthenticationPrincipal TaakUser user, @RequestParam(name = "param", required = false) String param) {
+        if (user == null) {
+            return "Not authenticated";
+        }
+        return String.format("Authenticated!\nusername: %s\nparam: %s", user.getUsername(), param);
+    }
 }
