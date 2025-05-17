@@ -56,7 +56,7 @@ public class TaakUser implements UserDetails {
     private String lineSub;
     @ElementCollection(fetch = FetchType.EAGER)
     
-    //This is required by implementation of UserDetails
+    // This is required by implementation of UserDetails
     private List<String> roles = new ArrayList<>();
     
 
