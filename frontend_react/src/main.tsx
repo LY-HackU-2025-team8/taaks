@@ -7,18 +7,32 @@ import './index.css';
 import reportWebVitals from './reportWebVitals.ts';
 import { routeTree } from './route-tree.gen';
 
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (failureCount, error) => {
+        // Retry only on network errors
+        if (error instanceof Error && error.name === 'NetworkError') {
+          return failureCount < 3; // Retry up to 3 times
+        }
+        return false; // Do not retry on other errors
+      },
+    },
+  },
+});
+
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  context: {},
+  context: {
+    queryClient,
+  },
   defaultPreload: 'intent',
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
 });
-
-// Create a client
-const queryClient = new QueryClient();
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
