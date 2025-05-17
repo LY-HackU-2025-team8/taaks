@@ -47,7 +47,12 @@ public class LoginController {
 	@PostMapping("/login")
 	public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
 		Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username(), loginRequest.password());
-		Authentication authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
+		Authentication authenticationResponse;
+		try {
+			authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
+		} catch (org.springframework.security.core.AuthenticationException ex) {
+			return ResponseEntity.status(401).build();
+		}
 		SecurityContext context = securityContextHolderStrategy.createEmptyContext();
 		context.setAuthentication(authenticationResponse); 
 		securityContextHolderStrategy.setContext(context);
