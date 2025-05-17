@@ -122,13 +122,19 @@
   }
 
   html {
-    @apply h-full;
+    @apply h-full min-h-[100dvh];
+  }
+
+  @media (display-mode: standalone) {
+    html {
+      @apply min-h-[100lvh];
+    }
   }
   body {
-    @apply bg-custom text-custom-foreground h-full min-h-[100lvh];
+    @apply h-full;
   }
 
   #app {
-    @apply bg-background text-foreground h-full;
+    @apply h-full;
   }
 }

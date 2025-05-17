@@ -42,7 +42,7 @@ function RouteComponent() {
   >({
     mutationFn: async (data: z.infer<typeof formSchema>) => {
       const user = {
-        id: crypto.randomUUID(),
+        id: crypto.randomUUID ? crypto.randomUUID() : '', // 手元端末テスト用
         name: data.name,
       };
       localStorage.setItem('user_me', JSON.stringify(user));
@@ -73,7 +73,10 @@ function RouteComponent() {
   return (
     <div className="flex h-full flex-col p-7">
       <Form {...form}>
-        <form onSubmit={handleSubmit} className="mt-auto space-y-7">
+        <form
+          onSubmit={handleSubmit}
+          className="mt-auto mb-[env(safe-area-inset-bottom)] space-y-7"
+        >
           <Card>
             <CardContent>
               <FormField
