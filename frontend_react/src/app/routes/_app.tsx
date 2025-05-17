@@ -6,7 +6,7 @@ import { checkLogin } from '../api/require-login';
 
 export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) =>
-    checkLogin(queryClient, { onError: '/login' }),
+    checkLogin(queryClient, { onError: '/' }),
   component: RouteComponent,
 });
 

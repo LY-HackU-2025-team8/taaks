@@ -6,6 +6,7 @@ import './fonts.css';
 import './index.css';
 import reportWebVitals from './reportWebVitals.ts';
 import { routeTree } from './route-tree.gen';
+import { zodConfig } from './shared/lib/zod-config.ts';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -58,3 +59,6 @@ if (rootElement && !rootElement.innerHTML) {
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// Initialize Zod configuration
+zodConfig();
