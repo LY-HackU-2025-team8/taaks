@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './fonts.css';
 import './index.css';
 import reportWebVitals from './reportWebVitals.ts';
-// Import the generated route tree
 import { routeTree } from './route-tree.gen';
 
 // Create a new router instance
@@ -16,6 +16,9 @@ const router = createRouter({
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
 });
+
+// Create a client
+const queryClient = new QueryClient();
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
@@ -30,7 +33,9 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </StrictMode>
   );
 }
