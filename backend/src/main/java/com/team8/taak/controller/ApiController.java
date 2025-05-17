@@ -15,16 +15,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class ApiController {
+    // テスト用のエンドポイント
     @GetMapping("/")
     public ResponseEntity<String> Hello() {
         return ResponseEntity.ok("Hello, World!");
     }
     
+    // テスト用のエンドポイント
     @GetMapping("/auth-check")
     public String getAuthenticatedUsername(@AuthenticationPrincipal TaakUser user, @RequestParam(name = "param", required = false) String param) {
         return String.format("Authenticated!\nusername: %s\nparam: %s", user.getUsername(), param);
     }
-
+    
+    // テスト用のエンドポイント
     @PostMapping("/auth-check")
     public String getAuthenticatedUsernamePost(@AuthenticationPrincipal TaakUser user, @RequestParam(name = "param", required = false) String param) {
         if (user == null) {

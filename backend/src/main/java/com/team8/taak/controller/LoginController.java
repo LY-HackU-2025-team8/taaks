@@ -32,6 +32,7 @@ public class LoginController {
 		securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
 	}
 
+	// CSRFトークンを取得するエンドポイント
 	@GetMapping("/csrf")
 	public ResponseEntity<Void> csrfToken(HttpServletRequest request) {
 		CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
