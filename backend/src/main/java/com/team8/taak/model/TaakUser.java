@@ -17,18 +17,46 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+/**
+ * Represents a user in the system, mapped to the 'taak_user' table.
+ *
+ * Database mapping:
+ * - id: Primary key, auto-generated (bigint)
+ * - username: Unique username (varchar(255)), maps to 'username' column
+ * - password: User's password (varchar(255)), maps to 'password' column
+ * - nickName: User's nickname (varchar(255)), maps to 'nick_name' column
+ * - lineSub: Unique LINE sub identifier (varchar(255)), maps to 'line_sub' column
+ * - roles: List of roles, mapped to 'taak_user_roles' table (one-to-many)
+ *
+ * The roles field uses @ElementCollection to map the user's roles to the 'taak_user_roles' table, where each role is a varchar(255) associated with the user's id.
+ *
+ * This class comment and design were created by human instruction to Copilot (AI).
+ */
 @Entity
 public class TaakUser implements UserDetails {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // ログインに使用するユーザー名 (e.g., yamamura)
     @Column(unique = true)
     private String username;
+
+    // ハッシュされたパスワード (e.g., $2a$10$E9j5v1Q0Z3x5z5z5z5z5zO)
     private String password;
-    private String nickName;
+
+    // アプリケーションで使用するユーザーの呼称 (e.g., 山村)
+    private String nickName;    
+
+    // LINEでログインを実装するときに使用するユーザーの識別子
+    // 現状では使っていない
     @Column(unique = true)
     private String lineSub;
     @ElementCollection(fetch = FetchType.EAGER)
+    
+    //This is required by implementation of UserDetails
     private List<String> roles = new ArrayList<>();
     
 
@@ -79,6 +107,7 @@ public class TaakUser implements UserDetails {
         this.roles = roles;
     }
 
+    // The following methods are required overrides from UserDetails, but are not used in this application.
     @Override
     public boolean isAccountNonExpired() {
         return true;

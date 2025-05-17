@@ -52,6 +52,7 @@ public class SecurityConfig {
 
     @Bean
     UserDetailsManager users(TaakUserRepository taakUserRepository, PasswordEncoder passwordEncoder) {
+        // テスト用の一時ユーザーをDBに登録処理
         TaakUser user = new TaakUser();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("password"));
