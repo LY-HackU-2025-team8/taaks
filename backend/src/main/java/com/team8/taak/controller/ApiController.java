@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 public class ApiController {
     @GetMapping("/")
-    public String getMethodName(@AuthenticationPrincipal TaakUser user) {
+    public String getAuthenticatedUsername(@AuthenticationPrincipal TaakUser user) {
         return String.format("Authenticated: %s", user.getUsername());
     }
     
