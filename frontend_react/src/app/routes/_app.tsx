@@ -8,7 +8,7 @@ import {
   LucidePlus,
   LucideUser,
 } from 'lucide-react';
-import { checkLogin } from '../api/require-login';
+import { checkLogin } from '../api/check-login';
 
 export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) =>
