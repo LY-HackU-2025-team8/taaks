@@ -8,16 +8,24 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <Outlet />
-      <nav className="bg-background fixed right-0 bottom-0 left-0 flex h-16 items-center justify-center gap-4 border-t px-4">
-        <Link to="/diary">Diary</Link>
-        <AddTaskDrawer
-          triggerComponent={
-            <Button size="icon" variant="default" className="rounded-full">
-              <LucidePlus />
-            </Button>
-          }
-        />
-        <Link to="/todo">Todo</Link>
+      <nav className="bg-background fixed right-0 bottom-0 left-0 border-t px-4 pb-[env(safe-area-inset-bottom)]">
+        <ul className="flex h-16 items-center justify-center gap-4">
+          <li className="contents">
+            <Link to="/diary">Diary</Link>
+          </li>
+          <li className="contents">
+            <AddTaskDrawer
+              triggerComponent={
+                <Button size="icon" variant="default" className="rounded-full">
+                  <LucidePlus />
+                </Button>
+              }
+            />
+          </li>
+          <li className="contents">
+            <Link to="/todo">Todo</Link>
+          </li>
+        </ul>
       </nav>
       <TanStackRouterDevtools position="top-right" />
     </>

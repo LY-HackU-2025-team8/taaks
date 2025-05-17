@@ -98,15 +98,12 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
           />
         </div>
         <DrawerFooter className="flex-row-reverse">
-          <Button
-            variant="secondary"
-            className="h-14 flex-1 py-[13px] text-base font-bold"
-          >
+          <Button className="h-14 flex-1 py-[13px] text-base font-bold">
             保存
           </Button>
           <DrawerClose asChild>
             <Button
-              variant="outline"
+              variant="secondary"
               className="h-14 flex-1 py-[13px] text-base font-bold"
             >
               キャンセル
