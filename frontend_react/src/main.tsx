@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
+import '@fontsource/noto-sans-jp/index.css';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './fonts.css';
 import './index.css';
-import "@fontsource/noto-sans-jp/index.css";
 import reportWebVitals from './reportWebVitals.ts';
 // Import the generated route tree
 import { routeTree } from './route-tree.gen';

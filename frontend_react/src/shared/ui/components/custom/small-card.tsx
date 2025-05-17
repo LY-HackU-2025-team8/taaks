@@ -1,60 +1,64 @@
-import { Check, Edit, MoreHorizontal } from "lucide-react";
+import { Check, Edit, MoreHorizontal } from 'lucide-react';
 
 export type SmallCardProps = {
   title: string;
   limit: string;
-}
+};
 
 export const SmallCard = ({ title, limit }: SmallCardProps) => {
-
   const BORDER_LENGTH: number = 25;
-  const truncatedTitle: string = title.length > BORDER_LENGTH ? title.slice(0, BORDER_LENGTH) + '...' : title;
+  const truncatedTitle: string =
+    title.length > BORDER_LENGTH
+      ? title.slice(0, BORDER_LENGTH) + '...'
+      : title;
 
   const edit = () => {
-    console.log("edit");
-  }
+    console.log('edit');
+  };
 
   const more = () => {
-    console.log("moreInfo");
-  }
+    console.log('moreInfo');
+  };
 
   const done = () => {
-    console.log("done");
-  }
+    console.log('done');
+  };
 
   return (
     <div className="relative flex h-[155px] w-[179px]">
-      
       {/* TODO: `bg-[#fbfbfb]` をカラーテーマ使って書き換える */}
-      <div className="small-card-container relative flex h-[155px] w-[179px] bg-[#fbfbfb] z-0">
+      <div className="small-card-container relative z-0 flex h-[155px] w-[179px] bg-[#fbfbfb]">
         <div className="z-10 p-3">
-          <p className="pt-1 text-[12px] text-[#909489] font-bold">
-            {limit}
-          </p>
-          <p className='pt-6 text-[15px] leading-[20px] max-w-[155px] font-[Noto_Sans_JP] font-[600] '>
+          <p className="pt-1 text-[12px] font-bold text-[#909489]">{limit}</p>
+          <p className="max-w-[155px] pt-6 font-[Noto_Sans_JP] text-[15px] leading-[20px] font-[600]">
             {truncatedTitle}
           </p>
         </div>
         <button
-          onClick={() => { more() }}
-          className="absolute bottom-[10px] left-[15px] z-10">
-          <MoreHorizontal
-            size={20}
-          />
+          onClick={() => {
+            more();
+          }}
+          className="absolute bottom-[10px] left-[15px] z-10"
+        >
+          <MoreHorizontal size={20} />
         </button>
         <button
-          onClick={() => { edit() }}
-          className="absolute bottom-[10px] right-[10px] z-10"
+          onClick={() => {
+            edit();
+          }}
+          className="absolute right-[10px] bottom-[10px] z-10"
         >
           <Edit size={20} />
         </button>
       </div>
-      
+
       {/* 右上のボタン */}
       {/* TODO: `bg-[#fbfbfb]` をカラーテーマ使って書き換える */}
       <button
-        onClick={() => { done() }}
-        className="small-card-button flex absolute w-[53px] h-[45px] top-0 right-0 z-10 items-center justify-center  rounded-full bg-[#fbfbfb] hover:bg-primary"
+        onClick={() => {
+          done();
+        }}
+        className="small-card-button hover:bg-primary absolute top-0 right-0 z-10 flex h-[45px] w-[53px] items-center justify-center rounded-full bg-[#fbfbfb]"
       >
         <Check size={30} />
       </button>
@@ -71,4 +75,4 @@ export const SmallCard = ({ title, limit }: SmallCardProps) => {
       </style>
     </div>
   );
-}
+};
