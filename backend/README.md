@@ -52,7 +52,7 @@ java -jar build/libs/taaks-0.0.1-SNAPSHOT.jar
 ```
 
 ## Dockerでの起動方法
-
+事前に[`./gradlew bootBuildImage`](#dockerイメージの作成)をしてください
 ### PostgreSQLも同時に起動させる場合
 
 ```
@@ -66,17 +66,24 @@ docker compose up -d taaks-backend
 ```
 
 # ログイン
-
-現状だとデフォルトのフォームログインだけです。登録や削除だったり、APIだったりはありません。
-以下のユーザーが自動で登録されるので、ログインできるはず。
-セッション管理はまだ動いていません(のはず)ですが、多分Cookieを使ったものがSpringで提供されているのでそれを使えると思います。
-
+現状だとデフォルトのフォームログインだけです。登録や削除だったり、APIだったりはありません。 
+以下のユーザーが自動で登録されるので、ログインできるはず。 
 ## ユーザー情報
 
 ```
 user
-```
-
-```
 password
 ```
+# セッション管理
+セッション管理はCookieで行われています。
+例：
+```
+JSESSIONID=5BF8FFAA033EECCDE16385B1057AE3BD
+```
+
+## REST APIでのログイン
+これから実装します。
+[公式ドキュメント](https://spring.pleiades.io/spring-security/reference/servlet/authentication/passwords/)を参考にする予定です。
+
+# テーブル情報
+[ビルド](#jarファイルの作成)等をした際に生成される`backend/schema.sql`が参考になります
