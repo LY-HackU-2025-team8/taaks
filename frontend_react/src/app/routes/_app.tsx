@@ -1,7 +1,13 @@
 import { AddTaskDrawer } from '@/features/add-task/ui/add-task-drawer';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
-import { LucidePlus } from 'lucide-react';
+import {
+  LucideCircleCheckBig,
+  LucideHome,
+  LucideNotebook,
+  LucidePlus,
+  LucideUser,
+} from 'lucide-react';
 import { checkLogin } from '../api/require-login';
 
 export const Route = createFileRoute('/_app')({
@@ -14,22 +20,56 @@ function RouteComponent() {
   return (
     <>
       <Outlet />
-      <nav className="bg-background fixed right-0 bottom-0 left-0 border-t px-4 pb-[env(safe-area-inset-bottom)]">
-        <ul className="flex h-16 items-center justify-center gap-4">
+      <nav className="text-muted fixed right-3.5 bottom-3.5 left-3.5 mb-[env(safe-area-inset-bottom)] rounded-full bg-[#33362C] px-7">
+        <ul className="flex h-16 items-center justify-around gap-4">
           <li className="contents">
-            <Link to="/diary">Diary</Link>
+            <Link
+              to="/dashboard"
+              className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
+            >
+              <LucideHome />
+              Home
+            </Link>
+          </li>
+          <li className="contents">
+            <Link
+              to="/todo"
+              className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
+            >
+              <LucideCircleCheckBig />
+              Todo
+            </Link>
           </li>
           <li className="contents">
             <AddTaskDrawer
               triggerComponent={
-                <Button size="icon" variant="default" className="rounded-full">
-                  <LucidePlus />
+                <Button
+                  size="icon"
+                  variant="default"
+                  className="bg-custom text-custom-foreground size-16 -translate-y-4 rounded-2xl shadow-xl"
+                >
+                  <LucidePlus className="size-8" />
                 </Button>
               }
             />
           </li>
           <li className="contents">
-            <Link to="/todo">Todo</Link>
+            <Link
+              to="/diary"
+              className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
+            >
+              <LucideNotebook />
+              Diary
+            </Link>
+          </li>
+          <li className="contents">
+            <Link
+              to="/diary"
+              className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
+            >
+              <LucideUser />
+              Account
+            </Link>
           </li>
         </ul>
       </nav>
