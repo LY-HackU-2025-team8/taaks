@@ -5,7 +5,7 @@ export type SmallCardProps = {
   limit: string;
 }
 
-export function SmallCard({ title, limit }: SmallCardProps) {
+export const SmallCard = ({ title, limit }: SmallCardProps) => {
 
   const BORDER_LENGTH: number = 25;
   const truncatedTitle: string = title.length > BORDER_LENGTH ? title.slice(0, BORDER_LENGTH) + '...' : title;
