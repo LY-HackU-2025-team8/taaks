@@ -58,7 +58,7 @@ export const SmallCard = ({ title, deadline }: SmallCardProps) => {
       {/* 右上のボタン */}
       <button
         onClick={handleDone}
-        className="bg-taaks-white hover:bg-primary absolute top-0 right-0 z-10 flex h-11.25 w-13.25 items-center justify-center rounded-full"
+        className="bg-taaks-white hover:bg-primary hover:text-primary-foreground absolute top-0 right-0 z-10 flex h-11.25 w-13.25 items-center justify-center rounded-full"
       >
         <Check className="size-7.5" />
       </button>
