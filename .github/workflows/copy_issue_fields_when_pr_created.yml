@@ -2,7 +2,6 @@ name: Copy Issue Project Fields when PR created # PR作成時にリンクされ�
 # PRがオープンされたとき、または再オープンされたときに実行
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
 
 jobs:
   sync_issue_fields:
