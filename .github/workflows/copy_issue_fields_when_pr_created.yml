@@ -138,34 +138,42 @@ jobs:
           DOMAIN_VAL: ${{ env.DOMAIN_VAL }}
           SPRINT_VAL: ${{ env.SPRINT_VAL }}
         run: |
-          # Priorityを設定
-          gh api graphql -f query='
-            mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
-              updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
-                projectV2Item { id }
-              }
-            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$PRIORITY_FIELD_ID -f val=$PRIORITY_VAL --silent
-          # Timeline(日付)を設定
-          gh api graphql -f query='
-            mutation($proj: ID!, $item: ID!, $field: ID!, $dt: DateTime!) {
-              updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { date: $dt } }) {
-                projectV2Item { id }
-              }
-            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$TIMELINE_FIELD_ID -f dt=$TIMELINE_VAL --silent
-          # Domainを設定
-          gh api graphql -f query='
-            mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
-              updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
-                projectV2Item { id }
-              }
-            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$DOMAIN_FIELD_ID -f val=$DOMAIN_VAL --silent
-          # Sprintを設定
-          gh api graphql -f query='
-            mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
-              updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
-                projectV2Item { id }
-              }
-            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$SPRINT_FIELD_ID -f val=$SPRINT_VAL --silent
+          # Priorityを設定（値がnull/空でなければ）
+          if [ -n "$PRIORITY_VAL" ] && [ "$PRIORITY_VAL" != "null" ]; then
+            gh api graphql -f query='
+              mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
+                updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
+                  projectV2Item { id }
+                }
+              }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$PRIORITY_FIELD_ID -f val=$PRIORITY_VAL --silent
+          fi
+          # Timeline(日付)を設定（値がnull/空でなければ）
+          if [ -n "$TIMELINE_VAL" ] && [ "$TIMELINE_VAL" != "null" ]; then
+            gh api graphql -f query='
+              mutation($proj: ID!, $item: ID!, $field: ID!, $dt: DateTime!) {
+                updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { date: $dt } }) {
+                  projectV2Item { id }
+                }
+              }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$TIMELINE_FIELD_ID -f dt=$TIMELINE_VAL --silent
+          fi
+          # Domainを設定（値がnull/空でなければ）
+          if [ -n "$DOMAIN_VAL" ] && [ "$DOMAIN_VAL" != "null" ]; then
+            gh api graphql -f query='
+              mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
+                updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
+                  projectV2Item { id }
+                }
+              }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$DOMAIN_FIELD_ID -f val=$DOMAIN_VAL --silent
+          fi
+          # Sprintを設定（値がnull/空でなければ）
+          if [ -n "$SPRINT_VAL" ] && [ "$SPRINT_VAL" != "null" ]; then
+            gh api graphql -f query='
+              mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
+                updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
+                  projectV2Item { id }
+                }
+              }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$SPRINT_FIELD_ID -f val=$SPRINT_VAL --silent
+          fi
 
       # IssueのラベルをPRに追加します
       - name: Copy labels to PR
