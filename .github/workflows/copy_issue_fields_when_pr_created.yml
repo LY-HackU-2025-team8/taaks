@@ -48,7 +48,7 @@ jobs:
       - name: Identify linked issue
         id: get-issue
         run: |
-          ISSUE_NUM=$(echo "${{ github.event.pull_request.body }}" | grep -oE 'close #[0-9]+' | head -1 | grep -oE '[0-9]+')
+          ISSUE_NUM=$(echo "${{ github.event.pull_request.body }}" | grep -oE 'close #[0-9]*' | head -1 | grep -oE '[0-9]*')
           if [ -z "$ISSUE_NUM" ]; then
             echo "No linked issue found. Skipping subsequent steps."
             echo "ISSUE_NUMBER=" >> $GITHUB_ENV
