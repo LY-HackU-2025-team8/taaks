@@ -75,6 +75,9 @@ jobs:
             query($owner: String!, $repo: String!, $num: Int!) {
               repository(owner: $owner, name: $repo) {
                 issue(number: $num) {
+                  labels(first: 20) {
+                    nodes { name }
+                  }
                   projectItems(first: 1) {
                     nodes {
                       id
@@ -101,6 +104,7 @@ jobs:
           echo TIMELINE_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Timeline") | .date' issue.json) >> $GITHUB_ENV
           echo DOMAIN_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Domain") | .name' issue.json) >> $GITHUB_ENV
           echo SPRINT_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Sprint") | .name' issue.json) >> $GITHUB_ENV
+          echo LABELS=$(jq -r '.data.repository.issue.labels.nodes[].name' issue.json | paste -sd "," -) >> $GITHUB_ENV
 
       # PRをプロジェクトカードとして追加し、アイテムIDを取得します
       - name: Add PR to project
@@ -161,3 +165,12 @@ jobs:
                 projectV2Item { id }
               }
             }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$SPRINT_FIELD_ID -f val=$SPRINT_OPT --silent
+
+      # IssueのラベルをPRに追加します
+      - name: Copy labels to PR
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          LABELS: ${{ env.LABELS }}
+        run: |
+          gh pr edit $PR_NUMBER --add-label $(echo $LABELS | sed 's/,/ --add-label /g')
