@@ -79,12 +79,59 @@ API経由でのログインのみをサポートしています。
 
 ログインに成功すると、以下のようなBearerトークン（JWT）が返却されます。このトークンはレスポンスボディだけでなく、レスポンスヘッダー（`X-AUTH-TOKEN`）にも含まれます。以降のAPIリクエスト時に`X-AUTH-TOKEN`ヘッダーに`Bearer {トークン}`の形式で付与してください。
 
-例:
+### /login のリクエスト例
+
 ```
-X-AUTH-TOKEN: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNzQ3NTYwMTQ4LCJleHAiOjE3NDc2NDY1NDh9.qY9noAGVM_KI7ea4N0Lo8afFIgY06GVs1B83sSz8Ouk
+POST /login HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "password"
+}
 ```
 
-## 補足
+### /login のレスポンス例
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-AUTH-TOKEN: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNzQ3NTYyNDUwLCJleHAiOjE3NDc2NDg4NTB9.m9NJBoZYq7DI8VltjyxJndjUFBehU6ss1KPQZBvSvMA
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNzQ3NTYyNDUwLCJleHAiOjE3NDc2NDg4NTB9.m9NJBoZYq7DI8VltjyxJndjUFBehU6ss1KPQZBvSvMA"
+}
+```
+
+---
+
+# 認証チェック
+
+取得したトークンを使って認証チェックを行う場合、`/auth-check`エンドポイントにリクエストします。
+
+- エンドポイント: `/auth-check`
+- メソッド: `POST`
+- ヘッダー: `X-AUTH-TOKEN: Bearer {トークン}`
+- ボディ: 任意
+
+### /auth-check のリクエスト例
+
+```
+POST /auth-check HTTP/1.1
+Host: localhost:8080
+Content-Type: text/plain
+X-AUTH-TOKEN: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNzQ3NTYyNDUwLCJleHAiOjE3NDc2NDg4NTB9.m9NJBoZYq7DI8VltjyxJndjUFBehU6ss1KPQZBvSvMA
+```
+
+### /auth-check のレスポンス例
+
+```
+HTTP/1.1 200 OK
+Content-Type: text/plain;charset=UTF-8
+```
+
+# 補足
 Cookieによるセッション管理やフォームログインは廃止しました。
 
 # テーブル情報
