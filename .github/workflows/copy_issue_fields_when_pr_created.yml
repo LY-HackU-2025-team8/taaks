@@ -64,7 +64,7 @@ jobs:
               repository(owner: $owner, name: $repo) {
                 issue(number: $num) {
                   labels(first: 99) {
-                    nodes { labelId }
+                    nodes { id }
                   }
                   projectItems(first: 1) {
                     nodes {
