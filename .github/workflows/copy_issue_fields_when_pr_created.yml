@@ -1,8 +1,9 @@
 name: Copy Issue Project Fields when PR created # PR作成時にリンクされたIssueのフィールドをPRカードにコピー
-# PRがオープンされたときに実行
+# PRがオープンされたとき、または手動で実行可能
 on:
   pull_request:
     types: [opened]
+  workflow_dispatch:
 
 jobs:
   sync_issue_fields:
