@@ -30,7 +30,7 @@ public class ApiController {
     
     // テスト用のエンドポイント
     @PostMapping("/auth-check")
-    public String getAuthenticatedUsernamePost(@AuthenticationPrincipal TaakUser user, @RequestBody String body) {
+    public String getAuthenticatedUsernamePost(@AuthenticationPrincipal TaakUser user, @RequestBody(required = false) String body) {
         if (user == null) {
             return "Not authenticated";
         }
