@@ -184,7 +184,7 @@ jobs:
           PR_NODE_ID: ${{ github.event.pull_request.node_id }}
           LABEL_IDS: ${{ env.LABEL_IDS }}
         run: |
-          if [ -n "$LABEL_IDS" ] && [ "$LABEL_IDS" != "null" ] && [ "$LABEL_IDS" != "[]" ]; then
+          if [ -n "$LABEL_IDS" ] && [ "$LABEL_IDS" != "null" ] && [ "$LABEL_IDS" != "[\"\"]" ]; then
             # Parse JSON array of label IDs into shell array
             IDS=($(echo $LABEL_IDS | jq -r '.[]'))
             # Start building gh CLI arguments
