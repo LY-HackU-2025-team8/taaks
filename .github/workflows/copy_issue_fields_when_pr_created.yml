@@ -176,4 +176,6 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           LABELS: ${{ env.LABELS }}
         run: |
-          gh pr edit $PR_NUMBER --add-label $(echo $LABELS | sed 's/,/ --add-label /g')
+          if [ -n "$LABELS" ] && [ "$(echo "$LABELS" | tr -d '[:space:]')" != "" ]; then
+            gh pr edit $PR_NUMBER --add-label $(echo $LABELS | sed 's/,/ --add-label /g')
+          fi
