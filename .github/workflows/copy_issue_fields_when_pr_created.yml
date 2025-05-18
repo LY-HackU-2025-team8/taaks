@@ -144,7 +144,7 @@ jobs:
               updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
                 projectV2Item { id }
               }
-            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$PRIORITY_FIELD_ID -f val=$PRIORITY_OPT --silent
+            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$PRIORITY_FIELD_ID -f val=$PRIORITY_VAL --silent
           # Timeline(日付)を設定
           gh api graphql -f query='
             mutation($proj: ID!, $item: ID!, $field: ID!, $dt: DateTime!) {
@@ -158,14 +158,14 @@ jobs:
               updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
                 projectV2Item { id }
               }
-            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$DOMAIN_FIELD_ID -f val=$DOMAIN_OPT --silent
+            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$DOMAIN_FIELD_ID -f val=$DOMAIN_VAL --silent
           # Sprintを設定
           gh api graphql -f query='
             mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
               updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
                 projectV2Item { id }
               }
-            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$SPRINT_FIELD_ID -f val=$SPRINT_OPT --silent
+            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$SPRINT_FIELD_ID -f val=$SPRINT_VAL --silent
 
       # IssueのラベルをPRに追加します
       - name: Copy labels to PR
