@@ -163,7 +163,7 @@ jobs:
           if [ -n "$SPRINT_VAL" ] && [ "$SPRINT_VAL" != "null" ]; then
             gh api graphql -f query='
               mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
-                updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
+                updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { iterationId: $val } }) {
                   projectV2Item { id }
                 }
               }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$SPRINT_FIELD_ID -f val=$SPRINT_VAL --silent
