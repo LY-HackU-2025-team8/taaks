@@ -184,6 +184,6 @@ jobs:
                 }
               }' \
               -F labelableId=$PR_NODE_ID \
-              -F labelIds="[$LABEL_IDS]" \
+              -F labelIds=$LABEL_IDS \
               --silent
           fi
