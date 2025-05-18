@@ -99,7 +99,7 @@ jobs:
                   }
                 }
               }
-            }' -f owner=${{ github.event.repository.owner.name }} -f repo=${{ github.event.repository.name }} -F num=$ISSUE_NUMBER > issue.json
+            }' -f owner=${{ github.event.repository.owner.login }} -f repo=${{ github.event.repository.name }} -F num=$ISSUE_NUMBER > issue.json
           echo ISSUE_ITEM_ID=$(jq -r .data.repository.issue.projectItems.nodes[0].id issue.json) >> $GITHUB_ENV
           echo PRIORITY_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].priority.id issue.json) >> $GITHUB_ENV
           echo TIMELINE_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].timeline.id issue.json) >> $GITHUB_ENV
