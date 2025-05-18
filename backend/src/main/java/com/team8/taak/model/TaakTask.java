@@ -13,6 +13,7 @@ import java.time.*;
 public class TaakTask{
     @Id
     @GeneratedValue(strategy=GenerationType.UUID)
+    @Column(columnDefinition="uuid", nullable = false, updatable=false)
     private UUID id;
     
     @Column(nullable = false, columnDefinition = "varchar(255) default ''")
@@ -24,21 +25,21 @@ public class TaakTask{
 
     // タイムゾーンのない日時（ex. 2021-05-30T15:47:13.395703）
     @Column(nullable = false)
-    private LocalDateTime due_at;
+    private LocalDateTime dueAt;
 
     @Column(nullable = false, columnDefinition= "boolean default false")
-    private boolean is_all_day;
+    private boolean isAllDay;
 
     // PostgreSQLのtimestamp型
     @Column(nullable = true, columnDefinition = "timestamp default null")
-    private LocalDateTime completed_at;
+    private LocalDateTime completedAt;
 
-    // ToDo: FK制約をつける
-    @Column(nullable = false, columnDefinition="bigint REFERENCES TaakUser(id)")
-    private Long user_id;
+    // ToDo: FK制約をつける columnDefinition="bigint REFERENCES TaakUser(id)"
+    @Column(nullable = false)
+    private Long userId;
 
     @Column(nullable = false)
-    private int load_score;
+    private int loadScore;
 
     // 空のコンストラクタ
     public TaakTask(){
@@ -63,34 +64,34 @@ public class TaakTask{
         this.memo = memo;
     }   
     public LocalDateTime getDueAt() {
-        return due_at;
+        return dueAt;
     }
     public void setDueAt(LocalDateTime due_at) {
-        this.due_at = due_at;
+        this.dueAt = due_at;
     }
     public boolean getIsAllDay() {
-        return is_all_day;
+        return isAllDay;
     }
     public void setIsAllDay(boolean is_all_day) {
-        this.is_all_day = is_all_day;
+        this.isAllDay = is_all_day;
     }
     public LocalDateTime getCompletedAt() {
-        return completed_at;
+        return completedAt;
     }
     public void setCompletedAt(LocalDateTime completed_at) {
-        this.completed_at = completed_at;
+        this.completedAt = completed_at;
     }
     public Long getUserId() {
-        return user_id;
+        return userId;
     }
-    public void setUserId(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
     public int getLoadScore() {
-        return load_score;
+        return loadScore;
     }
     public void setLoadScore(int load_score) {
-        this.load_score = load_score;
+        this.loadScore = load_score;
     }
 
 }
