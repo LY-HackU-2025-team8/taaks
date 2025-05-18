@@ -64,7 +64,7 @@ jobs:
               repository(owner: $owner, name: $repo) {
                 issue(number: $num) {
                   labels(first: 99) {
-                    nodes { id }
+                    nodes { labelId }
                   }
                   projectItems(first: 1) {
                     nodes {
@@ -99,7 +99,7 @@ jobs:
           echo TIMELINE_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].timeline.optionId issue.json) >> $GITHUB_ENV
           echo DOMAIN_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].domain.optionId issue.json) >> $GITHUB_ENV
           echo SPRINT_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].sprint.iterationId issue.json) >> $GITHUB_ENV
-          echo LABEL_IDS=$(jq -r '.data.repository.issue.labels.nodes[].id' issue.json | paste -sd "," -) >> $GITHUB_ENV
+          echo LABEL_IDS=["$(jq -r '.data.repository.issue.labels.nodes[].id' issue.json | paste -sd "\",\"" -)"] >> $GITHUB_ENV
 
       # PRをプロジェクトカードとして追加し、アイテムIDを取得します
       - name: Add PR to project
@@ -183,7 +183,7 @@ jobs:
                   clientMutationId
                 }
               }' \
-              -F labelableId="$PR_NODE_ID" \
+              -F labelableId=$PR_NODE_ID \
               -F labelIds="[$LABEL_IDS]" \
               --silent
           fi
