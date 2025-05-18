@@ -22,27 +22,40 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          gh api graphql -f query='\
-            query($org:String!,$number:Int!){\
-              organization(login:$org){\
-                projectV2(number:$number){\
-                  id\
-                  fields(first:10){\
-                    nodes{\
-                      __typename\
-                      ... on ProjectV2Field{ id name }\
-                      ... on ProjectV2SingleSelectField{ id name options{id name }}\
-                      ... on ProjectV2DateField{ id name }\
-                    }\
-                  }\
-                }\
-              }\
+          gh api graphql -f query='
+            query($org: String!, $number: Int!) {
+              organization(login: $org) {
+                projectV2(number: $number) {
+                  id
+                  fields(first: 10) {
+                    nodes {
+                      __typename
+                      ... on ProjectV2Field {
+                        id
+                        name
+                      }
+                      ... on ProjectV2SingleSelectField {
+                        id
+                        name
+                        options {
+                          id
+                          name
+                        }
+                      }
+                      ... on ProjectV2DateField {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+              }
             }' -f org=${{ github.repository_owner }} -F number=1 > fields.json
-          echo "PROJECT_ID=$(jq -r .data.organization.projectV2.id fields.json)" >> $GITHUB_ENV
-          echo "PRIORITY_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[]|select(.name==\"Priority\")|.id' fields.json)" >> $GITHUB_ENV
-          echo "TIMELINE_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[]|select(.name==\"Timeline\")|.id' fields.json)" >> $GITHUB_ENV
-          echo "DOMAIN_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[]|select(.name==\"Domain\")|.id' fields.json)" >> $GITHUB_ENV
-          echo "SPRINT_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[]|select(.name==\"Sprint\")|.id' fields.json)" >> $GITHUB_ENV
+          echo PROJECT_ID=$(jq -r .data.organization.projectV2.id fields.json) >> $GITHUB_ENV
+          echo PRIORITY_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name == "Priority") | .id' fields.json) >> $GITHUB_ENV
+          echo TIMELINE_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name == "Timeline") | .id' fields.json) >> $GITHUB_ENV
+          echo DOMAIN_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name == "Domain") | .id' fields.json) >> $GITHUB_ENV
+          echo SPRINT_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name == "Sprint") | .id' fields.json) >> $GITHUB_ENV
 
       # PR本文から「close #[番号]」形式でリンクされたIssue番号を抽出します
       - name: Identify linked issue
@@ -58,30 +71,36 @@ jobs:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
           ISSUE_NUMBER: ${{ env.ISSUE_NUMBER }}
         run: |
-          gh api graphql -f query='\
-            query($owner:String!,$repo:String!,$num:Int!){\
-              repository(owner:$owner,name:$repo){\
-                issue(number:$num){\
-                  projectItems(first:1){\
-                    nodes{\
-                      id\
-                      fieldValues(first:10){\
-                        nodes{\
-                          __typename\
-                          ... on ProjectV2ItemFieldSingleSelectValue{ field{name} name }\
-                          ... on ProjectV2ItemFieldDateValue{ field{name} date }\
-                        }\
-                      }\
-                    }\
-                  }\
-                }\
-              }\
-            }' -f owner=${{ github.repository_owner }} -f repo=${{ github.event.repository.name }} -F num=${{ env.ISSUE_NUMBER }} > issue.json
-          echo "ISSUE_ITEM_ID=$(jq -r .data.repository.issue.projectItems.nodes[0].id issue.json)" >> $GITHUB_ENV
-          echo "PRIORITY_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[]|select(.field.name==\"Priority\")|.name' issue.json)" >> $GITHUB_ENV
-          echo "TIMELINE_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[]|select(.field.name==\"Timeline\")|.date' issue.json)" >> $GITHUB_ENV
-          echo "DOMAIN_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[]|select(.field.name==\"Domain\")|.name' issue.json)" >> $GITHUB_ENV
-          echo "SPRINT_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[]|select(.field.name==\"Sprint\")|.name' issue.json)" >> $GITHUB_ENV
+          gh api graphql -f query='
+            query($owner: String!, $repo: String!, $num: Int!) {
+              repository(owner: $owner, name: $repo) {
+                issue(number: $num) {
+                  projectItems(first: 1) {
+                    nodes {
+                      id
+                      fieldValues(first: 10) {
+                        nodes {
+                          __typename
+                          ... on ProjectV2ItemFieldSingleSelectValue {
+                            field { name }
+                            name
+                          }
+                          ... on ProjectV2ItemFieldDateValue {
+                            field { name }
+                            date
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }' -f owner=$GITHUB_REPOSITORY_OWNER -f repo=$GITHUB_EVENT_REPOSITORY_NAME -f num=$ISSUE_NUMBER > issue.json
+          echo ISSUE_ITEM_ID=$(jq -r .data.repository.issue.projectItems.nodes[0].id issue.json) >> $GITHUB_ENV
+          echo PRIORITY_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Priority") | .name' issue.json) >> $GITHUB_ENV
+          echo TIMELINE_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Timeline") | .date' issue.json) >> $GITHUB_ENV
+          echo DOMAIN_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Domain") | .name' issue.json) >> $GITHUB_ENV
+          echo SPRINT_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Sprint") | .name' issue.json) >> $GITHUB_ENV
 
       # PRをプロジェクトカードとして追加し、アイテムIDを取得します
       - name: Add PR to project
@@ -91,11 +110,13 @@ jobs:
           PR_ID: ${{ github.event.pull_request.node_id }}
           PROJECT_ID: ${{ env.PROJECT_ID }}
         run: |
-          ITEM_ID=$(gh api graphql -f query='\
-            mutation($proj:ID!,$pr:ID!){\
-              addProjectV2ItemById(input:{projectId:$proj,contentId:$pr}){item{id}}\
+          ITEM_ID=$(gh api graphql -f query='
+            mutation($proj: ID!, $pr: ID!) {
+              addProjectV2ItemById(input: { projectId: $proj, contentId: $pr }) {
+                item { id }
+              }
             }' -f proj=$PROJECT_ID -f pr=$PR_ID --jq '.data.addProjectV2ItemById.item.id')
-          echo "ITEM_ID=$ITEM_ID" >> $GITHUB_ENV
+          echo ITEM_ID=$ITEM_ID >> $GITHUB_ENV
 
       # Issueから取得したフィールド値をPRカードにコピーします
       - name: Copy fields to PR card
@@ -113,25 +134,30 @@ jobs:
           SPRINT_VAL: ${{ env.SPRINT_VAL }}
         run: |
           # Priorityを設定
-          PRIORITY_OPT=$(jq -r '.data.organization.projectV2.fields.nodes[]|select(.name=="Priority").options[]|select(.name=="'"$PRIORITY_VAL"'").id' fields.json)
-          gh api graphql -f query='\
-            mutation($proj:ID!,$item:ID!,$field:ID!,$val:String!){\
-              updateProjectV2ItemFieldValue(input:{projectId:$proj,itemId:$item,fieldId:$field,value:{singleSelectOptionId:$val}}){projectV2Item{id}}\
+          gh api graphql -f query='
+            mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
+              updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
+                projectV2Item { id }
+              }
             }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$PRIORITY_FIELD_ID -f val=$PRIORITY_OPT --silent
           # Timeline(日付)を設定
-          gh api graphql -f query='\
-            mutation($proj:ID!,$item:ID!,$field:ID!,$dt:DateTime!){\
-              updateProjectV2ItemFieldValue(input:{projectId:$proj,itemId:$item,fieldId:$field,value:{date:$dt}}){projectV2Item{id}}\
-            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$TIMELINE_FIELD_ID -f dt="$TIMELINE_VAL" --silent
+          gh api graphql -f query='
+            mutation($proj: ID!, $item: ID!, $field: ID!, $dt: DateTime!) {
+              updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { date: $dt } }) {
+                projectV2Item { id }
+              }
+            }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$TIMELINE_FIELD_ID -f dt=$TIMELINE_VAL --silent
           # Domainを設定
-          DOMAIN_OPT=$(jq -r '.data.organization.projectV2.fields.nodes[]|select(.name=="Domain").options[]|select(.name=="'"$DOMAIN_VAL"'").id' fields.json)
-          gh api graphql -f query='\
-            mutation($proj:ID!,$item:ID!,$field:ID!,$val:String!){\
-              updateProjectV2ItemFieldValue(input:{projectId:$proj,itemId:$item,fieldId:$field,value:{singleSelectOptionId:$val}}){projectV2Item{id}}\
+          gh api graphql -f query='
+            mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
+              updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
+                projectV2Item { id }
+              }
             }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$DOMAIN_FIELD_ID -f val=$DOMAIN_OPT --silent
           # Sprintを設定
-          SPRINT_OPT=$(jq -r '.data.organization.projectV2.fields.nodes[]|select(.name=="Sprint").options[]|select(.name=="'"$SPRINT_VAL"'").id' fields.json)
-          gh api graphql -f query='\
-            mutation($proj:ID!,$item:ID!,$field:ID!,$val:String!){\
-              updateProjectV2ItemFieldValue(input:{projectId:$proj,itemId:$item,fieldId:$field,value:{singleSelectOptionId:$val}}){projectV2Item{id}}\
+          gh api graphql -f query='
+            mutation($proj: ID!, $item: ID!, $field: ID!, $val: String!) {
+              updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $val } }) {
+                projectV2Item { id }
+              }
             }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$SPRINT_FIELD_ID -f val=$SPRINT_OPT --silent
