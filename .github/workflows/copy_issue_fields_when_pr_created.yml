@@ -177,15 +177,13 @@ jobs:
           LABEL_IDS: ${{ env.LABEL_IDS }}
         run: |
           if [ -n "$LABEL_IDS" ] && [ "$LABEL_IDS" != "null" ]; then
-            # Wrap each ID in quotes and form a JSON array
-            FORMATTED_IDS=$(echo $LABEL_IDS | awk -F, '{ for(i=1;i<=NF;i++){ printf("\"%s\"%s", $i, (i<NF?",":"" )) } }')
             gh api graphql -f query='
-              mutation($lid: ID!, $lids: [ID!]!) {
-                addLabelsToLabelable(input: { labelableId: $lid, labelIds: $lids }) {
-                  labelable { id }
+              mutation($labelableId: ID!, $labelIds: [ID!]!) {
+                addLabelsToLabelable(input: { labelableId: $labelableId, labelIds: $labelIds }) {
+                  clientMutationId
                 }
               }' \
-              -f lid="$PR_NODE_ID" \
-              -f lids="[$FORMATTED_IDS]" \
+              -F labelableId="$PR_NODE_ID" \
+              -F labelIds="[$LABEL_IDS]" \
               --silent
           fi
