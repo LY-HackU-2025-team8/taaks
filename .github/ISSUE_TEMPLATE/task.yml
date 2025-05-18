@@ -16,7 +16,7 @@ body:
     id: specification
     attributes:
       label: 仕様
-      description:
+      description: 実装する機能の仕様
       placeholder: |
         - method: POST
         - url: /api/tasks
