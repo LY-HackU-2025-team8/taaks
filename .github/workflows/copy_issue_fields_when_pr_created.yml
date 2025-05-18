@@ -69,22 +69,30 @@ jobs:
                   projectItems(first: 1) {
                     nodes {
                       id
-                      fieldValues(first: 99) {
-                        nodes {
-                          __typename
-                          ... on ProjectV2ItemFieldSingleSelectValue {
-                            field { name }
-                            name
-                            optionId
-                          }
-                          ... on ProjectV2ItemFieldIterationValue {
-                            field { name }
-                            iteration {
-                              id
-                              title
-                              startDate
-                            }
-                          }
+                      sprint: fieldValueByName(name: "Sprint") {
+                        ... on ProjectV2ItemFieldIterationValue {
+                          id
+                          title
+                          startDate
+                          duration
+                        }
+                      }
+                      timeline: fieldValueByName(name: "Timeline") {
+                        ... on ProjectV2ItemFieldSingleSelectValue {
+                          id
+                          name
+                        }
+                      }
+                      priority: fieldValueByName(name: "Priority") {
+                        ... on ProjectV2ItemFieldSingleSelectValue {
+                          id
+                          name
+                        }
+                      }
+                      domain: fieldValueByName(name: "Domain") {
+                        ... on ProjectV2ItemFieldSingleSelectValue {
+                          id
+                          name
                         }
                       }
                     }
@@ -93,10 +101,10 @@ jobs:
               }
             }' -f owner=$GITHUB_REPOSITORY_OWNER -f repo=$GITHUB_EVENT_REPOSITORY_NAME -f num=$ISSUE_NUMBER > issue.json
           echo ISSUE_ITEM_ID=$(jq -r .data.repository.issue.projectItems.nodes[0].id issue.json) >> $GITHUB_ENV
-          echo PRIORITY_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Priority") | .optionId' issue.json) >> $GITHUB_ENV
-          echo TIMELINE_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Timeline") | .iteration.id' issue.json) >> $GITHUB_ENV
-          echo DOMAIN_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Domain") | .optionId' issue.json) >> $GITHUB_ENV
-          echo SPRINT_VAL=$(jq -r '.data.repository.issue.projectItems.nodes[0].fieldValues.nodes[] | select(.field.name == "Sprint") | .optionId' issue.json) >> $GITHUB_ENV
+          echo PRIORITY_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].priority.id issue.json) >> $GITHUB_ENV
+          echo TIMELINE_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].timeline.id issue.json) >> $GITHUB_ENV
+          echo DOMAIN_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].domain.id issue.json) >> $GITHUB_ENV
+          echo SPRINT_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].sprint.id issue.json) >> $GITHUB_ENV
           echo LABELS=$(jq -r '.data.repository.issue.labels.nodes[].name' issue.json | paste -sd "," -) >> $GITHUB_ENV
 
       # PRをプロジェクトカードとして追加し、アイテムIDを取得します
