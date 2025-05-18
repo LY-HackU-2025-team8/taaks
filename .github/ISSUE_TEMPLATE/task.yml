@@ -1,5 +1,5 @@
 name: Task
-description: 実際に行う作業
+description: エンジニアの開発タスク
 title: "[Task]: "
 type: Task
 body:
@@ -9,16 +9,33 @@ body:
       label: 概要
       description: タスクの概要
       placeholder: |
-        README.mdの更新
+        タスク作成APIの実装
     validations:
       required: true
   - type: textarea
-    id: reason
+    id: specification
     attributes:
-      label: 理由
-      description: なぜこのタスクが必要なのか
+      label: 仕様
+      description: 実装する機能の仕様
       placeholder: |
-        README.mdが古くなっているため
+        - method: POST
+        - url: /api/tasks
+        - request body:
+          ```json
+          {
+            "title": "タスクのタイトル",
+            "description": "タスクの詳細"
+          }
+          ```
+        - response:
+          ```json
+          {
+            "id": 1,
+            "title": "タスクのタイトル",
+            "description": "タスクの詳細",
+            "created_at": "2023-10-01T00:00:00Z"
+          }
+          ```
     validations:
       required: true
   - type: textarea
