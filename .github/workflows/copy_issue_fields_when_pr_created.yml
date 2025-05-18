@@ -64,7 +64,7 @@ jobs:
               repository(owner: $owner, name: $repo) {
                 issue(number: $num) {
                   labels(first: 99) {
-                    nodes { name }
+                    nodes { id }
                   }
                   projectItems(first: 1) {
                     nodes {
@@ -99,7 +99,7 @@ jobs:
           echo TIMELINE_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].timeline.optionId issue.json) >> $GITHUB_ENV
           echo DOMAIN_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].domain.optionId issue.json) >> $GITHUB_ENV
           echo SPRINT_VAL=$(jq -r .data.repository.issue.projectItems.nodes[0].sprint.iterationId issue.json) >> $GITHUB_ENV
-          echo LABELS=$(jq -r '.data.repository.issue.labels.nodes[].name' issue.json | paste -sd "," -) >> $GITHUB_ENV
+          echo LABEL_IDS=$(jq -r '.data.repository.issue.labels.nodes[].id' issue.json | paste -sd "," -) >> $GITHUB_ENV
 
       # PRをプロジェクトカードとして追加し、アイテムIDを取得します
       - name: Add PR to project
@@ -170,12 +170,22 @@ jobs:
           fi
 
       # IssueのラベルをPRに追加します
-      - name: Copy labels to PR
+      - name: Copy labels to PR via GraphQL
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          LABELS: ${{ env.LABELS }}
+          PR_NODE_ID: ${{ github.event.pull_request.node_id }}
+          LABEL_IDS: ${{ env.LABEL_IDS }}
         run: |
-          if [ -n "$LABELS" ] && [ "$(echo "$LABELS" | tr -d '[:space:]')" != "" ]; then
-            gh pr edit $PR_NUMBER --add-label $(echo $LABELS | sed 's/,/ --add-label /g')
+          if [ -n "$LABEL_IDS" ] && [ "$LABEL_IDS" != "null" ]; then
+            # Wrap each ID in quotes and form a JSON array
+            FORMATTED_IDS=$(echo $LABEL_IDS | awk -F, '{ for(i=1;i<=NF;i++){ printf("\"%s\"%s", $i, (i<NF?",":"" )) } }')
+            gh api graphql -f query='
+              mutation($lid: ID!, $lids: [ID!]!) {
+                addLabelsToLabelable(input: { labelableId: $lid, labelIds: $lids }) {
+                  labelable { id }
+                }
+              }' \
+              -f lid="$PR_NODE_ID" \
+              -f lids="[$FORMATTED_IDS]" \
+              --silent
           fi
