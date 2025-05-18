@@ -49,10 +49,16 @@ jobs:
         id: get-issue
         run: |
           ISSUE_NUM=$(echo "${{ github.event.pull_request.body }}" | grep -oE 'close #[0-9]+' | head -1 | grep -oE '[0-9]+')
+          if [ -z "$ISSUE_NUM" ]; then
+            echo "No linked issue found. Skipping subsequent steps."
+            echo "ISSUE_NUMBER=" >> $GITHUB_ENV
+            exit 0
+          fi
           echo "ISSUE_NUMBER=$ISSUE_NUM" >> $GITHUB_ENV
 
       # 抽出したIssueのプロジェクトアイテムIDとフィールド値を取得します
       - name: Fetch issue's project item and values
+        if: env.ISSUE_NUMBER != ''
         id: fetch-issue
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
@@ -102,6 +108,7 @@ jobs:
 
       # PRをプロジェクトカードとして追加し、アイテムIDを取得します
       - name: Add PR to project
+        if: env.ISSUE_NUMBER != ''
         id: add-pr
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
@@ -118,6 +125,7 @@ jobs:
 
       # Issueから取得したフィールド値をPRカードにコピーします
       - name: Copy fields to PR card
+        if: env.ISSUE_NUMBER != ''
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
           PROJECT_ID: ${{ env.PROJECT_ID }}
@@ -170,6 +178,7 @@ jobs:
 
       # IssueのラベルをPRに追加します
       - name: Copy labels to PR via GraphQL
+        if: env.ISSUE_NUMBER != ''
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
           PR_NODE_ID: ${{ github.event.pull_request.node_id }}
