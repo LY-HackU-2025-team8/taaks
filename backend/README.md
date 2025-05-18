@@ -66,24 +66,73 @@ docker compose up -d taaks-backend
 ```
 
 # ログイン
-現状だとデフォルトのフォームログインだけです。登録や削除だったり、APIだったりはありません。 
-以下のユーザーが自動で登録されるので、ログインできるはず。 
-## ユーザー情報
+API経由でのログインのみをサポートしています。
+
+- 現状、テスト用のユーザーのみ利用可能です。
+  - ユーザー名: `user`
+  - パスワード: `password`
+- エンドポイント: `/login`
+- メソッド: `POST`
+- リクエストボディ（JSON形式）:
+  - `username`: ユーザー名
+  - `password`: パスワード
+
+ログインに成功すると、以下のようなBearerトークン（JWT）が返却されます。このトークンはレスポンスボディだけでなく、レスポンスヘッダー（`X-AUTH-TOKEN`）にも含まれます。以降のAPIリクエスト時に`X-AUTH-TOKEN`ヘッダーに`Bearer {トークン}`の形式で付与してください。
+
+### /login のリクエスト例
 
 ```
-user
-password
-```
-# セッション管理
-セッション管理はCookieで行われています。
-例：
-```
-JSESSIONID=5BF8FFAA033EECCDE16385B1057AE3BD
+POST /login HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "password"
+}
 ```
 
-## REST APIでのログイン
-これから実装します。
-[公式ドキュメント](https://spring.pleiades.io/spring-security/reference/servlet/authentication/passwords/)を参考にする予定です。
+### /login のレスポンス例
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-AUTH-TOKEN: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNzQ3NTYyNDUwLCJleHAiOjE3NDc2NDg4NTB9.m9NJBoZYq7DI8VltjyxJndjUFBehU6ss1KPQZBvSvMA
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNzQ3NTYyNDUwLCJleHAiOjE3NDc2NDg4NTB9.m9NJBoZYq7DI8VltjyxJndjUFBehU6ss1KPQZBvSvMA"
+}
+```
+
+---
+
+# 認証チェック
+
+取得したトークンを使って認証チェックを行う場合、`/auth-check`エンドポイントにリクエストします。
+
+- エンドポイント: `/auth-check`
+- メソッド: `POST`
+- ヘッダー: `X-AUTH-TOKEN: Bearer {トークン}`
+- ボディ: 任意
+
+### /auth-check のリクエスト例
+
+```
+POST /auth-check HTTP/1.1
+Host: localhost:8080
+Content-Type: text/plain
+X-AUTH-TOKEN: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNzQ3NTYyNDUwLCJleHAiOjE3NDc2NDg4NTB9.m9NJBoZYq7DI8VltjyxJndjUFBehU6ss1KPQZBvSvMA
+```
+
+### /auth-check のレスポンス例
+
+```
+HTTP/1.1 200 OK
+Content-Type: text/plain;charset=UTF-8
+```
+
+# 補足
+Cookieによるセッション管理やフォームログインは廃止しました。
 
 # テーブル情報
 [ビルド](#jarファイルの作成)等をした際に生成される`backend/schema.sql`が参考になります
