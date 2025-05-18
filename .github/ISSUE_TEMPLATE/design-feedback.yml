@@ -1,0 +1,39 @@
+name: Design Feedback
+description: デザインに関するフィードバック
+title: "[Design]: "
+type: Design
+body:
+  - type: textarea
+    id: abstract
+    attributes:
+      label: 概要
+      description: フィードバックの概要
+      placeholder: |
+        ボタンの色を黒く変更して欲しい
+    validations:
+      required: true
+  - type: textarea
+    id: screen
+    attributes:
+      label: 画面
+      description: 画面のURLとスクリーンショット
+      placeholder: |
+        - https://taaks.app/login
+    validations:
+      required: true
+  - type: textarea
+    id: figma
+    attributes:
+      label: Figma
+      description: Figmaのリンク
+      placeholder: |
+        - https://www.figma.com
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: 参考資料
+      description: 機能に関連する資料があればリンクを貼る
+      placeholder: |
+        - https://ui.shadcn.com/docs/components/accordion
