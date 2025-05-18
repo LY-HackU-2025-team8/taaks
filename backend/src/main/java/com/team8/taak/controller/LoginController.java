@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.security.web.csrf.CsrfToken;
 
 
 @RestController
@@ -32,17 +30,6 @@ public class LoginController {
 		securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
 	}
 
-	// CSRFトークンを取得するエンドポイント
-	@GetMapping("/csrf")
-	public ResponseEntity<Void> csrfToken(HttpServletRequest request) {
-		CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-		if (csrfToken == null) {
-			return ResponseEntity.status(404).build();
-		}
-		return ResponseEntity.ok()
-			.header(csrfToken.getHeaderName(), csrfToken.getToken())
-			.build();
-	}
 
 	@PostMapping("/login")
 	public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {

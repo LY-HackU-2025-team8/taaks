@@ -3,7 +3,7 @@ package com.team8.taak.config;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.team8.taak.model.TaakUser;
 import com.team8.taak.model.TaakUserDetailManager;
@@ -24,19 +24,24 @@ import com.team8.taak.model.TaakUserRepository;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+        HttpSecurity http, 
+        AuthenticationManager authenticationManager, 
+        @Value("${jwt.secret}") String jwtSecret,
+        TaakUserDetailManager taakUserDetailManager
+        ) throws Exception {
         http
-            .csrf(csrf -> csrf
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .ignoringRequestMatchers("/login") // /loginのCSRFを無効化
-            )
+            .csrf(csrf -> csrf.disable())
+            .formLogin(form -> form.disable())
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login").permitAll()
-                .anyRequest().authenticated());
+                .requestMatchers("/login", "/csrf").permitAll()
+                .anyRequest().authenticated())
+            .addFilterBefore(new LoginFilter(authenticationManager, jwtSecret), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new AuthorizeFilter(jwtSecret, taakUserDetailManager), LoginFilter.class);
         return http.build();
     }
 
-        @Bean
+    @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
                                                         PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
