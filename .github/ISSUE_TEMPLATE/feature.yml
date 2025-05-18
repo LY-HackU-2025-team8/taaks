@@ -13,15 +13,6 @@ body:
     validations:
       required: true
   - type: textarea
-    id: user-story
-    attributes:
-      label: ユーザーストーリー
-      description: 誰がどんな時にこの機能を必要とするのか
-      placeholder: |
-        - taaksを知ったユーザーが、taaksを使うためにユーザー登録を行う
-    validations:
-      required: true
-  - type: textarea
     id: requirements
     attributes:
       label: 要件
@@ -31,6 +22,13 @@ body:
         - LINEと連携してアカウント登録ができる
     validations:
       required: true
+  - type: textarea
+    id: user-story
+    attributes:
+      label: ユーザーストーリー
+      description: 誰がどんな時にこの機能を必要とするのか
+      placeholder: |
+        - taaksを知ったユーザーが、taaksを使うためにユーザー登録を行う
   - type: textarea
     id: reference
     attributes:
