@@ -133,7 +133,7 @@
     }
   }
   body {
-    @apply h-full bg-gray;
+    @apply bg-gray h-full;
   }
 
   #app {

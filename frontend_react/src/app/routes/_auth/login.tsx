@@ -57,7 +57,7 @@ function RouteComponent() {
         }
       );
       if (!response.ok) {
-        throw new Error( 'Login failed');
+        throw new Error('Login failed');
       }
       const responseData = responseSchema.parse(await response.json());
       localStorage.setItem('token', responseData.token);
