@@ -1,0 +1,61 @@
+get:
+  summary: 日記の取得
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/DiaryResponse.yaml'
+    '404':
+      description: 見つかりません
+  security:
+    - bearerAuth: []
+
+put:
+  summary: 日記の更新
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/DiaryRequest.yaml'
+  responses:
+    '200':
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/DiaryResponse.yaml'
+    '404':
+      description: 見つかりません
+  security:
+    - bearerAuth: []
+
+delete:
+  summary: 日記の削除
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '204':
+      description: 削除成功（レスポンスボディなし）
+    '404':
+      description: 見つかりません
+  security:
+    - bearerAuth: []

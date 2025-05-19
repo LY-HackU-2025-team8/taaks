@@ -11,150 +11,20 @@ servers:
 components:
   securitySchemes:
     bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-
+      $ref: './components/securitySchemes/bearerAuth.yaml'
   schemas:
     DiaryRequest:
-      type: object
-      required:
-        - title
-        - body
-        - date
-      properties:
-        title:
-          type: string
-          example: プログラミング
-        body:
-          type: string
-          example: たくさんコードを書いた
-        date:
-          type: string
-          format: date
-          example: 2025-05-18
-
+      $ref: './components/schemas/DiaryRequest.yaml'
     DiaryResponse:
-      allOf:
-        - $ref: '#/components/schemas/DiaryRequest'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: integer
-              example: 123
-
+      $ref: './components/schemas/DiaryResponse.yaml'
     DiarySummary:
-      type: object
-      required:
-        - id
-        - title
-      properties:
-        id:
-          type: integer
-          example: 1
-        title:
-          type: string
-          example: お出かけ
+      $ref: './components/schemas/DiarySummary.yaml'
 
 security:
   - bearerAuth: []
 
 paths:
   /diary:
-    post:
-      summary: 日記の新規作成
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DiaryRequest'
-      responses:
-        '201':
-          description: 作成成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DiaryResponse'
-      security:
-        - bearerAuth: []
-
-    get:
-      summary: 日記一覧取得
-      description: ユーザーに紐づく日記の一覧を返す
-      responses:
-        '200':
-          description: 一覧取得成功
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DiarySummary'
-      security:
-        - bearerAuth: []
-
+    $ref: 'paths/diary.yaml'
   /diary/{id}:
-    get:
-      summary: 日記の取得
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: 取得成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DiaryResponse'
-        '404':
-          description: 見つかりません
-      security:
-        - bearerAuth: []
-
-    put:
-      summary: 日記の更新
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DiaryRequest'
-      responses:
-        '200':
-          description: 更新成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DiaryResponse'
-        '404':
-          description: 見つかりません
-      security:
-        - bearerAuth: []
-
-    delete:
-      summary: 日記の削除
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: 削除成功（レスポンスボディなし）
-        '404':
-          description: 見つかりません
-      security:
-        - bearerAuth: []
+    $ref: 'paths/diary_id.yaml'

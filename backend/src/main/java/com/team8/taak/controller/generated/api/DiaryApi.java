@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T20:36:10.586543602+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
 @Validated
 @Tag(name = "diary", description = "the diary API")
 public interface DiaryApi {
