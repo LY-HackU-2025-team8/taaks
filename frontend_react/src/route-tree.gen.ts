@@ -18,6 +18,7 @@ import { Route as AuthLoginImport } from './app/routes/_auth/login'
 import { Route as AppTodoImport } from './app/routes/_app/todo'
 import { Route as AppDiaryImport } from './app/routes/_app/diary'
 import { Route as AppDashboardImport } from './app/routes/_app/dashboard'
+import { Route as AppBuddyImport } from './app/routes/_app/buddy'
 import { Route as AppAccountImport } from './app/routes/_app/account'
 
 // Create/Update Routes
@@ -62,6 +63,12 @@ const AppDashboardRoute = AppDashboardImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
+const AppBuddyRoute = AppBuddyImport.update({
+  id: '/buddy',
+  path: '/buddy',
+  getParentRoute: () => AppRoute,
+} as any)
+
 const AppAccountRoute = AppAccountImport.update({
   id: '/account',
   path: '/account',
@@ -100,6 +107,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAccountImport
       parentRoute: typeof AppImport
     }
+    '/_app/buddy': {
+      id: '/_app/buddy'
+      path: '/buddy'
+      fullPath: '/buddy'
+      preLoaderRoute: typeof AppBuddyImport
+      parentRoute: typeof AppImport
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -135,6 +149,7 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppAccountRoute: typeof AppAccountRoute
+  AppBuddyRoute: typeof AppBuddyRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppDiaryRoute: typeof AppDiaryRoute
   AppTodoRoute: typeof AppTodoRoute
@@ -142,6 +157,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAccountRoute: AppAccountRoute,
+  AppBuddyRoute: AppBuddyRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppDiaryRoute: AppDiaryRoute,
   AppTodoRoute: AppTodoRoute,
@@ -163,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthRouteWithChildren
   '/account': typeof AppAccountRoute
+  '/buddy': typeof AppBuddyRoute
   '/dashboard': typeof AppDashboardRoute
   '/diary': typeof AppDiaryRoute
   '/todo': typeof AppTodoRoute
@@ -173,6 +190,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthRouteWithChildren
   '/account': typeof AppAccountRoute
+  '/buddy': typeof AppBuddyRoute
   '/dashboard': typeof AppDashboardRoute
   '/diary': typeof AppDiaryRoute
   '/todo': typeof AppTodoRoute
@@ -185,6 +203,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
   '/_app/account': typeof AppAccountRoute
+  '/_app/buddy': typeof AppBuddyRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/diary': typeof AppDiaryRoute
   '/_app/todo': typeof AppTodoRoute
@@ -197,18 +216,28 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/account'
+    | '/buddy'
     | '/dashboard'
     | '/diary'
     | '/todo'
     | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/account' | '/dashboard' | '/diary' | '/todo' | '/login'
+  to:
+    | '/'
+    | ''
+    | '/account'
+    | '/buddy'
+    | '/dashboard'
+    | '/diary'
+    | '/todo'
+    | '/login'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/_auth'
     | '/_app/account'
+    | '/_app/buddy'
     | '/_app/dashboard'
     | '/_app/diary'
     | '/_app/todo'
@@ -250,6 +279,7 @@ export const routeTree = rootRoute
       "filePath": "_app.tsx",
       "children": [
         "/_app/account",
+        "/_app/buddy",
         "/_app/dashboard",
         "/_app/diary",
         "/_app/todo"
@@ -263,6 +293,10 @@ export const routeTree = rootRoute
     },
     "/_app/account": {
       "filePath": "_app/account.tsx",
+      "parent": "/_app"
+    },
+    "/_app/buddy": {
+      "filePath": "_app/buddy.tsx",
       "parent": "/_app"
     },
     "/_app/dashboard": {
