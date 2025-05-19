@@ -1,4 +1,4 @@
-import { fetchLocalStorage } from '@/shared/lib/fetch-local-storage';
+import { fetchLocalStorage } from '@/shared/api/fetch-local-storage';
 import type { QueryOptions } from '@tanstack/react-query';
 import type { User } from '../model/user';
 

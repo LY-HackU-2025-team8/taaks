@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './fonts.css';
 import './index.css';
-import reportWebVitals from './reportWebVitals.ts';
 import { routeTree } from './route-tree.gen';
+import reportWebVitals from './shared/lib/reportWebVitals.ts';
 import { zodConfig } from './shared/lib/zod-config.ts';
 
 // Create a client

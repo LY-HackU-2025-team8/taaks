@@ -16,6 +16,11 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import org.springframework.http.HttpMethod;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import com.team8.taak.model.TaakUser;
 import com.team8.taak.model.TaakUserDetailManager;
 import com.team8.taak.model.TaakUserRepository;
@@ -34,8 +39,10 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .formLogin(form -> form.disable())
+            .cors(cors -> {}) // CORS有効化
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/login", "/csrf").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONSを許可
                 .anyRequest().authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(new LoginFilter(authenticationManager, jwtSecret), UsernamePasswordAuthenticationFilter.class)
@@ -67,6 +74,18 @@ public class SecurityConfig {
         TaakUserDetailManager manager =  new TaakUserDetailManager(taakUserRepository, passwordEncoder);
         if(! manager.userExists(user.getUsername())) manager.createUser(user);
         return manager;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOriginPatterns(java.util.List.of("*")); // Spring 6以降はこちらを推奨
+        configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(java.util.List.of("*", "Content-Type")); // Content-Typeを明示
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }
