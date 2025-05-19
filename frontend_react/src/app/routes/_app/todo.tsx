@@ -13,7 +13,7 @@ function RouteComponent() {
     <>
       <PageHeader className="bg-custom text-custom-foreground rounded-b-[32px] pb-8">
         <PageTitleContainer>
-          <PageTitle className="text-[28px] font-bold">Todo</PageTitle>
+          <PageTitle>Todo</PageTitle>
         </PageTitleContainer>
         <div className="py-3.5">
           <h3 className="text-2xl font-bold">4月</h3>
