@@ -40,20 +40,20 @@ public class TaskController {
         public LocalDateTime getDueAt() {
             return dueAt;
         }
-        public void setDueAt(LocalDateTime due_at) {
-            this.dueAt = due_at;
+        public void setDueAt(LocalDateTime dueAt) {
+            this.dueAt = dueAt;
         }
         public boolean getIsAllDay() {
             return isAllDay;
         }
-        public void setIsAllDay(boolean is_all_day) {
-            this.isAllDay = is_all_day;
+        public void setIsAllDay(boolean isAllDay) {
+            this.isAllDay = isAllDay;
         }
         public LocalDateTime getCompletedAt() {
             return completedAt;
         }
-        public void setCompletedAt(LocalDateTime completed_at) {
-            this.completedAt = completed_at;
+        public void setCompletedAt(LocalDateTime completedAt) {
+            this.completedAt = completedAt;
         }
         public Long getUserId() {
             return userId;
@@ -64,8 +64,8 @@ public class TaskController {
         public int getLoadScore() {
             return loadScore;
         }
-        public void setLoadScore(int load_score) {
-            this.loadScore = load_score;
+        public void setLoadScore(int loadScore) {
+            this.loadScore = loadScore;
         }
     }
 
