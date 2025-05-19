@@ -3,22 +3,44 @@ package com.team8.taak.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * Represents a diary entry in the system, mapped to the 'diary' table.
+ *
+ * Database mapping:
+ * - id: Primary key, auto-generated (int)
+ * - title: Title of the diary (varchar, NOT NULL, default: '')
+ * - body: Body text (text, NOT NULL, default: '')
+ * - date: Date of the diary (date, NOT NULL)
+ * - user: Foreign key to the user who wrote the diary (user_id, int, NOT NULL)
+ *
+ * The 'user' field is mapped as @ManyToOne to the TaakUser (taak_user) table, representing the author of the diary entry.
+ *
+ * This class comment and design were created by human instruction to Copilot (AI).
+ */
 @Entity
 @Table(name = "diary")
 public class Diary {
+    /** Diary ID (Primary key, auto-generated) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /** Title of the diary (NOT NULL, default: '') */
     @Column(nullable = false)
     private String title = "";
 
+    /** Body text (NOT NULL, default: '') */
     @Column(nullable = false, columnDefinition = "TEXT")
     private String body = "";
 
+    /** Date of the diary (NOT NULL) */
     @Column(nullable = false)
     private LocalDate date;
 
+    /**
+     * The user who wrote the diary (foreign key: user_id)
+     * Many-to-one relationship to TaakUser entity
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private TaakUser user;
