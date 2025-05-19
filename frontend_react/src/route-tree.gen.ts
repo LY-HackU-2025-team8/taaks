@@ -18,6 +18,7 @@ import { Route as AuthLoginImport } from './app/routes/_auth/login'
 import { Route as AppTodoImport } from './app/routes/_app/todo'
 import { Route as AppDiaryImport } from './app/routes/_app/diary'
 import { Route as AppDashboardImport } from './app/routes/_app/dashboard'
+import { Route as AppAccountImport } from './app/routes/_app/account'
 
 // Create/Update Routes
 
@@ -61,6 +62,12 @@ const AppDashboardRoute = AppDashboardImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
+const AppAccountRoute = AppAccountImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AppRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -85,6 +92,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
+    }
+    '/_app/account': {
+      id: '/_app/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AppAccountImport
+      parentRoute: typeof AppImport
     }
     '/_app/dashboard': {
       id: '/_app/dashboard'
@@ -120,12 +134,14 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AppRouteChildren {
+  AppAccountRoute: typeof AppAccountRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppDiaryRoute: typeof AppDiaryRoute
   AppTodoRoute: typeof AppTodoRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAccountRoute: AppAccountRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppDiaryRoute: AppDiaryRoute,
   AppTodoRoute: AppTodoRoute,
@@ -146,6 +162,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthRouteWithChildren
+  '/account': typeof AppAccountRoute
   '/dashboard': typeof AppDashboardRoute
   '/diary': typeof AppDiaryRoute
   '/todo': typeof AppTodoRoute
@@ -155,6 +172,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthRouteWithChildren
+  '/account': typeof AppAccountRoute
   '/dashboard': typeof AppDashboardRoute
   '/diary': typeof AppDiaryRoute
   '/todo': typeof AppTodoRoute
@@ -166,6 +184,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
+  '/_app/account': typeof AppAccountRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/diary': typeof AppDiaryRoute
   '/_app/todo': typeof AppTodoRoute
@@ -174,14 +193,22 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/dashboard' | '/diary' | '/todo' | '/login'
+  fullPaths:
+    | '/'
+    | ''
+    | '/account'
+    | '/dashboard'
+    | '/diary'
+    | '/todo'
+    | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/dashboard' | '/diary' | '/todo' | '/login'
+  to: '/' | '' | '/account' | '/dashboard' | '/diary' | '/todo' | '/login'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/_auth'
+    | '/_app/account'
     | '/_app/dashboard'
     | '/_app/diary'
     | '/_app/todo'
@@ -222,6 +249,7 @@ export const routeTree = rootRoute
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
+        "/_app/account",
         "/_app/dashboard",
         "/_app/diary",
         "/_app/todo"
@@ -232,6 +260,10 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/login"
       ]
+    },
+    "/_app/account": {
+      "filePath": "_app/account.tsx",
+      "parent": "/_app"
     },
     "/_app/dashboard": {
       "filePath": "_app/dashboard.tsx",
