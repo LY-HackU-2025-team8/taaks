@@ -24,7 +24,7 @@ security:
   - bearerAuth: []
 
 paths:
-  /diary:
+  /diaries:
     $ref: 'paths/diary.yaml'
-  /diary/{id}:
+  /diaries/{id}:
     $ref: 'paths/diary_id.yaml'
