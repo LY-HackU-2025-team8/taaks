@@ -148,11 +148,11 @@ jobs:
                 }
               }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$PRIORITY_FIELD_ID -f val=$PRIORITY_VAL --silent
           fi
-          # Timeline(日付)を設定（値がnull/空でなければ）
+          # Timelineを設定（値がnull/空でなければ）
           if [ -n "$TIMELINE_VAL" ] && [ "$TIMELINE_VAL" != "null" ]; then
             gh api graphql -f query='
-              mutation($proj: ID!, $item: ID!, $field: ID!, $dt: DateTime!) {
-                updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { date: $dt } }) {
+              mutation($proj: ID!, $item: ID!, $field: ID!, $dt: String!) {
+                updateProjectV2ItemFieldValue(input: { projectId: $proj, itemId: $item, fieldId: $field, value: { singleSelectOptionId: $dt } }) {
                   projectV2Item { id }
                 }
               }' -f proj=$PROJECT_ID -f item=$ITEM_ID -f field=$TIMELINE_FIELD_ID -f dt=$TIMELINE_VAL --silent
