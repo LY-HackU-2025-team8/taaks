@@ -94,4 +94,10 @@ public class TaakTask{
         this.loadScore = loadScore;
     }
 
+    @Override
+    public String toString() {
+        return "{id:" + id + ", title:" + title + ", memo:" + memo + ", dueAt:" + dueAt + ", isAllDay:" + isAllDay
+                + ", completedAt:" + completedAt + ", userId:" + userId + ", loadScore:" + loadScore + "}";
+    }
+
 }

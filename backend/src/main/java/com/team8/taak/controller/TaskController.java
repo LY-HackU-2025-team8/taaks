@@ -4,10 +4,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +20,7 @@ import com.team8.taak.model.TaakUser;
 
 @RestController
 public class TaskController {
+    // タスク登録・更新のリクエストボディ
     public static class TaskRequest {
         private String title;
         private String memo;
@@ -91,7 +95,7 @@ public class TaskController {
 
     // タスクの登録
     @PostMapping("/tasks")
-    public TaakTask createTask(@AuthenticationPrincipal TaakUser user, @RequestBody TaskRequest taskRequest) {
+    public ResponseEntity<String> createTask(@AuthenticationPrincipal TaakUser user, @RequestBody TaskRequest taskRequest) {
         Long userId = user.getId();
         TaakTask task = new TaakTask();
         task.setUserId(userId);
@@ -101,25 +105,25 @@ public class TaskController {
         task.setIsAllDay(taskRequest.getIsAllDay());
         task.setCompletedAt(taskRequest.getCompletedAt());
         task.setLoadScore(taskRequest.getLoadScore());
-        return taakTaskRepository.save(task);
+        TaakTask registeredTask = taakTaskRepository.save(task);
+        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tasks/" + registeredTask.getId()).body("{message: 'new task created', task: " + registeredTask.toString() + "}");
     }
 
     // タスクの更新
-    @PostMapping("tasks/{taskId}")
-    public TaakTask updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId, @RequestBody TaakTask task) {
+    @PutMapping("tasks/{taskId}")
+    public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId, @RequestBody TaskRequest taskRequest) {
         Optional<TaakTask> optionalTask = taakTaskRepository.findById(taskId);
-        if (optionalTask.isPresent()) {
-            TaakTask existingTask = optionalTask.get();
-            existingTask.setTitle(task.getTitle());
-            existingTask.setMemo(task.getMemo());
-            existingTask.setDueAt(task.getDueAt());
-            existingTask.setIsAllDay(task.getIsAllDay());
-            existingTask.setCompletedAt(task.getCompletedAt());
-            existingTask.setLoadScore(task.getLoadScore());
-            return taakTaskRepository.save(existingTask);
-        } else {
-            // タスクが見つからない場合の処理
-            return null;
+        if (!optionalTask.isPresent()) {
+            return ResponseEntity.status(404).body("Task not found");
         }
+        TaakTask existingTask = optionalTask.get();
+        existingTask.setTitle(taskRequest.getTitle());
+        existingTask.setMemo(taskRequest.getMemo());
+        existingTask.setDueAt(taskRequest.getDueAt());
+        existingTask.setIsAllDay(taskRequest.getIsAllDay());
+        existingTask.setCompletedAt(taskRequest.getCompletedAt());
+        existingTask.setLoadScore(taskRequest.getLoadScore());
+        taakTaskRepository.save(existingTask);
+        return ResponseEntity.ok("Task updated successfully");
     }
 }
