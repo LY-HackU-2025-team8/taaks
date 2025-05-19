@@ -39,6 +39,13 @@ body:
     validations:
       required: true
   - type: textarea
+    id: dependency
+    attributes:
+      label: 依存関係
+      description: このタスクに取り組む前に終わらせておくべきタスク
+      placeholder: |
+        - #[issue番号]
+  - type: textarea
     id: reference
     attributes:
       label: 参考資料
