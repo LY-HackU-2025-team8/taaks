@@ -11,21 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './app/routes/__root'
-import { Route as TodoImport } from './app/routes/todo'
-import { Route as DiaryImport } from './app/routes/diary'
+import { Route as AuthImport } from './app/routes/_auth'
+import { Route as AppImport } from './app/routes/_app'
 import { Route as IndexImport } from './app/routes/index'
+import { Route as AuthLoginImport } from './app/routes/_auth/login'
+import { Route as AppTodoImport } from './app/routes/_app/todo'
+import { Route as AppDiaryImport } from './app/routes/_app/diary'
+import { Route as AppDashboardImport } from './app/routes/_app/dashboard'
+import { Route as AppAccountImport } from './app/routes/_app/account'
 
 // Create/Update Routes
 
-const TodoRoute = TodoImport.update({
-  id: '/todo',
-  path: '/todo',
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRoute,
 } as any)
 
-const DiaryRoute = DiaryImport.update({
-  id: '/diary',
-  path: '/diary',
+const AppRoute = AppImport.update({
+  id: '/_app',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -33,6 +36,36 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AppTodoRoute = AppTodoImport.update({
+  id: '/todo',
+  path: '/todo',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppDiaryRoute = AppDiaryImport.update({
+  id: '/diary',
+  path: '/diary',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppDashboardRoute = AppDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppAccountRoute = AppAccountImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AppRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -46,63 +79,153 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/diary': {
-      id: '/diary'
-      path: '/diary'
-      fullPath: '/diary'
-      preLoaderRoute: typeof DiaryImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
     }
-    '/todo': {
-      id: '/todo'
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/_app/account': {
+      id: '/_app/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AppAccountImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/diary': {
+      id: '/_app/diary'
+      path: '/diary'
+      fullPath: '/diary'
+      preLoaderRoute: typeof AppDiaryImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/todo': {
+      id: '/_app/todo'
       path: '/todo'
       fullPath: '/todo'
-      preLoaderRoute: typeof TodoImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AppTodoImport
+      parentRoute: typeof AppImport
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AppRouteChildren {
+  AppAccountRoute: typeof AppAccountRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppDiaryRoute: typeof AppDiaryRoute
+  AppTodoRoute: typeof AppTodoRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAccountRoute: AppAccountRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppDiaryRoute: AppDiaryRoute,
+  AppTodoRoute: AppTodoRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/diary': typeof DiaryRoute
-  '/todo': typeof TodoRoute
+  '': typeof AuthRouteWithChildren
+  '/account': typeof AppAccountRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/diary': typeof AppDiaryRoute
+  '/todo': typeof AppTodoRoute
+  '/login': typeof AuthLoginRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/diary': typeof DiaryRoute
-  '/todo': typeof TodoRoute
+  '': typeof AuthRouteWithChildren
+  '/account': typeof AppAccountRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/diary': typeof AppDiaryRoute
+  '/todo': typeof AppTodoRoute
+  '/login': typeof AuthLoginRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/diary': typeof DiaryRoute
-  '/todo': typeof TodoRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_auth': typeof AuthRouteWithChildren
+  '/_app/account': typeof AppAccountRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/diary': typeof AppDiaryRoute
+  '/_app/todo': typeof AppTodoRoute
+  '/_auth/login': typeof AuthLoginRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/diary' | '/todo'
+  fullPaths:
+    | '/'
+    | ''
+    | '/account'
+    | '/dashboard'
+    | '/diary'
+    | '/todo'
+    | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/diary' | '/todo'
-  id: '__root__' | '/' | '/diary' | '/todo'
+  to: '/' | '' | '/account' | '/dashboard' | '/diary' | '/todo' | '/login'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_auth'
+    | '/_app/account'
+    | '/_app/dashboard'
+    | '/_app/diary'
+    | '/_app/todo'
+    | '/_auth/login'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DiaryRoute: typeof DiaryRoute
-  TodoRoute: typeof TodoRoute
+  AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DiaryRoute: DiaryRoute,
-  TodoRoute: TodoRoute,
+  AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -116,18 +239,47 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/diary",
-        "/todo"
+        "/_app",
+        "/_auth"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/diary": {
-      "filePath": "diary.tsx"
+    "/_app": {
+      "filePath": "_app.tsx",
+      "children": [
+        "/_app/account",
+        "/_app/dashboard",
+        "/_app/diary",
+        "/_app/todo"
+      ]
     },
-    "/todo": {
-      "filePath": "todo.tsx"
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/login"
+      ]
+    },
+    "/_app/account": {
+      "filePath": "_app/account.tsx",
+      "parent": "/_app"
+    },
+    "/_app/dashboard": {
+      "filePath": "_app/dashboard.tsx",
+      "parent": "/_app"
+    },
+    "/_app/diary": {
+      "filePath": "_app/diary.tsx",
+      "parent": "/_app"
+    },
+    "/_app/todo": {
+      "filePath": "_app/todo.tsx",
+      "parent": "/_app"
+    },
+    "/_auth/login": {
+      "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
     }
   }
 }

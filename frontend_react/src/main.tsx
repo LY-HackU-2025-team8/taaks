@@ -1,16 +1,34 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './fonts.css';
 import './index.css';
-import reportWebVitals from './reportWebVitals.ts';
-// Import the generated route tree
 import { routeTree } from './route-tree.gen';
+import reportWebVitals from './shared/lib/reportWebVitals.ts';
+import { zodConfig } from './shared/lib/zod-config.ts';
+
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (failureCount, error) => {
+        // Retry only on network errors
+        if (error instanceof Error && error.name === 'NetworkError') {
+          return failureCount < 3; // Retry up to 3 times
+        }
+        return false; // Do not retry on other errors
+      },
+    },
+  },
+});
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  context: {},
+  context: {
+    queryClient,
+  },
   defaultPreload: 'intent',
   scrollRestoration: true,
   defaultStructuralSharing: true,
@@ -30,7 +48,9 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </StrictMode>
   );
 }
@@ -39,3 +59,6 @@ if (rootElement && !rootElement.innerHTML) {
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// Initialize Zod configuration
+zodConfig();

@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+  title: Diary API
+  version: 1.0.0
+  description: |
+    ユーザーの日記を作成・取得・更新・削除・一覧取得するAPI
+
+servers:
+  - url: https://api.example.com
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: './components/securitySchemes/bearerAuth.yaml'
+  schemas:
+    DiaryRequest:
+      $ref: './components/schemas/DiaryRequest.yaml'
+    DiaryResponse:
+      $ref: './components/schemas/DiaryResponse.yaml'
+    DiarySummary:
+      $ref: './components/schemas/DiarySummary.yaml'
+
+security:
+  - bearerAuth: []
+
+paths:
+  /diaries:
+    $ref: 'paths/diary.yaml'
+  /diaries/{id}:
+    $ref: 'paths/diary_id.yaml'

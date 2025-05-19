@@ -3,17 +3,23 @@ package com.team8.taak.config;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.team8.taak.model.TaakUser;
 import com.team8.taak.model.TaakUserDetailManager;
@@ -24,19 +30,27 @@ import com.team8.taak.model.TaakUserRepository;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+        HttpSecurity http, 
+        AuthenticationManager authenticationManager, 
+        @Value("${jwt.secret}") String jwtSecret,
+        TaakUserDetailManager taakUserDetailManager
+        ) throws Exception {
         http
-            .csrf(Customizer.withDefaults())
-            .httpBasic(Customizer.withDefaults())
-            .formLogin(Customizer.withDefaults())
+            .csrf(csrf -> csrf.disable())
+            .formLogin(form -> form.disable())
+            .cors(cors -> {}) // CORS有効化
             .authorizeHttpRequests(authorize -> authorize
-                .anyRequest().authenticated()
-            );
-
+                .requestMatchers("/login", "/api/docs/**", "/api/swagger-ui/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONSを許可
+                .anyRequest().authenticated())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .addFilterBefore(new LoginFilter(authenticationManager, jwtSecret), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new AuthorizeFilter(jwtSecret, taakUserDetailManager), LoginFilter.class);
         return http.build();
     }
 
-        @Bean
+    @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
                                                         PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -52,6 +66,7 @@ public class SecurityConfig {
 
     @Bean
     UserDetailsManager users(TaakUserRepository taakUserRepository, PasswordEncoder passwordEncoder) {
+        // テスト用の一時ユーザーをDBに登録処理
         TaakUser user = new TaakUser();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("password"));
@@ -59,6 +74,18 @@ public class SecurityConfig {
         TaakUserDetailManager manager =  new TaakUserDetailManager(taakUserRepository, passwordEncoder);
         if(! manager.userExists(user.getUsername())) manager.createUser(user);
         return manager;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOriginPatterns(java.util.List.of("*")); // Spring 6以降はこちらを推奨
+        configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(java.util.List.of("*", "Content-Type")); // Content-Typeを明示
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }

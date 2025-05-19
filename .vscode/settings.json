@@ -16,5 +16,7 @@
   "files.associations": {
     "**/frontend_react/src/index.css": "tailwindcss"
   },
-  "cSpell.words": ["shadcn", "taaks", "vaul"]
+  "cSpell.words": ["shadcn", "taaks", "vaul"],
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true
 }
