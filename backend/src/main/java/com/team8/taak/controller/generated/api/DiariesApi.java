@@ -35,23 +35,23 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T23:52:41.245102182+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
 @Validated
-@Tag(name = "diary", description = "the diary API")
-public interface DiaryApi {
+@Tag(name = "diaries", description = "the diaries API")
+public interface DiariesApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
     /**
-     * GET /diary : 日記一覧取得
+     * GET /diaries : 日記一覧取得
      * ユーザーに紐づく日記の一覧を返す
      *
      * @return 一覧取得成功 (status code 200)
      */
     @Operation(
-        operationId = "diaryGet",
+        operationId = "diariesGet",
         summary = "日記一覧取得",
         description = "ユーザーに紐づく日記の一覧を返す",
         responses = {
@@ -65,11 +65,11 @@ public interface DiaryApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/diary",
+        value = "/diaries",
         produces = { "application/json" }
     )
     
-    default ResponseEntity<List<DiarySummary>> diaryGet(
+    default ResponseEntity<List<DiarySummary>> diariesGet(
         
     ) {
         getRequest().ifPresent(request -> {
@@ -87,14 +87,14 @@ public interface DiaryApi {
 
 
     /**
-     * DELETE /diary/{id} : 日記の削除
+     * DELETE /diaries/{id} : 日記の削除
      *
      * @param id  (required)
      * @return 削除成功（レスポンスボディなし） (status code 204)
      *         or 見つかりません (status code 404)
      */
     @Operation(
-        operationId = "diaryIdDelete",
+        operationId = "diariesIdDelete",
         summary = "日記の削除",
         responses = {
             @ApiResponse(responseCode = "204", description = "削除成功（レスポンスボディなし）"),
@@ -106,10 +106,10 @@ public interface DiaryApi {
     )
     @RequestMapping(
         method = RequestMethod.DELETE,
-        value = "/diary/{id}"
+        value = "/diaries/{id}"
     )
     
-    default ResponseEntity<Void> diaryIdDelete(
+    default ResponseEntity<Void> diariesIdDelete(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
@@ -118,14 +118,14 @@ public interface DiaryApi {
 
 
     /**
-     * GET /diary/{id} : 日記の取得
+     * GET /diaries/{id} : 日記の取得
      *
      * @param id  (required)
      * @return 取得成功 (status code 200)
      *         or 見つかりません (status code 404)
      */
     @Operation(
-        operationId = "diaryIdGet",
+        operationId = "diariesIdGet",
         summary = "日記の取得",
         responses = {
             @ApiResponse(responseCode = "200", description = "取得成功", content = {
@@ -139,11 +139,11 @@ public interface DiaryApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/diary/{id}",
+        value = "/diaries/{id}",
         produces = { "application/json" }
     )
     
-    default ResponseEntity<DiaryResponse> diaryIdGet(
+    default ResponseEntity<DiaryResponse> diariesIdGet(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         getRequest().ifPresent(request -> {
@@ -161,7 +161,7 @@ public interface DiaryApi {
 
 
     /**
-     * PUT /diary/{id} : 日記の更新
+     * PUT /diaries/{id} : 日記の更新
      *
      * @param id  (required)
      * @param diaryRequest  (required)
@@ -169,7 +169,7 @@ public interface DiaryApi {
      *         or 見つかりません (status code 404)
      */
     @Operation(
-        operationId = "diaryIdPut",
+        operationId = "diariesIdPut",
         summary = "日記の更新",
         responses = {
             @ApiResponse(responseCode = "200", description = "更新成功", content = {
@@ -183,12 +183,12 @@ public interface DiaryApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/diary/{id}",
+        value = "/diaries/{id}",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    default ResponseEntity<DiaryResponse> diaryIdPut(
+    default ResponseEntity<DiaryResponse> diariesIdPut(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id,
         @Parameter(name = "DiaryRequest", description = "", required = true) @Valid @RequestBody DiaryRequest diaryRequest
     ) {
@@ -207,13 +207,13 @@ public interface DiaryApi {
 
 
     /**
-     * POST /diary : 日記の新規作成
+     * POST /diaries : 日記の新規作成
      *
      * @param diaryRequest  (required)
      * @return 作成成功 (status code 201)
      */
     @Operation(
-        operationId = "diaryPost",
+        operationId = "diariesPost",
         summary = "日記の新規作成",
         responses = {
             @ApiResponse(responseCode = "201", description = "作成成功", content = {
@@ -226,12 +226,12 @@ public interface DiaryApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/diary",
+        value = "/diaries",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    default ResponseEntity<DiaryResponse> diaryPost(
+    default ResponseEntity<DiaryResponse> diariesPost(
         @Parameter(name = "DiaryRequest", description = "", required = true) @Valid @RequestBody DiaryRequest diaryRequest
     ) {
         getRequest().ifPresent(request -> {

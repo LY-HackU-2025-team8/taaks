@@ -1,6 +1,6 @@
 package com.team8.taak.controller;
 
-import com.team8.taak.controller.generated.api.DiaryApi;
+import com.team8.taak.controller.generated.api.DiariesApi;
 import com.team8.taak.controller.generated.model.DiaryRequest;
 import com.team8.taak.controller.generated.model.DiaryResponse;
 import com.team8.taak.controller.generated.model.DiarySummary;
@@ -19,12 +19,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-public class DiaryController implements DiaryApi {
+public class DiariesController implements DiariesApi {
     @Autowired
     private DiaryRepository diaryRepository;
 
     @Override
-    public ResponseEntity<List<DiarySummary>> diaryGet() {
+    public ResponseEntity<List<DiarySummary>> diariesGet() {
         TaakUser user = getAuthenticatedUser();
         List<DiarySummary> summaries = diaryRepository.findAllByUserId(user.getId()).stream()
                 .map(diary -> new DiarySummary(diary.getId(), diary.getTitle()))
@@ -33,7 +33,7 @@ public class DiaryController implements DiaryApi {
     }
 
     @Override
-    public ResponseEntity<DiaryResponse> diaryPost(@RequestBody DiaryRequest diaryRequest) {
+    public ResponseEntity<DiaryResponse> diariesPost(@RequestBody DiaryRequest diaryRequest) {
         TaakUser user = getAuthenticatedUser();
         Diary diary = new Diary();
         diary.setTitle(diaryRequest.getTitle());
@@ -46,7 +46,7 @@ public class DiaryController implements DiaryApi {
     }
 
     @Override
-    public ResponseEntity<DiaryResponse> diaryIdGet(@PathVariable("id") Integer id) {
+    public ResponseEntity<DiaryResponse> diariesIdGet(@PathVariable("id") Integer id) {
         TaakUser user = getAuthenticatedUser();
         Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
         if (diaryOpt.isEmpty()) {
@@ -58,7 +58,7 @@ public class DiaryController implements DiaryApi {
     }
 
     @Override
-    public ResponseEntity<DiaryResponse> diaryIdPut(@PathVariable("id") Integer id, @RequestBody DiaryRequest diaryRequest) {
+    public ResponseEntity<DiaryResponse> diariesIdPut(@PathVariable("id") Integer id, @RequestBody DiaryRequest diaryRequest) {
         TaakUser user = getAuthenticatedUser();
         Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
         if (diaryOpt.isEmpty()) {
@@ -74,7 +74,7 @@ public class DiaryController implements DiaryApi {
     }
 
     @Override
-    public ResponseEntity<Void> diaryIdDelete(@PathVariable("id") Integer id) {
+    public ResponseEntity<Void> diariesIdDelete(@PathVariable("id") Integer id) {
         TaakUser user = getAuthenticatedUser();
         Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
         if (diaryOpt.isEmpty()) {
