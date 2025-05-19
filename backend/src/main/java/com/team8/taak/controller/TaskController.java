@@ -1,6 +1,7 @@
 package com.team8.taak.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -81,7 +82,7 @@ public class TaskController {
     
     // タスク一覧の取得
     @GetMapping("/tasks")
-    public Optional<TaakTask> getTask(@AuthenticationPrincipal TaakUser user) {
+    public List<TaakTask> getTask(@AuthenticationPrincipal TaakUser user) {
         // JWTからユーザIDを抽出する処理を追加
         Long userId = user.getId();
         return taakTaskRepository.findByUserId(userId);
