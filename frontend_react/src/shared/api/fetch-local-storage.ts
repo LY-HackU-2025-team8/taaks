@@ -1,4 +1,4 @@
-import { NoDataFoundError } from '../api/errors/no-data-found';
+import { NoDataFoundError } from './errors/no-data-found';
 
 export const fetchLocalStorage = <T>(key: string) =>
   new Promise<T>((resolve, reject) => {

@@ -1,5 +1,5 @@
 import { userQueryOptions } from '@/entities/user/api/user-query-options';
-import { UserSchema, type User } from '@/entities/user/model/user';
+import { type User } from '@/entities/user/model/user';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {
   Card,
@@ -28,7 +28,12 @@ export const Route = createFileRoute('/_auth/login')({
 });
 
 const formSchema = z.object({
-  name: UserSchema.shape.name,
+  username: z.string(),
+  password: z.string(),
+});
+
+const responseSchema = z.object({
+  token: z.string(),
 });
 
 function RouteComponent() {
@@ -40,15 +45,30 @@ function RouteComponent() {
     Error,
     z.infer<typeof formSchema>
   >({
-    mutationFn: async (data: z.infer<typeof formSchema>) => {
-      const user = {
-        id: crypto.randomUUID ? crypto.randomUUID() : '', // 手元端末テスト用
-        name: data.name,
+    mutationFn: async (data) => {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_HOST}/login`,
+        {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error( 'Login failed');
+      }
+      const responseData = responseSchema.parse(await response.json());
+      localStorage.setItem('token', responseData.token);
+      /** @Todo レスポンスからid, nameを返す */
+      return {
+        id: '',
+        name: 'のざわな',
       };
-      localStorage.setItem('user_me', JSON.stringify(user));
-      return user;
     },
-    onSuccess: () => {
+    onSuccess: (user) => {
+      localStorage.setItem('user_me', JSON.stringify(user));
       queryClient.invalidateQueries(userQueryOptions());
       navigate({
         to: '/dashboard',
@@ -59,7 +79,8 @@ function RouteComponent() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      username: '',
+      password: '',
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -73,21 +94,35 @@ function RouteComponent() {
   return (
     <div className="flex h-full flex-col p-7">
       <Form {...form}>
-        <form
-          onSubmit={handleSubmit}
-          className="mt-auto mb-[env(safe-area-inset-bottom)] space-y-7"
-        >
+        <form className="mt-auto" onSubmit={handleSubmit}>
           <Card>
-            <CardContent>
+            <CardContent className="mb-[env(safe-area-inset-bottom)] space-y-7">
               <FormField
                 control={form.control}
-                name="name"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>ニックネーム</FormLabel>
+                    <FormLabel>ユーザーID</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="あなたはなんと呼ばれていますか？"
+                        placeholder="ユーザーIDを入力してください"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>パスワード</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="パスワードを入力してください"
                         {...field}
                       />
                     </FormControl>

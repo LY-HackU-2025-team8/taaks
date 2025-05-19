@@ -28,6 +28,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-gray: var(--gray);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -47,7 +48,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.94 0.0054 117.93);
+  --background: oklch(0.99 0 0);
   --foreground: oklch(0.18 0.0336 114.7);
   --card: oklch(0.99 0 0);
   --card-foreground: oklch(0.33 0.0176 120.96);
@@ -67,6 +68,7 @@
   --border: oklch(0.89 0.0152 119.13);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  --gray: oklch(0.94 0.0054 117.93);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -131,7 +133,7 @@
     }
   }
   body {
-    @apply h-full;
+    @apply h-full bg-gray;
   }
 
   #app {
