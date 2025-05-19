@@ -1,0 +1,16 @@
+type: object
+required:
+  - title
+  - body
+  - date
+properties:
+  title:
+    type: string
+    example: プログラミング
+  body:
+    type: string
+    example: たくさんコードを書いた
+  date:
+    type: string
+    format: date
+    example: 2025-05-18
