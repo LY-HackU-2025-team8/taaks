@@ -64,7 +64,7 @@ function RouteComponent() {
           </li>
           <li className="contents">
             <Link
-              to="/diary"
+              to="/account"
               className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
             >
               <LucideUser />
