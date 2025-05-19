@@ -26,8 +26,7 @@ public class DiaryController implements DiaryApi {
     @Override
     public ResponseEntity<List<DiarySummary>> diaryGet() {
         TaakUser user = getAuthenticatedUser();
-        List<DiarySummary> summaries = diaryRepository.findAll().stream()
-                .filter(diary -> diary.getUser().getId().equals(user.getId()))
+        List<DiarySummary> summaries = diaryRepository.findAllByUserId(user.getId()).stream()
                 .map(diary -> new DiarySummary(diary.getId(), diary.getTitle()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(summaries);
@@ -49,8 +48,8 @@ public class DiaryController implements DiaryApi {
     @Override
     public ResponseEntity<DiaryResponse> diaryIdGet(@PathVariable("id") Integer id) {
         TaakUser user = getAuthenticatedUser();
-        Optional<Diary> diaryOpt = diaryRepository.findById(id);
-        if (diaryOpt.isEmpty() || !diaryOpt.get().getUser().getId().equals(user.getId())) {
+        Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
+        if (diaryOpt.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Diary diary = diaryOpt.get();
@@ -61,8 +60,8 @@ public class DiaryController implements DiaryApi {
     @Override
     public ResponseEntity<DiaryResponse> diaryIdPut(@PathVariable("id") Integer id, @RequestBody DiaryRequest diaryRequest) {
         TaakUser user = getAuthenticatedUser();
-        Optional<Diary> diaryOpt = diaryRepository.findById(id);
-        if (diaryOpt.isEmpty() || !diaryOpt.get().getUser().getId().equals(user.getId())) {
+        Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
+        if (diaryOpt.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Diary diary = diaryOpt.get();
@@ -77,8 +76,8 @@ public class DiaryController implements DiaryApi {
     @Override
     public ResponseEntity<Void> diaryIdDelete(@PathVariable("id") Integer id) {
         TaakUser user = getAuthenticatedUser();
-        Optional<Diary> diaryOpt = diaryRepository.findById(id);
-        if (diaryOpt.isEmpty() || !diaryOpt.get().getUser().getId().equals(user.getId())) {
+        Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
+        if (diaryOpt.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         diaryRepository.deleteById(id);
