@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,7 +37,7 @@ public class TaakTask{
     private LocalDateTime completedAt;
 
     // ToDo: FK制約をつける columnDefinition="bigint REFERENCES TaakUser(id)"
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private TaakUser user;
 
@@ -89,20 +90,10 @@ public class TaakTask{
     public void setUser(TaakUser user) {
         this.user = user;
     }
-    public void setUserId(Long userId) {
-        this.user.setId(userId);
-    }
     public int getLoadScore() {
         return loadScore;
     }
     public void setLoadScore(int loadScore) {
         this.loadScore = loadScore;
     }
-
-    @Override
-    public String toString() {
-        return "{id:" + id + ", title:" + title + ", memo:" + memo + ", dueAt:" + dueAt + ", isAllDay:" + isAllDay
-                + ", completedAt:" + completedAt + ", userId:" + user.getId() + ", loadScore:" + loadScore + "}";
-    }
-
 }

@@ -161,13 +161,9 @@ public class TaskController {
     // タスクの詳細取得
     @GetMapping("/tasks/{taskId}")
     public ResponseEntity<String> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId) {
-        Optional<TaakTask> task = taakTaskRepository.findById(taskId);
+        Optional<TaakTask> task = taakTaskRepository.findByIdAndUserId(taskId, user.getId());
         if (!task.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
-        }
-        // 他人のタスクを取得しようとした場合は403 Forbiddenを返す
-        if (!task.get().getUser().getId().equals(user.getId())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to access this task");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("forbidden");
         }
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setId(task.get().getId());
@@ -186,7 +182,7 @@ public class TaskController {
     public ResponseEntity<String> createTask(@AuthenticationPrincipal TaakUser user, @RequestBody TaskRequest taskRequest) {
         Long userId = user.getId();
         TaakTask task = new TaakTask();
-        task.setUserId(userId);
+        task.setUser(user);
         task.setTitle(taskRequest.getTitle());
         task.setMemo(taskRequest.getMemo());
         task.setDueAt(taskRequest.getDueAt());
@@ -194,7 +190,16 @@ public class TaskController {
         task.setCompletedAt(taskRequest.getCompletedAt());
         task.setLoadScore(taskRequest.getLoadScore());
         TaakTask registeredTask = taakTaskRepository.save(task);
-        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tasks/" + registeredTask.getId()).body(registeredTask.toString());
+        TaskResponse taskResponse = new TaskResponse();
+        taskResponse.setId(registeredTask.getId());
+        taskResponse.setTitle(registeredTask.getTitle());
+        taskResponse.setMemo(registeredTask.getMemo());
+        taskResponse.setDueAt(registeredTask.getDueAt());
+        taskResponse.setIsAllDay(registeredTask.getIsAllDay());
+        taskResponse.setCompletedAt(registeredTask.getCompletedAt());
+        taskResponse.setUserId(userId);
+        taskResponse.setLoadScore(registeredTask.getLoadScore());
+        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tasks/" + registeredTask.getId()).body(taskResponse.toString());
     }
 
     // タスクの更新
