@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -22,9 +21,7 @@ public class TaakTask{
     @Column(nullable = false, columnDefinition = "varchar(255) default ''")
     private String title;
 
-    // ToDo: 255字を超えた時の処理を書く
-    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
-    @Lob
+    @Column(nullable = false, columnDefinition = "text default ''")
     private String memo;
 
     // タイムゾーンのない日時（ex. 2021-05-30T15:47:13.395703）
