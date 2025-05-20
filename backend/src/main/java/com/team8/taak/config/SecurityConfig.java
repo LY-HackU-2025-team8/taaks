@@ -3,7 +3,6 @@ package com.team8.taak.config;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,8 +32,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(
         HttpSecurity http, 
         AuthenticationManager authenticationManager, 
-        @Value("${jwt.secret}") String jwtSecret,
-        TaakUserDetailManager taakUserDetailManager
+        TaakUserDetailManager taakUserDetailManager,
+        JwtTokenUtil jwtTokenUtil
         ) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
@@ -45,8 +44,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONSを許可
                 .anyRequest().authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(new LoginFilter(authenticationManager, jwtSecret), UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(new AuthorizeFilter(jwtSecret, taakUserDetailManager), LoginFilter.class);
+            .addFilterBefore(new AuthorizeFilter(taakUserDetailManager, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -70,6 +68,7 @@ public class SecurityConfig {
         TaakUser user = new TaakUser();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("password"));
+        user.setNickName("テストユーザー");
         user.getRoles().add("USER");
         TaakUserDetailManager manager =  new TaakUserDetailManager(taakUserRepository, passwordEncoder);
         if(! manager.userExists(user.getUsername())) manager.createUser(user);

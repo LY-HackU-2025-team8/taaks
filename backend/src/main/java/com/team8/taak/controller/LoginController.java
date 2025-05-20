@@ -1,5 +1,10 @@
 package com.team8.taak.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team8.taak.config.JwtTokenUtil;
+import com.team8.taak.model.TaakUser;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -23,16 +31,18 @@ public class LoginController {
 	private final AuthenticationManager authenticationManager;
 	private final SecurityContextRepository securityContextRepository;
 	private final SecurityContextHolderStrategy securityContextHolderStrategy;
+	private final JwtTokenUtil jwtTokenUtil;
 
-	public LoginController(AuthenticationManager authenticationManager) {
+	public LoginController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
 		this.authenticationManager = authenticationManager;
+		this.jwtTokenUtil = jwtTokenUtil;
 		securityContextRepository = new HttpSessionSecurityContextRepository();
 		securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
 	}
 
 
 	@PostMapping("/login")
-	public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
 		Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username(), loginRequest.password());
 		Authentication authenticationResponse;
 		try {
@@ -42,10 +52,15 @@ public class LoginController {
 		}
 		SecurityContext context = securityContextHolderStrategy.createEmptyContext();
 		context.setAuthentication(authenticationResponse); 
+		TaakUser user = (TaakUser) authenticationResponse.getPrincipal();
+		String token = jwtTokenUtil.generateToken(user);
+		response.setHeader("X-AUTH-TOKEN", "Bearer " + token);
+        response.setContentType("application/json");
 		securityContextHolderStrategy.setContext(context);
 		securityContextRepository.saveContext(context, request, response); 
         if (authenticationResponse.isAuthenticated()) {
-            return ResponseEntity.ok().build();
+			LoginResponse loginResponse = new LoginResponse(token, new taakUserForResponse(user.getUsername(), user.getNickName(), user.getId()));
+            return ResponseEntity.ok(loginResponse);
         } else {
 			return ResponseEntity.status(401).build();
         }
@@ -53,5 +68,8 @@ public class LoginController {
 
 	public record LoginRequest(String username, String password) {
 	}
-
+	public record taakUserForResponse(String username, String nickname, Long id) {
+	}
+	public record LoginResponse(String token, taakUserForResponse user) {
+	}
 }
