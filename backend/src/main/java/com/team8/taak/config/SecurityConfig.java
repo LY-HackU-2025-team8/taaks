@@ -41,7 +41,7 @@ public class SecurityConfig {
             .formLogin(form -> form.disable())
             .cors(cors -> {}) // CORS有効化
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login", "/api/docs/**", "/api/swagger-ui/**").permitAll()
+                .requestMatchers("/login", "/api/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONSを許可
                 .anyRequest().authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
