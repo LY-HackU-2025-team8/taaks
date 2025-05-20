@@ -43,5 +43,9 @@ export default defineConfig([
   // override for Tanstack Router
   ...pluginRouter.configs['flat/recommended'],
   // 生成されるファイルを除外
-  globalIgnores(['src/route-tree.gen.ts', 'dist/**/*']),
+  globalIgnores([
+    'src/route-tree.gen.ts',
+    'src/shared/api/api-spec.ts',
+    'dist/**/*',
+  ]),
 ]);

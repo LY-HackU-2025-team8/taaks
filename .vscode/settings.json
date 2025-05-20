@@ -5,13 +5,16 @@
   "eslint.useFlatConfig": true,
   "eslint.workingDirectories": ["frontend_react"],
   "files.readonlyInclude": {
-    "**/route-tree.gen.ts": true
+    "**/route-tree.gen.ts": true,
+    "**/api-spec.ts": true
   },
   "files.watcherExclude": {
-    "**/route-tree.gen.ts": true
+    "**/route-tree.gen.ts": true,
+    "**/api-spec.ts": true
   },
   "search.exclude": {
-    "**/route-tree.gen.ts": true
+    "**/route-tree.gen.ts": true,
+    "**/api-spec.ts": true
   },
   "files.associations": {
     "**/frontend_react/src/index.css": "tailwindcss"
