@@ -46,7 +46,7 @@ export const Buddy = () => {
           {user?.name}さん！
         </h2>
         <Link to="/buddy">
-          <button className="bg-primary rounded-full px-4 py-2 text-card text-sm">
+          <button className="bg-primary text-card rounded-full px-4 py-2 text-sm">
             Buddyに会う
           </button>
         </Link>
