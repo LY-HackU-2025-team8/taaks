@@ -3,7 +3,6 @@ package com.team8.taak.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -71,18 +70,17 @@ public class TaskController {
     }
 
     public static class TaskResponse {
-        private UUID id;
+        private Integer id;
         private String title;
         private String memo;
         private LocalDateTime dueAt;
         private boolean isAllDay;
         private LocalDateTime completedAt;
-        private Long userId;
         private int loadScore;
-        public UUID getId() {
+        public Integer getId() {
             return id;
         }
-        public void setId(UUID id) {
+        public void setId(Integer id) {
             this.id = id;
         }
         public String getTitle() {
@@ -115,12 +113,6 @@ public class TaskController {
         public void setCompletedAt(LocalDateTime completedAt) {
             this.completedAt = completedAt;
         }
-        public Long getUserId() {
-            return userId;
-        }
-        public void setUserId(Long userId) {
-            this.userId = userId;
-        }
         public int getLoadScore() {
             return loadScore;
         }
@@ -129,8 +121,8 @@ public class TaskController {
         }
         @Override
         public String toString() {
-            return "{id=" + id + ", title=" + title + ", memo=" + memo + ", dueAt=" + dueAt + ", isAllDay="
-                    + isAllDay + ", completedAt=" + completedAt + ", userId=" + userId + ", loadScore=" + loadScore
+            return "{id:" + id + ", title:" + title + ", memo:" + memo + ", dueAt:" + dueAt + ", isAllDay:"
+                    + isAllDay + ", completedAt:" + completedAt + ", loadScore:" + loadScore
                     + "}";
         }
     }
@@ -152,7 +144,6 @@ public class TaskController {
             taskResponse.setDueAt(task.getDueAt());
             taskResponse.setIsAllDay(task.getIsAllDay());
             taskResponse.setCompletedAt(task.getCompletedAt());
-            taskResponse.setUserId(user.getId());
             taskResponse.setLoadScore(task.getLoadScore());
             return taskResponse;
         }).collect(Collectors.toList());
@@ -160,7 +151,7 @@ public class TaskController {
 
     // タスクの詳細取得
     @GetMapping("/tasks/{taskId}")
-    public ResponseEntity<String> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId) {
+    public ResponseEntity<String> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable Integer taskId) {
         Optional<TaakTask> task = taakTaskRepository.findByIdAndUserId(taskId, user.getId());
         if (!task.isPresent()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("forbidden");
@@ -172,7 +163,6 @@ public class TaskController {
         taskResponse.setDueAt(task.get().getDueAt());
         taskResponse.setIsAllDay(task.get().getIsAllDay());
         taskResponse.setCompletedAt(task.get().getCompletedAt());
-        taskResponse.setUserId(user.getId());
         taskResponse.setLoadScore(task.get().getLoadScore());
         return ResponseEntity.ok(taskResponse.toString());
     }
@@ -197,14 +187,13 @@ public class TaskController {
         taskResponse.setDueAt(registeredTask.getDueAt());
         taskResponse.setIsAllDay(registeredTask.getIsAllDay());
         taskResponse.setCompletedAt(registeredTask.getCompletedAt());
-        taskResponse.setUserId(userId);
         taskResponse.setLoadScore(registeredTask.getLoadScore());
         return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tasks/" + registeredTask.getId()).body(taskResponse.toString());
     }
 
     // タスクの更新
     @PutMapping("/tasks/{taskId}")
-    public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId, @RequestBody TaskRequest taskRequest) {
+    public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable Integer taskId, @RequestBody TaskRequest taskRequest) {
         Optional<TaakTask> optionalTask = taakTaskRepository.findById(taskId);
         if (!optionalTask.isPresent()) {
             return ResponseEntity.status(404).body("Task not found");

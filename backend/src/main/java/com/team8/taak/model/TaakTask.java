@@ -1,7 +1,6 @@
 package com.team8.taak.model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,9 +14,9 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class TaakTask{
     @Id
-    @GeneratedValue(strategy=GenerationType.UUID)
-    @Column(columnDefinition="uuid", nullable = false, updatable=false)
-    private UUID id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(nullable = false, updatable=false)
+    private Integer id;
     
     @Column(nullable = false, columnDefinition = "varchar(255) default ''")
     private String title;
@@ -48,10 +47,10 @@ public class TaakTask{
     public TaakTask(){
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getTitle() {
