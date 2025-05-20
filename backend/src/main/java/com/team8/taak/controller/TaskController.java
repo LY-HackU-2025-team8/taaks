@@ -31,7 +31,6 @@ public class TaskController {
         private LocalDateTime dueAt;
         private boolean isAllDay;
         private LocalDateTime completedAt;
-        private Long userId;
         private int loadScore;
         public String getTitle() {
             return title;
@@ -62,12 +61,6 @@ public class TaskController {
         }
         public void setCompletedAt(LocalDateTime completedAt) {
             this.completedAt = completedAt;
-        }
-        public Long getUserId() {
-            return userId;
-        }
-        public void setUserId(Long userId) {
-            this.userId = userId;
         }
         public int getLoadScore() {
             return loadScore;
@@ -195,7 +188,7 @@ public class TaskController {
         task.setCompletedAt(taskRequest.getCompletedAt());
         task.setLoadScore(taskRequest.getLoadScore());
         TaakTask registeredTask = taakTaskRepository.save(task);
-        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tasks/" + registeredTask.getId()).body("{message: 'new task created', task: " + registeredTask.toString() + "}");
+        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tasks/" + registeredTask.getId()).body(registeredTask.toString());
     }
 
     // タスクの更新
