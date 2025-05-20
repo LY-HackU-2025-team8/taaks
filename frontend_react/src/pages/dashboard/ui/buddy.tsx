@@ -30,25 +30,23 @@ export const Buddy = () => {
       faceParts.value = Math.floor(Math.random() * 4) + 1;
       headParts.value = Math.floor(Math.random() * 6) + 1;
     }
-  });
+  }, [rive, fukuParts, faceParts, headParts]);
 
   return (
-    <>
-      <div className="relative flex h-[338px] items-center">
-        <div className="z-10 flex flex-col gap-3 p-4">
-          <h2 className="text-2xl font-bold">
-            {greeting}
-            <br />
-            {user?.name}さん！
-          </h2>
-          <Link to="/buddy">
-            <button className="bg-primary rounded-full px-4 py-2 text-white">
-              Buddyに会う
-            </button>
-          </Link>
-        </div>
-        <RiveComponent className="absolute right-0 z-0 h-[338px] w-[288px]" />
+    <div className="relative flex h-[338px] items-center">
+      <div className="z-10 flex flex-col gap-3">
+        <h2 className="text-2xl font-bold">
+          {greeting}
+          <br />
+          {user?.name}さん！
+        </h2>
+        <Link to="/buddy">
+          <button className="bg-primary rounded-full px-4 py-2 text-white">
+            Buddyに会う
+          </button>
+        </Link>
       </div>
-    </>
+      <RiveComponent className="absolute top-0 right-0 z-0 h-[338px] w-[288px]" />
+    </div>
   );
 };
