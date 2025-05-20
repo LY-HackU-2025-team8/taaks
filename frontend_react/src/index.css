@@ -140,3 +140,9 @@
     @apply h-full;
   }
 }
+
+@theme {
+  --color-taaks-white: #fbfbfb;
+  --color-taaks-subtitle: #909489;
+  --font-noto-sans-jp: 'Noto Sans JP', LINESeedJP;
+}
