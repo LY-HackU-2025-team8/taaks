@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class TaakTask{
@@ -35,8 +37,9 @@ public class TaakTask{
     private LocalDateTime completedAt;
 
     // ToDo: FK制約をつける columnDefinition="bigint REFERENCES TaakUser(id)"
-    @Column(nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private TaakUser user;
 
     @Column(nullable = false)
     private int loadScore;
@@ -81,11 +84,14 @@ public class TaakTask{
     public void setCompletedAt(LocalDateTime completedAt) {
         this.completedAt = completedAt;
     }
-    public Long getUserId() {
-        return userId;
+    public TaakUser getUser() {
+        return user;
+    }
+    public void setUser(TaakUser user) {
+        this.user = user;
     }
     public void setUserId(Long userId) {
-        this.userId = userId;
+        this.user.setId(userId);
     }
     public int getLoadScore() {
         return loadScore;
@@ -97,7 +103,7 @@ public class TaakTask{
     @Override
     public String toString() {
         return "{id:" + id + ", title:" + title + ", memo:" + memo + ", dueAt:" + dueAt + ", isAllDay:" + isAllDay
-                + ", completedAt:" + completedAt + ", userId:" + userId + ", loadScore:" + loadScore + "}";
+                + ", completedAt:" + completedAt + ", userId:" + user.getId() + ", loadScore:" + loadScore + "}";
     }
 
 }
