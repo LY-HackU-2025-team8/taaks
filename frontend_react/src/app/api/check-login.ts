@@ -1,5 +1,5 @@
-import { userQueryOptions } from '@/entities/user/api/user-query-options';
 import type { FileRoutesByTo } from '@/route-tree.gen';
+import { $api } from '@/shared/api/openapi-fetch';
 import type { QueryClient } from '@tanstack/react-query';
 import { redirect } from '@tanstack/react-router';
 
@@ -15,8 +15,7 @@ export const checkLogin = async (
   } = {}
 ) => {
   try {
-    // ユーザーデータを取得
-    await queryClient.ensureQueryData(userQueryOptions());
+    await queryClient.ensureQueryData($api.queryOptions('get', '/auth-check'));
     return (
       onSuccess &&
       redirect({
