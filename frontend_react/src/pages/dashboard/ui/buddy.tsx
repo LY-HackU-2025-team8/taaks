@@ -6,6 +6,7 @@ import { Link } from '@tanstack/react-router';
 
 export const Buddy = () => {
   const STATE_MACHINE_NAME = 'base State Machine ';
+  const PARTS_COUNT = 6;
   const { data: user } = useQuery(userQueryOptions());
 
   // 時間帯に応じて挨拶を変更する
@@ -22,18 +23,22 @@ export const Buddy = () => {
   const fukuParts = useStateMachineInput(rive, STATE_MACHINE_NAME, 'FukuParts');
   const faceParts = useStateMachineInput(rive, STATE_MACHINE_NAME, 'FaceParts');
   const headParts = useStateMachineInput(rive, STATE_MACHINE_NAME, 'HeadParts');
+  const motion = useStateMachineInput(rive, STATE_MACHINE_NAME, 'motioninputs');
 
   // ランダムにパーツを変更する
   useEffect(() => {
     if (fukuParts && faceParts && headParts) {
-      fukuParts.value = Math.floor(Math.random() * 6) + 1;
-      faceParts.value = Math.floor(Math.random() * 4) + 1;
-      headParts.value = Math.floor(Math.random() * 6) + 1;
+      fukuParts.value = Math.floor(Math.random() * PARTS_COUNT) + 1;
+      faceParts.value = Math.floor(Math.random() * PARTS_COUNT) + 1;
+      headParts.value = Math.floor(Math.random() * PARTS_COUNT) + 1;
     }
-  }, [rive, fukuParts, faceParts, headParts]);
+    if (motion) {
+      motion.value = 2;
+    }
+  }, [rive, fukuParts, faceParts, headParts, motion]);
 
   return (
-    <div className="relative flex h-[338px] items-center">
+    <div className="relative flex h-72 items-center">
       <div className="z-10 flex flex-col gap-3">
         <h2 className="text-2xl font-bold">
           {greeting}
@@ -41,12 +46,16 @@ export const Buddy = () => {
           {user?.name}さん！
         </h2>
         <Link to="/buddy">
-          <button className="bg-primary rounded-full px-4 py-2 text-white">
+          <button className="bg-primary rounded-full px-4 py-2 text-card text-sm">
             Buddyに会う
           </button>
         </Link>
       </div>
-      <RiveComponent className="absolute top-0 right-0 z-0 h-[338px] w-[288px]" />
+      <RiveComponent
+        className="absolute right-0 z-0 h-72 w-60"
+        role="img"
+        aria-label="Buddy Animation"
+      />
     </div>
   );
 };
