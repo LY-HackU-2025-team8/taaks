@@ -158,7 +158,7 @@ public class TaskController {
     }
 
     // タスクの詳細取得
-    @GetMapping("tasks/{taskId}")
+    @GetMapping("/tasks/{taskId}")
     public Optional<TaskResponse> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId) {
         Optional<TaakTask> task = taakTaskRepository.findById(taskId);
         if (!task.isPresent()) {
@@ -197,7 +197,7 @@ public class TaskController {
     }
 
     // タスクの更新
-    @PutMapping("tasks/{taskId}")
+    @PutMapping("/tasks/{taskId}")
     public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId, @RequestBody TaskRequest taskRequest) {
         Optional<TaakTask> optionalTask = taakTaskRepository.findById(taskId);
         if (!optionalTask.isPresent()) {
