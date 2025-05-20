@@ -154,14 +154,14 @@ public class TaskController {
 
     // タスクの詳細取得
     @GetMapping("/tasks/{taskId}")
-    public Optional<TaskResponse> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId) {
+    public ResponseEntity<String> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable UUID taskId) {
         Optional<TaakTask> task = taakTaskRepository.findById(taskId);
         if (!task.isPresent()) {
-            return Optional.empty();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
         }
-        // 他人のタスクを取得しようとした場合は空のOptionalを返す
+        // 他人のタスクを取得しようとした場合は403 Forbiddenを返す
         if (!task.get().getUser().getId().equals(user.getId())) {
-            return Optional.empty();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to access this task");
         }
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setId(task.get().getId());
@@ -172,7 +172,7 @@ public class TaskController {
         taskResponse.setCompletedAt(task.get().getCompletedAt());
         taskResponse.setUserId(user.getId());
         taskResponse.setLoadScore(task.get().getLoadScore());
-        return Optional.of(taskResponse);
+        return ResponseEntity.ok(taskResponse.toString());
     }
 
     // タスクの登録
