@@ -8,11 +8,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        'primary-inverted':
+          'bg-primary-foreground text-primary hover:bg-primary-foreground/90',
         destructive:
-          'bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 text-white shadow-xs',
+          'bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 text-white',
         outline:
-          'border border-primary bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+          'border border-primary bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
         secondary:
           'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
         ghost:
@@ -21,13 +23,13 @@ const buttonVariants = cva(
       },
       size: {
         default: 'h-14 rounded-full px-6',
-        sm: 'h-8 gap-1.5 rounded-full px-3 text-sm has-[>svg]:px-2.5',
+        sm: 'h-8 gap-1.5 rounded-full px-3 text-xs has-[>svg]:px-2.5',
         lg: 'h-16 rounded-3xl px-7',
         icon: 'size-9',
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'primary',
       size: 'default',
     },
   }

@@ -29,7 +29,7 @@ const meta = {
       ],
     },
   },
-  args: { onClick: () => {}, size: 'default', variant: 'default' },
+  args: { onClick: () => {} },
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -38,7 +38,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     children: 'Primary',
-    variant: 'default',
+    variant: 'primary',
   },
 };
 
@@ -63,17 +63,16 @@ export const Secondary: Story = {
   },
 };
 
-export const Ghost: Story = {
+export const PrimaryInverted: Story = {
   args: {
-    children: 'Ghost',
-    variant: 'ghost',
+    children: 'Primary Inverted',
+    variant: 'primary-inverted',
   },
-};
-
-export const Link: Story = {
-  args: {
-    children: 'Link',
-    variant: 'link',
+  parameters: {
+    backgrounds: {
+      default: 'gray',
+      values: [{ name: 'gray', value: '#121403' }],
+    },
   },
 };
 
@@ -88,12 +87,5 @@ export const Small: Story = {
   args: {
     children: 'Small',
     size: 'sm',
-  },
-};
-
-export const Icon: Story = {
-  args: {
-    children: 'Icon',
-    size: 'icon',
   },
 };
