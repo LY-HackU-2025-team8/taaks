@@ -1,13 +1,13 @@
+import { randInt } from '@/shared/lib/random-number';
 import { useEffect } from 'react';
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
-import { randInt } from '@/shared/lib/random-number';
 
 type RiveBuddyProps = {
   /** クラス名 */
   className?: string;
-}
+};
 
-export const RiveBuddy = ({ className = "" }: RiveBuddyProps) => {
+export const RiveBuddy = ({ className = '' }: RiveBuddyProps) => {
   const STATE_MACHINE_NAME = 'base State Machine ';
 
   const { rive, RiveComponent } = useRive({
@@ -25,7 +25,7 @@ export const RiveBuddy = ({ className = "" }: RiveBuddyProps) => {
     if (fukuParts && faceParts && headParts && motion) {
       fukuParts.value = randInt(1, 6);
       faceParts.value = randInt(1, 6);
-      headParts.value = randInt(1, 6);
+      headParts.value = randInt(1, 7);
       motion.value = randInt(0, 2);
     }
   }, [rive, fukuParts, faceParts, headParts, motion]);
@@ -37,4 +37,4 @@ export const RiveBuddy = ({ className = "" }: RiveBuddyProps) => {
       aria-label="Buddy Animation"
     />
   );
-}
+};

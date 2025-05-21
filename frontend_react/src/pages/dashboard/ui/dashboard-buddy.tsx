@@ -1,11 +1,10 @@
-import { userQueryOptions } from '@/entities/user/api/user-query-options';
-import { useQuery } from '@tanstack/react-query';
-import { Link } from '@tanstack/react-router';
+import { $api } from '@/shared/api/openapi-fetch';
 import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
 import { Button } from '@/shared/ui/components/shadcn/button';
+import { Link } from '@tanstack/react-router';
 
 export const DashboardBuddy = () => {
-  const { data: user } = useQuery(userQueryOptions());
+  const { data: user } = $api.useQuery('get', '/users/me');
 
   // 時間帯に応じて挨拶を変更する
   const date = new Date();
@@ -17,24 +16,17 @@ export const DashboardBuddy = () => {
     <div className="relative flex h-72 items-center">
       <div className="z-10 flex flex-col gap-3">
         <div className="text-2xl font-bold">
-          <span className='block'>{greeting}</span>
-          <span className='block'>{user?.name}さん！</span>
+          <span className="block">{greeting}</span>
+          <span className="block">{user?.nickname}さん！</span>
         </div>
-        <Button 
+        <Button
           asChild
           className="bg-primary text-card rounded-full px-4 py-2 text-sm"
         >
-          <Link 
-          to="/buddy"
-          >
-            Buddyに会う
-          </Link>
+          <Link to="/buddy">Buddyに会う</Link>
         </Button>
-
       </div>
-      <RiveBuddy
-        className='h-72 w-60 absolute z-0 right-0'
-      />
+      <RiveBuddy className="absolute right-0 z-0 h-72 w-60" />
     </div>
   );
 };
