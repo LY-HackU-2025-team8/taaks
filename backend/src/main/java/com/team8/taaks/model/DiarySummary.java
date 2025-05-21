@@ -1,4 +1,4 @@
-package com.team8.taak.controller.generated.model;
+package com.team8.taaks.model;
 
 import java.net.URI;
 import java.util.Objects;
@@ -117,4 +117,3 @@ public class DiarySummary {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

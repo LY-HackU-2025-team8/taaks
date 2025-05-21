@@ -1,4 +1,4 @@
-package com.team8.taak.controller;
+package com.team8.taaks.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team8.taak.model.TaakTask;
-import com.team8.taak.model.TaakTaskRepository;
-import com.team8.taak.model.TaakUser;
+import com.team8.taaks.model.TaakTask;
+import com.team8.taaks.model.TaakTaskRepository;
+import com.team8.taaks.model.TaakUser;
 
 @CrossOrigin(origins={"localhost:3000", "https://taak.app"})
 @RestController

@@ -1,9 +1,10 @@
-package com.team8.taak.config;
+package com.team8.taaks.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.team8.taak.model.TaakUser;
+import com.team8.taaks.model.TaakUser;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

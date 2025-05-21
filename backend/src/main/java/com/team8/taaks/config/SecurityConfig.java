@@ -1,4 +1,4 @@
-package com.team8.taak.config;
+package com.team8.taaks.config;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -24,10 +24,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.team8.taak.controller.GlobalAuthExceptionHandler.ErrorResponse;
-import com.team8.taak.model.TaakUser;
-import com.team8.taak.model.TaakUserDetailManager;
-import com.team8.taak.model.TaakUserRepository;
+import com.team8.taaks.controller.GlobalAuthExceptionHandler.ErrorResponse;
+import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.model.TaakUserDetailManager;
+import com.team8.taaks.model.TaakUserRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
 

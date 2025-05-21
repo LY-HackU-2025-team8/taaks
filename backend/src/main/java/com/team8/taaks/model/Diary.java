@@ -1,4 +1,4 @@
-package com.team8.taak.model;
+package com.team8.taaks.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;

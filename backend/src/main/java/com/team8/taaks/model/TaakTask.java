@@ -1,4 +1,4 @@
-package com.team8.taak.model;
+package com.team8.taaks.model;
 
 import java.time.LocalDateTime;
 

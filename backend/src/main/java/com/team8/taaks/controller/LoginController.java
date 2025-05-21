@@ -1,4 +1,4 @@
-package com.team8.taak.controller;
+package com.team8.taaks.controller;
 
 
 import org.springframework.http.ResponseEntity;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team8.taak.config.JwtTokenUtil;
-import com.team8.taak.model.TaakUser;
+import com.team8.taaks.config.JwtTokenUtil;
+import com.team8.taaks.model.TaakUser;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

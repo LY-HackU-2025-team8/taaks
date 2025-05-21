@@ -1,4 +1,4 @@
-package com.team8.taak.config;
+package com.team8.taaks.config;
 
 
 import jakarta.servlet.FilterChain;

@@ -1,4 +1,4 @@
-package com.team8.taak;
+package com.team8.taaks;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
