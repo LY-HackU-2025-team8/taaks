@@ -15,7 +15,7 @@ export const checkLogin = async (
   } = {}
 ) => {
   try {
-    await queryClient.ensureQueryData($api.queryOptions('get', '/auth-check'));
+    await queryClient.ensureQueryData($api.queryOptions('get', '/users/me'));
     return (
       onSuccess &&
       redirect({
