@@ -170,7 +170,6 @@ public class TaskController {
     // タスクの登録
     @PostMapping("/tasks")
     public ResponseEntity<String> createTask(@AuthenticationPrincipal TaakUser user, @RequestBody TaskRequest taskRequest) {
-        Long userId = user.getId();
         TaakTask task = new TaakTask();
         task.setUser(user);
         task.setTitle(taskRequest.getTitle());

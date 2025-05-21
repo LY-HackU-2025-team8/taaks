@@ -18,24 +18,23 @@ public class TaakTask{
     @Column(nullable = false, updatable=false)
     private Integer id;
     
-    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
-    private String title;
+    @Column(nullable = false)
+    private String title = "";
 
-    @Column(nullable = false, columnDefinition = "text default ''")
-    private String memo;
+    @Column(nullable = false, columnDefinition="TEXT")
+    private String memo = "";
 
     // タイムゾーンのない日時（ex. 2021-05-30T15:47:13.395703）
     @Column(nullable = false)
     private LocalDateTime dueAt;
 
-    @Column(nullable = false, columnDefinition= "boolean default false")
-    private boolean isAllDay;
+    @Column(nullable = false)
+    private boolean isAllDay = false;
 
     // PostgreSQLのtimestamp型
-    @Column(nullable = true, columnDefinition = "timestamp default null")
-    private LocalDateTime completedAt;
+    @Column(nullable = true)
+    private LocalDateTime completedAt = null;
 
-    // ToDo: FK制約をつける columnDefinition="bigint REFERENCES TaakUser(id)"
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private TaakUser user;
