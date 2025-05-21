@@ -50,6 +50,11 @@ jobs:
   generate:
     name: Check Generated Files are Up-to-date
     runs-on: ubuntu-latest
+    env:
+      DB_PORT: 5432
+      DB_NAME: taaks
+      DB_USER: taaks
+      DB_PASSWORD: taaks
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
