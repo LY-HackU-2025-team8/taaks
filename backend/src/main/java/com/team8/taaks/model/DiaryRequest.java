@@ -1,4 +1,4 @@
-package com.team8.taaks.controller.generated.model;
+package com.team8.taaks.model;
 
 import java.net.URI;
 import java.util.Objects;

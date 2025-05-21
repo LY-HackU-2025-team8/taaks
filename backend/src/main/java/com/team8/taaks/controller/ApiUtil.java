@@ -1,4 +1,4 @@
-package com.team8.taaks.controller.generated.api;
+package com.team8.taaks.controller;
 
 import org.springframework.web.context.request.NativeWebRequest;
 

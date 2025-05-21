@@ -5,12 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team8.taaks.controller.generated.api.DiariesApi;
-import com.team8.taaks.controller.generated.model.DiaryRequest;
-import com.team8.taaks.controller.generated.model.DiaryResponse;
-import com.team8.taaks.controller.generated.model.DiarySummary;
 import com.team8.taaks.model.Diary;
 import com.team8.taaks.model.DiaryRepository;
+import com.team8.taaks.model.DiaryRequest;
+import com.team8.taaks.model.DiaryResponse;
+import com.team8.taaks.model.DiarySummary;
 import com.team8.taaks.model.TaakUser;
 
 import org.springframework.web.bind.annotation.RequestBody;

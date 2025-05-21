@@ -3,7 +3,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-package com.team8.taaks.controller.generated.api;
+package com.team8.taaks.controller;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.team8.taaks.controller.generated.model.DiaryRequest;
-import com.team8.taaks.controller.generated.model.DiaryResponse;
-import com.team8.taaks.controller.generated.model.DiarySummary;
+import com.team8.taaks.model.DiaryRequest;
+import com.team8.taaks.model.DiaryResponse;
+import com.team8.taaks.model.DiarySummary;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
