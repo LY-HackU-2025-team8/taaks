@@ -1,16 +1,18 @@
-package com.team8.taak.controller;
+package com.team8.taaks.controller;
 
-import com.team8.taak.controller.generated.api.DiariesApi;
-import com.team8.taak.controller.generated.model.DiaryRequest;
-import com.team8.taak.controller.generated.model.DiaryResponse;
-import com.team8.taak.controller.generated.model.DiarySummary;
-import com.team8.taak.model.Diary;
-import com.team8.taak.model.DiaryRepository;
-import com.team8.taak.model.TaakUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.team8.taaks.controller.generated.api.DiariesApi;
+import com.team8.taaks.controller.generated.model.DiaryRequest;
+import com.team8.taaks.controller.generated.model.DiaryResponse;
+import com.team8.taaks.controller.generated.model.DiarySummary;
+import com.team8.taaks.model.Diary;
+import com.team8.taaks.model.DiaryRepository;
+import com.team8.taaks.model.TaakUser;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 

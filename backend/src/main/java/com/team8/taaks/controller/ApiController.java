@@ -1,8 +1,8 @@
-package com.team8.taak.controller;
+package com.team8.taaks.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team8.taak.model.TaakUser;
+import com.team8.taaks.model.TaakUser;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -1,4 +1,4 @@
-package com.team8.taak.controller.generated.model;
+package com.team8.taaks.controller.generated.model;
 
 import java.net.URI;
 import java.util.Objects;
@@ -18,11 +18,11 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * DiaryRequest
+ * DiaryResponse
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
-public class DiaryRequest {
+public class DiaryResponse {
 
   private String title;
 
@@ -31,20 +31,23 @@ public class DiaryRequest {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate date;
 
-  public DiaryRequest() {
+  private Integer id;
+
+  public DiaryResponse() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public DiaryRequest(String title, String body, LocalDate date) {
+  public DiaryResponse(String title, String body, LocalDate date, Integer id) {
     this.title = title;
     this.body = body;
     this.date = date;
+    this.id = id;
   }
 
-  public DiaryRequest title(String title) {
+  public DiaryResponse title(String title) {
     this.title = title;
     return this;
   }
@@ -64,7 +67,7 @@ public class DiaryRequest {
     this.title = title;
   }
 
-  public DiaryRequest body(String body) {
+  public DiaryResponse body(String body) {
     this.body = body;
     return this;
   }
@@ -84,7 +87,7 @@ public class DiaryRequest {
     this.body = body;
   }
 
-  public DiaryRequest date(LocalDate date) {
+  public DiaryResponse date(LocalDate date) {
     this.date = date;
     return this;
   }
@@ -104,6 +107,26 @@ public class DiaryRequest {
     this.date = date;
   }
 
+  public DiaryResponse id(Integer id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+   */
+  @NotNull 
+  @Schema(name = "id", example = "123", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("id")
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -112,24 +135,26 @@ public class DiaryRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DiaryRequest diaryRequest = (DiaryRequest) o;
-    return Objects.equals(this.title, diaryRequest.title) &&
-        Objects.equals(this.body, diaryRequest.body) &&
-        Objects.equals(this.date, diaryRequest.date);
+    DiaryResponse diaryResponse = (DiaryResponse) o;
+    return Objects.equals(this.title, diaryResponse.title) &&
+        Objects.equals(this.body, diaryResponse.body) &&
+        Objects.equals(this.date, diaryResponse.date) &&
+        Objects.equals(this.id, diaryResponse.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, body, date);
+    return Objects.hash(title, body, date, id);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DiaryRequest {\n");
+    sb.append("class DiaryResponse {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -145,4 +170,3 @@ public class DiaryRequest {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

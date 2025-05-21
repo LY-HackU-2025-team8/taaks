@@ -1,4 +1,4 @@
-package com.team8.taak.controller;
+package com.team8.taaks.controller;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
