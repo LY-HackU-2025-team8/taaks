@@ -40,7 +40,7 @@ function RouteComponent() {
       const token = data.token;
       if (!token) return;
       localStorage.setItem('token', token);
-      queryClient.invalidateQueries($api.queryOptions('get', '/auth-check'));
+      queryClient.invalidateQueries($api.queryOptions('get', '/users/me'));
       navigate({
         to: '/dashboard',
       });
