@@ -4,30 +4,24 @@
   "private": true,
   "scripts": {
     "typecheck:react": "npm run -w taaks-react typecheck",
-    "typecheck:react-native": "npm run -w taaks-react-native typecheck",
     "typecheck": "run-s typecheck:*",
     "format:react": "npm run -w taaks-react format",
-    "format:react-native": "npm run -w taaks-react-native format",
     "format": "run-s format:*",
     "format-check:react": "npm run -w taaks-react format-check",
-    "format-check:react-native": "npm run -w taaks-react-native format-check",
     "format-check": "run-s format-check:*",
     "lint:react": "npm run -w taaks-react lint",
-    "lint:react-native": "npm run -w taaks-react-native lint",
     "lint": "run-s lint:*",
     "lint-check:react": "npm run -w taaks-react lint-check",
-    "lint-check:react-native": "npm run -w taaks-react-native lint-check",
     "lint-check": "run-s lint-check:*",
     "build:react": "npm run -w taaks-react build",
-    "build:react-native": "npm run -w taaks-react-native prebuild",
     "build": "run-s build:*",
     "generate:spring-boot": "cd backend && ./gradlew generateOpenApiDocs",
     "generate:react": "npm run -w taaks-react generate",
     "generate": "run-s generate:*",
     "dev:react": "npm run -w taaks-react dev",
     "dev": "run-s dev:*",
-    "storybook:react": "npm run -w taaks-react storybook",
-    "storybook": "run-s storybook:*"
+    "storybook": "npm run -w taaks-react storybook",
+    "storybook-build": "npm run -w taaks-react storybook-build"
   },
   "repository": {
     "type": "git",
@@ -40,8 +34,7 @@
   },
   "homepage": "https://github.com/LY-HackU-2025-team8/taaks#readme",
   "workspaces": [
-    "frontend_react",
-    "frontend_react-native"
+    "frontend_react"
   ],
   "devDependencies": {
     "npm-run-all2": "^8.0.1"
