@@ -24,10 +24,6 @@ export default defineConfig({
     }),
     viteReact(),
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
