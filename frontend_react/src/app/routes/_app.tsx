@@ -45,7 +45,6 @@ function RouteComponent() {
               triggerComponent={
                 <Button
                   size="icon"
-                  variant="default"
                   className="bg-custom text-custom-foreground size-16 -translate-y-4 rounded-2xl shadow-xl"
                 >
                   <LucidePlus className="size-8" />
