@@ -37,9 +37,9 @@ function RouteComponent() {
 
   const { mutate, isPending } = $api.useMutation('post', '/login', {
     onSuccess: (data) => {
-      const token = (data as unknown as { token: string })?.token as string;
+      const token = data.token;
+      if (!token) return;
       localStorage.setItem('token', token);
-      console.log('navigate!!');
       queryClient.invalidateQueries($api.queryOptions('get', '/users/me'));
       navigate({
         to: '/dashboard',
