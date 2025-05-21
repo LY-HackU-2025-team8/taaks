@@ -1,0 +1,61 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import { RiveIcon } from './rive-icon';
+
+const meta: Meta<typeof RiveIcon> = {
+  title: 'Components/RiveIcon',
+  component: RiveIcon,
+  tags: ['autodocs'],
+  argTypes: {
+    iconType: {
+      control: 'select',
+      options: ['Home', 'ToDo', 'Diary', 'Account', 'PLUS'],
+    },
+    className: { control: 'text' },
+  },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof RiveIcon>;
+
+export const Default: Story = {
+  args: {
+    iconType: 'Home',
+    className: 'w-24 h-24',
+  },
+};
+
+export const HomeIcon: Story = {
+  args: {
+    iconType: 'Home',
+    className: 'w-24 h-24',
+  },
+};
+
+export const ToDoIcon: Story = {
+  args: {
+    iconType: 'ToDo',
+    className: 'w-24 h-24',
+  },
+};
+
+export const DiaryIcon: Story = {
+  args: {
+    iconType: 'Diary',
+    className: 'w-24 h-24',
+  },
+};
+
+export const AccountIcon: Story = {
+  args: {
+    iconType: 'Account',
+    className: 'w-24 h-24',
+  },
+};
+
+export const PlusIcon: Story = {
+  args: {
+    iconType: 'PLUS',
+    className: 'w-24 h-24',
+  },
+};
