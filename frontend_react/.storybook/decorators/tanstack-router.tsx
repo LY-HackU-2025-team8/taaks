@@ -1,4 +1,4 @@
-import { Decorator } from '@storybook/react';
+import type { Decorator } from '@storybook/react';
 import { QueryClient } from '@tanstack/react-query';
 import { RouterContextProvider, createRouter } from '@tanstack/react-router';
 import { routeTree } from '../../src/route-tree.gen';

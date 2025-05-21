@@ -1,6 +1,6 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import type { Preview } from '@storybook/react';
-import 'ui-parts/index.css';
+import '../src/index.css';
 import { tanstackRouterDecorator } from './decorators/tanstack-router';
 
 const preview: Preview = {
@@ -34,8 +34,7 @@ const preview: Preview = {
       lightClass: 'light',
     },
   },
+  decorators: [tanstackRouterDecorator],
 };
 
 export default preview;
-
-export const decorators = [tanstackRouterDecorator];
