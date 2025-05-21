@@ -43,4 +43,7 @@ openApi {
 	apiDocsUrl.set("http://localhost:8080/api/docs.yaml")
 	outputDir.set(file("../openapi"))
 	outputFileName.set("openapi.yaml")
+  customBootRun {
+      workingDir = projectDir
+  }
 }
