@@ -1,0 +1,40 @@
+import { userQueryOptions } from '@/entities/user/api/user-query-options';
+import { useQuery } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
+import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
+import { Button } from '@/shared/ui/components/shadcn/button';
+
+export const DashboardBuddy = () => {
+  const { data: user } = useQuery(userQueryOptions());
+
+  // 時間帯に応じて挨拶を変更する
+  const date = new Date();
+  const hours = date.getHours();
+  const greeting =
+    hours < 10 ? 'おはよう' : hours < 18 ? 'こんにちは' : 'こんばんは';
+
+  return (
+    <div className="relative flex h-72 items-center">
+      <div className="z-10 flex flex-col gap-3">
+        <div className="text-2xl font-bold">
+          <span className='block'>{greeting}</span>
+          <span className='block'>{user?.name}さん！</span>
+        </div>
+        <Button 
+          asChild
+          className="bg-primary text-card rounded-full px-4 py-2 text-sm"
+        >
+          <Link 
+          to="/buddy"
+          >
+            Buddyに会う
+          </Link>
+        </Button>
+
+      </div>
+      <RiveBuddy
+        className='h-72 w-60 absolute z-0 right-0'
+      />
+    </div>
+  );
+};
