@@ -1,14 +1,11 @@
 package com.team8.taak.controller;
 
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
@@ -23,6 +20,8 @@ import com.team8.taak.model.TaakUser;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 @RestController
@@ -59,17 +58,23 @@ public class LoginController {
 		securityContextHolderStrategy.setContext(context);
 		securityContextRepository.saveContext(context, request, response); 
         if (authenticationResponse.isAuthenticated()) {
-			LoginResponse loginResponse = new LoginResponse(token, new taakUserForResponse(user.getUsername(), user.getNickName(), user.getId()));
+			LoginResponse loginResponse = new LoginResponse(token, new UsersResponse(user.getUsername(), user.getNickName(), user.getId()));
             return ResponseEntity.ok(loginResponse);
         } else {
 			return ResponseEntity.status(401).build();
         }
 	}
 
+	@GetMapping("/users/me")
+	public ResponseEntity<UsersResponse> userInfo(@AuthenticationPrincipal TaakUser user) {
+		return ResponseEntity.ok(new UsersResponse(user.getUsername(), user.getNickName(), user.getId()));
+	}
+	
+
 	public record LoginRequest(String username, String password) {
 	}
-	public record taakUserForResponse(String username, String nickname, Long id) {
+	public record UsersResponse(String username, String nickname, Long id) {
 	}
-	public record LoginResponse(String token, taakUserForResponse user) {
+	public record LoginResponse(String token, UsersResponse user) {
 	}
 }
