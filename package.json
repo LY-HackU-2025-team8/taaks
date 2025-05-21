@@ -20,7 +20,10 @@
     "lint-check": "run-s lint-check:*",
     "build:react": "npm run -w taaks-react build",
     "build:react-native": "npm run -w taaks-react-native prebuild",
-    "build": "run-s build:*"
+    "build": "run-s build:*",
+    "generate:spring-boot": "cd backend && ./gradlew generateOpenApiDocs",
+    "generate:react": "npm run -w taaks-react generate",
+    "generate": "run-s generate:*"
   },
   "repository": {
     "type": "git",

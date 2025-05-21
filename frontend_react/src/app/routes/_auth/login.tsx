@@ -1,5 +1,4 @@
-import { userQueryOptions } from '@/entities/user/api/user-query-options';
-import { type User } from '@/entities/user/model/user';
+import { $api } from '@/shared/api/openapi-fetch';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {
   Card,
@@ -18,7 +17,7 @@ import { Input } from '@/shared/ui/components/shadcn/input';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { LucideChevronLeft } from 'lucide-react';
 import { z } from 'zod';
@@ -32,44 +31,16 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-const responseSchema = z.object({
-  token: z.string(),
-});
-
 function RouteComponent() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { mutate, isPending } = useMutation<
-    User,
-    Error,
-    z.infer<typeof formSchema>
-  >({
-    mutationFn: async (data) => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_HOST}/login`,
-        {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-      const responseData = responseSchema.parse(await response.json());
-      localStorage.setItem('token', responseData.token);
-      /** @Todo レスポンスからid, nameを返す */
-      return {
-        id: '',
-        name: 'のざわな',
-      };
-    },
-    onSuccess: (user) => {
-      localStorage.setItem('user_me', JSON.stringify(user));
-      queryClient.invalidateQueries(userQueryOptions());
+  const { mutate, isPending } = $api.useMutation('post', '/login', {
+    onSuccess: (data) => {
+      const token = (data as unknown as { token: string })?.token as string;
+      localStorage.setItem('token', token);
+      console.log('navigate!!');
+      queryClient.invalidateQueries($api.queryOptions('get', '/auth-check'));
       navigate({
         to: '/dashboard',
       });
@@ -87,7 +58,7 @@ function RouteComponent() {
   });
 
   const handleSubmit = useMemo(
-    () => form.handleSubmit((data) => mutate(data)),
+    () => form.handleSubmit((data) => mutate({ body: data })),
     [mutate, form]
   );
 

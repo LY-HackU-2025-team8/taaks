@@ -46,3 +46,24 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run build
+
+  generate:
+    name: Check Generated Files are Up-to-date
+    runs-on: ubuntu-latest
+    env:
+      DB_PORT: 5432
+      DB_NAME: taaks
+      DB_USER: taaks
+      DB_PASSWORD: taaks
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - run: npm ci
+      - run: npm run generate
+      - run: git diff --exit-code
