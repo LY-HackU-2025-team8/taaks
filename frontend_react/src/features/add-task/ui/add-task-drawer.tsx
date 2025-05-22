@@ -39,12 +39,16 @@ const formSchema = z.object({
 });
 
 export type AddTaskDrawerProps = {
+  /** drawerの開閉状態が変更された時に呼び出されるコールバック関数 */
+  onOpenChange?: (open: boolean) => void;
+  /** drawerの開閉状態を示すフラグ */
+  open?: boolean;
   triggerComponent?: React.ReactNode;
 };
 
-export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
+export const AddTaskDrawer = ({ onOpenChange, open=false, triggerComponent }: AddTaskDrawerProps) => {
   const { mutate, isPending, error } = $api.useMutation('post', '/tasks');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(open);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -81,10 +85,15 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
     );
   });
 
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    onOpenChange?.(open);
+  };
+
   return (
     <Drawer
       open={isOpen}
-      onOpenChange={setIsOpen}
+      onOpenChange={handleOpenChange}
       repositionInputs={false}
       autoFocus
     >

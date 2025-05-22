@@ -22,6 +22,7 @@ export const Default: Story = {
   args: {
     iconType: 'Home',
     className: 'w-24 h-24',
+    isActive: true,
   },
 };
 
@@ -32,7 +33,7 @@ export const HomeIcon: Story = {
   },
 };
 
-export const ToDoIcon: Story = {
+export const TodoIcon: Story = {
   args: {
     iconType: 'ToDo',
     className: 'w-24 h-24',
