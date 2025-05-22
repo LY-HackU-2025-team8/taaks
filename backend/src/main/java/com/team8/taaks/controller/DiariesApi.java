@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team8.taaks.model.Diary;
 import com.team8.taaks.model.DiaryRequest;
 import com.team8.taaks.model.DiaryResponse;
 import com.team8.taaks.model.DiarySummary;
@@ -44,48 +45,6 @@ public interface DiariesApi {
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
-
-    /**
-     * GET /diaries : 日記一覧取得
-     * ユーザーに紐づく日記の一覧を返す
-     *
-     * @return 一覧取得成功 (status code 200)
-     */
-    @Operation(
-        operationId = "diariesGet",
-        summary = "日記一覧取得",
-        description = "ユーザーに紐づく日記の一覧を返す",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "一覧取得成功", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DiarySummary.class)))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/diaries",
-        produces = { "application/json" }
-    )
-    
-    default ResponseEntity<List<DiarySummary>> diariesGet(
-        
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"id\" : 1, \"title\" : \"お出かけ\" }, { \"id\" : 1, \"title\" : \"お出かけ\" } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
 
     /**
      * DELETE /diaries/{id} : 日記の削除

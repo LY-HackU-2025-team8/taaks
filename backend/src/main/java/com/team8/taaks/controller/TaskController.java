@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team8.taaks.model.TaakTask;
@@ -131,8 +134,14 @@ public class TaskController {
     
     // タスク一覧の取得
     @GetMapping("/tasks")
-    public ResponseEntity<List<TaskResponse>> getTask(@AuthenticationPrincipal TaakUser user) {
-        return new ResponseEntity<>(taakTaskRepository.findByUser(user).stream().map(task -> {
+    public ResponseEntity<Page<TaskResponse>> getTask(
+        @AuthenticationPrincipal TaakUser user,
+        @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+        @RequestParam(name = "size", required = false, defaultValue = "10") int size
+    ) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<TaakTask> tasks = taakTaskRepository.findAllByUserId(user.getId(), pageable);
+        Page<TaskResponse> taskResponses = tasks.map(task -> {
             TaskResponse taskResponse = new TaskResponse();
             taskResponse.setId(task.getId());
             taskResponse.setTitle(task.getTitle());
@@ -142,7 +151,8 @@ public class TaskController {
             taskResponse.setCompletedAt(task.getCompletedAt());
             taskResponse.setLoadScore(task.getLoadScore());
             return taskResponse;
-        }).collect(Collectors.toList()), HttpStatus.OK);
+        });
+        return ResponseEntity.ok(taskResponses);
     }
 
     // タスクの詳細取得
