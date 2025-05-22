@@ -33,7 +33,7 @@ paths:
           content:
             '*/*':
               schema:
-                type: string
+                $ref: "#/components/schemas/TaskResponse"
     put:
       tags:
       - task-controller
@@ -204,7 +204,7 @@ paths:
           content:
             '*/*':
               schema:
-                type: string
+                $ref: "#/components/schemas/TaskResponse"
   /login:
     post:
       tags:
@@ -362,6 +362,27 @@ components:
       - body
       - date
       - title
+    TaskResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        title:
+          type: string
+        memo:
+          type: string
+        dueAt:
+          type: string
+          format: date-time
+        isAllDay:
+          type: boolean
+        completedAt:
+          type: string
+          format: date-time
+        loadScore:
+          type: integer
+          format: int32
     LoginRequest:
       type: object
       properties:
@@ -386,27 +407,6 @@ components:
         id:
           type: integer
           format: int64
-    TaskResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        title:
-          type: string
-        memo:
-          type: string
-        dueAt:
-          type: string
-          format: date-time
-        isAllDay:
-          type: boolean
-        completedAt:
-          type: string
-          format: date-time
-        loadScore:
-          type: integer
-          format: int32
     DiarySummary:
       type: object
       properties:
