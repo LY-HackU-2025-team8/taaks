@@ -1,10 +1,12 @@
 package com.team8.taak.controller;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -119,12 +121,6 @@ public class TaskController {
         public void setLoadScore(int loadScore) {
             this.loadScore = loadScore;
         }
-        @Override
-        public String toString() {
-            return "{id:" + id + ", title:" + title + ", memo:" + memo + ", dueAt:" + dueAt + ", isAllDay:"
-                    + isAllDay + ", completedAt:" + completedAt + ", loadScore:" + loadScore
-                    + "}";
-        }
     }
 
     private final TaakTaskRepository taakTaskRepository;
@@ -135,8 +131,8 @@ public class TaskController {
     
     // タスク一覧の取得
     @GetMapping("/tasks")
-    public List<TaskResponse> getTask(@AuthenticationPrincipal TaakUser user) {
-        return taakTaskRepository.findByUser(user).stream().map(task -> {
+    public ResponseEntity<List<TaskResponse>> getTask(@AuthenticationPrincipal TaakUser user) {
+        return new ResponseEntity<>(taakTaskRepository.findByUser(user).stream().map(task -> {
             TaskResponse taskResponse = new TaskResponse();
             taskResponse.setId(task.getId());
             taskResponse.setTitle(task.getTitle());
@@ -146,15 +142,15 @@ public class TaskController {
             taskResponse.setCompletedAt(task.getCompletedAt());
             taskResponse.setLoadScore(task.getLoadScore());
             return taskResponse;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     // タスクの詳細取得
     @GetMapping("/tasks/{taskId}")
-    public ResponseEntity<String> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable Integer taskId) {
+    public ResponseEntity<TaskResponse> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable Integer taskId) {
         Optional<TaakTask> task = taakTaskRepository.findByIdAndUserId(taskId, user.getId());
         if (!task.isPresent()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("forbidden");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setId(task.get().getId());
@@ -164,12 +160,12 @@ public class TaskController {
         taskResponse.setIsAllDay(task.get().getIsAllDay());
         taskResponse.setCompletedAt(task.get().getCompletedAt());
         taskResponse.setLoadScore(task.get().getLoadScore());
-        return ResponseEntity.ok(taskResponse.toString());
+        return new ResponseEntity<>(taskResponse, HttpStatus.OK);
     }
 
     // タスクの登録
     @PostMapping("/tasks")
-    public ResponseEntity<String> createTask(@AuthenticationPrincipal TaakUser user, @RequestBody TaskRequest taskRequest) {
+    public ResponseEntity<TaskResponse> createTask(@AuthenticationPrincipal TaakUser user, @RequestBody TaskRequest taskRequest) {
         TaakTask task = new TaakTask();
         task.setUser(user);
         task.setTitle(taskRequest.getTitle());
@@ -187,7 +183,9 @@ public class TaskController {
         taskResponse.setIsAllDay(registeredTask.getIsAllDay());
         taskResponse.setCompletedAt(registeredTask.getCompletedAt());
         taskResponse.setLoadScore(registeredTask.getLoadScore());
-        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tasks/" + registeredTask.getId()).body(taskResponse.toString());
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(URI.create("/tasks/" + registeredTask.getId()));
+        return new ResponseEntity<>(taskResponse, responseHeaders, HttpStatus.CREATED);
     }
 
     // タスクの更新
@@ -195,12 +193,12 @@ public class TaskController {
     public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable Integer taskId, @RequestBody TaskRequest taskRequest) {
         Optional<TaakTask> optionalTask = taakTaskRepository.findById(taskId);
         if (!optionalTask.isPresent()) {
-            return ResponseEntity.status(404).body("Task not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         TaakTask existingTask = optionalTask.get();
         // 他人のタスクを更新しようとした場合は403エラーを返す
         if (!existingTask.getUser().getId().equals(user.getId())) {
-            return ResponseEntity.status(403).body("You do not have permission to update this task");
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         existingTask.setTitle(taskRequest.getTitle());
         existingTask.setMemo(taskRequest.getMemo());
@@ -209,6 +207,6 @@ public class TaskController {
         existingTask.setCompletedAt(taskRequest.getCompletedAt());
         existingTask.setLoadScore(taskRequest.getLoadScore());
         taakTaskRepository.save(existingTask);
-        return ResponseEntity.ok("Task updated successfully");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
