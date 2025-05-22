@@ -78,10 +78,6 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /**
-         * 日記一覧取得
-         * @description ユーザーに紐づく日記の一覧を返す
-         */
         get: operations["diariesGet"];
         put?: never;
         /** 日記の新規作成 */
@@ -181,14 +177,57 @@ export interface components {
             /** Format: int64 */
             id?: number;
         };
-        DiarySummary: {
-            /**
-             * Format: int32
-             * @example 1
-             */
-            id: number;
-            /** @example お出かけ */
-            title: string;
+        PageTaskResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["TaskResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            first?: boolean;
+            last?: boolean;
+            empty?: boolean;
+        };
+        PageableObject: {
+            paged?: boolean;
+            /** Format: int32 */
+            pageNumber?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            unpaged?: boolean;
+            /** Format: int64 */
+            offset?: number;
+            sort?: components["schemas"]["SortObject"];
+        };
+        SortObject: {
+            sorted?: boolean;
+            unsorted?: boolean;
+            empty?: boolean;
+        };
+        PageDiaryResponse: {
+            /** Format: int64 */
+            totalElements?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            size?: number;
+            content?: components["schemas"]["DiaryResponse"][];
+            /** Format: int32 */
+            number?: number;
+            sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            first?: boolean;
+            last?: boolean;
+            empty?: boolean;
         };
     };
     responses: never;
@@ -387,7 +426,10 @@ export interface operations {
     };
     getTask: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -400,7 +442,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["TaskResponse"][];
+                    "*/*": components["schemas"]["PageTaskResponse"];
                 };
             };
             /** @description exception */
@@ -482,20 +524,23 @@ export interface operations {
     };
     diariesGet: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                size?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description 一覧取得成功 */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DiarySummary"][];
+                    "*/*": components["schemas"]["PageDiaryResponse"];
                 };
             };
             /** @description exception */
