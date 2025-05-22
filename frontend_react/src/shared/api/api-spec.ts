@@ -154,6 +154,19 @@ export interface components {
              */
             date: string;
         };
+        TaskResponse: {
+            /** Format: int32 */
+            id?: number;
+            title?: string;
+            memo?: string;
+            /** Format: date-time */
+            dueAt?: string;
+            isAllDay?: boolean;
+            /** Format: date-time */
+            completedAt?: string;
+            /** Format: int32 */
+            loadScore?: number;
+        };
         LoginRequest: {
             username?: string;
             password?: string;
@@ -167,19 +180,6 @@ export interface components {
             nickname?: string;
             /** Format: int64 */
             id?: number;
-        };
-        TaskResponse: {
-            /** Format: int32 */
-            id?: number;
-            title?: string;
-            memo?: string;
-            /** Format: date-time */
-            dueAt?: string;
-            isAllDay?: boolean;
-            /** Format: date-time */
-            completedAt?: string;
-            /** Format: int32 */
-            loadScore?: number;
         };
         DiarySummary: {
             /**
@@ -216,7 +216,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": string;
+                    "*/*": components["schemas"]["TaskResponse"];
                 };
             };
             /** @description exception */
@@ -433,7 +433,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": string;
+                    "*/*": components["schemas"]["TaskResponse"];
                 };
             };
             /** @description exception */
