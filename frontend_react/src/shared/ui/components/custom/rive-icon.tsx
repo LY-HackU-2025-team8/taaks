@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
 
 export type RiveIconProps = {
@@ -29,12 +29,6 @@ export const RiveIcon = ({
   iconType,
   isActive = false,
 }: RiveIconProps) => {
-  const [isClicked, setIsClicked] = useState<boolean>(isActive);
-
-  useEffect(() => {
-    setIsClicked(isActive);
-  }, [isActive]);
-
   const iconConfig = ICON_TYPES[iconType];
 
   const { rive, RiveComponent } = useRive({
@@ -50,12 +44,11 @@ export const RiveIcon = ({
     iconConfig.inputName
   );
 
-  // 状態変更時にアニメーションの入力値を更新
   useEffect(() => {
     if (input) {
-      input.value = isClicked ? ACTIVE_VALUE : INACTIVE_VALUE;
+      input.value = isActive ? ACTIVE_VALUE : INACTIVE_VALUE;
     }
-  }, [isClicked, input]);
+  }, [input, isActive]);
 
   return (
     <RiveComponent
