@@ -24,7 +24,6 @@ const addAuthHeader: Middleware = {
 /** バックエンドがエラー時にBodyを返すまでは、強制的にエラーを投げる */
 const forceThrowError: Middleware = {
   async onResponse({ response }) {
-    console.log(response);
     if (!response.ok && (await response.text()) === '') {
       throw new Error('Unexpected error');
     }

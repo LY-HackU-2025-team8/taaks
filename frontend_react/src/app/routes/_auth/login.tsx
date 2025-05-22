@@ -35,7 +35,7 @@ function RouteComponent() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { mutate, isPending } = $api.useMutation('post', '/login', {
+  const { mutate, isPending, error } = $api.useMutation('post', '/login', {
     onSuccess: (data) => {
       const token = data.token;
       if (!token) return;
@@ -101,6 +101,11 @@ function RouteComponent() {
                   </FormItem>
                 )}
               />
+              {error && (
+                <div className="text-destructive">
+                  {error?.message ?? 'ログインに失敗しました'}
+                </div>
+              )}
             </CardContent>
             <CardFooter className="gap-4">
               <Button size="icon" className="size-10" asChild>
