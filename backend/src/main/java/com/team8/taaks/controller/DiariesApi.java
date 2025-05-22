@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.team8.taaks.model.Diary;
 import com.team8.taaks.model.DiaryRequest;
 import com.team8.taaks.model.DiaryResponse;
 import com.team8.taaks.model.DiarySummary;
@@ -51,24 +52,24 @@ public interface DiariesApi {
      *
      * @return 一覧取得成功 (status code 200)
      */
-    @Operation(
-        operationId = "diariesGet",
-        summary = "日記一覧取得",
-        description = "ユーザーに紐づく日記の一覧を返す",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "一覧取得成功", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = DiarySummary.class)))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/diaries",
-        produces = { "application/json" }
-    )
+    // @Operation(
+    //     operationId = "diariesGet",
+    //     summary = "日記一覧取得",
+    //     description = "ユーザーに紐づく日記の一覧を返す",
+    //     responses = {
+    //         @ApiResponse(responseCode = "200", description = "一覧取得成功", content = {
+    //             @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Page<Diary>.class)))
+    //         })
+    //     },
+    //     security = {
+    //         @SecurityRequirement(name = "bearerAuth")
+    //     }
+    // )
+    // @RequestMapping(
+    //     method = RequestMethod.GET,
+    //     value = "/diaries",
+    //     produces = { "application/json" }
+    // )
     
     default ResponseEntity<List<DiarySummary>> diariesGet(
         
