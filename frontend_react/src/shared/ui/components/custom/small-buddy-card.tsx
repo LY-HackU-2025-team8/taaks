@@ -1,28 +1,15 @@
 import { CLIPING_PATH } from '@/shared/constant';
 import { RiveCheckButton } from '@/shared/ui/components/custom/rive-check-button';
 import { useState, useCallback } from 'react';
-import { Edit, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
 
-/**
- * Props for the SmallCard component.
- *
- * @property {string} title - タスクのタイトル (The title of the task)
- * @property {string} deadline - タスクの締切 (The deadline of the task)
- */
 export type SmallCardProps = {
   /* タスクのタイトル */
   title: string;
-  /* タスクの締切 */
-  deadline: string;
 };
 
-export const SmallCard = ({ title, deadline }: SmallCardProps) => {
+export const SmallBuddyCard = ({ title }: SmallCardProps) => {
   const [done, setDone] = useState(false);
-
-  const handleEdit: React.MouseEventHandler<HTMLButtonElement> =
-    useCallback(() => {
-      console.log('edit');
-    }, []);
 
   const handleMore: React.MouseEventHandler<HTMLButtonElement> =
     useCallback(() => {
@@ -36,18 +23,19 @@ export const SmallCard = ({ title, deadline }: SmallCardProps) => {
     }, []);
 
   return (
-    <div className="relative flex h-38.75 w-44.75">
+    <div className="text-taaks-white relative flex h-38.75 w-44.75">
       <div
-        className="bg-taaks-white relative z-0 flex h-38.75 w-44.75"
+        className="bg-buddy from-buddy-blue via-buddy-green to-buddy-yellow relative z-0 flex h-38.75 w-44.75 bg-gradient-to-br"
         style={{
           clipPath: `path("${CLIPING_PATH}")`,
         }}
       >
         <div className="z-1 p-3">
-          <p className="text-taaks-subtitle pt-1 text-[12px] font-bold">
-            {deadline}
+          <p className="pt-1 text-[12px] font-bold">
+            <span className="block">Buddyからの</span>
+            <span className="block">おすすめ</span>
           </p>
-          <p className="max-w-37.85 font-noto-sans-jp line-clamp-3 pt-6 text-[15px] leading-5 font-[600]">
+          <p className="max-w-37.85 font-noto-sans-jp line-clamp-3 pt-3 text-[15px] leading-5 font-[600]">
             {title}
           </p>
         </div>
@@ -57,19 +45,13 @@ export const SmallCard = ({ title, deadline }: SmallCardProps) => {
         >
           <MoreHorizontal className="size-5" />
         </button>
-        <button
-          onClick={handleEdit}
-          className="absolute right-4 bottom-2.25 z-1"
-        >
-          <Edit className="size-5" />
-        </button>
       </div>
 
       {/* 右上のボタン */}
       <button onClick={handleDone}>
         <RiveCheckButton
           className="absolute top-0 right-0 h-11.25 w-13.25"
-          type="todo"
+          type="buddy"
           done={done}
         />
       </button>

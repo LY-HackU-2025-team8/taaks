@@ -144,5 +144,8 @@
 @theme {
   --color-taaks-white: #fbfbfb;
   --color-taaks-subtitle: #909489;
+  --color-buddy-blue: lch(62.12 55.99 259.19);
+  --color-buddy-green: lch(81.48 72.77 153.04);
+  --color-buddy-yellow: lch(83.36 92.54 121.17);
   --font-noto-sans-jp: 'Noto Sans JP', LINESeedJP;
 }
