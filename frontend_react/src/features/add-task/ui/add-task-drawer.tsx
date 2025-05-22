@@ -13,14 +13,16 @@ import {
 } from '@/shared/ui/components/shadcn/drawer';
 import {
   Form,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/shared/ui/components/shadcn/form';
 import { Separator } from '@/shared/ui/components/shadcn/separator';
+import { Slider } from '@/shared/ui/components/shadcn/slider';
 import { Switch } from '@/shared/ui/components/shadcn/switch';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
@@ -30,7 +32,7 @@ import { z } from 'zod';
 const formSchema = z.object({
   title: z.string().min(1, 'タイトルを入力してください'),
   memo: z.string(),
-  dueAt: z.string(),
+  dueAt: z.date(),
   completedAt: z.undefined(),
   isAllDay: z.boolean(),
   loadScore: z.number(),
@@ -42,15 +44,14 @@ export type AddTaskDrawerProps = {
 
 export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
   const { mutate, isPending, error } = $api.useMutation('post', '/tasks');
+  const [isOpen, setIsOpen] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
       memo: '',
-      dueAt: format(
-        Number(new Date()) + 18 * 60 * 60 * 1000,
-        'yyyy-MM-dd HH:mm:ss'
-      ),
+      dueAt: new Date(),
       completedAt: undefined,
       isAllDay: false,
       loadScore: 0,
@@ -64,34 +65,35 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
   const handleSubmit = form.handleSubmit((data) => {
     const dueAt = new Date(data.dueAt).toISOString();
 
-    mutate({
-      body: {
-        ...data,
-        dueAt,
+    mutate(
+      {
+        body: {
+          ...data,
+          dueAt,
+        },
       },
-    });
+      {
+        onSuccess: () => {
+          form.reset();
+          setIsOpen(false);
+        },
+      }
+    );
   });
 
-  useEffect(() => {
-    form.setValue(
-      'dueAt',
-      isAllDay
-        ? format(Number(new Date(form.getValues('dueAt'))), 'yyyy-MM-dd')
-        : format(
-            Number(new Date(form.getValues('dueAt'))) - 9 * 60 * 60 * 1000,
-            'yyyy-MM-dd HH:mm:ss'
-          )
-    );
-  }, [form, isAllDay]);
-
   return (
-    <Drawer>
+    <Drawer
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      repositionInputs={false}
+      autoFocus
+    >
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent aria-describedby={undefined}>
         <Form {...form}>
           <form
-            className="flex h-[80vh] flex-col overflow-y-auto"
             onSubmit={handleSubmit}
+            className="overflow-y-auto overscroll-y-contain"
           >
             <DrawerHeader>
               <DrawerTitle>
@@ -103,6 +105,7 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
                       <InlineTextarea
                         className="w-full text-2xl"
                         placeholder="タイトル"
+                        disableLineBreaks
                         {...field}
                       />
                       <FormMessage />
@@ -112,19 +115,25 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
               </DrawerTitle>
             </DrawerHeader>
             <Separator />
-            <div className="space-y-8 p-7">
+            <div className="space-y-8 overflow-y-auto py-7">
               <FormField
                 control={form.control}
                 name="dueAt"
                 render={({ field }) => (
-                  <FormItem className="flex gap-4">
+                  <FormItem className="flex gap-4 px-7">
                     <FormLabel>
                       <LucideClock className="shrink-0" />
                     </FormLabel>
                     <DatePicker
                       className="w-full"
-                      withTime={!form.watch('isAllDay')}
-                      {...field}
+                      withTime={!isAllDay}
+                      onChange={(e) => {
+                        field.onChange(new Date(e.target.value));
+                      }}
+                      value={format(
+                        field.value,
+                        isAllDay ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
+                      )}
                     />
                     <FormMessage />
                   </FormItem>
@@ -134,7 +143,7 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
                 control={form.control}
                 name="isAllDay"
                 render={({ field }) => (
-                  <FormItem className="flex gap-4">
+                  <FormItem className="flex gap-4 px-7">
                     <FormLabel>終日</FormLabel>
                     <Switch
                       checked={field.value}
@@ -144,14 +153,36 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
                   </FormItem>
                 )}
               />
-            </div>
-            <Separator />
-            <div className="p-7">
+              <Separator />
+              <FormField
+                control={form.control}
+                name="loadScore"
+                render={({ field }) => (
+                  <FormItem className="flex gap-4 px-7">
+                    <FormLabel className="shrink-0">負荷スコア</FormLabel>
+                    <Slider
+                      className="flex-1"
+                      value={[field.value]}
+                      onValueChange={(value) => {
+                        field.onChange(value[0]);
+                      }}
+                      min={0}
+                      max={10}
+                      step={1}
+                    />
+                    <FormDescription className="w-3 text-center">
+                      {field.value}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Separator />
               <FormField
                 control={form.control}
                 name="memo"
                 render={({ field }) => (
-                  <FormItem className="flex gap-4">
+                  <FormItem className="flex gap-4 px-7">
                     <FormLabel>
                       <LucideNotepadText className="shrink-0" />
                     </FormLabel>
@@ -170,7 +201,7 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
                 {error?.message ?? 'タスクの追加に失敗しました'}
               </div>
             )}
-            <DrawerFooter className="flex-row-reverse">
+            <DrawerFooter className="flex-row-reverse pt-0">
               <Button className="flex-1" type="submit" disabled={isPending}>
                 保存
               </Button>
