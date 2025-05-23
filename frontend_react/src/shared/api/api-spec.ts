@@ -40,6 +40,49 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+<<<<<<< HEAD
+=======
+    "/buddy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get buddy information
+         * @description Retrieves the buddy information for the authenticated user.
+         */
+        get: operations["getBuddy"];
+        /**
+         * Create or update buddy information
+         * @description Creates or updates the buddy information for the authenticated user.
+         */
+        put: operations["upsertBuddy"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getTask"];
+        put?: never;
+        post: operations["createTask"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+>>>>>>> baf1433 (feat: add Buddy management endpoints and schemas for buddy information)
     "/login": {
         parameters: {
             query?: never;
@@ -135,9 +178,50 @@ export interface components {
             /** @example プログラミング */
             title: string;
         };
+<<<<<<< HEAD
         /** @description エラー時のレスポンス */
         ErrorResponse: {
             message?: string;
+=======
+        BuddyRequest: {
+            nickname: string;
+            /** Format: int64 */
+            hairStyleId: number;
+            /** Format: int64 */
+            clothesId: number;
+            /** Format: int64 */
+            colorId: number;
+            name: string;
+        };
+        BuddyResponse: {
+            /** Format: int64 */
+            id?: number;
+            nickname?: string;
+            /** Format: int64 */
+            hairStyleId?: number;
+            /** Format: int64 */
+            clothesId?: number;
+            /** Format: int64 */
+            colorId?: number;
+            name?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        TaskResponse: {
+            /** Format: int32 */
+            id?: number;
+            title?: string;
+            memo?: string;
+            /** Format: date-time */
+            dueAt?: string;
+            isAllDay?: boolean;
+            /** Format: date-time */
+            completedAt?: string;
+            /** Format: int32 */
+            loadScore?: number;
+>>>>>>> baf1433 (feat: add Buddy management endpoints and schemas for buddy information)
         };
         LoginRequest: {
             password?: string;
@@ -423,7 +507,62 @@ export interface operations {
             };
         };
     };
+<<<<<<< HEAD
     login: {
+=======
+    getBuddy: {
+>>>>>>> baf1433 (feat: add Buddy management endpoints and schemas for buddy information)
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+<<<<<<< HEAD
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+=======
+        requestBody?: never;
+        responses: {
+            /** @description Successfully retrieved buddy information */
+>>>>>>> baf1433 (feat: add Buddy management endpoints and schemas for buddy information)
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+<<<<<<< HEAD
+                    "*/*": components["schemas"]["LoginResponse"];
+=======
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Buddy not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    upsertBuddy: {
         parameters: {
             query?: never;
             header?: never;
@@ -432,17 +571,36 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["LoginRequest"];
+                "application/json": components["schemas"]["BuddyRequest"];
             };
         };
         responses: {
-            /** @description OK */
+            /** @description Successfully updated buddy information */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["LoginResponse"];
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Successfully created buddy information */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Invalid request body */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+>>>>>>> baf1433 (feat: add Buddy management endpoints and schemas for buddy information)
                 };
             };
             /** @description exception */
