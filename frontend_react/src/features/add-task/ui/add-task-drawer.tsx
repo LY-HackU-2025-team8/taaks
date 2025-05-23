@@ -22,7 +22,7 @@ import {
 import { Separator } from '@/shared/ui/components/shadcn/separator';
 import { Slider } from '@/shared/ui/components/shadcn/slider';
 import { Switch } from '@/shared/ui/components/shadcn/switch';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
@@ -53,6 +53,10 @@ export const AddTaskDrawer = ({
 }: AddTaskDrawerProps) => {
   const { mutate, isPending, error } = $api.useMutation('post', '/tasks');
   const [isOpen, setIsOpen] = useState(open);
+
+  useEffect(() => {
+    setIsOpen(open);
+  }, [open]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

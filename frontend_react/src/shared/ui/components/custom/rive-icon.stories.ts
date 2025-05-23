@@ -8,7 +8,7 @@ const meta: Meta<typeof RiveIcon> = {
   argTypes: {
     iconType: {
       control: 'select',
-      options: ['Home', 'ToDo', 'Diary', 'Account', 'PLUS'],
+      options: ['Home', 'ToDo', 'Diary', 'Account', 'Plus'],
     },
     className: { control: 'text' },
   },
@@ -56,7 +56,7 @@ export const AccountIcon: Story = {
 
 export const PlusIcon: Story = {
   args: {
-    iconType: 'PLUS',
+    iconType: 'Plus',
     className: 'size-24',
   },
 };

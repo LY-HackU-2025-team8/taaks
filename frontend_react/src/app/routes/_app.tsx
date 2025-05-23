@@ -63,7 +63,7 @@ function RouteComponent() {
                 >
                   <RiveIcon
                     className="size-10"
-                    iconType="PLUS"
+                    iconType="Plus"
                     isActive={isDrawerOpen}
                   />
                 </Button>
