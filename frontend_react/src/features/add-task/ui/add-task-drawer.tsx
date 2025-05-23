@@ -46,7 +46,11 @@ export type AddTaskDrawerProps = {
   triggerComponent?: React.ReactNode;
 };
 
-export const AddTaskDrawer = ({ onOpenChange, open=false, triggerComponent }: AddTaskDrawerProps) => {
+export const AddTaskDrawer = ({
+  onOpenChange,
+  open = false,
+  triggerComponent,
+}: AddTaskDrawerProps) => {
   const { mutate, isPending, error } = $api.useMutation('post', '/tasks');
   const [isOpen, setIsOpen] = useState(open);
 
