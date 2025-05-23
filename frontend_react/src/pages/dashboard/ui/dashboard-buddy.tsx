@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/components/shadcn/button';
 import { Link } from '@tanstack/react-router';
 
 export const DashboardBuddy = () => {
-  const { data: user } = $api.useQuery('get', '/users/me');
+  const { data: buddy } = $api.useQuery('get', '/buddy');
 
   // 時間帯に応じて挨拶を変更する
   const date = new Date();
@@ -17,7 +17,7 @@ export const DashboardBuddy = () => {
       <div className="z-10 flex flex-col gap-3">
         <div className="text-2xl font-bold">
           <span className="block">{greeting}</span>
-          <span className="block">{user?.nickname}さん！</span>
+          <span className="block">{buddy?.nickname}さん！</span>
         </div>
         <Button
           asChild
