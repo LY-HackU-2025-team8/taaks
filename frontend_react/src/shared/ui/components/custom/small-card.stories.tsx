@@ -8,7 +8,7 @@ const meta: Meta<typeof SmallCard> = {
     backgrounds: {
       default: 'gray',
       values: [
-        { name: 'gray', value: '#EAEBE7'},
+        { name: 'gray', value: '#EAEBE7' },
         { name: 'black', value: '#121403' },
       ],
     },
