@@ -70,7 +70,7 @@ public class LoginController {
 	}
 
 	@GetMapping("/users/me")
-	public ResponseEntity<UsersResponse> userInfo(@AuthenticationPrincipal TaakUser user, BuddyRepository buddyRepository) {
+	public ResponseEntity<UsersResponse> userInfo(@AuthenticationPrincipal TaakUser user) {
 		return ResponseEntity.ok(new UsersResponse(user.getUsername(), user.getId()));
 	}
 	
