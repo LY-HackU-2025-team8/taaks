@@ -3,12 +3,6 @@ import { RiveCheckButton } from '@/shared/ui/components/custom/rive-check-button
 import { useState, useCallback } from 'react';
 import { Edit, MoreHorizontal } from 'lucide-react';
 
-/**
- * Props for the SmallCard component.
- *
- * @property {string} title - タスクのタイトル (The title of the task)
- * @property {string} deadline - タスクの締切 (The deadline of the task)
- */
 export type SmallCardProps = {
   /* タスクのタイトル */
   title: string;
