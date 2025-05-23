@@ -251,7 +251,6 @@ export interface components {
             /** Format: int64 */
             id?: number;
         };
-        BuddyRepository: unknown;
         PageTaskResponse: {
 >>>>>>> f9360bc (feat: update user model and API to remove nickname and integrate BuddyRepository)
             /** Format: int64 */
@@ -757,9 +756,7 @@ export interface operations {
     };
     userInfo: {
         parameters: {
-            query: {
-                buddyRepository: components["schemas"]["BuddyRepository"];
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;

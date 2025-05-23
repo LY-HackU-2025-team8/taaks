@@ -304,12 +304,6 @@ paths:
   /users/me:
     get:
       operationId: userInfo
-      parameters:
-      - name: buddyRepository
-        in: query
-        required: true
-        schema:
-          $ref: "#/components/schemas/BuddyRepository"
       responses:
         "200":
           content:
@@ -394,7 +388,6 @@ components:
         id:
           type: integer
           format: int64
-    BuddyRepository: {}
     PageTaskResponse:
       type: object
       properties:
