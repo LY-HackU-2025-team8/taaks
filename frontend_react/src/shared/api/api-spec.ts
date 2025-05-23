@@ -184,31 +184,31 @@ export interface components {
             totalPages?: number;
             pageable?: components["schemas"]["PageableObject"];
             /** Format: int32 */
-            numberOfElements?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
             size?: number;
             content?: components["schemas"]["TaskResponse"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
         PageableObject: {
-            unpaged?: boolean;
             paged?: boolean;
             /** Format: int32 */
             pageNumber?: number;
             /** Format: int32 */
             pageSize?: number;
+            unpaged?: boolean;
             /** Format: int64 */
             offset?: number;
             sort?: components["schemas"]["SortObject"];
         };
         SortObject: {
-            unsorted?: boolean;
             sorted?: boolean;
+            unsorted?: boolean;
             empty?: boolean;
         };
         PageDiaryResponse: {
@@ -218,15 +218,15 @@ export interface components {
             totalPages?: number;
             pageable?: components["schemas"]["PageableObject"];
             /** Format: int32 */
-            numberOfElements?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
             size?: number;
             content?: components["schemas"]["DiaryResponse"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
+            /** Format: int32 */
+            numberOfElements?: number;
+            first?: boolean;
+            last?: boolean;
             empty?: boolean;
         };
     };
