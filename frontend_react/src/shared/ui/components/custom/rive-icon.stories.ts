@@ -21,7 +21,7 @@ type Story = StoryObj<typeof RiveIcon>;
 export const Default: Story = {
   args: {
     iconType: 'Home',
-    className: 'w-24 h-24',
+    className: 'size-24',
     isActive: true,
   },
 };
@@ -29,34 +29,34 @@ export const Default: Story = {
 export const HomeIcon: Story = {
   args: {
     iconType: 'Home',
-    className: 'w-24 h-24',
+    className: 'size-24',
   },
 };
 
 export const TodoIcon: Story = {
   args: {
     iconType: 'ToDo',
-    className: 'w-24 h-24',
+    className: 'size-24',
   },
 };
 
 export const DiaryIcon: Story = {
   args: {
     iconType: 'Diary',
-    className: 'w-24 h-24',
+    className: 'size-24',
   },
 };
 
 export const AccountIcon: Story = {
   args: {
     iconType: 'Account',
-    className: 'w-24 h-24',
+    className: 'size-24',
   },
 };
 
 export const PlusIcon: Story = {
   args: {
     iconType: 'PLUS',
-    className: 'w-24 h-24',
+    className: 'size-24',
   },
 };

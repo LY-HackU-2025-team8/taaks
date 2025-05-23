@@ -2,7 +2,6 @@ import { AddTaskDrawer } from '@/features/add-task/ui/add-task-drawer';
 import { RiveIcon } from '@/shared/ui/components/custom/rive-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { useState } from 'react';
-import { useLocation } from '@tanstack/react-router';
 import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
 import { checkLogin } from '../api/check-login';
 
@@ -14,8 +13,6 @@ export const Route = createFileRoute('/_app')({
 
 function RouteComponent() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const location = useLocation();
-  const currentPath = location.pathname;
   return (
     <>
       <Outlet />
@@ -26,12 +23,16 @@ function RouteComponent() {
               to="/dashboard"
               className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
             >
-              <RiveIcon
-                className="size-8"
-                iconType="Home"
-                isActive={currentPath === '/dashboard'}
-              />
-              Home
+              {(state) => (
+                <>
+                  <RiveIcon
+                    className="size-8"
+                    iconType="Home"
+                    isActive={state.isActive}
+                  />
+                  Home
+                </>
+              )}
             </Link>
           </li>
           <li className="contents">
@@ -39,12 +40,16 @@ function RouteComponent() {
               to="/todo"
               className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
             >
-              <RiveIcon
-                className="size-8"
-                iconType="ToDo"
-                isActive={currentPath === '/todo'}
-              />
-              Todo
+              {(state) => (
+                <>
+                  <RiveIcon
+                    className="size-8"
+                    iconType="ToDo"
+                    isActive={state.isActive}
+                  />
+                  Todo
+                </>
+              )}
             </Link>
           </li>
           <li className="contents">
@@ -70,12 +75,16 @@ function RouteComponent() {
               to="/diary"
               className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
             >
-              <RiveIcon
-                className="size-8"
-                iconType="Diary"
-                isActive={currentPath === '/diary'}
-              />
-              Diary
+              {(state) => (
+                <>
+                  <RiveIcon
+                    className="size-8"
+                    iconType="Diary"
+                    isActive={state.isActive}
+                  />
+                  Diary
+                </>
+              )}
             </Link>
           </li>
           <li className="contents">
@@ -83,12 +92,16 @@ function RouteComponent() {
               to="/account"
               className="flex flex-1 flex-col items-center gap-1 text-[0.625rem]"
             >
-              <RiveIcon
-                className="size-8"
-                iconType="Account"
-                isActive={currentPath === '/account'}
-              />
-              Account
+              {(state) => (
+                <>
+                  <RiveIcon
+                    className="size-8"
+                    iconType="Account"
+                    isActive={state.isActive}
+                  />
+                  Account
+                </>
+              )}
             </Link>
           </li>
         </ul>
