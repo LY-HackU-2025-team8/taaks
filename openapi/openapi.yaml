@@ -304,6 +304,12 @@ paths:
   /users/me:
     get:
       operationId: userInfo
+      parameters:
+      - name: buddyRepository
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/BuddyRepository"
       responses:
         "200":
           content:
@@ -383,20 +389,19 @@ components:
     PageDiaryResponse:
       type: object
       properties:
-        content:
-          type: array
-          items:
-            $ref: "#/components/schemas/DiaryResponse"
-        empty:
-          type: boolean
-        first:
-          type: boolean
-        last:
-          type: boolean
-        number:
+        username:
+          type: string
+        id:
           type: integer
-          format: int32
-        numberOfElements:
+          format: int64
+    BuddyRepository: {}
+    PageTaskResponse:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
           type: integer
           format: int32
         pageable:

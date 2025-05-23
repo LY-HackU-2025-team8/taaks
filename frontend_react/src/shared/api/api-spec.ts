@@ -231,6 +231,7 @@ export interface components {
             token?: string;
             user?: components["schemas"]["UsersResponse"];
         };
+<<<<<<< HEAD
         PageDiaryResponse: {
             content?: components["schemas"]["DiaryResponse"][];
             empty?: boolean;
@@ -244,6 +245,15 @@ export interface components {
             /** Format: int32 */
             size?: number;
             sort?: components["schemas"]["SortObject"];
+=======
+        UsersResponse: {
+            username?: string;
+            /** Format: int64 */
+            id?: number;
+        };
+        BuddyRepository: unknown;
+        PageTaskResponse: {
+>>>>>>> f9360bc (feat: update user model and API to remove nickname and integrate BuddyRepository)
             /** Format: int64 */
             totalElements?: number;
             /** Format: int32 */
@@ -747,7 +757,9 @@ export interface operations {
     };
     userInfo: {
         parameters: {
-            query?: never;
+            query: {
+                buddyRepository: components["schemas"]["BuddyRepository"];
+            };
             header?: never;
             path?: never;
             cookie?: never;

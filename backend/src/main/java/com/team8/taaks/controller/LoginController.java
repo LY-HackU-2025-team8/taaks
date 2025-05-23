@@ -1,6 +1,8 @@
 package com.team8.taaks.controller;
 
 
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team8.taaks.config.JwtTokenUtil;
+import com.team8.taaks.model.Buddy;
+import com.team8.taaks.model.BuddyRepository;
 import com.team8.taaks.model.TaakUser;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -58,7 +62,7 @@ public class LoginController {
 		securityContextHolderStrategy.setContext(context);
 		securityContextRepository.saveContext(context, request, response); 
         if (authenticationResponse.isAuthenticated()) {
-			LoginResponse loginResponse = new LoginResponse(token, new UsersResponse(user.getUsername(), user.getNickName(), user.getId()));
+			LoginResponse loginResponse = new LoginResponse(token, new UsersResponse(user.getUsername(), user.getId()));
             return ResponseEntity.ok(loginResponse);
         } else {
 			return ResponseEntity.status(401).build();
@@ -66,14 +70,13 @@ public class LoginController {
 	}
 
 	@GetMapping("/users/me")
-	public ResponseEntity<UsersResponse> userInfo(@AuthenticationPrincipal TaakUser user) {
-		return ResponseEntity.ok(new UsersResponse(user.getUsername(), user.getNickName(), user.getId()));
+	public ResponseEntity<UsersResponse> userInfo(@AuthenticationPrincipal TaakUser user, BuddyRepository buddyRepository) {
+		return ResponseEntity.ok(new UsersResponse(user.getUsername(), user.getId()));
 	}
 	
-
 	public record LoginRequest(String username, String password) {
 	}
-	public record UsersResponse(String username, String nickname, Long id) {
+	public record UsersResponse(String username, Long id) {
 	}
 	public record LoginResponse(String token, UsersResponse user) {
 	}
