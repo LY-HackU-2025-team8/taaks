@@ -1,7 +1,6 @@
 package com.team8.taaks.controller;
 
 
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team8.taaks.config.JwtTokenUtil;
-import com.team8.taaks.model.Buddy;
-import com.team8.taaks.model.BuddyRepository;
 import com.team8.taaks.model.TaakUser;
 
 import jakarta.servlet.http.HttpServletRequest;

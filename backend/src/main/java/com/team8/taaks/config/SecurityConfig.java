@@ -4,7 +4,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
-import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team8.taaks.dto.ErrorResponse;
-import com.team8.taaks.model.BuddyRepository;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.model.TaakUserDetailManager;
 import com.team8.taaks.model.TaakUserRepository;
