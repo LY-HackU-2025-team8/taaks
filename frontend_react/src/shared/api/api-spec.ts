@@ -184,15 +184,15 @@ export interface components {
             totalPages?: number;
             pageable?: components["schemas"]["PageableObject"];
             /** Format: int32 */
+            numberOfElements?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
             size?: number;
             content?: components["schemas"]["TaskResponse"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            first?: boolean;
-            last?: boolean;
             empty?: boolean;
         };
         PageableObject: {
@@ -218,15 +218,15 @@ export interface components {
             totalPages?: number;
             pageable?: components["schemas"]["PageableObject"];
             /** Format: int32 */
+            numberOfElements?: number;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
             size?: number;
             content?: components["schemas"]["DiaryResponse"][];
             /** Format: int32 */
             number?: number;
             sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            first?: boolean;
-            last?: boolean;
             empty?: boolean;
         };
     };
