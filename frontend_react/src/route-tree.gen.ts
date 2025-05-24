@@ -16,7 +16,7 @@ import { Route as AppImport } from './app/routes/_app'
 import { Route as IndexImport } from './app/routes/index'
 import { Route as AuthLoginImport } from './app/routes/_auth/login'
 import { Route as AppTabTopPagesImport } from './app/routes/_app/_tab-top-pages'
-import { Route as AppDiaryCreateImport } from './app/routes/_app/diary/create'
+import { Route as AppDiaryNewImport } from './app/routes/_app/diary/new'
 import { Route as AppTabTopPagesTodoImport } from './app/routes/_app/_tab-top-pages/todo'
 import { Route as AppTabTopPagesDiaryImport } from './app/routes/_app/_tab-top-pages/diary'
 import { Route as AppTabTopPagesDashboardImport } from './app/routes/_app/_tab-top-pages/dashboard'
@@ -52,9 +52,9 @@ const AppTabTopPagesRoute = AppTabTopPagesImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppDiaryCreateRoute = AppDiaryCreateImport.update({
-  id: '/diary/create',
-  path: '/diary/create',
+const AppDiaryNewRoute = AppDiaryNewImport.update({
+  id: '/diary/new',
+  path: '/diary/new',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -162,11 +162,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTabTopPagesTodoImport
       parentRoute: typeof AppTabTopPagesImport
     }
-    '/_app/diary/create': {
-      id: '/_app/diary/create'
-      path: '/diary/create'
-      fullPath: '/diary/create'
-      preLoaderRoute: typeof AppDiaryCreateImport
+    '/_app/diary/new': {
+      id: '/_app/diary/new'
+      path: '/diary/new'
+      fullPath: '/diary/new'
+      preLoaderRoute: typeof AppDiaryNewImport
       parentRoute: typeof AppImport
     }
   }
@@ -196,12 +196,12 @@ const AppTabTopPagesRouteWithChildren = AppTabTopPagesRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppTabTopPagesRoute: typeof AppTabTopPagesRouteWithChildren
-  AppDiaryCreateRoute: typeof AppDiaryCreateRoute
+  AppDiaryNewRoute: typeof AppDiaryNewRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppTabTopPagesRoute: AppTabTopPagesRouteWithChildren,
-  AppDiaryCreateRoute: AppDiaryCreateRoute,
+  AppDiaryNewRoute: AppDiaryNewRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -225,7 +225,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AppTabTopPagesDashboardRoute
   '/diary': typeof AppTabTopPagesDiaryRoute
   '/todo': typeof AppTabTopPagesTodoRoute
-  '/diary/create': typeof AppDiaryCreateRoute
+  '/diary/new': typeof AppDiaryNewRoute
 }
 
 export interface FileRoutesByTo {
@@ -237,7 +237,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AppTabTopPagesDashboardRoute
   '/diary': typeof AppTabTopPagesDiaryRoute
   '/todo': typeof AppTabTopPagesTodoRoute
-  '/diary/create': typeof AppDiaryCreateRoute
+  '/diary/new': typeof AppDiaryNewRoute
 }
 
 export interface FileRoutesById {
@@ -252,7 +252,7 @@ export interface FileRoutesById {
   '/_app/_tab-top-pages/dashboard': typeof AppTabTopPagesDashboardRoute
   '/_app/_tab-top-pages/diary': typeof AppTabTopPagesDiaryRoute
   '/_app/_tab-top-pages/todo': typeof AppTabTopPagesTodoRoute
-  '/_app/diary/create': typeof AppDiaryCreateRoute
+  '/_app/diary/new': typeof AppDiaryNewRoute
 }
 
 export interface FileRouteTypes {
@@ -266,7 +266,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/diary'
     | '/todo'
-    | '/diary/create'
+    | '/diary/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -277,7 +277,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/diary'
     | '/todo'
-    | '/diary/create'
+    | '/diary/new'
   id:
     | '__root__'
     | '/'
@@ -290,7 +290,7 @@ export interface FileRouteTypes {
     | '/_app/_tab-top-pages/dashboard'
     | '/_app/_tab-top-pages/diary'
     | '/_app/_tab-top-pages/todo'
-    | '/_app/diary/create'
+    | '/_app/diary/new'
   fileRoutesById: FileRoutesById
 }
 
@@ -328,7 +328,7 @@ export const routeTree = rootRoute
       "filePath": "_app.tsx",
       "children": [
         "/_app/_tab-top-pages",
-        "/_app/diary/create"
+        "/_app/diary/new"
       ]
     },
     "/_auth": {
@@ -372,8 +372,8 @@ export const routeTree = rootRoute
       "filePath": "_app/_tab-top-pages/todo.tsx",
       "parent": "/_app/_tab-top-pages"
     },
-    "/_app/diary/create": {
-      "filePath": "_app/diary/create.tsx",
+    "/_app/diary/new": {
+      "filePath": "_app/diary/new.tsx",
       "parent": "/_app"
     }
   }
