@@ -19,7 +19,8 @@
     "generate:react": "npm run -w taaks-react generate",
     "generate": "run-s generate:*",
     "dev:react": "npm run -w taaks-react dev",
-    "dev": "run-s dev:*",
+    "dev:spring-boot": "cd backend && ./gradlew bootRun",
+    "dev": "run-p dev:*",
     "storybook": "npm run -w taaks-react storybook",
     "storybook-build": "npm run -w taaks-react storybook-build"
   },
