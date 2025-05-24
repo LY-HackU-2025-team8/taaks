@@ -448,7 +448,54 @@ paths:
           description: exception
       tags:
       - task-controller
+  /users:
+    post:
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistrationRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - taak-user-controller
   /users/me:
+    delete:
+      operationId: deleteAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteAccountRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/GenericMessageResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - taak-user-controller
     get:
       operationId: userInfo
       responses:
@@ -465,7 +512,55 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
       tags:
-      - login-controller
+      - taak-user-controller
+  /users/me/password:
+    patch:
+      operationId: changePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/GenericMessageResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - taak-user-controller
+  /users/me/username:
+    patch:
+      operationId: changeUsername
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangeUsernameRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - taak-user-controller
 components:
   schemas:
     BuddyRequest:
@@ -515,6 +610,23 @@ components:
         updatedAt:
           type: string
           format: date-time
+    ChangePasswordRequest:
+      type: object
+      properties:
+        newPassword:
+          type: string
+        oldPassword:
+          type: string
+    ChangeUsernameRequest:
+      type: object
+      properties:
+        newUsername:
+          type: string
+    DeleteAccountRequest:
+      type: object
+      properties:
+        password:
+          type: string
     DiaryRequest:
       type: object
       properties:
@@ -557,6 +669,11 @@ components:
     ErrorResponse:
       type: object
       description: エラー時のレスポンス
+      properties:
+        message:
+          type: string
+    GenericMessageResponse:
+      type: object
       properties:
         message:
           type: string
@@ -770,6 +887,13 @@ components:
             type: string
             format: date-time
         title:
+          type: string
+    UserRegistrationRequest:
+      type: object
+      properties:
+        password:
+          type: string
+        username:
           type: string
     UsersResponse:
       type: object

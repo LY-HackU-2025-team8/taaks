@@ -144,6 +144,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["registerUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/users/me": {
         parameters: {
             query?: never;
@@ -154,10 +170,42 @@ export interface paths {
         get: operations["userInfo"];
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["deleteAccount"];
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/users/me/password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["changePassword"];
+        trace?: never;
+    };
+    "/users/me/username": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["changeUsername"];
         trace?: never;
     };
 }
@@ -190,6 +238,16 @@ export interface components {
             /** Format: date-time */
             updatedAt?: string;
         };
+        ChangePasswordRequest: {
+            newPassword?: string;
+            oldPassword?: string;
+        };
+        ChangeUsernameRequest: {
+            newUsername?: string;
+        };
+        DeleteAccountRequest: {
+            password?: string;
+        };
         DiaryRequest: {
             /** @example たくさんコードを書いた */
             body: string;
@@ -219,6 +277,9 @@ export interface components {
         };
         /** @description エラー時のレスポンス */
         ErrorResponse: {
+            message?: string;
+        };
+        GenericMessageResponse: {
             message?: string;
         };
         LoginRequest: {
@@ -338,6 +399,10 @@ export interface components {
             memo?: string;
             scheduledAt?: string[];
             title?: string;
+        };
+        UserRegistrationRequest: {
+            password?: string;
+            username?: string;
         };
         UsersResponse: {
             /** Format: int64 */
@@ -887,6 +952,39 @@ export interface operations {
             };
         };
     };
+    registerUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserRegistrationRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["LoginResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     userInfo: {
         parameters: {
             query?: never;
@@ -895,6 +993,105 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["UsersResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    deleteAccount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteAccountRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GenericMessageResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    changePassword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangePasswordRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GenericMessageResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    changeUsername: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeUsernameRequest"];
+            };
+        };
         responses: {
             /** @description OK */
             200: {
