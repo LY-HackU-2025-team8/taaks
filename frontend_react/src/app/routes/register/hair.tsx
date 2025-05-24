@@ -64,53 +64,45 @@ function RouteComponent() {
               className="absolute -top-1 -left-12 size-95"
               motionId={1}
               hairId={form.watch('hairStyle') ?? 1}
+              clothesId={form.watch('clothes') ?? 1}
             />
           </div>
         </div>
-        <p className="pt-6 text-[1.25rem] font-bold">ヘアスタイルを選択</p>
+        <p className="pt-6 pb-2 text-[1.25rem] font-bold">ヘアスタイルを選択</p>
 
-        <div className="mt-4">
-          <FormField
-            control={form.control}
-            name={inputName}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <ToggleGroup
-                    className="flex h-[138px] overflow-x-scroll"
-                    type="single"
-                    defaultValue="1"
-                    {...field}
-                    value={field.value ? String(field.value) : '1'}
-                    onValueChange={(value) => {
-                      field.onChange(Number(value));
-                    }}
-                  >
-                    {array.map((item) => (
-                      <ToggleGroupItem
-                        key={item.value}
-                        value={item.value}
-                        className="flex h-[138px] w-[107px] flex-col items-center justify-center rounded-2xl border-2"
-                      >
-                        {item.icon}
-                        <span className="mt-2">{item.name}</span>
-                      </ToggleGroupItem>
-                    ))}
+        <FormField
+          control={form.control}
+          name={inputName}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <ToggleGroup
+                  className="flex h-40 overflow-x-scroll gap-2"
+                  type="single"
+                  defaultValue="1"
+                  {...field}
+                  value={field.value ? String(field.value) : '1'}
+                  onValueChange={(value) => {
+                    field.onChange(Number(value));
+                  }}
+                >
+                  {array.map((item) => (
+                    <ToggleGroupItem
+                      key={item.value}
+                      value={item.value}
+                      className="flex h-[8.625rem] w-[6.6875rem] flex-col items-center justify-center rounded-2xl border-2"
+                    >
+                      {item.icon}
+                      <span className="mt-2">{item.name}</span>
+                    </ToggleGroupItem>
+                  ))}
 
-                    {/* <ToggleGroupItem value="1" className='flex items-center'>
-                    <Fusafusa className="size-24" />
-                  </ToggleGroupItem>
-
-                  <ToggleGroupItem value="2">B</ToggleGroupItem>
-
-                  <ToggleGroupItem value="3">C</ToggleGroupItem> */}
-                  </ToggleGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+                </ToggleGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <RegisterNavigation prev_path="/register/nickname" />
       </form>
     </>

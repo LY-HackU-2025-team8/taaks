@@ -1,0 +1,227 @@
+import React from "react";
+
+// カディガン
+export const Cardigan: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 590.6 325.24" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g>
+      <g>
+        <path d="M302.41,322.17c9.45-111.64,33.54-217.57,78.75-315.25,48.7,8.42,95.89,34.71,142.1,72.81,29.52,59.84,50.58,138.12,64.26,232.51"
+          stroke="#000" strokeWidth={6.14} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M415.79,15.91c-44.47,100.59-71.07,202.48-71.58,306.26"
+          stroke="#000" strokeWidth={6.14} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M219.12,322.17c-23.61-101.4-32.01-197.34-11.33-282.85.88-3.63-3.02-6.72-6.8-5.35C107.15,67.81,35.44,151.06,3.07,322.17"
+          stroke="#000" strokeWidth={6.14} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M88.44,187.6l-9.85,24.61c5.57,37.63,7.57,73.71,0,105.66"
+          stroke="#000" strokeWidth={6.14} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M508.7,91.91c-38.89,48.35-58.57,123.95-56.59,230.26"
+          stroke="#000" strokeWidth={6.14} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M204.64,53.58c3.29,48.56,102.64,43.33,161.3-11.5"
+          stroke="#000" strokeWidth={6.14} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M222.81,28.27c1.18,35.37,89.74,36.19,134.91-25.2"
+          stroke="#000" strokeWidth={6.14} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M175.49,44.68c-15.16,96.95-13.17,189.92,12.13,277.49"
+          stroke="#000" strokeWidth={6.14} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+      </g>
+      <g>
+        <path d="M302.41,322.17c9.45-111.64,33.54-217.57,78.75-315.25,48.7,8.42,95.89,34.71,142.1,72.81,29.52,59.84,50.58,138.12,64.26,232.51"
+          stroke="#000" strokeWidth={8.72} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M415.79,15.91c-44.47,100.59-71.07,202.48-71.58,306.26"
+          stroke="#000" strokeWidth={8.72} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M219.12,322.17c-23.61-101.4-32.01-197.34-11.33-282.85.88-3.63-3.02-6.72-6.8-5.35C107.15,67.81,35.44,151.06,3.07,322.17"
+          stroke="#000" strokeWidth={8.72} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M88.44,187.6l-9.85,24.61c5.57,37.63,7.57,73.71,0,105.66"
+          stroke="#000" strokeWidth={8.72} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M508.7,91.91c-38.89,48.35-58.57,123.95-56.59,230.26"
+          stroke="#000" strokeWidth={8.72} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M204.64,53.58c3.29,48.56,102.64,43.33,161.3-11.5"
+          stroke="#000" strokeWidth={8.72} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M222.81,28.27c1.18,35.37,89.74,36.19,134.91-25.2"
+          stroke="#000" strokeWidth={8.72} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+        <path d="M175.49,44.68c-15.16,96.95-13.17,189.92,12.13,277.49"
+          stroke="#000" strokeWidth={8.72} strokeLinecap="round" strokeMiterlimit={10} fill="none"/>
+      </g>
+    </g>
+  </svg>
+);
+
+// ユニーク
+export const Unique: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 590.75 352.15" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g>
+      <g>
+        <polyline points="471.64 150.39 419.07 183.13 440.87 225.13 426.12 237.49 438.95 249.84 438.95 345.44"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.72}/>
+        <polyline points="205.57 301.73 189.54 237.49 254.94 256.02 254.94 225.75 274.81 239.34"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.72}/>
+        <line x1="347.26" y1="244.28" x2="340.85" y2="259.72"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.72}/>
+        <line x1="363.29" y1="263.73" x2="355.6" y2="267.75"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.72}/>
+        <polyline points="113.15 201.01 74.77 211.52 93.96 283.12 93.96 345.44"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.72}/>
+        <path d="M17.49,349.29l-14.32-31.83,38.38-76.71,9,84.44-15.3-152.88,64.16-21.93,5.16-29.4,27.5,3.86,33.22-72.85,65.94,13.76c17.36,30.86,82.43,32.05,122.46-24.71L443.43,3.99l11.54,61.77,69.88-5.56-12.82,46.33,74.37,38.92-43.6,56.83,14.75,18.52-9.47,11.36-42.47,50.96,42.47-50.96,32.55,26.95-26.93,53.74,12.82,16.68-12.82,19.77"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.72}/>
+      </g>
+      <g>
+        <polyline points="471.64 150.39 419.07 183.13 440.87 225.13 426.12 237.49 438.95 249.84 438.95 345.44"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <polyline points="205.57 301.73 189.54 237.49 254.94 256.02 254.94 225.75 274.81 239.34"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <line x1="347.26" y1="244.28" x2="340.85" y2="259.72"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <line x1="363.29" y1="263.73" x2="355.6" y2="267.75"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <polyline points="113.15 201.01 74.77 211.52 93.96 283.12 93.96 345.44"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M17.49,349.29l-14.32-31.83,38.38-76.71,9,84.44-15.3-152.88,64.16-21.93,5.16-29.4,27.5,3.86,33.22-72.85,65.94,13.76c17.36,30.86,82.43,32.05,122.46-24.71L443.43,3.99l11.54,61.77,69.88-5.56-12.82,46.33,74.37,38.92-43.6,56.83,14.75,18.52-9.47,11.36-42.47,50.96,42.47-50.96,32.55,26.95-26.93,53.74,12.82,16.68-12.82,19.77"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+      </g>
+    </g>
+  </svg>
+);
+
+// スーツ
+export const Suit: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 606.61 326.11" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g>
+      <g>
+        <polyline points="83.7 181.28 76.77 218.26 76.77 323.04"
+          fill="none" stroke="#000" strokeLinejoin="round" strokeLinecap="round" strokeWidth={6.14}/>
+        <path d="M3.07,321.89c16.59-61.45,36.95-123.65,80.87-190.5,8.71-13.26,19.59-25.28,32.37-35.49,22.89-18.29,46.23-33.97,69.99-47.33,1.72-.97,3.75.75,2.79,2.37l-59.31,99.98c-1.33,2.24-.65,5.03,1.6,6.55l35.15,23.77c1.99,1.35,2.78,3.7,1.96,5.82l-24.11,62.12c-.71,1.82-.23,3.86,1.24,5.25,20.68,19.56,44.86,39.07,84.3,58.39"
+          fill="none" stroke="#000" strokeLinejoin="round" strokeLinecap="round" strokeWidth={6.14}/>
+        <path d="M294.9,321.89c47.37-8.45,84.2-50.45,106.95-87.8l-38.31-35.69,73.81-43.85c4.1-77.05-20.35-109.18-42.26-145.32,0,0,138.03,38.75,152.68,94.84,14.65,56.09,55.78,207.53,55.78,207.53"
+          fill="none" stroke="#000" strokeLinejoin="round" strokeLinecap="round" strokeWidth={6.14}/>
+        <path d="M516.22,95.9c-46.91,53.47-63.66,130.03-63.66,225.99"
+          fill="none" stroke="#000" strokeLinejoin="round" strokeLinecap="round" strokeWidth={6.14}/>
+        <path d="M282.17,304.98c-37.46-45.56-61.35-104.35-71.66-176.36"
+          fill="none" stroke="#000" strokeLinejoin="round" strokeLinecap="round" strokeWidth={6.14}/>
+        <path d="M258.94,272.21c27.03-43.59,50.25-89.06,69.1-136.68"
+          fill="none" stroke="#000" strokeLinejoin="round" strokeLinecap="round" strokeWidth={6.14}/>
+        <path d="M223.5,26.95l-9.44,5.18c-.76.41-1.32,1.07-1.58,1.84-12.53,36.93-17.07,66.88-5.38,82.65,8.91,12,33.85-53.21,54.78-50.39,20.66,1.41,35.86,63.78,58.34,62.39,30.16-1.86,63.54-121.33,56.56-122.45l-4.07-2.53c-1.65-1.03-3.91-.64-5.01.87-35.92,49.05-124.09,64.71-138.94,24.19-.72-1.98-3.29-2.83-5.26-1.75Z"
+          fill="none" stroke="#000" strokeLinejoin="round" strokeLinecap="round" strokeWidth={6.14}/>
+        <polygon points="241.47 79.34 246.34 125.68 229.92 208.9 258.94 272.21 294.9 208.65 284.84 124.84 293.5 103.74 270.47 70.24 261.87 66.23 250.15 70.6 241.47 79.34"
+          fill="none" stroke="#000" strokeLinejoin="round" strokeLinecap="round" strokeWidth={6.14}/>
+      </g>
+      <g>
+        <polyline points="83.7 181.28 76.77 218.26 76.77 323.04"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M3.07,321.89c16.59-61.45,36.95-123.65,80.87-190.5,8.71-13.26,19.59-25.28,32.37-35.49,22.89-18.29,46.23-33.97,69.99-47.33,1.72-.97,3.75.75,2.79,2.37l-59.31,99.98c-1.33,2.24-.65,5.03,1.6,6.55l35.15,23.77c1.99,1.35,2.78,3.7,1.96,5.82l-24.11,62.12c-.71,1.82-.23,3.86,1.24,5.25,20.68,19.56,44.86,39.07,84.3,58.39"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M294.9,321.89c47.37-8.45,84.2-50.45,106.95-87.8l-38.31-35.69,73.81-43.85c4.1-77.05-20.35-109.18-42.26-145.32,0,0,138.03,38.75,152.68,94.84,14.65,56.09,55.78,207.53,55.78,207.53"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M516.22,95.9c-46.91,53.47-63.66,130.03-63.66,225.99"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M282.17,304.98c-37.46-45.56-61.35-104.35-71.66-176.36"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M258.94,272.21c27.03-43.59,50.25-89.06,69.1-136.68"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M223.5,26.95l-9.44,5.18c-.76.41-1.32,1.07-1.58,1.84-12.53,36.93-17.07,66.88-5.38,82.65,8.91,12,33.85-53.21,54.78-50.39,20.66,1.41,35.86,63.78,58.34,62.39,30.16-1.86,63.54-121.33,56.56-122.45l-4.07-2.53c-1.65-1.03-3.91-.64-5.01.87-35.92,49.05-124.09,64.71-138.94,24.19-.72-1.98-3.29-2.83-5.26-1.75Z"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <polygon points="241.47 79.34 246.34 125.68 229.92 208.9 258.94 272.21 294.9 208.65 284.84 124.84 293.5 103.74 270.47 70.24 261.87 66.23 250.15 70.6 241.47 79.34"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+      </g>
+    </g>
+  </svg>
+);
+
+// トレーナー
+export const Sweatshirt: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 599.51 322.16" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g>
+      <g>
+        <polyline points="108.43 185.12 104.49 208.5 104.49 313.12"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M4.36,317.8c1.12-33.05,29.06-151.61,104.07-233.59,32-34.98,111.34-69,115.84-64.3,4.7,53.94,86.29,45.25,120.16-9.1,2.97-4.76,8.56-7.2,14.08-6.25,92.82,16.01,125.5,44.23,166.08,106.11,37.05,68.98,65.44,170.98,70.56,207.13"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M469.78,132.62c-32.69,42.25-38.19,101.13-33.16,185.18"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+      </g>
+      <path d="M199.99,44.69c34.52,62.55,100.53,62.76,164.63-10.49"
+        fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+    </g>
+  </svg>
+);
+
+// パーカー
+export const Hoodie: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 585.69 357.88" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g>
+      <g>
+        <path d="M222.65,71.61c12.99,36.15,93.87,25.66,120.85-23.43"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <path d="M361.44,35.35c19.11-16.1,39.13-28.05,60.93-32.05,7.35-1.35,14.66,2.66,16.3,9.1,3.43,13.47,5.11,26.3,4.77,38.41-.16,5.93,4.63,11.08,11.27,12.15l36.31,5.87c6.54,1.06,11.28,6.07,11.28,11.91v22.67"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <path d="M200.77,67.34l-46.71-21.29c-7.03-3.21-15.66-.15-18.2,6.45l-14.89,38.71c-3.18,8.26-10.39,14.86-19.7,17.86-13.62,4.39-32.06,16.18-29.57,47.77"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <path d="M390.27,33.34c49.76-15.19-96.73,110.15-142.34,112.36s-114.27-87.24-91.72-81.07"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <path d="M261.36,151.77l169.94-57.5c15.83-5.35,33.47-4.71,48.73,1.79l34.44,14.66c42.33,44.38,59.56,136.13,68.19,244.11"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <path d="M228.62,154.14l-119.16-7.68c-7.29-.47-14.51,1.49-20.23,5.49h0c-2.07,1.45-3.85,3.18-5.29,5.13l-10.94,14.83c-7.65,10.37-13.93,21.47-18.72,33.1C39.29,241.36,2.41,338.02,3.04,354.84"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <path d="M502.3,134.62c-44.91,35.51-68.44,105.97-65.19,220.22"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <polyline points="74.64 218.06 67.77 253.74 67.77 354.84"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <line x1="197.07" y1="140.67" x2="197.07" y2="354.84"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+        <line x1="307.8" y1="124.95" x2="307.8" y2="354.84"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={6.07}/>
+      </g>
+      <g>
+        <path d="M222.65,71.61c12.99,36.15,93.87,25.66,120.85-23.43"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M361.44,35.35c19.11-16.1,39.13-28.05,60.93-32.05,7.35-1.35,14.66,2.66,16.3,9.1,3.43,13.47,5.11,26.3,4.77,38.41-.16,5.93,4.63,11.08,11.27,12.15l36.31,5.87c6.54,1.06,11.28,6.07,11.28,11.91v22.67"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M200.77,67.34l-46.71-21.29c-7.03-3.21-15.66-.15-18.2,6.45l-14.89,38.71c-3.18,8.26-10.39,14.86-19.7,17.86-13.62,4.39-32.06,16.18-29.57,47.77"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M390.27,33.34c49.76-15.19-96.73,110.15-142.34,112.36s-114.27-87.24-91.72-81.07"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M261.36,151.77l169.94-57.5c15.83-5.35,33.47-4.71,48.73,1.79l34.44,14.66c42.33,44.38,59.56,136.13,68.19,244.11"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M228.62,154.14l-119.16-7.68c-7.29-.47-14.51,1.49-20.23,5.49h0c-2.07,1.45-3.85,3.18-5.29,5.13l-10.94,14.83c-7.65,10.37-13.93,21.47-18.72,33.1C39.29,241.36,2.41,338.02,3.04,354.84"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M502.3,134.62c-44.91,35.51-68.44,105.97-65.19,220.22"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <polyline points="74.64 218.06 67.77 253.74 67.77 354.84"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <line x1="197.07" y1="140.67" x2="197.07" y2="354.84"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <line x1="307.8" y1="124.95" x2="307.8" y2="354.84"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+      </g>
+    </g>
+  </svg>
+);
+
+// Yシャツ
+export const Yshirt: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 577.78 319.57" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g>
+      <g>
+        <path d="M574.79,316.58c-7.68-93.15-4.94-190.88-71.48-258.21C460.57,26.17,407.72,10.47,349.74,3.14c-48.59,49.21-121.56,67.8-133.29,21.97-53.46,26.67-101.16,55.09-132.33,88.49C47.26,182.08,19.8,249.77,2.98,316.58"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.97}/>
+        <path d="M492.54,81.27c-45.55,52.61-56.83,137.63-54.73,235.31"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.97}/>
+        <polyline points="84.92 173.95 73.56 221.68 73.56 308.77"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.97}/>
+        <path d="M216.45,25.12l-24.57,69.32c-.68,1.92,2.11,3.26,3.57,1.73,11.71-12.33,35.44-31.84,57.69-33.28,22.01-1.42,40.2,22.93,48.63,36.6,2.5,4.05,8.94,4.38,11.97.63,29.39-36.39,44.09-67.67,44.34-95.86"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.97}/>
+        <line x1="259.26" y1="63.15" x2="259.26" y2="316.58"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={5.97}/>
+      </g>
+      <g>
+        <path d="M574.79,316.58c-7.68-93.15-4.94-190.88-71.48-258.21C460.57,26.17,407.72,10.47,349.74,3.14c-48.59,49.21-121.56,67.8-133.29,21.97-53.46,26.67-101.16,55.09-132.33,88.49C47.26,182.08,19.8,249.77,2.98,316.58"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M492.54,81.27c-45.55,52.61-56.83,137.63-54.73,235.31"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <polyline points="84.92 173.95 73.56 221.68 73.56 308.77"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <path d="M216.45,25.12l-24.57,69.32c-.68,1.92,2.11,3.26,3.57,1.73,11.71-12.33,35.44-31.84,57.69-33.28,22.01-1.42,40.2,22.93,48.63,36.6,2.5,4.05,8.94,4.38,11.97.63,29.39-36.39,44.09-67.67,44.34-95.86"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+        <line x1="259.26" y1="63.15" x2="259.26" y2="316.58"
+          fill="none" stroke="#000" strokeLinecap="round" strokeMiterlimit={10} strokeWidth={8.72}/>
+      </g>
+    </g>
+  </svg>
+);
