@@ -46,11 +46,7 @@ public class LoginController {
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
 		Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username(), loginRequest.password());
 		Authentication authenticationResponse;
-		try {
-			authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
-		} catch (org.springframework.security.core.AuthenticationException ex) {
-			return ResponseEntity.status(401).build();
-		}
+		authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
 		SecurityContext context = securityContextHolderStrategy.createEmptyContext();
 		context.setAuthentication(authenticationResponse); 
 		TaakUser user = (TaakUser) authenticationResponse.getPrincipal();
@@ -63,7 +59,7 @@ public class LoginController {
 			LoginResponse loginResponse = new LoginResponse(token, new UsersResponse(user.getUsername(), user.getId()));
             return ResponseEntity.ok(loginResponse);
         } else {
-			return ResponseEntity.status(401).build();
+			throw new org.springframework.security.core.AuthenticationException("Authentication failed") {};
         }
 	}
 }
