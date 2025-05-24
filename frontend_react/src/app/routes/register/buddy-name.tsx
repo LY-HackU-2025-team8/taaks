@@ -2,6 +2,7 @@ import { colorOptions } from '@/features/create-buddy/constants/registerOptions'
 import { BuddyPreview } from '@/features/create-buddy/ui/buddy-preview';
 import { ProgressBar } from '@/features/create-buddy/ui/progress-bar';
 import { RegisterNavigation } from '@/features/create-buddy/ui/register-navigation';
+import { $api } from '@/shared/api/openapi-fetch';
 import { InlineInput } from '@/shared/ui/components/input/inline-input';
 import {
   FormField,
@@ -23,10 +24,35 @@ function RouteComponent() {
   const navigate = useNavigate();
   const inputName = 'name';
 
+  const { mutate, isPending, error } = $api.useMutation('put', '/buddy');
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const isValid = await form.trigger(inputName);
-    if (isValid) navigate({ to: '/dashboard' });
+    if (isValid) {
+      const values = form.getValues();
+      mutate(
+        {
+          body: {
+            name: values.name,
+            hairStyleId: values.hairStyle,
+            clothesId: values.clothes,
+            colorId: values.color,
+            nickname: values.nickname,
+          },
+        },
+        {
+          onSuccess: () => {
+            navigate({ to: '/dashboard' });
+          },
+          onError: (err) => {
+            console.error('Error creating buddy:', err);
+          },
+        }
+      );
+
+      // navigate({ to: '/dashboard' });
+    }
   };
 
   return (
@@ -72,7 +98,12 @@ function RouteComponent() {
             </FormItem>
           )}
         />
-        <RegisterNavigation prev_path="/register/color" />
+        {error && (
+          <div className="text-destructive">
+            {error.message || 'エラーが発生しました。'}
+          </div>
+        )}
+        <RegisterNavigation prev_path="/register/color" disabled={isPending} />
       </form>
     </>
   );

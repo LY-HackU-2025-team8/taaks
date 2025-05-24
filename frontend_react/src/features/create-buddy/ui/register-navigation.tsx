@@ -4,9 +4,13 @@ import type { FileRoutesByTo } from 'src/route-tree.gen';
 
 type NavigationProps = {
   prev_path: keyof FileRoutesByTo;
+  disabled?: boolean;
 };
 
-export const RegisterNavigation = ({ prev_path }: NavigationProps) => {
+export const RegisterNavigation = ({
+  prev_path,
+  disabled = false,
+}: NavigationProps) => {
   return (
     <nav className="text-muted fixed right-2 bottom-3.5 left-2 z-20 mb-[env(safe-area-inset-bottom)]">
       <ul className="flex h-16 items-center justify-around gap-2">
@@ -16,7 +20,11 @@ export const RegisterNavigation = ({ prev_path }: NavigationProps) => {
           </Button>
         </li>
         <li className="contents">
-          <Button type="submit" className="bg-primary h-16 flex-1 rounded-xl">
+          <Button
+            type="submit"
+            className="bg-primary h-16 flex-1 rounded-xl"
+            disabled={disabled}
+          >
             次へ
           </Button>
         </li>
