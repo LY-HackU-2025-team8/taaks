@@ -48,21 +48,19 @@ export type AddTaskDrawerProps = {
 
 export const AddTaskDrawer = ({
   onOpenChange,
-  open = false,
+  open: propsOpen = false,
   triggerComponent,
 }: AddTaskDrawerProps) => {
   const { mutate, isPending, error } = $api.useMutation('post', '/tasks');
-  const [isOpen, setIsOpen] = useState(open);
+  const [open, setOpen] = useState(propsOpen);
 
   useEffect(() => {
-    setIsOpen(open);
+    setOpen(open);
   }, [open]);
 
   useEffect(() => {
-    if (onOpenChange) {
-      onOpenChange(isOpen);
-    }
-  }, [isOpen]);
+    onOpenChange?.(open);
+  }, [open, onOpenChange]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -93,21 +91,16 @@ export const AddTaskDrawer = ({
       {
         onSuccess: () => {
           form.reset();
-          setIsOpen(false);
+          setOpen(false);
         },
       }
     );
   });
 
-  const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
-    onOpenChange?.(open);
-  };
-
   return (
     <Drawer
-      open={isOpen}
-      onOpenChange={handleOpenChange}
+      open={open}
+      onOpenChange={setOpen}
       repositionInputs={false}
       autoFocus
     >
