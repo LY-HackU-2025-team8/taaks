@@ -31,7 +31,6 @@ import jakarta.persistence.Table; // Add this import
  * - password: User's password (TEXT, NOT NULL), maps to 'password' column
  * - nickName: User's nickname (varchar(255)), maps to 'nick_name' column
  * - lineSub: Unique LINE sub identifier (TEXT), maps to 'line_sub' column
- * - salt: Salt for password hashing (TEXT)
  * - roles: List of roles, mapped to 'taak_user_roles' table (one-to-many)
  *
  * The roles field uses @ElementCollection to map the user's roles to the 'taak_user_roles' table, where each role is a varchar(255) associated with the user's id.
