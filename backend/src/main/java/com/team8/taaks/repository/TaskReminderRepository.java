@@ -43,4 +43,11 @@ public interface TaskReminderRepository extends JpaRepository<TaskReminder, Long
      * @return A list of TaskReminder entities for the specified task ID.
      */
     List<TaskReminder> findAllByTaskId(Integer taskId);
+
+    /**
+     * Deletes all task reminders associated with a given task ID.
+     *
+     * @param taskId The ID of the task whose reminders are to be deleted.
+     */
+    void deleteAllByTaskId(Integer taskId);
 }

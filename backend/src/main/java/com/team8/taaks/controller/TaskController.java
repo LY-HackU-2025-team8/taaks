@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -177,7 +178,7 @@ public class TaskController {
 
     // タスクの詳細取得
     @GetMapping("/tasks/{taskId}")
-    public ResponseEntity<TaskResponse> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable Integer taskId) {
+    public ResponseEntity<TaskResponse> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable("taskId") Integer taskId) {
         Optional<TaakTask> task = taakTaskRepository.findByIdAndUserId(taskId, user.getId());
         if (!task.isPresent()) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -231,7 +232,8 @@ public class TaskController {
 
     // タスクの更新
     @PutMapping("/tasks/{taskId}")
-    public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable Integer taskId, @RequestBody TaskRequest taskRequest) {
+    @Transactional
+    public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable("taskId") Integer taskId, @RequestBody TaskRequest taskRequest) {
         Optional<TaakTask> optionalTask = taakTaskRepository.findById(taskId);
         if (!optionalTask.isPresent()) {
             return new ResponseEntity<>("Task not found", HttpStatus.NOT_FOUND);
@@ -248,10 +250,7 @@ public class TaskController {
         existingTask.setCompletedAt(taskRequest.getCompletedAt());
         existingTask.setLoadScore(taskRequest.getLoadScore());
         taakTaskRepository.save(existingTask);
-        taskReminderRepository.findAllByTaskId(taskId).stream()
-        .forEach(reminder -> {
-            taskReminderRepository.delete(reminder);
-        });
+        taskReminderRepository.deleteAllByTaskId(taskId);
         taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
             .map(scheduledAt -> {
                 TaskReminder taskReminder = new TaskReminder();
