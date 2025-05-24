@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 
+import com.team8.taaks.repository.TaakUserRepository;
+
 public class TaakUserDetailManager implements UserDetailsManager{
     private final TaakUserRepository taakUserRepository;
     private final PasswordEncoder passwordEncoder;

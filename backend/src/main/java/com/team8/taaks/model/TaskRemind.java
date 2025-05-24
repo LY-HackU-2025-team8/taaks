@@ -4,22 +4,21 @@ import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 
-import org.hibernate.usertype.internal.ZonedDateTimeCompositeUserType.ZonedDateTimeEmbeddable;
 
 /**
- * Represents a notification to be sent.
+ * Represents a task reminder to be sent, mapped to the 'task_remind' table.
  *
  * Database mapping:
  * - id: Primary key, auto-generated (BIGINT)
  * - task_id: Foreign key to the task (BIGINT, NOT NULL)
- * - scheduled_at: Scheduled time for sending the notification (TIMESTAMP WITH TIME ZONE, NOT NULL)
+ * - scheduled_at: Scheduled time for sending the reminder (TIMESTAMP WITH TIME ZONE, NOT NULL)
  * - created_at: Timestamp of creation (TIMESTAMP WITH TIME ZONE, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
  * - updated_at: Timestamp of last update (TIMESTAMP WITH TIME ZONE, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
  */
 @Entity
-@Table(name = "notification", indexes = {
-    @Index(name = "idx_notification_task_id", columnList = "task_id"),
-    @Index(name = "idx_notification_scheduled_at", columnList = "scheduled_at")
+@Table(name = "task_remind", indexes = { // Changed table name and index names
+    @Index(name = "idx_task_remind_task_id", columnList = "task_id"),
+    @Index(name = "idx_task_remind_scheduled_at", columnList = "scheduled_at")
 })
 public class TaskRemind {
 
@@ -33,7 +32,7 @@ public class TaskRemind {
     @JoinColumn(name = "task_id", nullable = false)
     private TaakTask task; 
 
-    /** Scheduled time for sending the notification (NOT NULL) */
+    /** Scheduled time for sending the reminder (NOT NULL) */ // Changed "notification" to "reminder"
     @Column(name = "scheduled_at", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime scheduledAt;
 
