@@ -1,10 +1,9 @@
 package com.team8.taaks.controller;
 
 import java.net.URI;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +20,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openai.client.OpenAIClient;
+import com.openai.client.okhttp.OpenAIOkHttpClient;
+import com.openai.models.ChatModel;
+import com.openai.models.responses.ResponseCreateParams;
+import com.openai.models.responses.StructuredResponse;
+import com.openai.models.responses.StructuredResponseCreateParams;
 import com.team8.taaks.model.TaakTask;
 import com.team8.taaks.model.TaakTaskRepository;
 import com.team8.taaks.model.TaakUser;
+
 
 @CrossOrigin(origins={"localhost:3000", "https://taak.app"})
 @RestController
@@ -126,11 +132,18 @@ public class TaskController {
         }
     }
 
+    public static class LLMOutput {
+        public int loadScore;
+    }
+
+    OpenAIClient client = OpenAIOkHttpClient.fromEnv();
+
     private final TaakTaskRepository taakTaskRepository;
 
     public TaskController(TaakTaskRepository taakTaskRepository) {
         this.taakTaskRepository = taakTaskRepository;
     }
+
     
     // タスク一覧の取得
     @GetMapping("/tasks")
@@ -183,7 +196,25 @@ public class TaskController {
         task.setDueAt(taskRequest.getDueAt());
         task.setIsAllDay(taskRequest.getIsAllDay());
         task.setCompletedAt(taskRequest.getCompletedAt());
-        task.setLoadScore(taskRequest.getLoadScore());
+        // 生成AIで負荷スコアを計算
+        System.out.println("これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル：" + taskRequest.getTitle() + "\n期限までの時間（分）" + Duration.between(LocalDateTime.now(), taskRequest.getDueAt()).toMinutes());
+        StructuredResponseCreateParams<LLMOutput> params = ResponseCreateParams.builder()
+            .input("これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル：" + taskRequest.getTitle() + "\n期限までの時間（分）" + Duration.between(LocalDateTime.now(), taskRequest.getDueAt()).toMinutes())
+            .text(LLMOutput.class)
+            .model(ChatModel.GPT_4_1)
+            .build();
+        try {
+            StructuredResponse<LLMOutput> response = client.responses().create(params);
+            Optional<LLMOutput> outputOptional = response.output().stream().flatMap(item -> item.message().stream()).flatMap(msg -> msg.content().stream()).flatMap(content -> content.outputText().stream()).findFirst();
+            if (outputOptional.isEmpty()) {
+                throw new OpenAiApiException(500, "Failed to get load score from OpenAI API");
+            }
+            int loadScore = outputOptional.get().loadScore;
+            System.out.println("負荷スコア: " + loadScore);
+        task.setLoadScore(loadScore);
+        } catch (OpenAiApiException e) {
+            throw new OpenAiApiException(502, "An error occurred while communicating: " + e.getMessage());
+        }
         TaakTask registeredTask = taakTaskRepository.save(task);
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setId(registeredTask.getId());
