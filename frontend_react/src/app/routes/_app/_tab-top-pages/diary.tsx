@@ -14,7 +14,7 @@ function RouteComponent() {
     <>
       <PageHeader>
         <PageTitleContainer>
-          <PageTitle className='mr-auto'>Diary</PageTitle>
+          <PageTitle className="mr-auto">Diary</PageTitle>
           <Button variant="ghost" size="icon" asChild>
             <Link to="/diary/new">
               <PlusIcon />
