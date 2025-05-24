@@ -10,7 +10,7 @@ import {
 } from '@/shared/ui/components/shadcn/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { z } from 'zod';
 
@@ -84,8 +84,8 @@ export const NewDiaryForm = ({
         />
         <footer className="mt-auto">
           <div className="flex gap-2">
-            <Button variant="secondary" className="flex-1">
-              キャンセル
+            <Button variant="secondary" className="flex-1" asChild>
+              <Link to="/diary">キャンセル</Link>
             </Button>
             <Button type="submit" className="flex-1" disabled={isPending}>
               保存
