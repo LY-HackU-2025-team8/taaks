@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
  *
  * Database mapping:
  * - id: Primary key, auto-generated (BIGINT)
- * - task_id: Foreign key to the task (BIGINT, NOT NULL)
+ * - task_id: Foreign key to the task (INTEGER, NOT NULL)
  * - scheduled_at: Scheduled time for sending the reminder (TIMESTAMP WITH TIME ZONE, NOT NULL)
  * - created_at: Timestamp of creation (TIMESTAMP WITH TIME ZONE, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
  * - updated_at: Timestamp of last update (TIMESTAMP WITH TIME ZONE, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
