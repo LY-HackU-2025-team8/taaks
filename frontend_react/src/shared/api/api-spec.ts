@@ -4,16 +4,41 @@
  */
 
 export interface paths {
-    "/tasks/{taskId}": {
+    "/buddy": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getTaskDetail"];
-        put: operations["updateTask"];
+        /**
+         * Get buddy information
+         * @description Retrieves the buddy information for the authenticated user.
+         */
+        get: operations["getBuddy"];
+        /**
+         * Create or update buddy information
+         * @description Creates or updates the buddy information for the authenticated user.
+         */
+        put: operations["upsertBuddy"];
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/diaries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["diariesGet"];
+        put?: never;
+        /** 日記の新規作成 */
+        post: operations["diariesPost"];
         delete?: never;
         options?: never;
         head?: never;
@@ -39,24 +64,16 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/buddy": {
+    "/login": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /**
-         * Get buddy information
-         * @description Retrieves the buddy information for the authenticated user.
-         */
-        get: operations["getBuddy"];
-        /**
-         * Create or update buddy information
-         * @description Creates or updates the buddy information for the authenticated user.
-         */
-        put: operations["upsertBuddy"];
-        post?: never;
+        get?: never;
+        put?: never;
+        post: operations["login"];
         delete?: never;
         options?: never;
         head?: never;
@@ -79,33 +96,16 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/login": {
+    "/tasks/{taskId}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
-        post: operations["login"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/diaries": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["diariesGet"];
-        put?: never;
-        /** 日記の新規作成 */
-        post: operations["diariesPost"];
+        get: operations["getTaskDetail"];
+        put: operations["updateTask"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -132,24 +132,44 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** @description エラー時のレスポンス */
-        ErrorResponse: {
-            message?: string;
+        BuddyRequest: {
+            /** Format: int64 */
+            clothesId: number;
+            /** Format: int64 */
+            colorId: number;
+            /** Format: int64 */
+            hairStyleId: number;
+            name: string;
+            nickname: string;
         };
-        TaskRequest: {
-            title?: string;
-            memo?: string;
+        BuddyResponse: {
+            /** Format: int64 */
+            clothesId?: number;
+            /** Format: int64 */
+            colorId?: number;
             /** Format: date-time */
-            dueAt?: string;
-            isAllDay?: boolean;
+            createdAt?: string;
+            /** Format: int64 */
+            hairStyleId?: number;
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            nickname?: string;
             /** Format: date-time */
-            completedAt?: string;
-            /** Format: int32 */
-            loadScore?: number;
+            updatedAt?: string;
         };
-        DiaryResponse: {
+        DiaryRequest: {
+            /** @example たくさんコードを書いた */
+            body: string;
+            /**
+             * Format: date
+             * @example 2025-05-18
+             */
+            date: string;
             /** @example プログラミング */
             title: string;
+        };
+        DiaryResponse: {
             /** @example たくさんコードを書いた */
             body: string;
             /**
@@ -162,121 +182,101 @@ export interface components {
              * @example 123
              */
             id: number;
-        };
-        DiaryRequest: {
             /** @example プログラミング */
             title: string;
-            /** @example たくさんコードを書いた */
-            body: string;
-            /**
-             * Format: date
-             * @example 2025-05-18
-             */
-            date: string;
         };
-        BuddyRequest: {
-            nickname: string;
-            /** Format: int64 */
-            hairStyleId: number;
-            /** Format: int64 */
-            clothesId: number;
-            /** Format: int64 */
-            colorId: number;
-            name: string;
-        };
-        BuddyResponse: {
-            /** Format: int64 */
-            id?: number;
-            nickname?: string;
-            /** Format: int64 */
-            hairStyleId?: number;
-            /** Format: int64 */
-            clothesId?: number;
-            /** Format: int64 */
-            colorId?: number;
-            name?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        TaskResponse: {
-            /** Format: int32 */
-            id?: number;
-            title?: string;
-            memo?: string;
-            /** Format: date-time */
-            dueAt?: string;
-            isAllDay?: boolean;
-            /** Format: date-time */
-            completedAt?: string;
-            /** Format: int32 */
-            loadScore?: number;
+        /** @description エラー時のレスポンス */
+        ErrorResponse: {
+            message?: string;
         };
         LoginRequest: {
-            username?: string;
             password?: string;
+            username?: string;
         };
         LoginResponse: {
             token?: string;
             user?: components["schemas"]["UsersResponse"];
         };
-        UsersResponse: {
-            username?: string;
-            /** Format: int64 */
-            id?: number;
-        };
-        PageTaskResponse: {
+        PageDiaryResponse: {
+            content?: components["schemas"]["DiaryResponse"][];
+            empty?: boolean;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            number?: number;
+            /** Format: int32 */
+            numberOfElements?: number;
+            pageable?: components["schemas"]["PageableObject"];
+            /** Format: int32 */
+            size?: number;
+            sort?: components["schemas"]["SortObject"];
             /** Format: int64 */
             totalElements?: number;
             /** Format: int32 */
             totalPages?: number;
+        };
+        PageTaskResponse: {
+            content?: components["schemas"]["TaskResponse"][];
+            empty?: boolean;
+            first?: boolean;
+            last?: boolean;
+            /** Format: int32 */
+            number?: number;
+            /** Format: int32 */
+            numberOfElements?: number;
             pageable?: components["schemas"]["PageableObject"];
             /** Format: int32 */
             size?: number;
-            content?: components["schemas"]["TaskResponse"][];
-            /** Format: int32 */
-            number?: number;
             sort?: components["schemas"]["SortObject"];
+            /** Format: int64 */
+            totalElements?: number;
             /** Format: int32 */
-            numberOfElements?: number;
-            first?: boolean;
-            last?: boolean;
-            empty?: boolean;
+            totalPages?: number;
         };
         PageableObject: {
-            paged?: boolean;
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             pageNumber?: number;
             /** Format: int32 */
             pageSize?: number;
-            unpaged?: boolean;
-            /** Format: int64 */
-            offset?: number;
+            paged?: boolean;
             sort?: components["schemas"]["SortObject"];
+            unpaged?: boolean;
         };
         SortObject: {
+            empty?: boolean;
             sorted?: boolean;
             unsorted?: boolean;
-            empty?: boolean;
         };
-        PageDiaryResponse: {
+        TaskRequest: {
+            /** Format: date-time */
+            completedAt?: string;
+            /** Format: date-time */
+            dueAt?: string;
+            isAllDay?: boolean;
+            /** Format: int32 */
+            loadScore?: number;
+            memo?: string;
+            title?: string;
+        };
+        TaskResponse: {
+            /** Format: date-time */
+            completedAt?: string;
+            /** Format: date-time */
+            dueAt?: string;
+            /** Format: int32 */
+            id?: number;
+            isAllDay?: boolean;
+            /** Format: int32 */
+            loadScore?: number;
+            memo?: string;
+            title?: string;
+        };
+        UsersResponse: {
             /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["DiaryResponse"][];
-            /** Format: int32 */
-            number?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            numberOfElements?: number;
-            first?: boolean;
-            last?: boolean;
-            empty?: boolean;
+            id?: number;
+            username?: string;
         };
     };
     responses: never;
@@ -287,24 +287,31 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    getTaskDetail: {
+    getBuddy: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                taskId: number;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description OK */
+            /** @description Successfully retrieved buddy information */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["TaskResponse"];
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Buddy not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description exception */
@@ -318,20 +325,68 @@ export interface operations {
             };
         };
     };
-    updateTask: {
+    upsertBuddy: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                taskId: number;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TaskRequest"];
+                "application/json": components["schemas"]["BuddyRequest"];
             };
         };
+        responses: {
+            /** @description Successfully updated buddy information */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Successfully created buddy information */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Invalid request body */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    diariesGet: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description OK */
             200: {
@@ -339,7 +394,40 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": string;
+                    "*/*": components["schemas"]["PageDiaryResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    diariesPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiaryRequest"];
+            };
+        };
+        responses: {
+            /** @description 作成成功 */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiaryResponse"];
                 };
             };
             /** @description exception */
@@ -473,45 +561,7 @@ export interface operations {
             };
         };
     };
-    getBuddy: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successfully retrieved buddy information */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BuddyResponse"];
-                };
-            };
-            /** @description Buddy not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description exception */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    upsertBuddy: {
+    login: {
         parameters: {
             query?: never;
             header?: never;
@@ -520,35 +570,17 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["BuddyRequest"];
+                "application/json": components["schemas"]["LoginRequest"];
             };
         };
         responses: {
-            /** @description Successfully updated buddy information */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BuddyResponse"];
-                };
-            };
-            /** @description Successfully created buddy information */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BuddyResponse"];
-                };
-            };
-            /** @description Invalid request body */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
+                    "*/*": components["schemas"]["LoginResponse"];
                 };
             };
             /** @description exception */
@@ -627,47 +659,13 @@ export interface operations {
             };
         };
     };
-    login: {
+    getTaskDetail: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LoginRequest"];
+            path: {
+                taskId: number;
             };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["LoginResponse"];
-                };
-            };
-            /** @description exception */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    diariesGet: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -678,7 +676,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageDiaryResponse"];
+                    "*/*": components["schemas"]["TaskResponse"];
                 };
             };
             /** @description exception */
@@ -692,26 +690,28 @@ export interface operations {
             };
         };
     };
-    diariesPost: {
+    updateTask: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                taskId: number;
+            };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["DiaryRequest"];
+                "application/json": components["schemas"]["TaskRequest"];
             };
         };
         responses: {
-            /** @description 作成成功 */
-            201: {
+            /** @description OK */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DiaryResponse"];
+                    "*/*": string;
                 };
             };
             /** @description exception */
