@@ -2,6 +2,9 @@ package com.team8.taaks.model;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+
+import org.hibernate.usertype.internal.ZonedDateTimeCompositeUserType.ZonedDateTimeEmbeddable;
 
 /**
  * Represents a notification to be sent.
@@ -18,7 +21,7 @@ import java.time.OffsetDateTime;
     @Index(name = "idx_notification_task_id", columnList = "task_id"),
     @Index(name = "idx_notification_scheduled_at", columnList = "scheduled_at")
 })
-public class Notification {
+public class TaskRemind {
 
     /** Unique identifier (Primary key, auto-generated) */
     @Id
@@ -32,7 +35,7 @@ public class Notification {
 
     /** Scheduled time for sending the notification (NOT NULL) */
     @Column(name = "scheduled_at", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime scheduledAt;
+    private ZonedDateTime scheduledAt;
 
     /** Record creation timestamp (NOT NULL, DEFAULT CURRENT_TIMESTAMP) */
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
@@ -70,11 +73,11 @@ public class Notification {
         this.task = task;
     }
 
-    public OffsetDateTime getScheduledAt() {
+    public ZonedDateTime getScheduledAt() {
         return scheduledAt;
     }
 
-    public void setScheduledAt(OffsetDateTime scheduledAt) {
+    public void setScheduledAt(ZonedDateTime scheduledAt) {
         this.scheduledAt = scheduledAt;
     }
 
