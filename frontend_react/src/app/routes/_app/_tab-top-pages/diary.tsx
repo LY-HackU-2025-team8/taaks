@@ -3,7 +3,7 @@ import { PageTitle } from '@/shared/ui/page/page-title';
 import { PageTitleContainer } from '@/shared/ui/page/page-title-container';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_app/_tab-top/diary')({
+export const Route = createFileRoute('/_app/_tab-top-pages/diary')({
   component: RouteComponent,
 });
 
