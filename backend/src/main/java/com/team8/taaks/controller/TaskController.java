@@ -2,6 +2,8 @@ package com.team8.taaks.controller;
 
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.config.Task;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team8.taaks.model.TaakTask;
 import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.model.TaskReminder;
 import com.team8.taaks.repository.TaakTaskRepository;
+import com.team8.taaks.repository.TaskReminderRepository;
 
 @CrossOrigin(origins={"localhost:3000", "https://taak.app"})
 @RestController
@@ -34,6 +39,7 @@ public class TaskController {
         private boolean isAllDay;
         private LocalDateTime completedAt;
         private int loadScore;
+        private List<ZonedDateTime> scheduledAt; 
         public String getTitle() {
             return title;
         }
@@ -70,6 +76,12 @@ public class TaskController {
         public void setLoadScore(int loadScore) {
             this.loadScore = loadScore;
         }
+        public List<ZonedDateTime> getScheduledAt() {
+            return scheduledAt;
+        }
+        public void setScheduledAt(List<ZonedDateTime> scheduledAt) {
+            this.scheduledAt = scheduledAt;
+        }
     }
 
     public static class TaskResponse {
@@ -80,6 +92,7 @@ public class TaskController {
         private boolean isAllDay;
         private LocalDateTime completedAt;
         private int loadScore;
+        private List<ZonedDateTime> scheduledAt; 
         public Integer getId() {
             return id;
         }
@@ -122,11 +135,19 @@ public class TaskController {
         public void setLoadScore(int loadScore) {
             this.loadScore = loadScore;
         }
+        public List<ZonedDateTime> getScheduledAt() {
+            return scheduledAt;
+        }
+        public void setScheduledAt(List<ZonedDateTime> scheduledAt) {
+            this.scheduledAt = scheduledAt;
+        }
     }
 
     private final TaakTaskRepository taakTaskRepository;
+    private final TaskReminderRepository taskReminderRepository;
 
-    public TaskController(TaakTaskRepository taakTaskRepository) {
+    public TaskController(TaakTaskRepository taakTaskRepository, TaskReminderRepository taskReminderRepository) {
+        this.taskReminderRepository = taskReminderRepository;
         this.taakTaskRepository = taakTaskRepository;
     }
     
@@ -148,6 +169,8 @@ public class TaskController {
             taskResponse.setIsAllDay(task.getIsAllDay());
             taskResponse.setCompletedAt(task.getCompletedAt());
             taskResponse.setLoadScore(task.getLoadScore());
+            taskResponse.setScheduledAt(taskReminderRepository.findAllByTaskId(task.getId()).stream()
+            .map(reminder -> reminder.getScheduledAt()).toList());
             return taskResponse;
         });
         return ResponseEntity.ok(taskResponses);
@@ -168,6 +191,8 @@ public class TaskController {
         taskResponse.setIsAllDay(task.get().getIsAllDay());
         taskResponse.setCompletedAt(task.get().getCompletedAt());
         taskResponse.setLoadScore(task.get().getLoadScore());
+        taskResponse.setScheduledAt(taskReminderRepository.findAllByTaskId(task.get().getId()).stream()
+            .map(reminder -> reminder.getScheduledAt()).toList());
         return new ResponseEntity<>(taskResponse, HttpStatus.OK);
     }
 
@@ -183,6 +208,13 @@ public class TaskController {
         task.setCompletedAt(taskRequest.getCompletedAt());
         task.setLoadScore(taskRequest.getLoadScore());
         TaakTask registeredTask = taakTaskRepository.save(task);
+        taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
+            .map(scheduledAt -> {
+                TaskReminder taskReminder = new TaskReminder();
+                taskReminder.setTask(registeredTask);
+                taskReminder.setScheduledAt(scheduledAt);
+                return taskReminder;
+            }).toList());
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setId(registeredTask.getId());
         taskResponse.setTitle(registeredTask.getTitle());
@@ -191,6 +223,8 @@ public class TaskController {
         taskResponse.setIsAllDay(registeredTask.getIsAllDay());
         taskResponse.setCompletedAt(registeredTask.getCompletedAt());
         taskResponse.setLoadScore(registeredTask.getLoadScore());
+        taskResponse.setScheduledAt(taskReminderRepository.findAllByTaskId(registeredTask.getId()).stream()
+            .map(reminder -> reminder.getScheduledAt()).toList());
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(URI.create("/tasks/" + registeredTask.getId()));
         return new ResponseEntity<>(taskResponse, responseHeaders, HttpStatus.CREATED);
@@ -215,6 +249,17 @@ public class TaskController {
         existingTask.setCompletedAt(taskRequest.getCompletedAt());
         existingTask.setLoadScore(taskRequest.getLoadScore());
         taakTaskRepository.save(existingTask);
+        taskReminderRepository.findAllByTaskId(taskId).stream()
+        .forEach(reminder -> {
+            taskReminderRepository.delete(reminder);
+        });
+        taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
+            .map(scheduledAt -> {
+                TaskReminder taskReminder = new TaskReminder();
+                taskReminder.setTask(existingTask);
+                taskReminder.setScheduledAt(scheduledAt);
+                return taskReminder;
+            }).toList());
         return new ResponseEntity<>("Task updated successfully", HttpStatus.OK);
     }
 }
