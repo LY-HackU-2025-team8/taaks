@@ -58,6 +58,12 @@ export const AddTaskDrawer = ({
     setIsOpen(open);
   }, [open]);
 
+  useEffect(() => {
+    if (onOpenChange) {
+      onOpenChange(isOpen);
+    }
+  }, [isOpen])
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
