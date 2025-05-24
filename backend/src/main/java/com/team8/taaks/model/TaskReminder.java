@@ -32,7 +32,7 @@ public class TaskReminder {
     @JoinColumn(name = "task_id", nullable = false)
     private TaakTask task; 
 
-    /** Scheduled time for sending the reminder (NOT NULL) */ // Changed "notification" to "reminder"
+    /** Scheduled time for sending the reminder (NOT NULL) */
     @Column(name = "scheduled_at", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime scheduledAt;
 
