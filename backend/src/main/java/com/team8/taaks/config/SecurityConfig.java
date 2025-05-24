@@ -46,7 +46,7 @@ public class SecurityConfig {
             .cors(cors -> {}) // CORS有効化
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/login", "/api/**").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONSを許可
+                .requestMatchers(HttpMethod.POST, "/users").permitAll() // POST /users を許可
                 .anyRequest().authenticated())
             .exceptionHandling( exception -> exception
                 .authenticationEntryPoint((request, response, authException) -> {
