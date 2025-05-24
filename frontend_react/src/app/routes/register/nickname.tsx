@@ -1,8 +1,13 @@
-import { RegisterNavigation } from '@/shared/ui/components/custom/register-navigation';
+import { RegisterNavigation } from '@/features/create-buddy/ui/register-navigation';
 import { InlineInput } from '@/shared/ui/components/input/inline-input';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { FormField, FormItem, FormMessage, FormControl } from '@/shared/ui/components/shadcn/form';
+import {
+  FormField,
+  FormItem,
+  FormMessage,
+  FormControl,
+} from '@/shared/ui/components/shadcn/form';
 import { useFormContext } from 'react-hook-form';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 import { registerBuddyFormSchema } from '../register';
 
@@ -18,11 +23,14 @@ function RouteComponent() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const isValid = await form.trigger(inputName);
-    if (isValid) navigate({ to: '/register/hair' })
+    if (isValid) navigate({ to: '/register/hair' });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-1 flex-col justify-center px-3">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-1 flex-col justify-center px-3"
+    >
       <p>
         <span className="block text-2xl font-bold">まずはあなたの呼び方を</span>
         <span className="block text-2xl font-bold">教えてください</span>
@@ -47,9 +55,7 @@ function RouteComponent() {
           )}
         />
       </div>
-      <RegisterNavigation
-        prev_path="/account"
-      />
+      <RegisterNavigation prev_path="/account" />
     </form>
   );
 }

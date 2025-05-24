@@ -1,4 +1,4 @@
-import { RegisterNavigation } from '@/shared/ui/components/custom/register-navigation';
+import { RegisterNavigation } from '@/features/create-buddy/ui/register-navigation';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/register/clothes')({
@@ -9,9 +9,7 @@ function RouteComponent() {
   return (
     <div>
       clothes
-      <RegisterNavigation
-        prev_path="/register/hair"
-      />
+      <RegisterNavigation prev_path="/register/hair" />
     </div>
   );
 }

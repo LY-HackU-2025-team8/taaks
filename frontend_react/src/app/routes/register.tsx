@@ -1,9 +1,9 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { checkLogin } from '../api/check-login';
-import { useForm } from 'react-hook-form';
 import { Form } from '@/shared/ui/components/shadcn/form';
-import { z } from 'zod';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { z } from 'zod';
+import { checkLogin } from '../api/check-login';
 
 export const Route = createFileRoute('/register')({
   beforeLoad: async ({ context: { queryClient } }) =>
@@ -13,7 +13,12 @@ export const Route = createFileRoute('/register')({
 
 // TODO: 最大値と最小値を定数で設定する
 export const registerBuddyFormSchema = z.object({
-  nickname: z.string().min(1, { message: 'ニックネームを入力してください' }),
+  nickname: z
+    .string()
+    .min(1, { message: 'ニックネームを入力してください' })
+    .max(5, {
+      message: 'ニックネームは5文字以内で入力してください',
+    }),
   hairStyle: z.number().int().min(1, { message: '髪型を選択してください' }),
   clothes: z.number().int().min(1, { message: '服装を選択してください' }),
   color: z.number().int().min(1, { message: '色を選択してください' }),
@@ -35,7 +40,7 @@ function RouteComponent() {
   });
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="bg-background flex min-h-screen flex-col">
       <div className="flex items-center justify-center p-3.5">
         <img src="/TaaksBuddy.svg" className="w-42.75" />
       </div>
