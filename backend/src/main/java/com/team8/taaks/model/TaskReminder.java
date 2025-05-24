@@ -17,8 +17,8 @@ import java.time.ZonedDateTime;
  */
 @Entity
 @Table(name = "task_reminder", indexes = { 
-    @Index(name = "idx_task_remind_task_id", columnList = "task_id"),
-    @Index(name = "idx_task_remind_scheduled_at", columnList = "scheduled_at")
+    @Index(name = "idx_task_reminder_task_id", columnList = "task_id"),
+    @Index(name = "idx_task_reminder_scheduled_at", columnList = "scheduled_at")
 })
 public class TaskReminder {
 
