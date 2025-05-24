@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
@@ -18,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team8.taaks.config.JwtTokenUtil;
 import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.dto.LoginRequest;
+import com.team8.taaks.dto.LoginResponse;
+import com.team8.taaks.dto.UsersResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 
@@ -64,17 +65,5 @@ public class LoginController {
         } else {
 			return ResponseEntity.status(401).build();
         }
-	}
-
-	@GetMapping("/users/me")
-	public ResponseEntity<UsersResponse> userInfo(@AuthenticationPrincipal TaakUser user) {
-		return ResponseEntity.ok(new UsersResponse(user.getUsername(), user.getId()));
-	}
-	
-	public record LoginRequest(String username, String password) {
-	}
-	public record UsersResponse(String username, Long id) {
-	}
-	public record LoginResponse(String token, UsersResponse user) {
 	}
 }
