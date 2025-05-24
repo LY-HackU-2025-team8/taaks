@@ -22,7 +22,7 @@ import {
 import { Separator } from '@/shared/ui/components/shadcn/separator';
 import { Slider } from '@/shared/ui/components/shadcn/slider';
 import { Switch } from '@/shared/ui/components/shadcn/switch';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
@@ -39,12 +39,28 @@ const formSchema = z.object({
 });
 
 export type AddTaskDrawerProps = {
+  /** drawerの開閉状態が変更された時に呼び出されるコールバック関数 */
+  onOpenChange?: (open: boolean) => void;
+  /** drawerの開閉状態を示すフラグ */
+  open?: boolean;
   triggerComponent?: React.ReactNode;
 };
 
-export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
+export const AddTaskDrawer = ({
+  onOpenChange,
+  open: propsOpen = false,
+  triggerComponent,
+}: AddTaskDrawerProps) => {
   const { mutate, isPending, error } = $api.useMutation('post', '/tasks');
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(propsOpen);
+
+  useEffect(() => {
+    setOpen(open);
+  }, [open]);
+
+  useEffect(() => {
+    onOpenChange?.(open);
+  }, [open, onOpenChange]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,7 +91,7 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
       {
         onSuccess: () => {
           form.reset();
-          setIsOpen(false);
+          setOpen(false);
         },
       }
     );
@@ -83,8 +99,8 @@ export const AddTaskDrawer = ({ triggerComponent }: AddTaskDrawerProps) => {
 
   return (
     <Drawer
-      open={isOpen}
-      onOpenChange={setIsOpen}
+      open={open}
+      onOpenChange={setOpen}
       repositionInputs={false}
       autoFocus
     >
