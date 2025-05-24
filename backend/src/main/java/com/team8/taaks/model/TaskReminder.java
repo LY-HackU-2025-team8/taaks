@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
 
 
 /**
- * Represents a task reminder to be sent, mapped to the 'task_remind' table.
+ * Represents a task reminder to be sent, mapped to the 'task_reminder' table.
  *
  * Database mapping:
  * - id: Primary key, auto-generated (BIGINT)
