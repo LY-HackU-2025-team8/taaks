@@ -21,6 +21,7 @@ import { Route as RegisterColorImport } from './app/routes/register/color'
 import { Route as RegisterClothesImport } from './app/routes/register/clothes'
 import { Route as RegisterBuddyNameImport } from './app/routes/register/buddy-name'
 import { Route as AuthLoginImport } from './app/routes/_auth/login'
+<<<<<<< HEAD
 import { Route as AppTabTopPagesImport } from './app/routes/_app/_tab-top-pages'
 import { Route as AppTodoTaskIdImport } from './app/routes/_app/todo/$taskId'
 import { Route as AppDiaryNewImport } from './app/routes/_app/diary/new'
@@ -29,6 +30,13 @@ import { Route as AppTabTopPagesSettingsImport } from './app/routes/_app/_tab-to
 import { Route as AppTabTopPagesDiaryImport } from './app/routes/_app/_tab-top-pages/diary'
 import { Route as AppTabTopPagesDashboardImport } from './app/routes/_app/_tab-top-pages/dashboard'
 import { Route as AppTabTopPagesBuddyImport } from './app/routes/_app/_tab-top-pages/buddy'
+=======
+import { Route as AppTodoImport } from './app/routes/_app/todo'
+import { Route as AppDiaryImport } from './app/routes/_app/diary'
+import { Route as AppDashboardImport } from './app/routes/_app/dashboard'
+import { Route as AppBuddyImport } from './app/routes/_app/buddy'
+import { Route as AppAccountImport } from './app/routes/_app/account'
+>>>>>>> baa857f (Add route tree generation for application routes)
 
 // Create/Update Routes
 
@@ -90,6 +98,7 @@ const AuthLoginRoute = AuthLoginImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
+<<<<<<< HEAD
 const AppTabTopPagesRoute = AppTabTopPagesImport.update({
   id: '/_tab-top-pages',
   getParentRoute: () => AppRoute,
@@ -135,6 +144,36 @@ const AppTabTopPagesBuddyRoute = AppTabTopPagesBuddyImport.update({
   id: '/buddy',
   path: '/buddy',
   getParentRoute: () => AppTabTopPagesRoute,
+=======
+const AppTodoRoute = AppTodoImport.update({
+  id: '/todo',
+  path: '/todo',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppDiaryRoute = AppDiaryImport.update({
+  id: '/diary',
+  path: '/diary',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppDashboardRoute = AppDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppBuddyRoute = AppBuddyImport.update({
+  id: '/buddy',
+  path: '/buddy',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppAccountRoute = AppAccountImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AppRoute,
+>>>>>>> baa857f (Add route tree generation for application routes)
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -169,11 +208,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
+<<<<<<< HEAD
     '/_app/_tab-top-pages': {
       id: '/_app/_tab-top-pages'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AppTabTopPagesImport
+=======
+    '/_app/account': {
+      id: '/_app/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AppAccountImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/buddy': {
+      id: '/_app/buddy'
+      path: '/buddy'
+      fullPath: '/buddy'
+      preLoaderRoute: typeof AppBuddyImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/diary': {
+      id: '/_app/diary'
+      path: '/diary'
+      fullPath: '/diary'
+      preLoaderRoute: typeof AppDiaryImport
+      parentRoute: typeof AppImport
+    }
+    '/_app/todo': {
+      id: '/_app/todo'
+      path: '/todo'
+      fullPath: '/todo'
+      preLoaderRoute: typeof AppTodoImport
+>>>>>>> baa857f (Add route tree generation for application routes)
       parentRoute: typeof AppImport
     }
     '/_auth/login': {
@@ -218,6 +293,7 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterNicknameImport
       parentRoute: typeof RegisterImport
     }
+<<<<<<< HEAD
     '/_app/_tab-top-pages/buddy': {
       id: '/_app/_tab-top-pages/buddy'
       path: '/buddy'
@@ -267,11 +343,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTodoTaskIdImport
       parentRoute: typeof AppImport
     }
+=======
+>>>>>>> baa857f (Add route tree generation for application routes)
   }
 }
 
 // Create and export the route tree
 
+<<<<<<< HEAD
 interface AppTabTopPagesRouteChildren {
   AppTabTopPagesBuddyRoute: typeof AppTabTopPagesBuddyRoute
   AppTabTopPagesDashboardRoute: typeof AppTabTopPagesDashboardRoute
@@ -302,6 +381,22 @@ const AppRouteChildren: AppRouteChildren = {
   AppTabTopPagesRoute: AppTabTopPagesRouteWithChildren,
   AppDiaryNewRoute: AppDiaryNewRoute,
   AppTodoTaskIdRoute: AppTodoTaskIdRoute,
+=======
+interface AppRouteChildren {
+  AppAccountRoute: typeof AppAccountRoute
+  AppBuddyRoute: typeof AppBuddyRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppDiaryRoute: typeof AppDiaryRoute
+  AppTodoRoute: typeof AppTodoRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAccountRoute: AppAccountRoute,
+  AppBuddyRoute: AppBuddyRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppDiaryRoute: AppDiaryRoute,
+  AppTodoRoute: AppTodoRoute,
+>>>>>>> baa857f (Add route tree generation for application routes)
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -338,14 +433,25 @@ const RegisterRouteWithChildren = RegisterRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+<<<<<<< HEAD
   '': typeof AppTabTopPagesRouteWithChildren
   '/register': typeof RegisterRouteWithChildren
+=======
+  '': typeof AuthRouteWithChildren
+  '/register': typeof RegisterRouteWithChildren
+  '/account': typeof AppAccountRoute
+  '/buddy': typeof AppBuddyRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/diary': typeof AppDiaryRoute
+  '/todo': typeof AppTodoRoute
+>>>>>>> baa857f (Add route tree generation for application routes)
   '/login': typeof AuthLoginRoute
   '/register/buddy-name': typeof RegisterBuddyNameRoute
   '/register/clothes': typeof RegisterClothesRoute
   '/register/color': typeof RegisterColorRoute
   '/register/hair': typeof RegisterHairRoute
   '/register/nickname': typeof RegisterNicknameRoute
+<<<<<<< HEAD
   '/buddy': typeof AppTabTopPagesBuddyRoute
   '/dashboard': typeof AppTabTopPagesDashboardRoute
   '/diary': typeof AppTabTopPagesDiaryRoute
@@ -353,18 +459,31 @@ export interface FileRoutesByFullPath {
   '/todo': typeof AppTabTopPagesTodoRoute
   '/diary/new': typeof AppDiaryNewRoute
   '/todo/$taskId': typeof AppTodoTaskIdRoute
+=======
+>>>>>>> baa857f (Add route tree generation for application routes)
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+<<<<<<< HEAD
   '': typeof AppTabTopPagesRouteWithChildren
   '/register': typeof RegisterRouteWithChildren
+=======
+  '': typeof AuthRouteWithChildren
+  '/register': typeof RegisterRouteWithChildren
+  '/account': typeof AppAccountRoute
+  '/buddy': typeof AppBuddyRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/diary': typeof AppDiaryRoute
+  '/todo': typeof AppTodoRoute
+>>>>>>> baa857f (Add route tree generation for application routes)
   '/login': typeof AuthLoginRoute
   '/register/buddy-name': typeof RegisterBuddyNameRoute
   '/register/clothes': typeof RegisterClothesRoute
   '/register/color': typeof RegisterColorRoute
   '/register/hair': typeof RegisterHairRoute
   '/register/nickname': typeof RegisterNicknameRoute
+<<<<<<< HEAD
   '/buddy': typeof AppTabTopPagesBuddyRoute
   '/dashboard': typeof AppTabTopPagesDashboardRoute
   '/diary': typeof AppTabTopPagesDiaryRoute
@@ -372,6 +491,8 @@ export interface FileRoutesByTo {
   '/todo': typeof AppTabTopPagesTodoRoute
   '/diary/new': typeof AppDiaryNewRoute
   '/todo/$taskId': typeof AppTodoTaskIdRoute
+=======
+>>>>>>> baa857f (Add route tree generation for application routes)
 }
 
 export interface FileRoutesById {
@@ -380,13 +501,22 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
   '/register': typeof RegisterRouteWithChildren
+<<<<<<< HEAD
   '/_app/_tab-top-pages': typeof AppTabTopPagesRouteWithChildren
+=======
+  '/_app/account': typeof AppAccountRoute
+  '/_app/buddy': typeof AppBuddyRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/diary': typeof AppDiaryRoute
+  '/_app/todo': typeof AppTodoRoute
+>>>>>>> baa857f (Add route tree generation for application routes)
   '/_auth/login': typeof AuthLoginRoute
   '/register/buddy-name': typeof RegisterBuddyNameRoute
   '/register/clothes': typeof RegisterClothesRoute
   '/register/color': typeof RegisterColorRoute
   '/register/hair': typeof RegisterHairRoute
   '/register/nickname': typeof RegisterNicknameRoute
+<<<<<<< HEAD
   '/_app/_tab-top-pages/buddy': typeof AppTabTopPagesBuddyRoute
   '/_app/_tab-top-pages/dashboard': typeof AppTabTopPagesDashboardRoute
   '/_app/_tab-top-pages/diary': typeof AppTabTopPagesDiaryRoute
@@ -394,6 +524,8 @@ export interface FileRoutesById {
   '/_app/_tab-top-pages/todo': typeof AppTabTopPagesTodoRoute
   '/_app/diary/new': typeof AppDiaryNewRoute
   '/_app/todo/$taskId': typeof AppTodoTaskIdRoute
+=======
+>>>>>>> baa857f (Add route tree generation for application routes)
 }
 
 export interface FileRouteTypes {
@@ -402,12 +534,21 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/register'
+<<<<<<< HEAD
+=======
+    | '/account'
+    | '/buddy'
+    | '/dashboard'
+    | '/diary'
+    | '/todo'
+>>>>>>> baa857f (Add route tree generation for application routes)
     | '/login'
     | '/register/buddy-name'
     | '/register/clothes'
     | '/register/color'
     | '/register/hair'
     | '/register/nickname'
+<<<<<<< HEAD
     | '/buddy'
     | '/dashboard'
     | '/diary'
@@ -415,17 +556,28 @@ export interface FileRouteTypes {
     | '/todo'
     | '/diary/new'
     | '/todo/$taskId'
+=======
+>>>>>>> baa857f (Add route tree generation for application routes)
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
     | '/register'
+<<<<<<< HEAD
+=======
+    | '/account'
+    | '/buddy'
+    | '/dashboard'
+    | '/diary'
+    | '/todo'
+>>>>>>> baa857f (Add route tree generation for application routes)
     | '/login'
     | '/register/buddy-name'
     | '/register/clothes'
     | '/register/color'
     | '/register/hair'
     | '/register/nickname'
+<<<<<<< HEAD
     | '/buddy'
     | '/dashboard'
     | '/diary'
@@ -433,19 +585,30 @@ export interface FileRouteTypes {
     | '/todo'
     | '/diary/new'
     | '/todo/$taskId'
+=======
+>>>>>>> baa857f (Add route tree generation for application routes)
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/_auth'
     | '/register'
+<<<<<<< HEAD
     | '/_app/_tab-top-pages'
+=======
+    | '/_app/account'
+    | '/_app/buddy'
+    | '/_app/dashboard'
+    | '/_app/diary'
+    | '/_app/todo'
+>>>>>>> baa857f (Add route tree generation for application routes)
     | '/_auth/login'
     | '/register/buddy-name'
     | '/register/clothes'
     | '/register/color'
     | '/register/hair'
     | '/register/nickname'
+<<<<<<< HEAD
     | '/_app/_tab-top-pages/buddy'
     | '/_app/_tab-top-pages/dashboard'
     | '/_app/_tab-top-pages/diary'
@@ -453,6 +616,8 @@ export interface FileRouteTypes {
     | '/_app/_tab-top-pages/todo'
     | '/_app/diary/new'
     | '/_app/todo/$taskId'
+=======
+>>>>>>> baa857f (Add route tree generation for application routes)
   fileRoutesById: FileRoutesById
 }
 
@@ -492,9 +657,17 @@ export const routeTree = rootRoute
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
+<<<<<<< HEAD
         "/_app/_tab-top-pages",
         "/_app/diary/new",
         "/_app/todo/$taskId"
+=======
+        "/_app/account",
+        "/_app/buddy",
+        "/_app/dashboard",
+        "/_app/diary",
+        "/_app/todo"
+>>>>>>> baa857f (Add route tree generation for application routes)
       ]
     },
     "/_auth": {
@@ -513,6 +686,7 @@ export const routeTree = rootRoute
         "/register/nickname"
       ]
     },
+<<<<<<< HEAD
     "/_app/_tab-top-pages": {
       "filePath": "_app/_tab-top-pages.tsx",
       "parent": "/_app",
@@ -523,6 +697,27 @@ export const routeTree = rootRoute
         "/_app/_tab-top-pages/settings",
         "/_app/_tab-top-pages/todo"
       ]
+=======
+    "/_app/account": {
+      "filePath": "_app/account.tsx",
+      "parent": "/_app"
+    },
+    "/_app/buddy": {
+      "filePath": "_app/buddy.tsx",
+      "parent": "/_app"
+    },
+    "/_app/dashboard": {
+      "filePath": "_app/dashboard.tsx",
+      "parent": "/_app"
+    },
+    "/_app/diary": {
+      "filePath": "_app/diary.tsx",
+      "parent": "/_app"
+    },
+    "/_app/todo": {
+      "filePath": "_app/todo.tsx",
+      "parent": "/_app"
+>>>>>>> baa857f (Add route tree generation for application routes)
     },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
@@ -547,6 +742,7 @@ export const routeTree = rootRoute
     "/register/nickname": {
       "filePath": "register/nickname.tsx",
       "parent": "/register"
+<<<<<<< HEAD
     },
     "/_app/_tab-top-pages/buddy": {
       "filePath": "_app/_tab-top-pages/buddy.tsx",
@@ -575,6 +771,8 @@ export const routeTree = rootRoute
     "/_app/todo/$taskId": {
       "filePath": "_app/todo/$taskId.tsx",
       "parent": "/_app"
+=======
+>>>>>>> baa857f (Add route tree generation for application routes)
     }
   }
 }
