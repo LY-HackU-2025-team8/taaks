@@ -20,8 +20,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 
-import com.team8.taaks.model.DiaryRequest;
-import com.team8.taaks.model.DiaryResponse;
+import com.team8.taaks.dto.DiaryRequest;
+import com.team8.taaks.dto.DiaryResponse;
 
 import javax.validation.Valid;
 import java.util.Optional;

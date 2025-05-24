@@ -2,8 +2,9 @@ package com.team8.taaks.controller;
 
 import com.team8.taaks.dto.ErrorResponse;
 import com.team8.taaks.model.Buddy;
-import com.team8.taaks.model.BuddyRepository;
 import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.repository.BuddyRepository;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

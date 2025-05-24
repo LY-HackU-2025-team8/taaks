@@ -1,4 +1,4 @@
-package com.team8.taaks.model;
+package com.team8.taaks.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;

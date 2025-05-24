@@ -7,11 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team8.taaks.dto.DiaryRequest;
+import com.team8.taaks.dto.DiaryResponse;
 import com.team8.taaks.model.Diary;
-import com.team8.taaks.model.DiaryRepository;
-import com.team8.taaks.model.DiaryRequest;
-import com.team8.taaks.model.DiaryResponse;
 import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.repository.DiaryRepository;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;

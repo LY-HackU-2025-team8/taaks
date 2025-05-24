@@ -1,4 +1,4 @@
-package com.team8.taaks.model;
+package com.team8.taaks.dto;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,11 +12,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import javax.annotation.Generated;
 
 /**
- * DiaryResponse
+ * DiaryRequest
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
-public class DiaryResponse {
+public class DiaryRequest {
 
   private String title;
 
@@ -25,23 +25,20 @@ public class DiaryResponse {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate date;
 
-  private Integer id;
-
-  public DiaryResponse() {
+  public DiaryRequest() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public DiaryResponse(String title, String body, LocalDate date, Integer id) {
+  public DiaryRequest(String title, String body, LocalDate date) {
     this.title = title;
     this.body = body;
     this.date = date;
-    this.id = id;
   }
 
-  public DiaryResponse title(String title) {
+  public DiaryRequest title(String title) {
     this.title = title;
     return this;
   }
@@ -61,7 +58,7 @@ public class DiaryResponse {
     this.title = title;
   }
 
-  public DiaryResponse body(String body) {
+  public DiaryRequest body(String body) {
     this.body = body;
     return this;
   }
@@ -81,7 +78,7 @@ public class DiaryResponse {
     this.body = body;
   }
 
-  public DiaryResponse date(LocalDate date) {
+  public DiaryRequest date(LocalDate date) {
     this.date = date;
     return this;
   }
@@ -101,26 +98,6 @@ public class DiaryResponse {
     this.date = date;
   }
 
-  public DiaryResponse id(Integer id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-   */
-  @NotNull 
-  @Schema(name = "id", example = "123", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("id")
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -129,26 +106,24 @@ public class DiaryResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DiaryResponse diaryResponse = (DiaryResponse) o;
-    return Objects.equals(this.title, diaryResponse.title) &&
-        Objects.equals(this.body, diaryResponse.body) &&
-        Objects.equals(this.date, diaryResponse.date) &&
-        Objects.equals(this.id, diaryResponse.id);
+    DiaryRequest diaryRequest = (DiaryRequest) o;
+    return Objects.equals(this.title, diaryRequest.title) &&
+        Objects.equals(this.body, diaryRequest.body) &&
+        Objects.equals(this.date, diaryRequest.date);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, body, date, id);
+    return Objects.hash(title, body, date);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DiaryResponse {\n");
+    sb.append("class DiaryRequest {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    body: ").append(toIndentedString(body)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }

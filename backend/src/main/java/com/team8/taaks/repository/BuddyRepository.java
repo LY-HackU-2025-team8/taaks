@@ -1,7 +1,10 @@
-package com.team8.taaks.model;
+package com.team8.taaks.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.team8.taaks.model.Buddy;
+
 import java.util.Optional;
 
 @Repository

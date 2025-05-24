@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team8.taaks.model.TaakTask;
-import com.team8.taaks.model.TaakTaskRepository;
 import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.repository.TaakTaskRepository;
 
 @CrossOrigin(origins={"localhost:3000", "https://taak.app"})
 @RestController
