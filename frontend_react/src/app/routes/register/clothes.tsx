@@ -1,14 +1,7 @@
-import {
-  Sweatshirt,
-  Hoodie,
-  Cardigan,
-  Suit,
-  Yshirt,
-  Unique,
-} from '@/features/create-buddy/icons/clothes';
+import { clothesOptions } from '@/features/create-buddy/constants/registerOptions';
+import { BuddyPreview } from '@/features/create-buddy/ui/buddy-preview';
 import { ProgressBar } from '@/features/create-buddy/ui/progress-bar';
 import { RegisterNavigation } from '@/features/create-buddy/ui/register-navigation';
-import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
 import {
   FormField,
   FormItem,
@@ -28,16 +21,6 @@ export const Route = createFileRoute('/register/clothes')({
   component: RouteComponent,
 });
 
-// TODO: constにまとめる？
-const array = [
-  { value: '1', icon: <Sweatshirt className="size-18" />, name: 'トレーナー' },
-  { value: '2', icon: <Hoodie className="size-18" />, name: 'パーカー' },
-  { value: '3', icon: <Cardigan className="size-18" />, name: 'カーディガン' },
-  { value: '4', icon: <Suit className="size-18" />, name: 'スーツ' },
-  { value: '5', icon: <Yshirt className="size-18" />, name: 'ワイシャツ' },
-  { value: '6', icon: <Unique className="size-18" />, name: 'ユニーク' },
-];
-
 function RouteComponent() {
   const form = useFormContext<z.infer<typeof registerBuddyFormSchema>>();
   const navigate = useNavigate();
@@ -56,16 +39,13 @@ function RouteComponent() {
         onSubmit={handleSubmit}
         className="mb-22 flex flex-1 flex-col justify-center px-3"
       >
-        <div className="flex items-center justify-center p-3.5">
-          <div className="relative size-71 overflow-hidden rounded-[105px] bg-[#EAEBE7]">
-            <RiveBuddy
-              className="absolute -bottom-6 -left-12 size-95"
-              motionId={2}
-              hairId={form.watch('hairStyle') ?? 1}
-              clothesId={form.watch('clothes') ?? 1}
-            />
-          </div>
-        </div>
+        <BuddyPreview
+          size="large-bottom"
+          motionId={2}
+          hairId={form.watch('hairStyle')}
+          clothesId={form.watch('clothes')}
+          faceId={5}
+        />
         <p className="pt-6 pb-2 text-[1.25rem] font-bold">服装を選択</p>
 
         <FormField
@@ -75,26 +55,24 @@ function RouteComponent() {
             <FormItem>
               <FormControl>
                 <ToggleGroup
-                  className="flex h-40 overflow-x-scroll gap-2"
+                  className="flex h-40 gap-2 overflow-x-scroll"
                   type="single"
-                  defaultValue="1"
                   {...field}
                   value={field.value ? String(field.value) : '1'}
                   onValueChange={(value) => {
-                    field.onChange(Number(value));
+                    if (value) field.onChange(Number(value));
                   }}
                 >
-                  {array.map((item) => (
+                  {clothesOptions.map((item) => (
                     <ToggleGroupItem
                       key={item.value}
                       value={item.value}
                       className="flex h-[8.625rem] w-[6.6875rem] flex-col items-center justify-center rounded-2xl border-2"
                     >
-                      {item.icon}
+                      <item.icon className="size-18" />
                       <span className="mt-2">{item.name}</span>
                     </ToggleGroupItem>
                   ))}
-
                 </ToggleGroup>
               </FormControl>
               <FormMessage />

@@ -4,7 +4,7 @@ import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
 type ProgressBarProps = {
   /** クラス名 */
   className?: string;
-  /** 進捗の値（0〜4の整数） */
+  /** 進捗の値（1〜4の整数） */
   progress?: 1 | 2 | 3 | 4;
 };
 
