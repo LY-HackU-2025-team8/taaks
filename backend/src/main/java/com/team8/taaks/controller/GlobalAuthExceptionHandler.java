@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,11 +19,14 @@ public class GlobalAuthExceptionHandler {
             responseCode = "default",
             description = "exception",
             content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    public ErrorResponse handle(Exception  ex) {
+    public ResponseEntity<ErrorResponse> handle(Exception  ex) {
         if (ex instanceof ResponseStatusException) {
-            return new ErrorResponse(((ResponseStatusException) ex).getReason());
+            return ResponseEntity
+                    .status(((ResponseStatusException) ex).getStatusCode())
+                    .body(new ErrorResponse(((ResponseStatusException) ex).getReason()));
         }
-        return new ErrorResponse(ex.getMessage());
+        return ResponseEntity
+                .status(500)
+                .body(new ErrorResponse("Internal Server Error:"));
     }
-
 }
