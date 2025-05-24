@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardFooter,
-  CardHeader,
   CardTitle,
 } from '@/shared/ui/components/shadcn/card';
 import {
