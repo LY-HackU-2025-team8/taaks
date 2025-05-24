@@ -2,6 +2,8 @@ package com.team8.taaks.repository;
 
 import com.team8.taaks.model.NotificationTargetToken;
 import com.team8.taaks.model.TaakUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -36,4 +38,8 @@ public interface NotificationTargetTokenRepository extends JpaRepository<Notific
      * @return An Optional containing the NotificationTargetToken if found, or an empty Optional otherwise.
      */
     Optional<NotificationTargetToken> findByTargetToken(String targetToken);
+
+    Page<NotificationTargetToken> findAllByUserId(Long userId, Pageable pageable);
+    Optional<NotificationTargetToken> findByIdAndUserId(Long id, Long userId);
+    Optional<NotificationTargetToken> findByTargetTokenAndUserId(String targetToken, Long userId);
 }

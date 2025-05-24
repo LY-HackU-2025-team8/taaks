@@ -40,6 +40,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs.add('-parameters')
+}
+
 openApi {
 	apiDocsUrl.set("http://localhost:8080/api/docs.yaml")
 	outputDir.set(file("../openapi"))
