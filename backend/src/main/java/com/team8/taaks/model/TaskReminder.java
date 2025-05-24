@@ -20,14 +20,14 @@ import java.time.ZonedDateTime;
     @Index(name = "idx_task_remind_task_id", columnList = "task_id"),
     @Index(name = "idx_task_remind_scheduled_at", columnList = "scheduled_at")
 })
-public class TaskRemind {
+public class TaskReminder {
 
     /** Unique identifier (Primary key, auto-generated) */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Task associated with this notification (Foreign key: task_id) */
+    /** Task associated with this reminder (Foreign key: task_id) */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id", nullable = false)
     private TaakTask task; 
