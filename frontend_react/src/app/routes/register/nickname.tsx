@@ -22,7 +22,7 @@ function RouteComponent() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex h-screen flex-1 flex-col justify-center px-3">
+    <form onSubmit={handleSubmit} className="flex flex-1 flex-col justify-center px-3">
       <p>
         <span className="block text-2xl font-bold">まずはあなたの呼び方を</span>
         <span className="block text-2xl font-bold">教えてください</span>

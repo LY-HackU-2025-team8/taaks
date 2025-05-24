@@ -13,7 +13,10 @@ export const RegisterNavigation = ({
     <nav className="text-muted fixed right-2 bottom-3.5 left-2 mb-[env(safe-area-inset-bottom)]">
       <ul className="flex h-16 items-center justify-around gap-2">
         <li className="contents">
-          <Button asChild>
+          <Button 
+            asChild
+            className='bg-primary rounded-xl size-16'
+          >
             <Link
               to={prev_path}
             >
@@ -22,7 +25,10 @@ export const RegisterNavigation = ({
           </Button>
         </li>
         <li className="contents">
-          <Button type="submit">
+          <Button 
+            type="submit"
+            className='bg-primary rounded-xl flex-1 h-16'
+          >
               次へ
           </Button>
         </li>
