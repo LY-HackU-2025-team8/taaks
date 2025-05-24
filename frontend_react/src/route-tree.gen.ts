@@ -15,11 +15,13 @@ import { Route as AuthImport } from './app/routes/_auth'
 import { Route as AppImport } from './app/routes/_app'
 import { Route as IndexImport } from './app/routes/index'
 import { Route as AuthLoginImport } from './app/routes/_auth/login'
-import { Route as AppTodoImport } from './app/routes/_app/todo'
-import { Route as AppDiaryImport } from './app/routes/_app/diary'
-import { Route as AppDashboardImport } from './app/routes/_app/dashboard'
-import { Route as AppBuddyImport } from './app/routes/_app/buddy'
-import { Route as AppAccountImport } from './app/routes/_app/account'
+import { Route as AppTabTopPagesImport } from './app/routes/_app/_tab-top-pages'
+import { Route as AppDiaryNewImport } from './app/routes/_app/diary/new'
+import { Route as AppTabTopPagesTodoImport } from './app/routes/_app/_tab-top-pages/todo'
+import { Route as AppTabTopPagesDiaryImport } from './app/routes/_app/_tab-top-pages/diary'
+import { Route as AppTabTopPagesDashboardImport } from './app/routes/_app/_tab-top-pages/dashboard'
+import { Route as AppTabTopPagesBuddyImport } from './app/routes/_app/_tab-top-pages/buddy'
+import { Route as AppTabTopPagesAccountImport } from './app/routes/_app/_tab-top-pages/account'
 
 // Create/Update Routes
 
@@ -45,34 +47,45 @@ const AuthLoginRoute = AuthLoginImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AppTodoRoute = AppTodoImport.update({
+const AppTabTopPagesRoute = AppTabTopPagesImport.update({
+  id: '/_tab-top-pages',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppDiaryNewRoute = AppDiaryNewImport.update({
+  id: '/diary/new',
+  path: '/diary/new',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppTabTopPagesTodoRoute = AppTabTopPagesTodoImport.update({
   id: '/todo',
   path: '/todo',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AppTabTopPagesRoute,
 } as any)
 
-const AppDiaryRoute = AppDiaryImport.update({
+const AppTabTopPagesDiaryRoute = AppTabTopPagesDiaryImport.update({
   id: '/diary',
   path: '/diary',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AppTabTopPagesRoute,
 } as any)
 
-const AppDashboardRoute = AppDashboardImport.update({
+const AppTabTopPagesDashboardRoute = AppTabTopPagesDashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AppTabTopPagesRoute,
 } as any)
 
-const AppBuddyRoute = AppBuddyImport.update({
+const AppTabTopPagesBuddyRoute = AppTabTopPagesBuddyImport.update({
   id: '/buddy',
   path: '/buddy',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AppTabTopPagesRoute,
 } as any)
 
-const AppAccountRoute = AppAccountImport.update({
+const AppTabTopPagesAccountRoute = AppTabTopPagesAccountImport.update({
   id: '/account',
   path: '/account',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AppTabTopPagesRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -100,39 +113,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
-    '/_app/account': {
-      id: '/_app/account'
-      path: '/account'
-      fullPath: '/account'
-      preLoaderRoute: typeof AppAccountImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/buddy': {
-      id: '/_app/buddy'
-      path: '/buddy'
-      fullPath: '/buddy'
-      preLoaderRoute: typeof AppBuddyImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/dashboard': {
-      id: '/_app/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AppDashboardImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/diary': {
-      id: '/_app/diary'
-      path: '/diary'
-      fullPath: '/diary'
-      preLoaderRoute: typeof AppDiaryImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/todo': {
-      id: '/_app/todo'
-      path: '/todo'
-      fullPath: '/todo'
-      preLoaderRoute: typeof AppTodoImport
+    '/_app/_tab-top-pages': {
+      id: '/_app/_tab-top-pages'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppTabTopPagesImport
       parentRoute: typeof AppImport
     }
     '/_auth/login': {
@@ -142,25 +127,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthImport
     }
+    '/_app/_tab-top-pages/account': {
+      id: '/_app/_tab-top-pages/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AppTabTopPagesAccountImport
+      parentRoute: typeof AppTabTopPagesImport
+    }
+    '/_app/_tab-top-pages/buddy': {
+      id: '/_app/_tab-top-pages/buddy'
+      path: '/buddy'
+      fullPath: '/buddy'
+      preLoaderRoute: typeof AppTabTopPagesBuddyImport
+      parentRoute: typeof AppTabTopPagesImport
+    }
+    '/_app/_tab-top-pages/dashboard': {
+      id: '/_app/_tab-top-pages/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppTabTopPagesDashboardImport
+      parentRoute: typeof AppTabTopPagesImport
+    }
+    '/_app/_tab-top-pages/diary': {
+      id: '/_app/_tab-top-pages/diary'
+      path: '/diary'
+      fullPath: '/diary'
+      preLoaderRoute: typeof AppTabTopPagesDiaryImport
+      parentRoute: typeof AppTabTopPagesImport
+    }
+    '/_app/_tab-top-pages/todo': {
+      id: '/_app/_tab-top-pages/todo'
+      path: '/todo'
+      fullPath: '/todo'
+      preLoaderRoute: typeof AppTabTopPagesTodoImport
+      parentRoute: typeof AppTabTopPagesImport
+    }
+    '/_app/diary/new': {
+      id: '/_app/diary/new'
+      path: '/diary/new'
+      fullPath: '/diary/new'
+      preLoaderRoute: typeof AppDiaryNewImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AppTabTopPagesRouteChildren {
+  AppTabTopPagesAccountRoute: typeof AppTabTopPagesAccountRoute
+  AppTabTopPagesBuddyRoute: typeof AppTabTopPagesBuddyRoute
+  AppTabTopPagesDashboardRoute: typeof AppTabTopPagesDashboardRoute
+  AppTabTopPagesDiaryRoute: typeof AppTabTopPagesDiaryRoute
+  AppTabTopPagesTodoRoute: typeof AppTabTopPagesTodoRoute
+}
+
+const AppTabTopPagesRouteChildren: AppTabTopPagesRouteChildren = {
+  AppTabTopPagesAccountRoute: AppTabTopPagesAccountRoute,
+  AppTabTopPagesBuddyRoute: AppTabTopPagesBuddyRoute,
+  AppTabTopPagesDashboardRoute: AppTabTopPagesDashboardRoute,
+  AppTabTopPagesDiaryRoute: AppTabTopPagesDiaryRoute,
+  AppTabTopPagesTodoRoute: AppTabTopPagesTodoRoute,
+}
+
+const AppTabTopPagesRouteWithChildren = AppTabTopPagesRoute._addFileChildren(
+  AppTabTopPagesRouteChildren,
+)
+
 interface AppRouteChildren {
-  AppAccountRoute: typeof AppAccountRoute
-  AppBuddyRoute: typeof AppBuddyRoute
-  AppDashboardRoute: typeof AppDashboardRoute
-  AppDiaryRoute: typeof AppDiaryRoute
-  AppTodoRoute: typeof AppTodoRoute
+  AppTabTopPagesRoute: typeof AppTabTopPagesRouteWithChildren
+  AppDiaryNewRoute: typeof AppDiaryNewRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppAccountRoute: AppAccountRoute,
-  AppBuddyRoute: AppBuddyRoute,
-  AppDashboardRoute: AppDashboardRoute,
-  AppDiaryRoute: AppDiaryRoute,
-  AppTodoRoute: AppTodoRoute,
+  AppTabTopPagesRoute: AppTabTopPagesRouteWithChildren,
+  AppDiaryNewRoute: AppDiaryNewRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -177,24 +218,26 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
-  '/account': typeof AppAccountRoute
-  '/buddy': typeof AppBuddyRoute
-  '/dashboard': typeof AppDashboardRoute
-  '/diary': typeof AppDiaryRoute
-  '/todo': typeof AppTodoRoute
+  '': typeof AppTabTopPagesRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/account': typeof AppTabTopPagesAccountRoute
+  '/buddy': typeof AppTabTopPagesBuddyRoute
+  '/dashboard': typeof AppTabTopPagesDashboardRoute
+  '/diary': typeof AppTabTopPagesDiaryRoute
+  '/todo': typeof AppTabTopPagesTodoRoute
+  '/diary/new': typeof AppDiaryNewRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
-  '/account': typeof AppAccountRoute
-  '/buddy': typeof AppBuddyRoute
-  '/dashboard': typeof AppDashboardRoute
-  '/diary': typeof AppDiaryRoute
-  '/todo': typeof AppTodoRoute
+  '': typeof AppTabTopPagesRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/account': typeof AppTabTopPagesAccountRoute
+  '/buddy': typeof AppTabTopPagesBuddyRoute
+  '/dashboard': typeof AppTabTopPagesDashboardRoute
+  '/diary': typeof AppTabTopPagesDiaryRoute
+  '/todo': typeof AppTabTopPagesTodoRoute
+  '/diary/new': typeof AppDiaryNewRoute
 }
 
 export interface FileRoutesById {
@@ -202,12 +245,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
-  '/_app/account': typeof AppAccountRoute
-  '/_app/buddy': typeof AppBuddyRoute
-  '/_app/dashboard': typeof AppDashboardRoute
-  '/_app/diary': typeof AppDiaryRoute
-  '/_app/todo': typeof AppTodoRoute
+  '/_app/_tab-top-pages': typeof AppTabTopPagesRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/_app/_tab-top-pages/account': typeof AppTabTopPagesAccountRoute
+  '/_app/_tab-top-pages/buddy': typeof AppTabTopPagesBuddyRoute
+  '/_app/_tab-top-pages/dashboard': typeof AppTabTopPagesDashboardRoute
+  '/_app/_tab-top-pages/diary': typeof AppTabTopPagesDiaryRoute
+  '/_app/_tab-top-pages/todo': typeof AppTabTopPagesTodoRoute
+  '/_app/diary/new': typeof AppDiaryNewRoute
 }
 
 export interface FileRouteTypes {
@@ -215,33 +260,37 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/login'
     | '/account'
     | '/buddy'
     | '/dashboard'
     | '/diary'
     | '/todo'
-    | '/login'
+    | '/diary/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
+    | '/login'
     | '/account'
     | '/buddy'
     | '/dashboard'
     | '/diary'
     | '/todo'
-    | '/login'
+    | '/diary/new'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/_auth'
-    | '/_app/account'
-    | '/_app/buddy'
-    | '/_app/dashboard'
-    | '/_app/diary'
-    | '/_app/todo'
+    | '/_app/_tab-top-pages'
     | '/_auth/login'
+    | '/_app/_tab-top-pages/account'
+    | '/_app/_tab-top-pages/buddy'
+    | '/_app/_tab-top-pages/dashboard'
+    | '/_app/_tab-top-pages/diary'
+    | '/_app/_tab-top-pages/todo'
+    | '/_app/diary/new'
   fileRoutesById: FileRoutesById
 }
 
@@ -278,11 +327,8 @@ export const routeTree = rootRoute
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
-        "/_app/account",
-        "/_app/buddy",
-        "/_app/dashboard",
-        "/_app/diary",
-        "/_app/todo"
+        "/_app/_tab-top-pages",
+        "/_app/diary/new"
       ]
     },
     "/_auth": {
@@ -291,29 +337,44 @@ export const routeTree = rootRoute
         "/_auth/login"
       ]
     },
-    "/_app/account": {
-      "filePath": "_app/account.tsx",
-      "parent": "/_app"
-    },
-    "/_app/buddy": {
-      "filePath": "_app/buddy.tsx",
-      "parent": "/_app"
-    },
-    "/_app/dashboard": {
-      "filePath": "_app/dashboard.tsx",
-      "parent": "/_app"
-    },
-    "/_app/diary": {
-      "filePath": "_app/diary.tsx",
-      "parent": "/_app"
-    },
-    "/_app/todo": {
-      "filePath": "_app/todo.tsx",
-      "parent": "/_app"
+    "/_app/_tab-top-pages": {
+      "filePath": "_app/_tab-top-pages.tsx",
+      "parent": "/_app",
+      "children": [
+        "/_app/_tab-top-pages/account",
+        "/_app/_tab-top-pages/buddy",
+        "/_app/_tab-top-pages/dashboard",
+        "/_app/_tab-top-pages/diary",
+        "/_app/_tab-top-pages/todo"
+      ]
     },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
       "parent": "/_auth"
+    },
+    "/_app/_tab-top-pages/account": {
+      "filePath": "_app/_tab-top-pages/account.tsx",
+      "parent": "/_app/_tab-top-pages"
+    },
+    "/_app/_tab-top-pages/buddy": {
+      "filePath": "_app/_tab-top-pages/buddy.tsx",
+      "parent": "/_app/_tab-top-pages"
+    },
+    "/_app/_tab-top-pages/dashboard": {
+      "filePath": "_app/_tab-top-pages/dashboard.tsx",
+      "parent": "/_app/_tab-top-pages"
+    },
+    "/_app/_tab-top-pages/diary": {
+      "filePath": "_app/_tab-top-pages/diary.tsx",
+      "parent": "/_app/_tab-top-pages"
+    },
+    "/_app/_tab-top-pages/todo": {
+      "filePath": "_app/_tab-top-pages/todo.tsx",
+      "parent": "/_app/_tab-top-pages"
+    },
+    "/_app/diary/new": {
+      "filePath": "_app/diary/new.tsx",
+      "parent": "/_app"
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_app/account')({
+export const Route = createFileRoute('/_app/_tab-top-pages/account')({
   component: RouteComponent,
 });
 
