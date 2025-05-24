@@ -738,6 +738,11 @@ components:
           format: int32
         memo:
           type: string
+        scheduledAt:
+          type: array
+          items:
+            type: string
+            format: date-time
         title:
           type: string
     TaskResponse:
@@ -759,6 +764,11 @@ components:
           format: int32
         memo:
           type: string
+        scheduledAt:
+          type: array
+          items:
+            type: string
+            format: date-time
         title:
           type: string
     UsersResponse:

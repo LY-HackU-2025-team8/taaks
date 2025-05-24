@@ -322,6 +322,7 @@ export interface components {
             /** Format: int32 */
             loadScore?: number;
             memo?: string;
+            scheduledAt?: string[];
             title?: string;
         };
         TaskResponse: {
@@ -335,6 +336,7 @@ export interface components {
             /** Format: int32 */
             loadScore?: number;
             memo?: string;
+            scheduledAt?: string[];
             title?: string;
         };
         UsersResponse: {
