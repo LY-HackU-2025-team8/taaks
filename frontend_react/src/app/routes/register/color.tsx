@@ -1,18 +1,16 @@
 import { RegisterNavigation } from '@/shared/ui/components/custom/register-navigation';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_register/buddy-name')({
+export const Route = createFileRoute('/register/color')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
     <div>
-      buddy name
+      Color
       <RegisterNavigation
-        next_path="/dashboard"
-        prev_path="/color"
-        disabledNext={false}
+        prev_path="/register/clothes"
       />
     </div>
   );

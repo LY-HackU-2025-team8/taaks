@@ -1,18 +1,16 @@
 import { RegisterNavigation } from '@/shared/ui/components/custom/register-navigation';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_register/clothes')({
+export const Route = createFileRoute('/register/hair')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
     <div>
-      clothes
+      hair
       <RegisterNavigation
-        next_path="/color"
-        prev_path="/hair"
-        disabledNext={false}
+        prev_path="/register/nickname"
       />
     </div>
   );
