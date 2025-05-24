@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,6 +25,11 @@ public class GlobalAuthExceptionHandler {
             return ResponseEntity
                     .status(((ResponseStatusException) ex).getStatusCode())
                     .body(new ErrorResponse(((ResponseStatusException) ex).getReason()));
+        }
+        if (ex instanceof HttpMessageNotReadableException) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ErrorResponse("Bad Request: " + ex.getMessage()));
         }
         return ResponseEntity
                 .status(500)
