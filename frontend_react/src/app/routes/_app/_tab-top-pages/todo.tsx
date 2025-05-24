@@ -1,5 +1,8 @@
+import { VerticalTaskList } from '@/pages/todo/vertical-task-list';
 import { PageHeader } from '@/shared/ui/page/page-header';
 import { PageMain } from '@/shared/ui/page/page-main';
+import { PageSection } from '@/shared/ui/page/page-section';
+import { PageSectionTitle } from '@/shared/ui/page/page-section-title';
 import { PageTitle } from '@/shared/ui/page/page-title';
 import { PageTitleContainer } from '@/shared/ui/page/page-title-container';
 import { createFileRoute } from '@tanstack/react-router';
@@ -19,7 +22,12 @@ function RouteComponent() {
           <h3 className="text-2xl font-bold">4月</h3>
         </div>
       </PageHeader>
-      <PageMain className="flex-1">本体</PageMain>
+      <PageMain>
+        <PageSection>
+          <PageSectionTitle>Todo List</PageSectionTitle>
+          <VerticalTaskList />
+        </PageSection>
+      </PageMain>
     </>
   );
 }

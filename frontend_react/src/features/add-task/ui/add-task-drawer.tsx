@@ -25,6 +25,7 @@ import { Switch } from '@/shared/ui/components/shadcn/switch';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { LucideClock, LucideNotepadText } from 'lucide-react';
 import { z } from 'zod';
@@ -51,7 +52,12 @@ export const AddTaskDrawer = ({
   open: propsOpen = false,
   triggerComponent,
 }: AddTaskDrawerProps) => {
-  const { mutate, isPending, error } = $api.useMutation('post', '/tasks');
+  const queryClient = useQueryClient();
+  const { mutate, isPending, error } = $api.useMutation('post', '/tasks', {
+    onSettled: () => {
+      queryClient.invalidateQueries($api.queryOptions('get', '/tasks'));
+    },
+  });
   const [open, setOpen] = useState(propsOpen);
 
   useEffect(() => {
@@ -79,7 +85,7 @@ export const AddTaskDrawer = ({
   const isAllDay = form.watch('isAllDay');
 
   const handleSubmit = form.handleSubmit((data) => {
-    const dueAt = new Date(data.dueAt).toISOString();
+    const dueAt = format(new Date(data.dueAt), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     mutate(
       {

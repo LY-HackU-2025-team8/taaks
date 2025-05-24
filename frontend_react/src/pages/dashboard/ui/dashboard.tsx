@@ -2,7 +2,7 @@ import { PageHeader } from '@/shared/ui/page/page-header';
 import { PageTitle } from '@/shared/ui/page/page-title';
 import { PageTitleContainer } from '@/shared/ui/page/page-title-container';
 import { DashboardBuddy } from './dashboard-buddy';
-import { ToolLink } from './tool-link';
+import { ToolLinkButton } from './tool-link-button';
 
 export const Dashboard = () => {
   return (
@@ -17,9 +17,9 @@ export const Dashboard = () => {
         <div className="space-y-1.5">
           <h3 className="font-bold">Tools</h3>
           <div className="flex gap-2.25">
-            <ToolLink to="/todo">ToDoリスト</ToolLink>
-            <ToolLink to="/diary">日記</ToolLink>
-            <ToolLink to="/buddy">Buddy</ToolLink>
+            <ToolLinkButton to="/todo">ToDoリスト</ToolLinkButton>
+            <ToolLinkButton to="/diary">日記</ToolLinkButton>
+            <ToolLinkButton to="/buddy">Buddy</ToolLinkButton>
           </div>
         </div>
       </PageHeader>

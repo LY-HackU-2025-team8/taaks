@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardFooter,
+  CardTitle,
 } from '@/shared/ui/components/shadcn/card';
 import {
   Form,
@@ -66,8 +67,9 @@ function RouteComponent() {
     <div className="flex h-full flex-col p-7">
       <Form {...form}>
         <form className="mt-auto" onSubmit={handleSubmit}>
-          <Card>
-            <CardContent className="mb-[env(safe-area-inset-bottom)] space-y-7">
+          <Card className="gap-5 rounded-4xl py-5">
+            <CardContent className="mb-[env(safe-area-inset-bottom)] space-y-5 px-5">
+              <CardTitle className="text-center">ログイン</CardTitle>
               <FormField
                 control={form.control}
                 name="username"
@@ -107,8 +109,8 @@ function RouteComponent() {
                 </div>
               )}
             </CardContent>
-            <CardFooter className="gap-4">
-              <Button size="icon" className="size-10" asChild>
+            <CardFooter className="gap-2 px-5">
+              <Button size="icon-lg" className="size-14" asChild>
                 <Link to="/">
                   <LucideChevronLeft />
                 </Link>
@@ -116,7 +118,7 @@ function RouteComponent() {
               <Button
                 size="lg"
                 type="submit"
-                className="flex-1"
+                className="h-14 flex-1"
                 disabled={isPending}
               >
                 ログイン
