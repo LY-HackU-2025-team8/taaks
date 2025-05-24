@@ -25,7 +25,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team8.taaks.dto.ErrorResponse;
 import com.team8.taaks.model.TaakUser;
-import com.team8.taaks.model.TaakUserDetailManager;
 import com.team8.taaks.repository.TaakUserRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
