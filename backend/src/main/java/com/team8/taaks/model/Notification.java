@@ -1,0 +1,96 @@
+package com.team8.taaks.model;
+
+import jakarta.persistence.*;
+import java.time.OffsetDateTime;
+
+/**
+ * Represents a notification to be sent.
+ *
+ * Database mapping:
+ * - id: Primary key, auto-generated (BIGINT)
+ * - task_id: Foreign key to the task (BIGINT, NOT NULL)
+ * - scheduled_at: Scheduled time for sending the notification (TIMESTAMP WITH TIME ZONE, NOT NULL)
+ * - created_at: Timestamp of creation (TIMESTAMP WITH TIME ZONE, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
+ * - updated_at: Timestamp of last update (TIMESTAMP WITH TIME ZONE, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
+ */
+@Entity
+@Table(name = "notification", indexes = {
+    @Index(name = "idx_notification_task_id", columnList = "task_id"),
+    @Index(name = "idx_notification_scheduled_at", columnList = "scheduled_at")
+})
+public class Notification {
+
+    /** Unique identifier (Primary key, auto-generated) */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    /** Task associated with this notification (Foreign key: task_id) */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id", nullable = false)
+    private TaakTask task; 
+
+    /** Scheduled time for sending the notification (NOT NULL) */
+    @Column(name = "scheduled_at", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime scheduledAt;
+
+    /** Record creation timestamp (NOT NULL, DEFAULT CURRENT_TIMESTAMP) */
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    private OffsetDateTime createdAt;
+
+    /** Record last update timestamp (NOT NULL, DEFAULT CURRENT_TIMESTAMP) */
+    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    private OffsetDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = OffsetDateTime.now();
+        updatedAt = OffsetDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = OffsetDateTime.now();
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public TaakTask getTask() {
+        return task;
+    }
+
+    public void setTask(TaakTask task) {
+        this.task = task;
+    }
+
+    public OffsetDateTime getScheduledAt() {
+        return scheduledAt;
+    }
+
+    public void setScheduledAt(OffsetDateTime scheduledAt) {
+        this.scheduledAt = scheduledAt;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+}
