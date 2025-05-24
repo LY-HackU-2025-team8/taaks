@@ -16,7 +16,7 @@ import java.time.ZonedDateTime;
  * - updated_at: Timestamp of last update (TIMESTAMP WITH TIME ZONE, NOT NULL, DEFAULT CURRENT_TIMESTAMP)
  */
 @Entity
-@Table(name = "task_remind", indexes = { // Changed table name and index names
+@Table(name = "task_reminder", indexes = { 
     @Index(name = "idx_task_remind_task_id", columnList = "task_id"),
     @Index(name = "idx_task_remind_scheduled_at", columnList = "scheduled_at")
 })
