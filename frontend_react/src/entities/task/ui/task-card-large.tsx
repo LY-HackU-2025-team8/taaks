@@ -24,7 +24,7 @@ export const TaskCardLarge = ({
     <Card className={cn('relative pl-16', className)} {...props}>
       <div className="absolute top-3.5 bottom-3.5 left-3.5 flex w-12 flex-col items-end border-r pr-3.5 text-2xl font-bold">
         <span>{format(new Date(task.dueAt || new Date()), 'hh')}</span>
-        <span>{format(new Date(task.dueAt || new Date()), 'MM')}</span>
+        <span>{format(new Date(task.dueAt || new Date()), 'mm')}</span>
       </div>
       <CardHeader className="gap-4">
         <CardTitle>{task.title}</CardTitle>
