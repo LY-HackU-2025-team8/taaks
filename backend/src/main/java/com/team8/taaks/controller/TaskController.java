@@ -196,8 +196,7 @@ public class TaskController {
         task.setDueAt(taskRequest.getDueAt());
         task.setIsAllDay(taskRequest.getIsAllDay());
         task.setCompletedAt(taskRequest.getCompletedAt());
-        // 生成AIで負荷スコアを計算
-        System.out.println("これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル：" + taskRequest.getTitle() + "\n期限までの時間（分）" + Duration.between(LocalDateTime.now(), taskRequest.getDueAt()).toMinutes());
+        // System.out.println("これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル：" + taskRequest.getTitle() + "\n期限までの時間（分）" + Duration.between(LocalDateTime.now(), taskRequest.getDueAt()).toMinutes());
         StructuredResponseCreateParams<LLMOutput> params = ResponseCreateParams.builder()
             .input("これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル：" + taskRequest.getTitle() + "\n期限までの時間（分）" + Duration.between(LocalDateTime.now(), taskRequest.getDueAt()).toMinutes())
             .text(LLMOutput.class)
@@ -210,7 +209,7 @@ public class TaskController {
                 throw new OpenAiApiException(500, "Failed to get load score from OpenAI API");
             }
             int loadScore = outputOptional.get().loadScore;
-            System.out.println("負荷スコア: " + loadScore);
+            // System.out.println("負荷スコア: " + loadScore);
         task.setLoadScore(loadScore);
         } catch (OpenAiApiException e) {
             throw new OpenAiApiException(502, "An error occurred while communicating: " + e.getMessage());
