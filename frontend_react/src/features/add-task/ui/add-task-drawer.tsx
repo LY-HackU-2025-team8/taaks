@@ -85,7 +85,7 @@ export const AddTaskDrawer = ({
   const isAllDay = form.watch('isAllDay');
 
   const handleSubmit = form.handleSubmit((data) => {
-    const dueAt = new Date(data.dueAt).toISOString();
+    const dueAt = format(new Date(data.dueAt), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     mutate(
       {
