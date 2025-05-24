@@ -11,16 +11,13 @@ import com.team8.taaks.model.Diary;
 import com.team8.taaks.model.DiaryRepository;
 import com.team8.taaks.model.DiaryRequest;
 import com.team8.taaks.model.DiaryResponse;
-import com.team8.taaks.model.DiarySummary;
 import com.team8.taaks.model.TaakUser;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 
 

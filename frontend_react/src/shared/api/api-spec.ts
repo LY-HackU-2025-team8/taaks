@@ -4,6 +4,30 @@
  */
 
 export interface paths {
+    "/buddy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get buddy information
+         * @description Retrieves the buddy information for the authenticated user.
+         */
+        get: operations["getBuddy"];
+        /**
+         * Create or update buddy information
+         * @description Creates or updates the buddy information for the authenticated user.
+         */
+        put: operations["upsertBuddy"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/diaries": {
         parameters: {
             query?: never;
@@ -108,6 +132,32 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        BuddyRequest: {
+            /** Format: int64 */
+            clothesId: number;
+            /** Format: int64 */
+            colorId: number;
+            /** Format: int64 */
+            hairStyleId: number;
+            name: string;
+            nickname: string;
+        };
+        BuddyResponse: {
+            /** Format: int64 */
+            clothesId?: number;
+            /** Format: int64 */
+            colorId?: number;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: int64 */
+            hairStyleId?: number;
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            nickname?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
         DiaryRequest: {
             /** @example たくさんコードを書いた */
             body: string;
@@ -226,7 +276,6 @@ export interface components {
         UsersResponse: {
             /** Format: int64 */
             id?: number;
-            nickname?: string;
             username?: string;
         };
     };
@@ -238,6 +287,95 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    getBuddy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successfully retrieved buddy information */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Buddy not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    upsertBuddy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BuddyRequest"];
+            };
+        };
+        responses: {
+            /** @description Successfully updated buddy information */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Successfully created buddy information */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BuddyResponse"];
+                };
+            };
+            /** @description Invalid request body */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     diariesGet: {
         parameters: {
             query?: {

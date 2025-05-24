@@ -4,7 +4,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
-import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +23,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.team8.taaks.controller.GlobalAuthExceptionHandler.ErrorResponse;
+import com.team8.taaks.dto.ErrorResponse;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.model.TaakUserDetailManager;
 import com.team8.taaks.model.TaakUserRepository;
@@ -85,7 +84,6 @@ public class SecurityConfig {
         TaakUser user = new TaakUser();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("password"));
-        user.setNickName("テストユーザー");
         user.getRoles().add("USER");
         TaakUserDetailManager manager =  new TaakUserDetailManager(taakUserRepository, passwordEncoder);
         if(! manager.userExists(user.getUsername())) manager.createUser(user);

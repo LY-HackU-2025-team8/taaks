@@ -17,4 +17,13 @@ public interface BuddyRepository extends JpaRepository<Buddy, Long> {
      * @return An Optional containing the buddy if found, or an empty Optional otherwise.
      */
     Optional<Buddy> findByIdAndUserId(Long id, Long userId);
+
+    /**
+     * Finds a buddy by the ID of the associated user.
+     * This method is used to retrieve the buddy for a specific user.
+     *
+     * @param userId The ID of the user associated with the buddy (buddy.user.id).
+     * @return An Optional containing the buddy if found, or an empty Optional otherwise.
+     */
+    Optional<Buddy> findByUserId(Long userId);
 }

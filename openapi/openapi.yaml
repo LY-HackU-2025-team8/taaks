@@ -8,7 +8,73 @@ servers:
 tags:
 - description: the diaries API
   name: diaries
+- description: Buddy management APIs
+  name: Buddy
 paths:
+  /buddy:
+    get:
+      description: Retrieves the buddy information for the authenticated user.
+      operationId: getBuddy
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BuddyResponse"
+          description: Successfully retrieved buddy information
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Buddy not found
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      summary: Get buddy information
+      tags:
+      - Buddy
+    put:
+      description: Creates or updates the buddy information for the authenticated
+        user.
+      operationId: upsertBuddy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BuddyRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BuddyResponse"
+          description: Successfully updated buddy information
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BuddyResponse"
+          description: Successfully created buddy information
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Invalid request body
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      summary: Create or update buddy information
+      tags:
+      - Buddy
   /diaries:
     get:
       operationId: diariesGet
@@ -321,6 +387,53 @@ paths:
       - login-controller
 components:
   schemas:
+    BuddyRequest:
+      type: object
+      properties:
+        clothesId:
+          type: integer
+          format: int64
+        colorId:
+          type: integer
+          format: int64
+        hairStyleId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        nickname:
+          type: string
+      required:
+      - clothesId
+      - colorId
+      - hairStyleId
+      - name
+      - nickname
+    BuddyResponse:
+      type: object
+      properties:
+        clothesId:
+          type: integer
+          format: int64
+        colorId:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+        hairStyleId:
+          type: integer
+          format: int64
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        nickname:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
     DiaryRequest:
       type: object
       properties:
@@ -516,7 +629,5 @@ components:
         id:
           type: integer
           format: int64
-        nickname:
-          type: string
         username:
           type: string

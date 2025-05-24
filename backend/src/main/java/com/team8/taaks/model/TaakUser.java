@@ -47,9 +47,6 @@ public class TaakUser implements UserDetails {
     // ハッシュされたパスワード (e.g., $2a$10$E9j5v1Q0Z3x5z5z5z5z5zO)
     private String password;
 
-    // アプリケーションで使用するユーザーの呼称 (e.g., 山村)
-    private String nickName;    
-
     // LINEでログインを実装するときに使用するユーザーの識別子
     // 現状では使っていない
     @Column(unique = true)
@@ -86,12 +83,7 @@ public class TaakUser implements UserDetails {
     public void setPassword(String passwordHash) {
         this.password = passwordHash;
     }
-    public String getNickName() {
-        return nickName;
-    }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
+    
     public String getLineSub() {
         return lineSub;
     }
