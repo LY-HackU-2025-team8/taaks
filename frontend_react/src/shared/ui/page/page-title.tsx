@@ -1,8 +1,9 @@
-import { cn } from '@/shared/lib/utils';
+import { Heading } from '../components/typography/heading';
 
-export const PageTitle = ({
-  className,
-  ...props
-}: React.ComponentProps<'h1'>) => {
-  return <h1 className={cn('text-[28px] font-bold', className)} {...props} />;
+export const PageTitle = (props: React.ComponentProps<'h1'>) => {
+  return (
+    <Heading className="text-3xl" asChild>
+      <h1 {...props} />
+    </Heading>
+  );
 };

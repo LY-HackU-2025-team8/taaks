@@ -32,13 +32,13 @@ export const SmallCard = ({ title, deadline }: SmallCardProps) => {
   return (
     <div className="relative flex h-38.75 w-44.75">
       <div
-        className="bg-taaks-white relative z-0 flex h-38.75 w-44.75"
+        className="bg-card relative z-0 flex h-38.75 w-44.75"
         style={{
           clipPath: `path("${CLIPING_PATH}")`,
         }}
       >
         <div className="z-1 p-3">
-          <p className="text-taaks-subtitle pt-1 text-[12px] font-bold">
+          <p className="text-muted-foreground pt-1 text-[12px] font-bold">
             {deadline}
           </p>
           <p className="max-w-37.85 font-noto-sans-jp line-clamp-3 pt-6 text-[15px] leading-5 font-[600]">

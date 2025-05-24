@@ -23,7 +23,7 @@ export const SmallBuddyCard = ({ title }: SmallCardProps) => {
     }, []);
 
   return (
-    <div className="text-taaks-white relative flex h-38.75 w-44.75">
+    <div className="text-taaks-card relative flex h-38.75 w-44.75">
       <div
         className="bg-buddy from-buddy-blue via-buddy-green to-buddy-yellow relative z-0 flex h-38.75 w-44.75 bg-gradient-to-br"
         style={{
@@ -35,7 +35,7 @@ export const SmallBuddyCard = ({ title }: SmallCardProps) => {
             <span className="block">Buddyからの</span>
             <span className="block">おすすめ</span>
           </p>
-          <p className="max-w-37.85 font-noto-sans-jp line-clamp-3 pt-3 text-[15px] leading-5 font-[600]">
+          <p className="font-noto-sans-jp line-clamp-3 max-w-38 pt-3 text-[15px] leading-5 font-[600]">
             {title}
           </p>
         </div>
