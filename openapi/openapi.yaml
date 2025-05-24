@@ -256,6 +256,87 @@ paths:
           description: exception
       tags:
       - login-controller
+  /notification-target-token:
+    get:
+      operationId: getNotificationTargetTokens
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - in: query
+        name: size
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageNotificationTargetTokenResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - notification-target-token-controller
+    post:
+      operationId: createNotificationTargetToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationTargetTokenRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/NotificationTargetTokenResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - notification-target-token-controller
+  /notification-target-token/{id}:
+    get:
+      operationId: getNotificationTargetToken
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/NotificationTargetTokenResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - notification-target-token-controller
   /tasks:
     get:
       operationId: getTask
@@ -493,6 +574,31 @@ components:
           type: string
         user:
           $ref: "#/components/schemas/UsersResponse"
+    NotificationTargetTokenRequest:
+      type: object
+      properties:
+        target_token:
+          type: string
+          minLength: 1
+      required:
+      - target_token
+    NotificationTargetTokenResponse:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        id:
+          type: integer
+          format: int64
+        targetToken:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        userId:
+          type: integer
+          format: int64
     PageDiaryResponse:
       type: object
       properties:
@@ -500,6 +606,38 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/DiaryResponse"
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: "#/components/schemas/SortObject"
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageNotificationTargetTokenResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/NotificationTargetTokenResponse"
         empty:
           type: boolean
         first:
