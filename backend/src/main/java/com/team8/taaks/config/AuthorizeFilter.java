@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class AuthorizeFilter extends OncePerRequestFilter {
 
@@ -35,6 +36,11 @@ public class AuthorizeFilter extends OncePerRequestFilter {
                 return;
             }
             DecodedJWT decodedJWT = jwtTokenUtil.decodeToken(xAuthToken.substring(7));
+            Date expitredAt  = decodedJWT.getExpiresAt();
+            if (expitredAt == null || expitredAt.before(new Date())) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
             String username = decodedJWT.getClaim("username").asString();
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             SecurityContextHolder.getContext().setAuthentication(
