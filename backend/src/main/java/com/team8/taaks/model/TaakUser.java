@@ -61,9 +61,6 @@ public class TaakUser implements UserDetails {
     // 現状では使っていない
     @Column(name = "line_sub", unique = true, columnDefinition = "TEXT")
     private String lineSub;
-
-    @Column(name = "salt", nullable = false, columnDefinition = "TEXT")
-    private String salt;
     
     @ElementCollection(fetch = FetchType.EAGER)
     // This is required by implementation of UserDetails
@@ -121,13 +118,6 @@ public class TaakUser implements UserDetails {
         this.lineSub = lineSub;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 
     public List<String> getRoles() {
         return roles;
