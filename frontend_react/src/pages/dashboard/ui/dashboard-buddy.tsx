@@ -15,20 +15,30 @@ export const DashboardBuddy = () => {
     hours < 10 ? 'おはよう' : hours < 18 ? 'こんにちは' : 'こんばんは';
 
   return (
-    <div className="relative flex h-72 items-center">
+    <div className="flex h-72 items-center relative overflow-x-clip overflow-y-visible">
       <div className="z-10 flex flex-col gap-3">
-        <div className="flex flex-col text-xl font-bold">
-          <span>{greeting}</span>
-          <span>{buddy?.nickname}さん！</span>
+        <div className="flex flex-col text-xl font-bold whitespace-nowrap">
+          <span className="block">{greeting}</span>
+          <span className="block">{buddy?.nickname}さん！</span>
         </div>
         <Button
           asChild
-          className="bg-primary text-card rounded-full px-4 py-2 text-sm"
+          className="bg-primary text-card rounded-full px- py-2 text-sm w-fit"
         >
-          <Link to="/buddy">Buddyに会う</Link>
+          <Link to="/buddy">{buddy?.name}に会う</Link>
         </Button>
       </div>
-      <RiveBuddy className="absolute right-0 z-0 h-72 w-60" />
+      <div
+        className="flex flex-col h-72 w-full"
+      >
+        <RiveBuddy
+          className="absolute -top-16 -right-18 size-96 mask-b-from-60% mask-b-to-100%"
+          motionId={1}
+          faceId={3}
+          hairId={buddy?.hairStyleId ?? 1}
+          clothesId={buddy?.clothesId ?? 1}
+        />
+      </div>
     </div>
   );
 };
