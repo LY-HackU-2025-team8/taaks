@@ -1,7 +1,7 @@
+import { $api } from '@/shared/api/openapi-fetch';
 import { AppNav } from '@/shared/ui/layouts/app-nav';
 import { AppNavContext } from '@/shared/ui/layouts/app-nav-context';
 import { useCallback, useState, useEffect } from 'react';
-import { $api } from '@/shared/api/openapi-fetch';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { redirectUnlessLoggedIn } from '../api/require-login';
 import { ThemeProvider, useTheme } from 'next-themes';
