@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
@@ -18,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team8.taaks.config.JwtTokenUtil;
 import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.dto.LoginRequest;
+import com.team8.taaks.dto.LoginResponse;
+import com.team8.taaks.dto.UsersResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 
@@ -45,11 +46,7 @@ public class LoginController {
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
 		Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username(), loginRequest.password());
 		Authentication authenticationResponse;
-		try {
-			authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
-		} catch (org.springframework.security.core.AuthenticationException ex) {
-			return ResponseEntity.status(401).build();
-		}
+		authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
 		SecurityContext context = securityContextHolderStrategy.createEmptyContext();
 		context.setAuthentication(authenticationResponse); 
 		TaakUser user = (TaakUser) authenticationResponse.getPrincipal();
@@ -62,19 +59,7 @@ public class LoginController {
 			LoginResponse loginResponse = new LoginResponse(token, new UsersResponse(user.getUsername(), user.getId()));
             return ResponseEntity.ok(loginResponse);
         } else {
-			return ResponseEntity.status(401).build();
+			throw new org.springframework.security.core.AuthenticationException("Authentication failed") {};
         }
-	}
-
-	@GetMapping("/users/me")
-	public ResponseEntity<UsersResponse> userInfo(@AuthenticationPrincipal TaakUser user) {
-		return ResponseEntity.ok(new UsersResponse(user.getUsername(), user.getId()));
-	}
-	
-	public record LoginRequest(String username, String password) {
-	}
-	public record UsersResponse(String username, Long id) {
-	}
-	public record LoginResponse(String token, UsersResponse user) {
 	}
 }

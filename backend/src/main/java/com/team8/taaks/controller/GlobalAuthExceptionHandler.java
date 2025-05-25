@@ -6,6 +6,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -14,15 +19,30 @@ import org.springframework.web.server.ResponseStatusException;
 public class GlobalAuthExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    @ApiResponse( 
+    @ApiResponse(
             responseCode = "default",
             description = "exception",
             content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    public ErrorResponse handle(Exception  ex) {
+    public ResponseEntity<ErrorResponse> handle(Exception  ex) {
         if (ex instanceof ResponseStatusException) {
-            return new ErrorResponse(((ResponseStatusException) ex).getReason());
+            return ResponseEntity
+                    .status(((ResponseStatusException) ex).getStatusCode())
+                    .body(new ErrorResponse(((ResponseStatusException) ex).getReason()));
+        } else if (ex instanceof HttpMessageNotReadableException) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse("Bad Request: " + ex.getMessage()));
+        } else if (ex instanceof BadCredentialsException) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(new ErrorResponse("Unauthorized: " + ex.getMessage()));
+        } else if (ex instanceof HttpRequestMethodNotSupportedException) {
+            return ResponseEntity
+                    .status(HttpStatus.METHOD_NOT_ALLOWED)
+                    .body(new ErrorResponse("Method Not Allowed: " + ex.getMessage()));
         }
-        return new ErrorResponse(ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Internal Server Error: " + ex.getMessage()));
     }
-
 }

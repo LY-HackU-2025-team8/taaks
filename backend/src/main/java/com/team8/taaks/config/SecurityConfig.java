@@ -25,7 +25,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team8.taaks.dto.ErrorResponse;
 import com.team8.taaks.model.TaakUser;
-import com.team8.taaks.model.TaakUserDetailManager;
 import com.team8.taaks.repository.TaakUserRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,7 +46,7 @@ public class SecurityConfig {
             .cors(cors -> {}) // CORS有効化
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/login", "/api/**").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONSを許可
+                .requestMatchers(HttpMethod.POST, "/users").permitAll() // POST /users を許可
                 .anyRequest().authenticated())
             .exceptionHandling( exception -> exception
                 .authenticationEntryPoint((request, response, authException) -> {
@@ -94,7 +93,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(java.util.List.of("*")); // Spring 6以降はこちらを推奨
-        configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE","PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(java.util.List.of("*", "Content-Type")); // Content-Typeを明示
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
