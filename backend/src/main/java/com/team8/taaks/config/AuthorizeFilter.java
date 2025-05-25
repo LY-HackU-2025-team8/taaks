@@ -36,8 +36,8 @@ public class AuthorizeFilter extends OncePerRequestFilter {
                 return;
             }
             DecodedJWT decodedJWT = jwtTokenUtil.decodeToken(xAuthToken.substring(7));
-            Date expitredAt  = decodedJWT.getExpiresAt();
-            if (expitredAt == null || expitredAt.before(new Date())) {
+            Date expiredAt  = decodedJWT.getExpiresAt();
+            if (expiredAt == null || expiredAt.before(new Date())) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
