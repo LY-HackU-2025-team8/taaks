@@ -5,9 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +55,7 @@ public class TaskController {
         @RequestParam(name = "dueAt_lt", required = false) LocalDateTime dueAtLt,
         @RequestParam(name = "isAllDay_eq", required = false) Boolean isAllDayEq,
         @RequestParam(name = "isCompleted_eq", required = false) Boolean isCompletedEq,
-        @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-        @RequestParam(name = "size", required = false, defaultValue = "10") int size
+        @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC ) @ParameterObject Pageable pageable
     ) {
         Specification<TaakTask> spec = Specification.where(null);
         if (dueAtGt != null) {
@@ -69,7 +71,6 @@ public class TaskController {
             spec = spec.and(TaakTaskSpecification.isCompleted(isCompletedEq));
         }
         spec = spec.and(TaakTaskSpecification.hasUserId(user.getId()));
-        Pageable pageable = Pageable.ofSize(size).withPage(page);
         Page<TaakTask> tasks = taakTaskRepository.findAll(spec, pageable);
         Page<TaskResponse> taskResponses = tasks.map(task -> new TaskResponse(
             task.getId(),
