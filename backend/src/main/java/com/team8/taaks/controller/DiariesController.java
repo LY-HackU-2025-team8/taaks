@@ -14,19 +14,25 @@ import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.repository.DiaryRepository;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.Optional;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
-public class DiariesController implements DiariesApi {
+@RequestMapping("/diaries")
+public class DiariesController {
     @Autowired
     private DiaryRepository diaryRepository;
 
-    @GetMapping("/diaries")
+    @GetMapping("/")
     public ResponseEntity<Page<DiaryResponse>> diariesGet(@RequestParam (value = "page", required = false, defaultValue = "0") Integer page,
                                                   @RequestParam(value = "size", required = false, defaultValue =  "10") Integer size) {
         TaakUser user = getAuthenticatedUser();
@@ -36,7 +42,7 @@ public class DiariesController implements DiariesApi {
         return ResponseEntity.ok(diaryResponses);
     }
 
-    @Override
+    @PostMapping("/")
     public ResponseEntity<DiaryResponse> diariesPost(@RequestBody DiaryRequest diaryRequest) {
         TaakUser user = getAuthenticatedUser();
         Diary diary = new Diary();
@@ -49,7 +55,7 @@ public class DiariesController implements DiariesApi {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Override
+    @GetMapping("/{id}")
     public ResponseEntity<DiaryResponse> diariesIdGet(@PathVariable("id") Integer id) {
         TaakUser user = getAuthenticatedUser();
         Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
@@ -61,7 +67,7 @@ public class DiariesController implements DiariesApi {
         return ResponseEntity.ok(response);
     }
 
-    @Override
+    @PutMapping("/{id}")
     public ResponseEntity<DiaryResponse> diariesIdPut(@PathVariable("id") Integer id, @RequestBody DiaryRequest diaryRequest) {
         TaakUser user = getAuthenticatedUser();
         Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
@@ -77,7 +83,7 @@ public class DiariesController implements DiariesApi {
         return ResponseEntity.ok(response);
     }
 
-    @Override
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> diariesIdDelete(@PathVariable("id") Integer id) {
         TaakUser user = getAuthenticatedUser();
         Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
