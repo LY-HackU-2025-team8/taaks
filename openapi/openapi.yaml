@@ -358,20 +358,33 @@ paths:
         required: false
         schema:
           type: boolean
-      - in: query
+      - description: Zero-based page index (0..N)
+        in: query
         name: page
         required: false
         schema:
           type: integer
-          format: int32
           default: 0
-      - in: query
+          minimum: 0
+      - description: The size of the page to be returned
+        in: query
         name: size
         required: false
         schema:
           type: integer
-          format: int32
           default: 10
+          minimum: 1
+      - description: "Sorting criteria in the format: property,(asc|desc). Default\
+          \ sort order is ascending. Multiple sort criteria are supported."
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: array
+          default:
+          - "id,ASC"
+          items:
+            type: string
       responses:
         "200":
           content:

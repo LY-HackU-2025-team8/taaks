@@ -831,8 +831,12 @@ export interface operations {
                 dueAt_lt?: string;
                 isAllDay_eq?: boolean;
                 isCompleted_eq?: boolean;
+                /** @description Zero-based page index (0..N) */
                 page?: number;
+                /** @description The size of the page to be returned */
                 size?: number;
+                /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
+                sort?: string[];
             };
             header?: never;
             path?: never;
