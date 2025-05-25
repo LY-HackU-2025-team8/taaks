@@ -25,9 +25,6 @@ public class TaakTaskSpecification {
     }
     public static Specification<TaakTask> isAllDay(boolean isAllDayEq) {
         return (root, query, criteriaBuilder) -> {
-            if (isAllDayEq == false) {
-                return criteriaBuilder.conjunction();
-            }
             return criteriaBuilder.equal(root.get("isAllDay"), isAllDayEq);
         };
     }
