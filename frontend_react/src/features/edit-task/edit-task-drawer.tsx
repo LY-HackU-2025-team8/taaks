@@ -1,7 +1,7 @@
 import { taskFormSchema } from '@/entities/task/api/task-form-schema';
 import type { TaskResponseModel } from '@/entities/task/api/task-model';
+import { useEditTask } from '@/entities/task/api/useEditTask';
 import { TaskForm } from '@/entities/task/ui/task-form';
-import { $api } from '@/shared/api/openapi-fetch';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {
   Drawer,
@@ -9,51 +9,33 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerTrigger,
+  useDrawerState,
 } from '@/shared/ui/components/shadcn/drawer';
 import { Form } from '@/shared/ui/components/shadcn/form';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { z } from 'zod';
 
-export type AddTaskDrawerProps = React.ComponentProps<typeof Drawer> & {
+export type EditTaskDrawerProps = React.ComponentProps<typeof Drawer> & {
   /** 編集対象のタスク */
   task?: TaskResponseModel;
 };
 
 export const EditTaskDrawer = ({
   onOpenChange,
-  open: propsOpen = false,
+  open,
   task,
   children,
   ...props
-}: AddTaskDrawerProps) => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending, error } = $api.useMutation(
-    'put',
-    '/tasks/{taskId}',
-    {
-      onSettled: () => {
-        queryClient.invalidateQueries($api.queryOptions('get', '/tasks'));
-        queryClient.invalidateQueries(
-          $api.queryOptions('get', '/tasks/{taskId}', {
-            params: { path: { taskId: task?.id ?? 0 } },
-          })
-        );
-      },
-    }
+}: EditTaskDrawerProps) => {
+  const { editTask, isPending, error } = useEditTask(
+    z.number().parse(task?.id)
   );
-  const [open, setOpen] = useState(propsOpen);
-
-  useEffect(() => {
-    setOpen(open);
-  }, [open]);
-
-  useEffect(() => {
-    onOpenChange?.(open);
-  }, [open, onOpenChange]);
+  const drawerState = useDrawerState({
+    open,
+    onOpenChange,
+  });
 
   const form = useForm<z.infer<typeof taskFormSchema>>({
     resolver: zodResolver(taskFormSchema),
@@ -62,42 +44,17 @@ export const EditTaskDrawer = ({
     reValidateMode: 'onChange',
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
-    const dueAt = format(new Date(data.dueAt), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    const completedAt =
-      data.completedAt &&
-      format(new Date(data.completedAt), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
-    mutate(
-      {
-        body: {
-          ...data,
-          dueAt,
-          completedAt,
-        },
-        params: {
-          path: {
-            taskId: task?.id ?? 0,
-          },
-        },
+  const handleSubmit = form.handleSubmit(
+    editTask({
+      onSuccess: () => {
+        form.reset();
+        drawerState.onOpenChange(false);
       },
-      {
-        onSuccess: () => {
-          form.reset();
-          setOpen(false);
-        },
-      }
-    );
-  });
+    })
+  );
 
   return (
-    <Drawer
-      open={open}
-      onOpenChange={setOpen}
-      repositionInputs={false}
-      autoFocus
-      {...props}
-    >
+    <Drawer repositionInputs={false} autoFocus {...drawerState} {...props}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent aria-describedby={undefined}>
         <Form {...form}>

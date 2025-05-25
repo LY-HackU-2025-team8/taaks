@@ -2,6 +2,23 @@ import { cn } from '@/shared/lib/utils';
 import * as React from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 
+export const useDrawerState = ({
+  open: propOpen,
+  onOpenChange: propOnOpenChange,
+}: {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}) => {
+  const [internalOpen, setInternalOpen] = React.useState(false);
+  const open = propOpen ?? internalOpen;
+  const onOpenChange = propOnOpenChange ?? setInternalOpen;
+
+  return {
+    open,
+    onOpenChange,
+  };
+};
+
 function Drawer({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) {
