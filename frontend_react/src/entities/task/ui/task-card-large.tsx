@@ -1,3 +1,4 @@
+import { EditTaskDrawer } from '@/features/edit-task/edit-task-drawer';
 import { cn } from '@/shared/lib/utils';
 import { CheckIconSmall } from '@/shared/ui/components/icons/check-icon-small';
 import { EditIconSmall } from '@/shared/ui/components/icons/edit-icon-small';
@@ -46,13 +47,15 @@ export const TaskCardLarge = ({
         <CardDescription>{task.memo}</CardDescription>
       </CardHeader>
       <CardFooter className="justify-end gap-1.5">
-        <Button
-          variant="outline"
-          size="icon-sm"
-          className="border-card-foreground text-card-foreground"
-        >
-          <EditIconSmall />
-        </Button>
+        <EditTaskDrawer task={task}>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            className="border-card-foreground text-card-foreground"
+          >
+            <EditIconSmall />
+          </Button>
+        </EditTaskDrawer>
         <Button
           variant="outline"
           size="icon-sm"

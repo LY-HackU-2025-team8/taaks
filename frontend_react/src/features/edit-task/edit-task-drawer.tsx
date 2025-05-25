@@ -1,4 +1,5 @@
 import { taskFormSchema } from '@/entities/task/api/task-form-schema';
+import type { TaskResponseModel } from '@/entities/task/api/task-model';
 import { TaskForm } from '@/entities/task/ui/task-form';
 import { $api } from '@/shared/api/openapi-fetch';
 import { Button } from '@/shared/ui/components/shadcn/button';
@@ -10,32 +11,40 @@ import {
   DrawerTrigger,
 } from '@/shared/ui/components/shadcn/drawer';
 import { Form } from '@/shared/ui/components/shadcn/form';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { z } from 'zod';
 
-export type AddTaskDrawerProps = {
-  /** drawerの開閉状態が変更された時に呼び出されるコールバック関数 */
-  onOpenChange?: (open: boolean) => void;
-  /** drawerの開閉状態を示すフラグ */
-  open?: boolean;
-  triggerComponent?: React.ReactNode;
+export type AddTaskDrawerProps = React.ComponentProps<typeof Drawer> & {
+  /** 編集対象のタスク */
+  task?: TaskResponseModel;
 };
 
-export const AddTaskDrawer = ({
+export const EditTaskDrawer = ({
   onOpenChange,
   open: propsOpen = false,
-  triggerComponent,
+  task,
+  children,
+  ...props
 }: AddTaskDrawerProps) => {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = $api.useMutation('post', '/tasks', {
-    onSettled: () => {
-      queryClient.invalidateQueries($api.queryOptions('get', '/tasks'));
-    },
-  });
+  const { mutate, isPending, error } = $api.useMutation(
+    'put',
+    '/tasks/{taskId}',
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries($api.queryOptions('get', '/tasks'));
+        queryClient.invalidateQueries(
+          $api.queryOptions('get', '/tasks/{taskId}', {
+            params: { path: { taskId: task?.id ?? 0 } },
+          })
+        );
+      },
+    }
+  );
   const [open, setOpen] = useState(propsOpen);
 
   useEffect(() => {
@@ -48,14 +57,7 @@ export const AddTaskDrawer = ({
 
   const form = useForm<z.infer<typeof taskFormSchema>>({
     resolver: zodResolver(taskFormSchema),
-    defaultValues: {
-      title: '',
-      memo: '',
-      dueAt: new Date(),
-      completedAt: undefined,
-      isAllDay: false,
-      loadScore: 0,
-    },
+    defaultValues: taskFormSchema.parse(task),
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
@@ -73,6 +75,11 @@ export const AddTaskDrawer = ({
           dueAt,
           completedAt,
         },
+        params: {
+          path: {
+            taskId: task?.id ?? 0,
+          },
+        },
       },
       {
         onSuccess: () => {
@@ -89,8 +96,9 @@ export const AddTaskDrawer = ({
       onOpenChange={setOpen}
       repositionInputs={false}
       autoFocus
+      {...props}
     >
-      <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
+      <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent aria-describedby={undefined}>
         <Form {...form}>
           <TaskForm onSubmit={handleSubmit}>

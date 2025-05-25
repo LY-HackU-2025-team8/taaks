@@ -1,6 +1,8 @@
+import { EditTaskDrawer } from '@/features/edit-task/edit-task-drawer';
 import { $api } from '@/shared/api/openapi-fetch';
 import { ClockIcon } from '@/shared/ui/components/icons/clock-icon';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
+import { EditIcon } from '@/shared/ui/components/icons/edit-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Separator } from '@/shared/ui/components/shadcn/separator';
 import { Heading } from '@/shared/ui/components/typography/heading';
@@ -32,17 +34,20 @@ export const Route = createFileRoute('/_app/todo/$taskId')({
 function RouteComponent() {
   const { task } = Route.useLoaderData();
 
-  console.log(task);
-
   return (
     <>
       <PageHeader>
-        <PageTitleContainer>
+        <PageTitleContainer className="flex items-center justify-between">
           <Button variant="ghost" size="icon" asChild>
             <Link to="/todo">
               <CloseIcon />
             </Link>
           </Button>
+          <EditTaskDrawer task={task}>
+            <Button variant="ghost" size="icon">
+              <EditIcon />
+            </Button>
+          </EditTaskDrawer>
         </PageTitleContainer>
       </PageHeader>
       <PageMain>
