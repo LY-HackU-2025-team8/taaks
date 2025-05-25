@@ -145,6 +145,10 @@ paths:
         "204":
           description: Diary deleted successfully
         "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
           description: Diary not found
         default:
           content:
@@ -173,9 +177,9 @@ paths:
           description: Successfully retrieved diary
         "404":
           content:
-            '*/*':
+            application/json:
               schema:
-                $ref: "#/components/schemas/DiaryResponse"
+                $ref: "#/components/schemas/ErrorResponse"
           description: Diary not found
         default:
           content:
@@ -210,9 +214,9 @@ paths:
           description: Diary updated successfully
         "404":
           content:
-            '*/*':
+            application/json:
               schema:
-                $ref: "#/components/schemas/DiaryResponse"
+                $ref: "#/components/schemas/ErrorResponse"
           description: Diary not found
         default:
           content:

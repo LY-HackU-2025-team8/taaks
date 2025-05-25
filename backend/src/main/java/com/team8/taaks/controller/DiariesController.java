@@ -13,6 +13,7 @@ import com.team8.taaks.dto.DiaryResponse;
 import com.team8.taaks.model.Diary;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.repository.DiaryRepository;
+import com.team8.taaks.dto.ErrorResponse;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,7 +70,7 @@ public class DiariesController {
     @GetMapping("/{id}")
     @Operation(summary = "Get a diary by ID", responses = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved diary"),
-        @ApiResponse(responseCode = "404", description = "Diary not found")
+        @ApiResponse(responseCode = "404", description = "Diary not found", content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<DiaryResponse> diariesIdGet(@PathVariable("id") Integer id) {
         TaakUser user = getAuthenticatedUser();
@@ -85,7 +86,7 @@ public class DiariesController {
     @PutMapping("/{id}")
     @Operation(summary = "Update a diary by ID", responses = {
         @ApiResponse(responseCode = "200", description = "Diary updated successfully"),
-        @ApiResponse(responseCode = "404", description = "Diary not found")
+        @ApiResponse(responseCode = "404", description = "Diary not found", content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<DiaryResponse> diariesIdPut(@PathVariable("id") Integer id, @RequestBody DiaryRequest diaryRequest) {
         TaakUser user = getAuthenticatedUser();
@@ -105,7 +106,7 @@ public class DiariesController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a diary by ID", responses = {
         @ApiResponse(responseCode = "204", description = "Diary deleted successfully"),
-        @ApiResponse(responseCode = "404", description = "Diary not found")
+        @ApiResponse(responseCode = "404", description = "Diary not found", content = @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/json", schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<Void> diariesIdDelete(@PathVariable("id") Integer id) {
         TaakUser user = getAuthenticatedUser();

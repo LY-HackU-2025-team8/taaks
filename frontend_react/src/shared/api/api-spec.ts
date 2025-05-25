@@ -599,7 +599,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["DiaryResponse"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description exception */
@@ -643,7 +643,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["DiaryResponse"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description exception */
@@ -680,7 +680,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
             };
             /** @description exception */
             default: {
