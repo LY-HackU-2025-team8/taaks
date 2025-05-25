@@ -1,4 +1,5 @@
 import { Button } from '@/shared/ui/components/shadcn/button';
+import { Link } from '@tanstack/react-router';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_app/_tab-top-pages/settings')({
@@ -8,6 +9,9 @@ export const Route = createFileRoute('/_app/_tab-top-pages/settings')({
 function RouteComponent() {
   return (
     <div className="flex h-full flex-col items-center justify-center">
+      <Button asChild className="mb-4">
+        <Link to="/register/nickname">バディの設定</Link>
+      </Button>
       <Button
         /** @todo 関数として分離 */
         onClick={() => {
