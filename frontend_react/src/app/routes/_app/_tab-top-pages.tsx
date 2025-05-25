@@ -18,7 +18,7 @@ function RouteComponent() {
   }, [setHidden]);
 
   return (
-    <div className="bg-muted h-full">
+    <div className="bg-muted flex-1 pb-24">
       <Outlet />
     </div>
   );

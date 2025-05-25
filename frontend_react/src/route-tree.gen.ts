@@ -16,6 +16,7 @@ import { Route as AppImport } from './app/routes/_app'
 import { Route as IndexImport } from './app/routes/index'
 import { Route as AuthLoginImport } from './app/routes/_auth/login'
 import { Route as AppTabTopPagesImport } from './app/routes/_app/_tab-top-pages'
+import { Route as AppTodoTaskIdImport } from './app/routes/_app/todo/$taskId'
 import { Route as AppDiaryNewImport } from './app/routes/_app/diary/new'
 import { Route as AppTabTopPagesTodoImport } from './app/routes/_app/_tab-top-pages/todo'
 import { Route as AppTabTopPagesDiaryImport } from './app/routes/_app/_tab-top-pages/diary'
@@ -49,6 +50,12 @@ const AuthLoginRoute = AuthLoginImport.update({
 
 const AppTabTopPagesRoute = AppTabTopPagesImport.update({
   id: '/_tab-top-pages',
+  getParentRoute: () => AppRoute,
+} as any)
+
+const AppTodoTaskIdRoute = AppTodoTaskIdImport.update({
+  id: '/todo/$taskId',
+  path: '/todo/$taskId',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -169,6 +176,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDiaryNewImport
       parentRoute: typeof AppImport
     }
+    '/_app/todo/$taskId': {
+      id: '/_app/todo/$taskId'
+      path: '/todo/$taskId'
+      fullPath: '/todo/$taskId'
+      preLoaderRoute: typeof AppTodoTaskIdImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
@@ -197,11 +211,13 @@ const AppTabTopPagesRouteWithChildren = AppTabTopPagesRoute._addFileChildren(
 interface AppRouteChildren {
   AppTabTopPagesRoute: typeof AppTabTopPagesRouteWithChildren
   AppDiaryNewRoute: typeof AppDiaryNewRoute
+  AppTodoTaskIdRoute: typeof AppTodoTaskIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppTabTopPagesRoute: AppTabTopPagesRouteWithChildren,
   AppDiaryNewRoute: AppDiaryNewRoute,
+  AppTodoTaskIdRoute: AppTodoTaskIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -226,6 +242,7 @@ export interface FileRoutesByFullPath {
   '/diary': typeof AppTabTopPagesDiaryRoute
   '/todo': typeof AppTabTopPagesTodoRoute
   '/diary/new': typeof AppDiaryNewRoute
+  '/todo/$taskId': typeof AppTodoTaskIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -238,6 +255,7 @@ export interface FileRoutesByTo {
   '/diary': typeof AppTabTopPagesDiaryRoute
   '/todo': typeof AppTabTopPagesTodoRoute
   '/diary/new': typeof AppDiaryNewRoute
+  '/todo/$taskId': typeof AppTodoTaskIdRoute
 }
 
 export interface FileRoutesById {
@@ -253,6 +271,7 @@ export interface FileRoutesById {
   '/_app/_tab-top-pages/diary': typeof AppTabTopPagesDiaryRoute
   '/_app/_tab-top-pages/todo': typeof AppTabTopPagesTodoRoute
   '/_app/diary/new': typeof AppDiaryNewRoute
+  '/_app/todo/$taskId': typeof AppTodoTaskIdRoute
 }
 
 export interface FileRouteTypes {
@@ -267,6 +286,7 @@ export interface FileRouteTypes {
     | '/diary'
     | '/todo'
     | '/diary/new'
+    | '/todo/$taskId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -278,6 +298,7 @@ export interface FileRouteTypes {
     | '/diary'
     | '/todo'
     | '/diary/new'
+    | '/todo/$taskId'
   id:
     | '__root__'
     | '/'
@@ -291,6 +312,7 @@ export interface FileRouteTypes {
     | '/_app/_tab-top-pages/diary'
     | '/_app/_tab-top-pages/todo'
     | '/_app/diary/new'
+    | '/_app/todo/$taskId'
   fileRoutesById: FileRoutesById
 }
 
@@ -328,7 +350,8 @@ export const routeTree = rootRoute
       "filePath": "_app.tsx",
       "children": [
         "/_app/_tab-top-pages",
-        "/_app/diary/new"
+        "/_app/diary/new",
+        "/_app/todo/$taskId"
       ]
     },
     "/_auth": {
@@ -374,6 +397,10 @@ export const routeTree = rootRoute
     },
     "/_app/diary/new": {
       "filePath": "_app/diary/new.tsx",
+      "parent": "/_app"
+    },
+    "/_app/todo/$taskId": {
+      "filePath": "_app/todo/$taskId.tsx",
       "parent": "/_app"
     }
   }

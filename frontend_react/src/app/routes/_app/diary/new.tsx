@@ -57,7 +57,7 @@ function RouteComponent() {
   const date = form.watch('date');
 
   return (
-    <div className="flex h-full flex-col">
+    <>
       <PageHeader>
         <PageTitleContainer>
           <Button variant="ghost" size="icon" asChild>
@@ -67,7 +67,7 @@ function RouteComponent() {
           </Button>
         </PageTitleContainer>
       </PageHeader>
-      <PageMain className="flex flex-1 flex-col gap-7">
+      <PageMain className="flex-1">
         <Form {...form}>
           <form onSubmit={handleSubmit} className="contents">
             <PageSection className="flex-1">
@@ -101,6 +101,6 @@ function RouteComponent() {
           </form>
         </Form>
       </PageMain>
-    </div>
+    </>
   );
 }

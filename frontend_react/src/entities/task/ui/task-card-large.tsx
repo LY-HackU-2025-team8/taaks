@@ -1,5 +1,6 @@
 import { cn } from '@/shared/lib/utils';
-import { EditIcon } from '@/shared/ui/components/icons/edit-icon';
+import { CheckIconSmall } from '@/shared/ui/components/icons/check-icon-small';
+import { EditIconSmall } from '@/shared/ui/components/icons/edit-icon-small';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {
   Card,
@@ -8,8 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/ui/components/shadcn/card';
+import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
-import { LucideCheck } from 'lucide-react';
 import type { TaskResponseModel } from '../api/task-model';
 
 export type TaskCardLargeProps = React.ComponentProps<'div'> & {
@@ -22,11 +23,24 @@ export const TaskCardLarge = ({
   ...props
 }: TaskCardLargeProps) => {
   return (
-    <Card className={cn('relative pl-16', className)} {...props}>
+    <Card
+      className={cn(
+        'relative pl-16 [&_button]:relative [&_button]:z-10',
+        className
+      )}
+      {...props}
+    >
       <div className="font-line-seed absolute top-3.5 bottom-3.5 left-3.5 flex w-12 flex-col items-end border-r pr-3.5 text-2xl font-bold">
         <span>{format(new Date(task.dueAt || new Date()), 'HH')}</span>
         <span>{format(new Date(task.dueAt || new Date()), 'mm')}</span>
       </div>
+      {task.id && (
+        <Link
+          to="/todo/$taskId"
+          params={{ taskId: task.id }}
+          className="absolute inset-0"
+        />
+      )}
       <CardHeader className="gap-4">
         <CardTitle>{task.title}</CardTitle>
         <CardDescription>{task.memo}</CardDescription>
@@ -37,14 +51,14 @@ export const TaskCardLarge = ({
           size="icon-sm"
           className="border-card-foreground text-card-foreground"
         >
-          <EditIcon />
+          <EditIconSmall />
         </Button>
         <Button
           variant="outline"
           size="icon-sm"
           className="border-card-foreground text-card-foreground"
         >
-          <LucideCheck />
+          <CheckIconSmall />
         </Button>
       </CardFooter>
     </Card>
