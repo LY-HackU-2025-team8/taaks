@@ -33,7 +33,7 @@ public class TaakTaskSpecification {
             if (isCompletedEq == false) {
                 return criteriaBuilder.isNull(root.get("completedAt"));
             } else {
-            return criteriaBuilder.isNotNull(root.get("completedAt"));
+                return criteriaBuilder.isNotNull(root.get("completedAt"));
             }
         };
     }

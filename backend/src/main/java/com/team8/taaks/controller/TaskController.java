@@ -51,7 +51,7 @@ public class TaskController {
         @RequestParam(name = "dueAt_gt", required = false) LocalDateTime dueAtGt,
         @RequestParam(name = "dueAt_lt", required = false) LocalDateTime dueAtLt,
         @RequestParam(name = "isAllDay_eq", required = false) Boolean isAllDayEq,
-        @RequestParam(name = "isCompleted_eq", required = false) Boolean isCompletedAtEq,
+        @RequestParam(name = "isCompleted_eq", required = false) Boolean isCompletedEq,
         @RequestParam(name = "page", required = false, defaultValue = "0") int page,
         @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ) {
@@ -65,8 +65,8 @@ public class TaskController {
         if (isAllDayEq != null) {
             spec = spec.and(TaakTaskSpecification.isAllDay(isAllDayEq));
         }
-        if (isCompletedAtEq != null) {
-            spec = spec.and(TaakTaskSpecification.isCompleted(isCompletedAtEq));
+        if (isCompletedEq != null) {
+            spec = spec.and(TaakTaskSpecification.isCompleted(isCompletedEq));
         }
         spec = spec.and(TaakTaskSpecification.hasUserId(user.getId()));
         Pageable pageable = Pageable.ofSize(size).withPage(page);
