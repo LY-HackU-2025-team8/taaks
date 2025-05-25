@@ -71,22 +71,18 @@ export const AppNav = ({
           </Link>
         </li>
         <li className="contents">
-          <AddTaskDrawer
-            onOpenChange={setIsDrawerOpen}
-            open={isDrawerOpen}
-            triggerComponent={
-              <Button
-                size="icon"
-                className="bg-custom text-custom-foreground size-16 -translate-y-4 rounded-2xl shadow-xl"
-              >
-                <RiveIcon
-                  className="size-10"
-                  iconType="Plus"
-                  isActive={isDrawerOpen}
-                />
-              </Button>
-            }
-          />
+          <AddTaskDrawer onOpenChange={setIsDrawerOpen} open={isDrawerOpen}>
+            <Button
+              size="icon"
+              className="bg-custom text-custom-foreground size-16 -translate-y-4 rounded-2xl shadow-xl"
+            >
+              <RiveIcon
+                className="size-10"
+                iconType="Plus"
+                isActive={isDrawerOpen}
+              />
+            </Button>
+          </AddTaskDrawer>
         </li>
         <li className="contents">
           <Link to="/diary" className="flex flex-1 flex-col items-center gap-1">

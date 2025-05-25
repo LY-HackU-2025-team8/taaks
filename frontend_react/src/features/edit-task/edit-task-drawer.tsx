@@ -1,5 +1,6 @@
 import { taskFormSchema } from '@/entities/task/api/task-form-schema';
-import { useCreateTask } from '@/entities/task/api/use-create-task';
+import type { TaskResponseModel } from '@/entities/task/api/task-model';
+import { useEditTask } from '@/entities/task/api/use-edit-task';
 import { TaskForm } from '@/entities/task/ui/task-form';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {
@@ -11,19 +12,26 @@ import {
   useDrawerState,
 } from '@/shared/ui/components/shadcn/drawer';
 import { Form } from '@/shared/ui/components/shadcn/form';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-export type AddTaskDrawerProps = React.ComponentProps<typeof Drawer>;
+export type EditTaskDrawerProps = React.ComponentProps<typeof Drawer> & {
+  /** 編集対象のタスク */
+  task?: TaskResponseModel;
+};
 
-export const AddTaskDrawer = ({
+export const EditTaskDrawer = ({
   onOpenChange,
   open,
+  task,
   children,
   ...props
-}: AddTaskDrawerProps) => {
-  const { createTask, isPending, error } = useCreateTask();
+}: EditTaskDrawerProps) => {
+  const { editTask, isPending, error } = useEditTask(
+    z.number().parse(task?.id)
+  );
   const drawerState = useDrawerState({
     open,
     onOpenChange,
@@ -31,20 +39,13 @@ export const AddTaskDrawer = ({
 
   const form = useForm<z.infer<typeof taskFormSchema>>({
     resolver: zodResolver(taskFormSchema),
-    defaultValues: {
-      title: '',
-      memo: '',
-      dueAt: new Date(),
-      completedAt: undefined,
-      isAllDay: false,
-      loadScore: 0,
-    },
+    defaultValues: taskFormSchema.parse(task),
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
 
   const handleSubmit = form.handleSubmit(
-    createTask({
+    editTask({
       onSuccess: () => {
         form.reset();
         drawerState.onOpenChange(false);

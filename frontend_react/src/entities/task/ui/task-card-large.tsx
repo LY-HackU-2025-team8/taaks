@@ -1,3 +1,4 @@
+import { EditTaskDrawer } from '@/features/edit-task/edit-task-drawer';
 import { cn } from '@/shared/lib/utils';
 import { CheckIconSmall } from '@/shared/ui/components/icons/check-icon-small';
 import { EditIconSmall } from '@/shared/ui/components/icons/edit-icon-small';
@@ -30,7 +31,7 @@ export const TaskCardLarge = ({
       )}
       {...props}
     >
-      <div className="font-line-seed absolute top-3.5 bottom-3.5 left-3.5 flex w-12 flex-col items-end border-r pr-3.5 text-2xl font-bold">
+      <div className="font-line-seed text-foreground absolute top-3.5 bottom-3.5 left-3.5 flex w-12 flex-col items-end border-r pr-3.5 text-2xl font-bold">
         <span>{format(new Date(task.dueAt || new Date()), 'HH')}</span>
         <span>{format(new Date(task.dueAt || new Date()), 'mm')}</span>
       </div>
@@ -46,13 +47,15 @@ export const TaskCardLarge = ({
         <CardDescription>{task.memo}</CardDescription>
       </CardHeader>
       <CardFooter className="justify-end gap-1.5">
-        <Button
-          variant="outline"
-          size="icon-sm"
-          className="border-card-foreground text-card-foreground"
-        >
-          <EditIconSmall />
-        </Button>
+        <EditTaskDrawer task={task}>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            className="border-card-foreground text-card-foreground"
+          >
+            <EditIconSmall />
+          </Button>
+        </EditTaskDrawer>
         <Button
           variant="outline"
           size="icon-sm"
