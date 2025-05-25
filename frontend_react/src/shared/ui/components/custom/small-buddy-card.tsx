@@ -24,7 +24,7 @@ export const SmallBuddyCard = ({ title }: SmallCardProps) => {
     }, []);
 
   return (
-    <div className="text-taaks-card relative flex h-38.75 w-44.75">
+    <div className="text-card relative flex h-38.75 w-44.75">
       <div
         className="bg-buddy from-buddy-blue via-buddy-green to-buddy-yellow relative z-0 flex h-38.75 w-44.75 bg-gradient-to-br"
         style={{

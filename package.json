@@ -38,6 +38,8 @@
     "frontend_react"
   ],
   "devDependencies": {
+    "@storybook/cli": "^8.6.14",
+    "@storybook/react": "^8.6.14",
     "npm-run-all2": "^8.0.1"
   },
   "dependencies": {
