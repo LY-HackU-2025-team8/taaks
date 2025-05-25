@@ -22,7 +22,12 @@ export const registerBuddyFormSchema = z.object({
   hairStyle: z.number().int().min(1, { message: '髪型を選択してください' }),
   clothes: z.number().int().min(1, { message: '服装を選択してください' }),
   color: z.number().int().min(1, { message: '色を選択してください' }),
-  name: z.string().min(1, { message: 'Buddyの名前を入力してください' }),
+  name: z
+    .string()
+    .min(1, { message: 'Buddyの名前を入力してください' })
+    .max(5, {
+      message: 'Buddyの名前は5文字以内で入力してください',
+    }),
 });
 
 function RouteComponent() {
