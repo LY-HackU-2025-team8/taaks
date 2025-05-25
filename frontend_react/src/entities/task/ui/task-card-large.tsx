@@ -25,7 +25,7 @@ export const TaskCardLarge = ({
   return (
     <Card
       className={cn(
-        'relative pl-16 [&_button]:relative [&_button]:z-10',
+        'relative pl-16 [&_button]:relative [&_button]:z-1',
         className
       )}
       {...props}
@@ -38,7 +38,7 @@ export const TaskCardLarge = ({
         <Link
           to="/todo/$taskId"
           params={{ taskId: task.id }}
-          className="absolute inset-0"
+          className="absolute inset-0 z-0"
         />
       )}
       <CardHeader className="gap-4">
