@@ -11,9 +11,15 @@
 // Import Routes
 
 import { Route as rootRoute } from './app/routes/__root'
+import { Route as RegisterImport } from './app/routes/register'
 import { Route as AuthImport } from './app/routes/_auth'
 import { Route as AppImport } from './app/routes/_app'
 import { Route as IndexImport } from './app/routes/index'
+import { Route as RegisterNicknameImport } from './app/routes/register/nickname'
+import { Route as RegisterHairImport } from './app/routes/register/hair'
+import { Route as RegisterColorImport } from './app/routes/register/color'
+import { Route as RegisterClothesImport } from './app/routes/register/clothes'
+import { Route as RegisterBuddyNameImport } from './app/routes/register/buddy-name'
 import { Route as AuthLoginImport } from './app/routes/_auth/login'
 import { Route as AppTabTopPagesImport } from './app/routes/_app/_tab-top-pages'
 import { Route as AppDiaryNewImport } from './app/routes/_app/diary/new'
@@ -24,6 +30,12 @@ import { Route as AppTabTopPagesBuddyImport } from './app/routes/_app/_tab-top-p
 import { Route as AppTabTopPagesAccountImport } from './app/routes/_app/_tab-top-pages/account'
 
 // Create/Update Routes
+
+const RegisterRoute = RegisterImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthRoute = AuthImport.update({
   id: '/_auth',
@@ -39,6 +51,36 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const RegisterNicknameRoute = RegisterNicknameImport.update({
+  id: '/nickname',
+  path: '/nickname',
+  getParentRoute: () => RegisterRoute,
+} as any)
+
+const RegisterHairRoute = RegisterHairImport.update({
+  id: '/hair',
+  path: '/hair',
+  getParentRoute: () => RegisterRoute,
+} as any)
+
+const RegisterColorRoute = RegisterColorImport.update({
+  id: '/color',
+  path: '/color',
+  getParentRoute: () => RegisterRoute,
+} as any)
+
+const RegisterClothesRoute = RegisterClothesImport.update({
+  id: '/clothes',
+  path: '/clothes',
+  getParentRoute: () => RegisterRoute,
+} as any)
+
+const RegisterBuddyNameRoute = RegisterBuddyNameImport.update({
+  id: '/buddy-name',
+  path: '/buddy-name',
+  getParentRoute: () => RegisterRoute,
 } as any)
 
 const AuthLoginRoute = AuthLoginImport.update({
@@ -113,6 +155,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterImport
+      parentRoute: typeof rootRoute
+    }
     '/_app/_tab-top-pages': {
       id: '/_app/_tab-top-pages'
       path: ''
@@ -126,6 +175,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthImport
+    }
+    '/register/buddy-name': {
+      id: '/register/buddy-name'
+      path: '/buddy-name'
+      fullPath: '/register/buddy-name'
+      preLoaderRoute: typeof RegisterBuddyNameImport
+      parentRoute: typeof RegisterImport
+    }
+    '/register/clothes': {
+      id: '/register/clothes'
+      path: '/clothes'
+      fullPath: '/register/clothes'
+      preLoaderRoute: typeof RegisterClothesImport
+      parentRoute: typeof RegisterImport
+    }
+    '/register/color': {
+      id: '/register/color'
+      path: '/color'
+      fullPath: '/register/color'
+      preLoaderRoute: typeof RegisterColorImport
+      parentRoute: typeof RegisterImport
+    }
+    '/register/hair': {
+      id: '/register/hair'
+      path: '/hair'
+      fullPath: '/register/hair'
+      preLoaderRoute: typeof RegisterHairImport
+      parentRoute: typeof RegisterImport
+    }
+    '/register/nickname': {
+      id: '/register/nickname'
+      path: '/nickname'
+      fullPath: '/register/nickname'
+      preLoaderRoute: typeof RegisterNicknameImport
+      parentRoute: typeof RegisterImport
     }
     '/_app/_tab-top-pages/account': {
       id: '/_app/_tab-top-pages/account'
@@ -216,10 +300,36 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface RegisterRouteChildren {
+  RegisterBuddyNameRoute: typeof RegisterBuddyNameRoute
+  RegisterClothesRoute: typeof RegisterClothesRoute
+  RegisterColorRoute: typeof RegisterColorRoute
+  RegisterHairRoute: typeof RegisterHairRoute
+  RegisterNicknameRoute: typeof RegisterNicknameRoute
+}
+
+const RegisterRouteChildren: RegisterRouteChildren = {
+  RegisterBuddyNameRoute: RegisterBuddyNameRoute,
+  RegisterClothesRoute: RegisterClothesRoute,
+  RegisterColorRoute: RegisterColorRoute,
+  RegisterHairRoute: RegisterHairRoute,
+  RegisterNicknameRoute: RegisterNicknameRoute,
+}
+
+const RegisterRouteWithChildren = RegisterRoute._addFileChildren(
+  RegisterRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AppTabTopPagesRouteWithChildren
+  '/register': typeof RegisterRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/register/buddy-name': typeof RegisterBuddyNameRoute
+  '/register/clothes': typeof RegisterClothesRoute
+  '/register/color': typeof RegisterColorRoute
+  '/register/hair': typeof RegisterHairRoute
+  '/register/nickname': typeof RegisterNicknameRoute
   '/account': typeof AppTabTopPagesAccountRoute
   '/buddy': typeof AppTabTopPagesBuddyRoute
   '/dashboard': typeof AppTabTopPagesDashboardRoute
@@ -231,7 +341,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AppTabTopPagesRouteWithChildren
+  '/register': typeof RegisterRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/register/buddy-name': typeof RegisterBuddyNameRoute
+  '/register/clothes': typeof RegisterClothesRoute
+  '/register/color': typeof RegisterColorRoute
+  '/register/hair': typeof RegisterHairRoute
+  '/register/nickname': typeof RegisterNicknameRoute
   '/account': typeof AppTabTopPagesAccountRoute
   '/buddy': typeof AppTabTopPagesBuddyRoute
   '/dashboard': typeof AppTabTopPagesDashboardRoute
@@ -245,8 +361,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
+  '/register': typeof RegisterRouteWithChildren
   '/_app/_tab-top-pages': typeof AppTabTopPagesRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/register/buddy-name': typeof RegisterBuddyNameRoute
+  '/register/clothes': typeof RegisterClothesRoute
+  '/register/color': typeof RegisterColorRoute
+  '/register/hair': typeof RegisterHairRoute
+  '/register/nickname': typeof RegisterNicknameRoute
   '/_app/_tab-top-pages/account': typeof AppTabTopPagesAccountRoute
   '/_app/_tab-top-pages/buddy': typeof AppTabTopPagesBuddyRoute
   '/_app/_tab-top-pages/dashboard': typeof AppTabTopPagesDashboardRoute
@@ -260,7 +382,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/register'
     | '/login'
+    | '/register/buddy-name'
+    | '/register/clothes'
+    | '/register/color'
+    | '/register/hair'
+    | '/register/nickname'
     | '/account'
     | '/buddy'
     | '/dashboard'
@@ -271,7 +399,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/register'
     | '/login'
+    | '/register/buddy-name'
+    | '/register/clothes'
+    | '/register/color'
+    | '/register/hair'
+    | '/register/nickname'
     | '/account'
     | '/buddy'
     | '/dashboard'
@@ -283,8 +417,14 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/_auth'
+    | '/register'
     | '/_app/_tab-top-pages'
     | '/_auth/login'
+    | '/register/buddy-name'
+    | '/register/clothes'
+    | '/register/color'
+    | '/register/hair'
+    | '/register/nickname'
     | '/_app/_tab-top-pages/account'
     | '/_app/_tab-top-pages/buddy'
     | '/_app/_tab-top-pages/dashboard'
@@ -298,12 +438,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
+  RegisterRoute: typeof RegisterRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
+  RegisterRoute: RegisterRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -318,7 +460,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_app",
-        "/_auth"
+        "/_auth",
+        "/register"
       ]
     },
     "/": {
@@ -337,6 +480,16 @@ export const routeTree = rootRoute
         "/_auth/login"
       ]
     },
+    "/register": {
+      "filePath": "register.tsx",
+      "children": [
+        "/register/buddy-name",
+        "/register/clothes",
+        "/register/color",
+        "/register/hair",
+        "/register/nickname"
+      ]
+    },
     "/_app/_tab-top-pages": {
       "filePath": "_app/_tab-top-pages.tsx",
       "parent": "/_app",
@@ -351,6 +504,26 @@ export const routeTree = rootRoute
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
       "parent": "/_auth"
+    },
+    "/register/buddy-name": {
+      "filePath": "register/buddy-name.tsx",
+      "parent": "/register"
+    },
+    "/register/clothes": {
+      "filePath": "register/clothes.tsx",
+      "parent": "/register"
+    },
+    "/register/color": {
+      "filePath": "register/color.tsx",
+      "parent": "/register"
+    },
+    "/register/hair": {
+      "filePath": "register/hair.tsx",
+      "parent": "/register"
+    },
+    "/register/nickname": {
+      "filePath": "register/nickname.tsx",
+      "parent": "/register"
     },
     "/_app/_tab-top-pages/account": {
       "filePath": "_app/_tab-top-pages/account.tsx",
