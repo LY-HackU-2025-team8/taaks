@@ -30,7 +30,7 @@ public class DaysController {
         @PathVariable("day") LocalDate day){
         LocalDateTime startOfDay = day.atStartOfDay();
         LocalDateTime endOfDay = LocalDateTime.of(day, LocalTime.MAX);
-        Long loadScore = taakTaskRepository.sumQuadrupleLoadScoreForCompletedTasksBetweenDueDates(startOfDay, endOfDay);
+        Long loadScore = taakTaskRepository.sumQuadrupleLoadScoreForCompletedTasksBetweenDueDates(user.getId(), startOfDay, endOfDay).orElse(0L);
         DayResponse response = new DayResponse(day, loadScore);
         return ResponseEntity.ok(response);
     }

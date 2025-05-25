@@ -16,6 +16,6 @@ public interface TaakTaskRepository extends CrudRepository<TaakTask, Integer>, J
     List<TaakTask> findByUser(TaakUser user);
     Optional<TaakTask> findByIdAndUserId(Integer id, Long userId);
 
-    @Query("SELECT SUM(t.loadScore) * 4 FROM TaakTask t WHERE t.dueAt >= :start AND t.dueAt <= :end AND t.completedAt IS NOT NULL")
-    Long sumQuadrupleLoadScoreForCompletedTasksBetweenDueDates(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    @Query("SELECT SUM(t.loadScore) * 4 FROM TaakTask t WHERE t.user.id = :userId AND t.dueAt >= :start AND t.dueAt <= :end AND t.completedAt IS NOT NULL")
+    Optional<Long> sumQuadrupleLoadScoreForCompletedTasksBetweenDueDates(@Param("userId") Long userId, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }
