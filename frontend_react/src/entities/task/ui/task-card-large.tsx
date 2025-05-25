@@ -1,5 +1,6 @@
 import { EditTaskDrawer } from '@/features/edit-task/edit-task-drawer';
 import { cn } from '@/shared/lib/utils';
+import { BackIconSmall } from '@/shared/ui/components/icons/back-icon-small';
 import { CheckIconSmall } from '@/shared/ui/components/icons/check-icon-small';
 import { EditIconSmall } from '@/shared/ui/components/icons/edit-icon-small';
 import { Button } from '@/shared/ui/components/shadcn/button';
@@ -10,9 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/ui/components/shadcn/card';
+import { useCallback } from 'react';
 import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
+import { z } from 'zod';
+import { taskFormSchema } from '../api/task-form-schema';
 import type { TaskResponseModel } from '../api/task-model';
+import { useEditTask } from '../api/use-edit-task';
 
 export type TaskCardLargeProps = React.ComponentProps<'div'> & {
   task: TaskResponseModel;
@@ -23,6 +28,28 @@ export const TaskCardLarge = ({
   className,
   ...props
 }: TaskCardLargeProps) => {
+  const { editTask, isPending } = useEditTask(z.number().parse(task.id));
+
+  const handleComplete = useCallback(() => {
+    editTask()(
+      taskFormSchema.parse({
+        ...task,
+        completedAt: new Date(),
+      })
+    );
+  }, [editTask, task]);
+
+  const handleUndo = useCallback(() => {
+    editTask()(
+      taskFormSchema.parse({
+        ...task,
+        completedAt: undefined,
+      })
+    );
+  }, [editTask, task]);
+
+  const isCompleted = !!task.completedAt;
+
   return (
     <Card
       className={cn(
@@ -60,8 +87,10 @@ export const TaskCardLarge = ({
           variant="outline"
           size="icon-sm"
           className="border-card-foreground text-card-foreground"
+          disabled={isPending}
+          onClick={isCompleted ? handleUndo : handleComplete}
         >
-          <CheckIconSmall />
+          {isCompleted ? <BackIconSmall /> : <CheckIconSmall />}
         </Button>
       </CardFooter>
     </Card>
