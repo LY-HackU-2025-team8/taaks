@@ -2,6 +2,7 @@ package com.team8.taaks.controller;
 
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -120,11 +121,11 @@ public class TaskController {
         task.setCompletedAt(taskRequest.completedAt());
         task.setLoadScore(taskRequest.loadScore());
         TaakTask registeredTask = taakTaskRepository.save(task);
-        if(taskRequest.getScheduledAt() == null || taskRequest.getScheduledAt().isEmpty()) {
+        if(taskRequest.scheduledAt() == null || taskRequest.scheduledAt().isEmpty()) {
             // スケジュールが指定されていない場合は空のリストを保存
             taskReminderRepository.saveAll(List.of());
         } else {
-            taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
+            taskReminderRepository.saveAll(taskRequest.scheduledAt().stream()
                 .map(scheduledAt -> {
                     TaskReminder taskReminder = new TaskReminder();
                     taskReminder.setTask(registeredTask);
@@ -132,16 +133,17 @@ public class TaskController {
                     return taskReminder;
                 }).toList());
         }
-        TaskResponse taskResponse = new TaskResponse();
-        taskResponse.setId(registeredTask.getId());
-        taskResponse.setTitle(registeredTask.getTitle());
-        taskResponse.setMemo(registeredTask.getMemo());
-        taskResponse.setDueAt(registeredTask.getDueAt());
-        taskResponse.setIsAllDay(registeredTask.getIsAllDay());
-        taskResponse.setCompletedAt(registeredTask.getCompletedAt());
-        taskResponse.setLoadScore(registeredTask.getLoadScore());
-        taskResponse.setScheduledAt(taskReminderRepository.findAllByTaskId(registeredTask.getId()).stream()
-            .map(reminder -> reminder.getScheduledAt()).toList());
+        TaskResponse taskResponse = new TaskResponse(
+            registeredTask.getId(),
+            registeredTask.getTitle(),
+            registeredTask.getMemo(),
+            registeredTask.getDueAt(),
+            registeredTask.getIsAllDay(),
+            registeredTask.getCompletedAt(),
+            registeredTask.getLoadScore(),
+            taskReminderRepository.findAllByTaskId(registeredTask.getId()).stream()
+                .map(reminder -> reminder.getScheduledAt()).toList()
+        );
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(URI.create("/tasks/" + registeredTask.getId()));
         return new ResponseEntity<>(taskResponse, responseHeaders, HttpStatus.CREATED);
@@ -170,11 +172,11 @@ public class TaskController {
 
         // リマインダーの更新: 既存のものを削除し、新しいものを登録
         taskReminderRepository.deleteAllByTaskId(taskId);
-        if(taskRequest.getScheduledAt() == null || taskRequest.getScheduledAt().isEmpty()) {
+        if(taskRequest.scheduledAt() == null || taskRequest.scheduledAt().isEmpty()) {
             // スケジュールが指定されていない場合は空のリストを保存
             taskReminderRepository.saveAll(List.of());
         } else {
-            taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
+            taskReminderRepository.saveAll(taskRequest.scheduledAt().stream()
                 .map(scheduledAt -> {
                     TaskReminder taskReminder = new TaskReminder();
                     taskReminder.setTask(existingTask);
