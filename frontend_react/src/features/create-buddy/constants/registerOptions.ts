@@ -40,18 +40,3 @@ export const clothesOptions: ToggleOptions[] = [
   { value: '5', icon: Yshirt, name: 'ワイシャツ' },
   { value: '6', icon: Unique, name: 'ユニーク' },
 ];
-
-type ColorOption = {
-  value: string;
-  color: string;
-};
-
-export const colorOptions: ColorOption[] = [
-  { value: '1', color: '#CBED3E' },
-  { value: '2', color: '#E3C840' },
-  { value: '3', color: '#EB6163' },
-  { value: '4', color: '#EB94D4' },
-  { value: '5', color: '#C171EF' },
-  { value: '6', color: '#747DEF' },
-  { value: '7', color: '#72D9E5' },
-];

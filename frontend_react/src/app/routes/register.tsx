@@ -3,13 +3,23 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { z } from 'zod';
-import { checkLogin } from '../api/check-login';
+
+import { redirectUnlessLoggedIn } from '../api/require-login';
 
 export const Route = createFileRoute('/register')({
-  beforeLoad: async ({ context: { queryClient } }) =>
-    checkLogin(queryClient, { onError: '/' }),
+  beforeLoad: async ({ context: { queryClient } }) => {
+    await redirectUnlessLoggedIn(queryClient, { to: '/login' });
+  },
   component: RouteComponent,
 });
+
+// import { checkLogin } from '../api/check-login';
+
+// export const Route = createFileRoute('/register')({
+//   beforeLoad: async ({ context: { queryClient } }) =>
+//     checkLogin(queryClient, { onError: '/' }),
+//   component: RouteComponent,
+// });
 
 // TODO: 最大値と最小値を定数で設定する
 export const registerBuddyFormSchema = z.object({
@@ -22,12 +32,9 @@ export const registerBuddyFormSchema = z.object({
   hairStyle: z.number().int().min(1, { message: '髪型を選択してください' }),
   clothes: z.number().int().min(1, { message: '服装を選択してください' }),
   color: z.number().int().min(1, { message: '色を選択してください' }),
-  name: z
-    .string()
-    .min(1, { message: 'Buddyの名前を入力してください' })
-    .max(5, {
-      message: 'Buddyの名前は5文字以内で入力してください',
-    }),
+  name: z.string().min(1, { message: 'Buddyの名前を入力してください' }).max(5, {
+    message: 'Buddyの名前は5文字以内で入力してください',
+  }),
 });
 
 function RouteComponent() {

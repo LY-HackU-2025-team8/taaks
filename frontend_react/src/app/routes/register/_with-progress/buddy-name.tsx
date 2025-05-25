@@ -1,4 +1,4 @@
-import { colorOptions } from '@/features/create-buddy/constants/registerOptions';
+import { colorOptions } from '@/features/create-buddy/constants/colorOptions';
 import { BuddyPreview } from '@/features/create-buddy/ui/buddy-preview';
 import { RegisterNavigation } from '@/features/create-buddy/ui/register-navigation';
 import { $api } from '@/shared/api/openapi-fetch';

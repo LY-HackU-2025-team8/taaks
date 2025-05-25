@@ -1,4 +1,4 @@
-import { colorOptions } from '@/features/create-buddy/constants/registerOptions';
+import { colorOptions } from '@/features/create-buddy/constants/colorOptions';
 import { BuddyPreview } from '@/features/create-buddy/ui/buddy-preview';
 import { RegisterNavigation } from '@/features/create-buddy/ui/register-navigation';
 import {
@@ -42,7 +42,7 @@ function RouteComponent() {
             const selectedValue = String(form.watch(inputName) ?? '1');
             const selectedColor =
               colorOptions.find((item) => item.value === selectedValue)
-                ?.color ?? '#EAEBE7';
+                ?.color ?? 'green';
             return (
               <BuddyPreview
                 motionId={1}

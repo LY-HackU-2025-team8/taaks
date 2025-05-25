@@ -171,3 +171,32 @@
     @apply flex flex-1 flex-col items-stretch;
   }
 }
+
+/* カスタムカラーを定義 */
+.green {
+  --custom: oklch(0.8917 0.193 120.28);
+}
+
+.yellow {
+  --custom: oklch(0.8324 0.1513 97.61);
+}
+
+.red {
+  --custom: oklch(0.6679 0.1714 22.08);
+}
+
+.pink {
+  --custom: oklch(0.7749 0.1314 337.17);
+}
+
+.purple {
+  --custom: oklch(0.687 0.1919 311.68);
+}
+
+.blue {
+  --custom: oklch(0.6373 0.1684 277.09);
+}
+
+.cyan {
+  --custom: oklch(0.8278 0.0973 205.42);
+}
