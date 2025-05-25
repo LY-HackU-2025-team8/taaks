@@ -1,8 +1,20 @@
 package com.team8.taaks.model;
 
-import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 
 
 /**
@@ -35,6 +47,9 @@ public class TaskReminder {
     /** Scheduled time for sending the reminder (NOT NULL) */
     @Column(name = "scheduled_at", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime scheduledAt;
+
+    @Column(name = "notified_at", nullable = true, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime notifiedAt;
 
     /** Record creation timestamp (NOT NULL, DEFAULT CURRENT_TIMESTAMP) */
     @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
@@ -78,6 +93,14 @@ public class TaskReminder {
 
     public void setScheduledAt(ZonedDateTime scheduledAt) {
         this.scheduledAt = scheduledAt;
+    }
+
+    public ZonedDateTime getNotifiedAt() {
+        return notifiedAt;
+    }
+
+    public void setNotifiedAt(ZonedDateTime notifiedAt) {
+        this.notifiedAt = notifiedAt;
     }
 
     public OffsetDateTime getCreatedAt() {
