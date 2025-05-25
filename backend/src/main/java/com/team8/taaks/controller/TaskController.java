@@ -1,10 +1,12 @@
 package com.team8.taaks.controller;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.model.TaskReminder;
 import com.team8.taaks.repository.TaakTaskRepository;
 import com.team8.taaks.repository.TaskReminderRepository;
+import com.team8.taaks.specification.TaakTaskSpecification;
 
 @CrossOrigin(origins={"localhost:3000", "https://taak.app"})
 @RestController
@@ -44,11 +47,29 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<Page<TaskResponse>> getTask(
         @AuthenticationPrincipal TaakUser user,
+        @RequestParam(name = "dueAt_gt", required = false) LocalDateTime dueAtGt,
+        @RequestParam(name = "dueAt_lt", required = false) LocalDateTime dueAtLt,
+        @RequestParam(name = "isAllDay_eq", required = false) Boolean isAllDayEq,
+        @RequestParam(name = "isCompleted_eq", required = false) Boolean isCompetedAtEq,
         @RequestParam(name = "page", required = false, defaultValue = "0") int page,
         @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ) {
+        Specification<TaakTask> spec = Specification.where(null);
+        if (dueAtGt != null) {
+            spec = spec.and(TaakTaskSpecification.dueAtGreaterThan(dueAtGt));
+        }
+        if (dueAtLt != null) {
+            spec = spec.and(TaakTaskSpecification.dueAtLessThan(dueAtLt));
+        }
+        if (isAllDayEq != null) {
+            spec = spec.and(TaakTaskSpecification.isAllDay(isAllDayEq));
+        }
+        if (isCompetedAtEq != null) {
+            spec = spec.and(TaakTaskSpecification.isCompleted(isCompetedAtEq));
+        }
+        spec = spec.and(TaakTaskSpecification.hasUserId(user.getId()));
         Pageable pageable = Pageable.ofSize(size).withPage(page);
-        Page<TaakTask> tasks = taakTaskRepository.findAllByUserId(user.getId(), pageable);
+        Page<TaakTask> tasks = taakTaskRepository.findAll(spec, pageable);
         Page<TaskResponse> taskResponses = tasks.map(task -> new TaskResponse(
             task.getId(),
             task.getTitle(),

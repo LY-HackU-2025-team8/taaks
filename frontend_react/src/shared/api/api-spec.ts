@@ -37,7 +37,6 @@ export interface paths {
         };
         get: operations["diariesGet"];
         put?: never;
-        /** 日記の新規作成 */
         post: operations["diariesPost"];
         delete?: never;
         options?: never;
@@ -52,12 +51,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** 日記の取得 */
         get: operations["diariesIdGet"];
-        /** 日記の更新 */
         put: operations["diariesIdPut"];
         post?: never;
-        /** 日記の削除 */
         delete: operations["diariesIdDelete"];
         options?: never;
         head?: never;
@@ -552,13 +548,13 @@ export interface operations {
             };
         };
         responses: {
-            /** @description 作成成功 */
-            201: {
+            /** @description OK */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DiaryResponse"];
+                    "*/*": components["schemas"]["DiaryResponse"];
                 };
             };
             /** @description exception */
@@ -583,22 +579,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description 取得成功 */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DiaryResponse"];
-                };
-            };
-            /** @description 見つかりません */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DiaryResponse"];
+                    "*/*": components["schemas"]["DiaryResponse"];
                 };
             };
             /** @description exception */
@@ -627,22 +614,13 @@ export interface operations {
             };
         };
         responses: {
-            /** @description 更新成功 */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DiaryResponse"];
-                };
-            };
-            /** @description 見つかりません */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DiaryResponse"];
+                    "*/*": components["schemas"]["DiaryResponse"];
                 };
             };
             /** @description exception */
@@ -667,15 +645,8 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description 削除成功（レスポンスボディなし） */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description 見つかりません */
-            404: {
+            /** @description OK */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -824,6 +795,10 @@ export interface operations {
     getTask: {
         parameters: {
             query?: {
+                dueAt_gt?: string;
+                dueAt_lt?: string;
+                isAllDay_eq?: boolean;
+                isCompleted_eq?: boolean;
                 page?: number;
                 size?: number;
             };

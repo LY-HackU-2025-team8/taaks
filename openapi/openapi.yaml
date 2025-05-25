@@ -6,8 +6,6 @@ servers:
 - description: Generated server url
   url: http://localhost:8080
 tags:
-- description: the diaries API
-  name: diaries
 - description: Buddy management APIs
   name: Buddy
 paths:
@@ -107,7 +105,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
       tags:
-      - diaries
+      - diaries-controller
     post:
       operationId: diariesPost
       requestBody:
@@ -117,23 +115,20 @@ paths:
               $ref: "#/components/schemas/DiaryRequest"
         required: true
       responses:
-        "201":
+        "200":
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/DiaryResponse"
-          description: 作成成功
+          description: OK
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
-      security:
-      - bearerAuth: []
-      summary: 日記の新規作成
       tags:
-      - diaries
+      - diaries-controller
   /diaries/{id}:
     delete:
       operationId: diariesIdDelete
@@ -145,21 +140,16 @@ paths:
           type: integer
           format: int32
       responses:
-        "204":
-          description: 削除成功（レスポンスボディなし）
-        "404":
-          description: 見つかりません
+        "200":
+          description: OK
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
-      security:
-      - bearerAuth: []
-      summary: 日記の削除
       tags:
-      - diaries
+      - diaries-controller
     get:
       operationId: diariesIdGet
       parameters:
@@ -172,27 +162,18 @@ paths:
       responses:
         "200":
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/DiaryResponse"
-          description: 取得成功
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DiaryResponse"
-          description: 見つかりません
+          description: OK
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
-      security:
-      - bearerAuth: []
-      summary: 日記の取得
       tags:
-      - diaries
+      - diaries-controller
     put:
       operationId: diariesIdPut
       parameters:
@@ -211,27 +192,18 @@ paths:
       responses:
         "200":
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/DiaryResponse"
-          description: 更新成功
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DiaryResponse"
-          description: 見つかりません
+          description: OK
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
-      security:
-      - bearerAuth: []
-      summary: 日記の更新
       tags:
-      - diaries
+      - diaries-controller
   /login:
     post:
       operationId: login
@@ -341,6 +313,28 @@ paths:
     get:
       operationId: getTask
       parameters:
+      - in: query
+        name: dueAt_gt
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: dueAt_lt
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: isAllDay_eq
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: isCompleted_eq
+        required: false
+        schema:
+          type: boolean
       - in: query
         name: page
         required: false
