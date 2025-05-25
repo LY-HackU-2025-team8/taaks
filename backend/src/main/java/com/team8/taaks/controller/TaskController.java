@@ -256,7 +256,7 @@ public class TaskController {
         existingTask.setLoadScore(taskRequest.getLoadScore());
         taakTaskRepository.save(existingTask);
         taskReminderRepository.deleteAllByTaskId(taskId);
-                if(taskRequest.getScheduledAt() == null || taskRequest.getScheduledAt().isEmpty()) {
+        if(taskRequest.getScheduledAt() == null || taskRequest.getScheduledAt().isEmpty()) {
             // スケジュールが指定されていない場合は空のリストを保存
             taskReminderRepository.saveAll(List.of());
         } else {
