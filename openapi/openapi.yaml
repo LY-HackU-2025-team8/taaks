@@ -6,8 +6,6 @@ servers:
 - description: Generated server url
   url: http://localhost:8080
 tags:
-- description: the diaries API
-  name: diaries
 - description: Buddy management APIs
   name: Buddy
 paths:
@@ -99,15 +97,16 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/PageDiaryResponse"
-          description: OK
+          description: Successfully retrieved diaries
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
+      summary: Get diaries
       tags:
-      - diaries
+      - diaries-controller
     post:
       operationId: diariesPost
       requestBody:
@@ -119,21 +118,19 @@ paths:
       responses:
         "201":
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/DiaryResponse"
-          description: 作成成功
+          description: Diary created successfully
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
-      security:
-      - bearerAuth: []
-      summary: 日記の新規作成
+      summary: Create a new diary
       tags:
-      - diaries
+      - diaries-controller
   /diaries/{id}:
     delete:
       operationId: diariesIdDelete
@@ -146,20 +143,22 @@ paths:
           format: int32
       responses:
         "204":
-          description: 削除成功（レスポンスボディなし）
+          description: Diary deleted successfully
         "404":
-          description: 見つかりません
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Diary not found
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
-      security:
-      - bearerAuth: []
-      summary: 日記の削除
+      summary: Delete a diary by ID
       tags:
-      - diaries
+      - diaries-controller
     get:
       operationId: diariesIdGet
       parameters:
@@ -172,27 +171,25 @@ paths:
       responses:
         "200":
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/DiaryResponse"
-          description: 取得成功
+          description: Successfully retrieved diary
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DiaryResponse"
-          description: 見つかりません
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Diary not found
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
-      security:
-      - bearerAuth: []
-      summary: 日記の取得
+      summary: Get a diary by ID
       tags:
-      - diaries
+      - diaries-controller
     put:
       operationId: diariesIdPut
       parameters:
@@ -211,27 +208,25 @@ paths:
       responses:
         "200":
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/DiaryResponse"
-          description: 更新成功
+          description: Diary updated successfully
         "404":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DiaryResponse"
-          description: 見つかりません
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Diary not found
         default:
           content:
             '*/*':
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: exception
-      security:
-      - bearerAuth: []
-      summary: 日記の更新
+      summary: Update a diary by ID
       tags:
-      - diaries
+      - diaries-controller
   /login:
     post:
       operationId: login
@@ -341,6 +336,28 @@ paths:
     get:
       operationId: getTask
       parameters:
+      - in: query
+        name: dueAt_gt
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: dueAt_lt
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: isAllDay_eq
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: isCompleted_eq
+        required: false
+        schema:
+          type: boolean
       - in: query
         name: page
         required: false
