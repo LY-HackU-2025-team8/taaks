@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.query.SortDirection;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter.Directive;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +55,7 @@ public class TaskController {
         @RequestParam(name = "dueAt_lt", required = false) LocalDateTime dueAtLt,
         @RequestParam(name = "isAllDay_eq", required = false) Boolean isAllDayEq,
         @RequestParam(name = "isCompleted_eq", required = false) Boolean isCompletedEq,
-        @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC ) @ParameterObject Pageable pageable // ★ @ParameterObject を追加
+        @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC ) @ParameterObject Pageable pageable
     ) {
         Specification<TaakTask> spec = Specification.where(null);
         if (dueAtGt != null) {
