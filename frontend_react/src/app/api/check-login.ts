@@ -19,6 +19,7 @@ export const checkLogin = async (
   } catch {
     // ユーザーデータの取得に失敗した場合
     if (onError) throw redirect({ to: onError });
+    return;
   }
   // ユーザーデータの取得に成功した場合
   if (onSuccess) throw redirect({ to: onSuccess });
