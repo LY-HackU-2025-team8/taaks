@@ -1,6 +1,5 @@
 import { colorOptions } from '@/features/create-buddy/constants/registerOptions';
 import { BuddyPreview } from '@/features/create-buddy/ui/buddy-preview';
-import { ProgressBar } from '@/features/create-buddy/ui/progress-bar';
 import { RegisterNavigation } from '@/features/create-buddy/ui/register-navigation';
 import { $api } from '@/shared/api/openapi-fetch';
 import { InlineInput } from '@/shared/ui/components/input/inline-input';
@@ -13,9 +12,9 @@ import {
 import { useFormContext } from 'react-hook-form';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
-import { registerBuddyFormSchema } from '../register';
+import { registerBuddyFormSchema } from '../../register';
 
-export const Route = createFileRoute('/register/buddy-name')({
+export const Route = createFileRoute('/register/_with-progress/buddy-name')({
   component: RouteComponent,
 });
 
@@ -50,14 +49,11 @@ function RouteComponent() {
           },
         }
       );
-
-      // navigate({ to: '/dashboard' });
     }
   };
 
   return (
     <>
-      <ProgressBar className="mt-4 h-12 w-full" progress={4} />
       <form
         onSubmit={handleSubmit}
         className="mb-22 flex flex-1 flex-col justify-center px-3"

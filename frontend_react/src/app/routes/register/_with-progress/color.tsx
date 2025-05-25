@@ -1,6 +1,5 @@
-import { clothesOptions } from '@/features/create-buddy/constants/registerOptions';
+import { colorOptions } from '@/features/create-buddy/constants/registerOptions';
 import { BuddyPreview } from '@/features/create-buddy/ui/buddy-preview';
-import { ProgressBar } from '@/features/create-buddy/ui/progress-bar';
 import { RegisterNavigation } from '@/features/create-buddy/ui/register-navigation';
 import {
   FormField,
@@ -15,38 +14,47 @@ import {
 import { useFormContext } from 'react-hook-form';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
-import { registerBuddyFormSchema } from '../register';
+import { registerBuddyFormSchema } from '../../register';
 
-export const Route = createFileRoute('/register/clothes')({
+export const Route = createFileRoute('/register/_with-progress/color')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const form = useFormContext<z.infer<typeof registerBuddyFormSchema>>();
   const navigate = useNavigate();
-  const inputName = 'clothes';
+  const inputName = 'color';
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const isValid = await form.trigger(inputName);
-    if (isValid) navigate({ to: '/register/color' });
+    if (isValid) navigate({ to: '/register/buddy-name' });
   };
 
   return (
     <>
-      <ProgressBar className="mt-4 h-12 w-full" progress={2} />
       <form
         onSubmit={handleSubmit}
         className="mb-22 flex flex-1 flex-col justify-center px-3"
       >
-        <BuddyPreview
-          size="large-bottom"
-          motionId={2}
-          hairId={form.watch('hairStyle')}
-          clothesId={form.watch('clothes')}
-          faceId={5}
-        />
-        <p className="pt-6 pb-2 text-[1.25rem] font-bold">服装を選択</p>
+        <div className="flex items-center justify-center p-3.5">
+          {(() => {
+            const selectedValue = String(form.watch(inputName) ?? '1');
+            const selectedColor =
+              colorOptions.find((item) => item.value === selectedValue)
+                ?.color ?? '#EAEBE7';
+            return (
+              <BuddyPreview
+                motionId={1}
+                faceId={3}
+                hairId={form.watch('hairStyle') ?? 1}
+                clothesId={form.watch('clothes') ?? 1}
+                color={selectedColor}
+              />
+            );
+          })()}
+        </div>
+        <p className="pt-6 pb-2 text-[1.25rem] font-bold">色を選択</p>
 
         <FormField
           control={form.control}
@@ -63,14 +71,16 @@ function RouteComponent() {
                     if (value) field.onChange(Number(value));
                   }}
                 >
-                  {clothesOptions.map((item) => (
+                  {colorOptions.map((item) => (
                     <ToggleGroupItem
                       key={item.value}
                       value={item.value}
-                      className="flex h-[8.625rem] w-[6.6875rem] flex-col items-center justify-center rounded-2xl border-2"
+                      className="flex size-20 flex-col items-center justify-center rounded-full border-2 p-0"
                     >
-                      <item.icon className="size-18" />
-                      <span className="mt-2">{item.name}</span>
+                      <div
+                        className="size-18 rounded-full"
+                        style={{ backgroundColor: item.color }}
+                      ></div>
                     </ToggleGroupItem>
                   ))}
                 </ToggleGroup>
@@ -79,7 +89,7 @@ function RouteComponent() {
             </FormItem>
           )}
         />
-        <RegisterNavigation prev_path="/register/hair" />
+        <RegisterNavigation prev_path="/register/clothes" />
       </form>
     </>
   );
