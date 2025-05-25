@@ -35,8 +35,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** Get diaries */
         get: operations["diariesGet"];
         put?: never;
+        /** Create a new diary */
         post: operations["diariesPost"];
         delete?: never;
         options?: never;
@@ -51,9 +53,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** Get a diary by ID */
         get: operations["diariesIdGet"];
+        /** Update a diary by ID */
         put: operations["diariesIdPut"];
         post?: never;
+        /** Delete a diary by ID */
         delete: operations["diariesIdDelete"];
         options?: never;
         head?: never;
@@ -515,7 +520,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK */
+            /** @description Successfully retrieved diaries */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -548,8 +553,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description OK */
-            200: {
+            /** @description Diary created successfully */
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -579,8 +584,17 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK */
+            /** @description Successfully retrieved diary */
             200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DiaryResponse"];
+                };
+            };
+            /** @description Diary not found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -614,8 +628,17 @@ export interface operations {
             };
         };
         responses: {
-            /** @description OK */
+            /** @description Diary updated successfully */
             200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DiaryResponse"];
+                };
+            };
+            /** @description Diary not found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -645,8 +668,15 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK */
-            200: {
+            /** @description Diary deleted successfully */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Diary not found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
