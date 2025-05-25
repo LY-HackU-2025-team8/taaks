@@ -32,7 +32,7 @@ public class DiariesController {
     @Autowired
     private DiaryRepository diaryRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<Page<DiaryResponse>> diariesGet(@RequestParam (value = "page", required = false, defaultValue = "0") Integer page,
                                                   @RequestParam(value = "size", required = false, defaultValue =  "10") Integer size) {
         TaakUser user = getAuthenticatedUser();
@@ -42,7 +42,7 @@ public class DiariesController {
         return ResponseEntity.ok(diaryResponses);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<DiaryResponse> diariesPost(@RequestBody DiaryRequest diaryRequest) {
         TaakUser user = getAuthenticatedUser();
         Diary diary = new Diary();
