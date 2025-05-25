@@ -208,13 +208,18 @@ public class TaskController {
         task.setCompletedAt(taskRequest.getCompletedAt());
         task.setLoadScore(taskRequest.getLoadScore());
         TaakTask registeredTask = taakTaskRepository.save(task);
-        taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
-            .map(scheduledAt -> {
-                TaskReminder taskReminder = new TaskReminder();
-                taskReminder.setTask(registeredTask);
-                taskReminder.setScheduledAt(scheduledAt);
-                return taskReminder;
-            }).toList());
+        if(taskRequest.getScheduledAt() == null || taskRequest.getScheduledAt().isEmpty()) {
+            // スケジュールが指定されていない場合は空のリストを保存
+            taskReminderRepository.saveAll(List.of());
+        } else {
+            taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
+                .map(scheduledAt -> {
+                    TaskReminder taskReminder = new TaskReminder();
+                    taskReminder.setTask(registeredTask);
+                    taskReminder.setScheduledAt(scheduledAt);
+                    return taskReminder;
+                }).toList());
+        }
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setId(registeredTask.getId());
         taskResponse.setTitle(registeredTask.getTitle());
@@ -251,13 +256,18 @@ public class TaskController {
         existingTask.setLoadScore(taskRequest.getLoadScore());
         taakTaskRepository.save(existingTask);
         taskReminderRepository.deleteAllByTaskId(taskId);
-        taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
-            .map(scheduledAt -> {
-                TaskReminder taskReminder = new TaskReminder();
-                taskReminder.setTask(existingTask);
-                taskReminder.setScheduledAt(scheduledAt);
-                return taskReminder;
-            }).toList());
+                if(taskRequest.getScheduledAt() == null || taskRequest.getScheduledAt().isEmpty()) {
+            // スケジュールが指定されていない場合は空のリストを保存
+            taskReminderRepository.saveAll(List.of());
+        } else {
+            taskReminderRepository.saveAll(taskRequest.getScheduledAt().stream()
+                .map(scheduledAt -> {
+                    TaskReminder taskReminder = new TaskReminder();
+                    taskReminder.setTask(existingTask);
+                    taskReminder.setScheduledAt(scheduledAt);
+                    return taskReminder;
+                }).toList());
+        }
         return new ResponseEntity<>("Task updated successfully", HttpStatus.OK);
     }
 }
