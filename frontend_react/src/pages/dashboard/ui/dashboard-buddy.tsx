@@ -15,7 +15,7 @@ export const DashboardBuddy = () => {
     hours < 10 ? 'おはよう' : hours < 18 ? 'こんにちは' : 'こんばんは';
 
   return (
-    <div className="flex h-72 items-center relative overflow-x-clip overflow-y-visible">
+    <div className="relative flex h-72 items-center overflow-x-clip overflow-y-visible">
       <div className="z-10 flex flex-col gap-3">
         <div className="flex flex-col text-xl font-bold whitespace-nowrap">
           <span className="block">{greeting}</span>
@@ -23,14 +23,12 @@ export const DashboardBuddy = () => {
         </div>
         <Button
           asChild
-          className="bg-primary text-card rounded-full px- py-2 text-sm w-fit"
+          className="bg-primary text-card px- w-fit rounded-full py-2 text-sm"
         >
           <Link to="/buddy">{buddy?.name}に会う</Link>
         </Button>
       </div>
-      <div
-        className="flex flex-col h-72 w-full"
-      >
+      <div className="flex h-72 w-full flex-col">
         <RiveBuddy
           className="absolute -top-16 -right-18 size-96 mask-b-from-60% mask-b-to-100%"
           motionId={1}
