@@ -1,5 +1,5 @@
 import { taskFormSchema } from '@/entities/task/api/task-form-schema';
-import { useCreateTask } from '@/entities/task/api/useCreateTask';
+import { useCreateTask } from '@/entities/task/api/use-create-task';
 import { TaskForm } from '@/entities/task/ui/task-form';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {

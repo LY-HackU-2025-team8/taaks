@@ -1,6 +1,6 @@
 import { taskFormSchema } from '@/entities/task/api/task-form-schema';
 import type { TaskResponseModel } from '@/entities/task/api/task-model';
-import { useEditTask } from '@/entities/task/api/useEditTask';
+import { useEditTask } from '@/entities/task/api/use-edit-task';
 import { TaskForm } from '@/entities/task/ui/task-form';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {
