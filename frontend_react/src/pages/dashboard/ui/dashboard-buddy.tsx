@@ -23,7 +23,7 @@ export const DashboardBuddy = () => {
         </div>
         <Button
           asChild
-          className="bg-primary text-card px- w-fit rounded-full py-2 text-sm"
+          className="bg-primary text-card px-6 w-fit rounded-full py-2 text-sm"
         >
           <Link to="/buddy">{buddy?.name}に会う</Link>
         </Button>

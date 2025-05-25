@@ -45,7 +45,7 @@ function RouteComponent() {
               <FormControl>
                 <InlineInput
                   placeholder="ユーザー"
-                  className="w-full border-b-1 border-b-[##D9DCD1] py-4"
+                  className="w-full border-b-1 border-b-[#D9DCD1] py-4"
                   autoFocus
                   {...field}
                 />
