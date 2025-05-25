@@ -50,4 +50,12 @@ public interface TaskReminderRepository extends JpaRepository<TaskReminder, Long
      * @param taskId The ID of the task whose reminders are to be deleted.
      */
     void deleteAllByTaskId(Integer taskId);
+
+    /**
+     * Finds all task reminders that have not been notified and are scheduled before the current time.
+     *
+     * @param scheduledAt The ZonedDateTime to compare against the scheduled_at field.
+     * @return A list of TaskReminder entities that have not been notified and are due.
+     */
+    List<TaskReminder> findByNotifiedAtIsNullAndScheduledAtBefore(ZonedDateTime scheduledAt);
 }
