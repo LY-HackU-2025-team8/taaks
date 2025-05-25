@@ -16,19 +16,10 @@ export const checkLogin = async (
 ) => {
   try {
     await queryClient.ensureQueryData($api.queryOptions('get', '/users/me'));
-    return (
-      onSuccess &&
-      redirect({
-        to: onSuccess,
-      })
-    );
   } catch {
-    // ユーザーデータの取得に失敗した場合はリダイレクト
-    return (
-      onError &&
-      redirect({
-        to: onError,
-      })
-    );
+    // ユーザーデータの取得に失敗した場合
+    if (onError) throw redirect({ to: onError });
   }
+  // ユーザーデータの取得に成功した場合
+  if (onSuccess) throw redirect({ to: onSuccess });
 };
