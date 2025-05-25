@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,7 @@ import com.team8.taaks.repository.TaskReminderRepository;
 
 @CrossOrigin(origins={"localhost:3000", "https://taak.app"})
 @RestController
+@RequestMapping("/tasks")
 public class TaskController {
     private final TaakTaskRepository taakTaskRepository;
     private final TaskReminderRepository taskReminderRepository;
@@ -39,7 +41,7 @@ public class TaskController {
     }
 
     // タスク一覧の取得
-    @GetMapping("/tasks")
+    @GetMapping
     public ResponseEntity<Page<TaskResponse>> getTask(
         @AuthenticationPrincipal TaakUser user,
         @RequestParam(name = "page", required = false, defaultValue = "0") int page,
@@ -62,7 +64,7 @@ public class TaskController {
     }
 
     // タスクの詳細取得
-    @GetMapping("/tasks/{taskId}")
+    @GetMapping("/{taskId}")
     public ResponseEntity<TaskResponse> getTaskDetail(@AuthenticationPrincipal TaakUser user, @PathVariable("taskId") Integer taskId) {
         Optional<TaakTask> taskOpt = taakTaskRepository.findByIdAndUserId(taskId, user.getId());
         if (taskOpt.isEmpty()) {
@@ -86,7 +88,7 @@ public class TaskController {
     }
 
     // タスクの登録
-    @PostMapping("/tasks")
+    @PostMapping
     public ResponseEntity<TaskResponse> createTask(@AuthenticationPrincipal TaakUser user, @RequestBody TaskRequest taskRequest) {
         TaakTask task = new TaakTask();
         task.setUser(user);
@@ -125,7 +127,7 @@ public class TaskController {
     }
 
     // タスクの更新
-    @PutMapping("/tasks/{taskId}")
+    @PutMapping("/{taskId}")
     @Transactional
     public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable("taskId") Integer taskId, @RequestBody TaskRequest taskRequest) {
         Optional<TaakTask> optionalTask = taakTaskRepository.findById(taskId);
