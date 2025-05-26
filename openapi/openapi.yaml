@@ -73,6 +73,49 @@ paths:
       summary: Create or update buddy information
       tags:
       - Buddy
+  /days/today:
+    get:
+      operationId: todaySummary
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DayResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - days-controller
+  /days/{day}:
+    get:
+      operationId: diarySummary
+      parameters:
+      - in: path
+        name: day
+        required: true
+        schema:
+          type: string
+          format: date
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DayResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - days-controller
   /diaries:
     get:
       operationId: diariesGet
@@ -652,6 +695,15 @@ components:
       properties:
         newUsername:
           type: string
+    DayResponse:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        loadScore:
+          type: integer
+          format: int64
     DeleteAccountRequest:
       type: object
       properties:
