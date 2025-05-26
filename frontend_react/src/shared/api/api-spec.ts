@@ -276,34 +276,34 @@ export interface components {
             /** @example プログラミング */
             title: string;
         };
-        /** @description エラー時のレスポンス */
         ErrorResponse: {
-            message?: string;
+            /** @description エラー時のレスポンス */
+            message: string;
         };
         GenericMessageResponse: {
-            message?: string;
+            message: string;
         };
         LoginRequest: {
             password?: string;
             username?: string;
         };
         LoginResponse: {
-            token?: string;
-            user?: components["schemas"]["UsersResponse"];
+            token: string;
+            user: components["schemas"]["UsersResponse"];
         };
         NotificationTargetTokenRequest: {
             target_token: string;
         };
         NotificationTargetTokenResponse: {
             /** Format: date-time */
-            createdAt?: string;
+            createdAt: string;
             /** Format: int64 */
-            id?: number;
-            targetToken?: string;
+            id: number;
+            targetToken: string;
             /** Format: date-time */
-            updatedAt?: string;
+            updatedAt: string;
             /** Format: int64 */
-            userId?: number;
+            userId: number;
         };
         PageDiaryResponse: {
             content?: components["schemas"]["DiaryResponse"][];
@@ -391,15 +391,15 @@ export interface components {
             /** Format: date-time */
             completedAt?: string;
             /** Format: date-time */
-            dueAt?: string;
+            dueAt: string;
             /** Format: int32 */
-            id?: number;
-            isAllDay?: boolean;
+            id: number;
+            isAllDay: boolean;
             /** Format: int32 */
-            loadScore?: number;
-            memo?: string;
-            scheduledAt?: string[];
-            title?: string;
+            loadScore: number;
+            memo: string;
+            scheduledAt: string[];
+            title: string;
         };
         UserRegistrationRequest: {
             password?: string;
@@ -407,8 +407,8 @@ export interface components {
         };
         UsersResponse: {
             /** Format: int64 */
-            id?: number;
-            username?: string;
+            id: number;
+            username: string;
         };
     };
     responses: never;
