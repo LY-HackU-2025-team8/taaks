@@ -1,13 +1,19 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { checkLogin } from '../api/check-login';
+import { $api } from '@/shared/api/openapi-fetch';
+import { useEffect } from 'react';
+import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_auth')({
-  beforeLoad: async ({ context: { queryClient } }) => {
-    await checkLogin(queryClient, { onSuccess: '/dashboard' });
-  },
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const navigate = useNavigate();
+  const { isFetched } = $api.useQuery('get', '/users/me');
+
+  // ログインしている場合はダッシュボードへリダイレクト
+  useEffect(() => {
+    if (isFetched) navigate({ to: '/dashboard' });
+  }, [isFetched, navigate]);
+
   return <Outlet />;
 }

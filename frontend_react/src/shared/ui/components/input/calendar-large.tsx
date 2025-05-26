@@ -6,7 +6,7 @@ export const CalendarLarge = ({
 }: React.ComponentProps<typeof Calendar>) => {
   return (
     <Calendar
-      className="mx-auto w-full max-w-100 p-0"
+      className="mx-auto w-full p-0"
       classNames={{
         month_grid:
           'grid grid-cols-7 [&_thead]:contents [&_tbody]:contents -mx-1.5',
@@ -15,9 +15,9 @@ export const CalendarLarge = ({
         weekday:
           'text-sm font-bold font-line-seed first:text-red-700 last:text-blue-700',
         week: 'contents',
-        day: 'rounded-2xl flex flex-col items-center justify-center p-1.5',
+        day: 'rounded-3xl flex flex-col items-center justify-center p-2 -m-0.5',
         day_button:
-          'aspect-square bg-background rounded-xl size-full font-bold font-line-seed',
+          'aspect-square max-h-12 bg-background rounded-2xl w-full h-full font-bold font-line-seed',
         selected: 'text-foreground bg-primary/20',
         today: '',
         button_next:
@@ -29,6 +29,7 @@ export const CalendarLarge = ({
         formatCaption: (date) => format(date, 'M月'),
         formatWeekdayName: (weekday) => format(weekday, 'E'),
       }}
+      showOutsideDays={false}
       {...props}
     />
   );
