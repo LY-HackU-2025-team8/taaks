@@ -34,8 +34,8 @@ function RouteComponent() {
       </PageHeader>
       <PageMain>
         <PageSection>
-          <PageSectionTitle>Todo List</PageSectionTitle>
-          <VerticalTaskList />
+          <PageSectionTitle>今日のタスク</PageSectionTitle>
+          <VerticalTaskList date={date} />
         </PageSection>
       </PageMain>
     </>
