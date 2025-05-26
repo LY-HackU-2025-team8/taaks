@@ -72,10 +72,10 @@ function RouteComponent() {
           <form onSubmit={handleSubmit} className="contents">
             <PageSection className="flex-1">
               <div className="flex flex-col items-start gap-2">
-                <span className="block text-3xl font-bold">
+                <span className="block text-2xl font-bold">
                   {format(date, 'M月dd日')}
                 </span>
-                <span className="block text-3xl font-bold">
+                <span className="block text-2xl font-bold">
                   {format(date, 'EEEE', { locale: ja })}
                 </span>
               </div>

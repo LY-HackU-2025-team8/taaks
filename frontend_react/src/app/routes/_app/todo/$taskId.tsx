@@ -52,7 +52,7 @@ function RouteComponent() {
       </PageHeader>
       <PageMain>
         <PageSection className="">
-          <Heading className="text-3xl" asChild>
+          <Heading className="text-2xl" asChild>
             <h1>{task.title}</h1>
           </Heading>
           <Text variant="muted" className="text-sm">
@@ -73,7 +73,7 @@ function RouteComponent() {
         <PageSection>
           <Heading asChild>
             <div className="flex items-center gap-2">
-              <h2 className="text-xl">負荷スコア</h2>
+              <h2>負荷スコア</h2>
               <Text className="text-sm" asChild>
                 <span>by Taaks intelligence</span>
               </Text>

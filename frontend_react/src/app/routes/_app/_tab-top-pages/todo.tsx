@@ -22,7 +22,7 @@ function RouteComponent() {
 
   return (
     <>
-      <PageHeader className="bg-custom text-custom-foreground rounded-b-[32px] pb-8">
+      <PageHeader className="bg-custom text-custom-foreground rounded-b-4xl pb-8">
         <PageTitleContainer>
           <PageTitle>Todo</PageTitle>
         </PageTitleContainer>
