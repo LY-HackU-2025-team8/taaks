@@ -67,7 +67,7 @@ function RouteComponent() {
     <div className="flex h-full flex-col p-7">
       <Form {...form}>
         <form className="mt-auto" onSubmit={handleSubmit}>
-          <Card className="gap-5 rounded-5xl py-5">
+          <Card className="rounded-5xl gap-5 py-5">
             <CardContent className="mb-[env(safe-area-inset-bottom)] space-y-5 px-5">
               <CardTitle className="text-center">ログイン</CardTitle>
               <FormField
