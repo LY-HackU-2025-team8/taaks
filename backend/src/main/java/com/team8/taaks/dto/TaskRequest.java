@@ -11,5 +11,4 @@ public record TaskRequest(
     boolean isAllDay,
     LocalDateTime completedAt,
     int loadScore,
-    List<ZonedDateTime> scheduledAt
-) {}
+    List<ZonedDateTime> scheduledAt) {}
