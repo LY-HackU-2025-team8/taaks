@@ -1,4 +1,5 @@
 package com.team8.taaks.dto;
 
-public record GenericMessageResponse(String message) {
-}
+import io.swagger.v3.oas.annotations.media.Schema;
+
+public record GenericMessageResponse(@Schema(required = true) String message) {}

@@ -754,11 +754,15 @@ components:
       properties:
         message:
           type: string
+      required:
+      - message
     GenericMessageResponse:
       type: object
       properties:
         message:
           type: string
+      required:
+      - message
     LoginRequest:
       type: object
       properties:
@@ -773,6 +777,9 @@ components:
           type: string
         user:
           $ref: "#/components/schemas/UsersResponse"
+      required:
+      - token
+      - user
     NotificationTargetTokenRequest:
       type: object
       properties:
@@ -798,6 +805,12 @@ components:
         userId:
           type: integer
           format: int64
+      required:
+      - createdAt
+      - id
+      - targetToken
+      - updatedAt
+      - userId
     PageDiaryResponse:
       type: object
       properties:
@@ -970,6 +983,14 @@ components:
             format: date-time
         title:
           type: string
+      required:
+      - dueAt
+      - id
+      - isAllDay
+      - loadScore
+      - memo
+      - scheduledAt
+      - title
     UserRegistrationRequest:
       type: object
       properties:
@@ -985,3 +1006,6 @@ components:
           format: int64
         username:
           type: string
+      required:
+      - id
+      - username
