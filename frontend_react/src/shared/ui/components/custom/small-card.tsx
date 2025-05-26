@@ -38,10 +38,10 @@ export const SmallCard = ({ title, deadline }: SmallCardProps) => {
         }}
       >
         <div className="z-1 p-3">
-          <p className="text-muted-foreground pt-1 text-[12px] font-bold">
+          <p className="text-muted-foreground pt-1 text-sm font-bold">
             {deadline}
           </p>
-          <p className="max-w-37.85 font-noto-sans-jp line-clamp-3 pt-6 text-[15px] leading-5 font-[600]">
+          <p className="max-w-37.85 font-noto-sans-jp line-clamp-3 pt-6 leading-5 font-[600]">
             {title}
           </p>
         </div>

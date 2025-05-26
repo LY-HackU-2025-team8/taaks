@@ -22,7 +22,7 @@ export const AppNav = ({
   return (
     <nav
       className={cn(
-        'text-app-nav-foreground bg-app-nav-background fixed right-3.5 bottom-3.5 left-3.5 z-15 mb-[env(safe-area-inset-bottom)] rounded-full px-7',
+        'text-app-nav-foreground bg-app-nav-background fixed right-3.5 bottom-3.5 left-3.5 z-15 mb-[env(safe-area-inset-bottom)] rounded-full px-4',
         { hidden },
         className
       )}
@@ -43,7 +43,7 @@ export const AppNav = ({
                 />
                 <Text
                   variant="muted"
-                  className="font-line-seed text-[0.625rem] font-bold"
+                  className="font-line-seed text-2xs line-clamp-1 font-bold"
                 >
                   ホーム
                 </Text>
@@ -62,7 +62,7 @@ export const AppNav = ({
                 />
                 <Text
                   variant="muted"
-                  className="font-line-seed text-[0.625rem] font-bold"
+                  className="font-line-seed text-2xs line-clamp-1 font-bold"
                 >
                   Todo
                 </Text>
@@ -74,7 +74,7 @@ export const AppNav = ({
           <AddTaskDrawer onOpenChange={setIsDrawerOpen} open={isDrawerOpen}>
             <Button
               size="icon"
-              className="bg-custom text-custom-foreground size-16 -translate-y-4 rounded-2xl shadow-xl"
+              className="bg-custom text-custom-foreground hover:bg-custom size-16 -translate-y-4 cursor-pointer rounded-2xl shadow-xl hover:-mx-1 hover:size-18"
             >
               <RiveIcon
                 className="size-10"
@@ -95,7 +95,7 @@ export const AppNav = ({
                 />
                 <Text
                   variant="muted"
-                  className="font-line-seed text-[0.625rem] font-bold"
+                  className="font-line-seed text-2xs line-clamp-1 font-bold"
                 >
                   日記
                 </Text>
@@ -117,7 +117,7 @@ export const AppNav = ({
                 />
                 <Text
                   variant="muted"
-                  className="font-line-seed text-[0.625rem] font-bold"
+                  className="font-line-seed text-2xs line-clamp-1 font-bold"
                 >
                   アカウント
                 </Text>

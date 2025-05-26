@@ -53,12 +53,12 @@ export const TaskCardLarge = ({
   return (
     <Card
       className={cn(
-        'relative pl-16 [&_button]:relative [&_button]:z-1',
+        'relative rounded-2xl pl-16 [&_button]:relative [&_button]:z-1',
         className
       )}
       {...props}
     >
-      <div className="font-line-seed text-foreground absolute top-3.5 bottom-3.5 left-3.5 flex w-12 flex-col items-end border-r pr-3.5 text-2xl font-bold">
+      <div className="font-line-seed text-foreground absolute top-3.5 bottom-3.5 left-0 flex w-16 flex-col items-end border-r px-3.5 text-xl font-bold">
         <span>{format(new Date(task.dueAt || new Date()), 'HH')}</span>
         <span>{format(new Date(task.dueAt || new Date()), 'mm')}</span>
       </div>

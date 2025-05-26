@@ -15,15 +15,15 @@ export const CalendarLarge = ({
         weekday:
           'text-sm font-bold font-line-seed first:text-red-700 last:text-blue-700',
         week: 'contents',
-        day: 'rounded-3xl flex flex-col items-center justify-center p-2 -m-0.5',
+        day: 'rounded-[19px] flex flex-col items-center justify-center p-1.5 -m-0.5',
         day_button:
-          'aspect-square max-h-12 bg-background rounded-2xl w-full h-full font-bold font-line-seed',
+          'aspect-square max-h-12 bg-background rounded-lg w-full h-full font-bold font-line-seed',
         selected: 'text-foreground bg-primary/20',
         today: '',
         button_next:
-          'bg-custom-foreground/10 hover:bg-custom-foreground/15 size-7 rounded-lg flex items-center justify-center transition-all',
+          'bg-custom-foreground/10 hover:bg-custom-foreground/15 size-7 rounded-sm flex items-center justify-center transition-all',
         button_previous:
-          'bg-custom-foreground/10 hover:bg-custom-foreground/15 size-7 rounded-lg flex items-center justify-center transition-all',
+          'bg-custom-foreground/10 hover:bg-custom-foreground/15 size-7 rounded-sm flex items-center justify-center transition-all',
       }}
       formatters={{
         formatCaption: (date) => format(date, 'M月'),

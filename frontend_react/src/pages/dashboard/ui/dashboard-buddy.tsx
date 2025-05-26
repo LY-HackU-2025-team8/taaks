@@ -15,9 +15,9 @@ export const DashboardBuddy = () => {
   return (
     <div className="relative flex h-72 items-center">
       <div className="z-10 flex flex-col gap-3">
-        <div className="text-2xl font-bold">
-          <span className="block">{greeting}</span>
-          <span className="block">{buddy?.nickname}さん！</span>
+        <div className="flex flex-col text-xl font-bold">
+          <span>{greeting}</span>
+          <span>{buddy?.nickname}さん！</span>
         </div>
         <Button
           asChild

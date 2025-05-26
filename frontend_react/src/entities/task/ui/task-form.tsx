@@ -44,7 +44,7 @@ export const TaskForm = ({
             render={({ field }) => (
               <FormItem>
                 <InlineTextarea
-                  className="w-full text-2xl"
+                  className="w-full text-xl"
                   placeholder="タイトル"
                   disableLineBreaks
                   {...field}

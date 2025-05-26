@@ -31,11 +31,11 @@ export const SmallBuddyCard = ({ title }: SmallCardProps) => {
         }}
       >
         <div className="z-1 p-3">
-          <p className="pt-1 text-[12px] font-bold">
+          <p className="pt-1 text-sm font-bold">
             <span className="block">Buddyからの</span>
             <span className="block">おすすめ</span>
           </p>
-          <p className="font-noto-sans-jp line-clamp-3 max-w-38 pt-3 text-[15px] leading-5 font-[600]">
+          <p className="font-noto-sans-jp line-clamp-3 max-w-38 pt-3 leading-5 font-[600]">
             {title}
           </p>
         </div>
