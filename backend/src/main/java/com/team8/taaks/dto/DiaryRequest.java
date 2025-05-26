@@ -1,21 +1,19 @@
 package com.team8.taaks.dto;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.Objects;
+import javax.annotation.Generated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
 
-
-import javax.annotation.Generated;
-
-/**
- * DiaryRequest
- */
-
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
+/** DiaryRequest */
+@Generated(
+    value = "org.openapitools.codegen.languages.SpringCodegen",
+    date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]",
+    comments = "Generator version: 7.13.0")
 public class DiaryRequest {
 
   private String title;
@@ -29,9 +27,7 @@ public class DiaryRequest {
     super();
   }
 
-  /**
-   * Constructor with only required parameters
-   */
+  /** Constructor with only required parameters */
   public DiaryRequest(String title, String body, LocalDate date) {
     this.title = title;
     this.body = body;
@@ -45,9 +41,10 @@ public class DiaryRequest {
 
   /**
    * Get title
+   *
    * @return title
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "title", example = "プログラミング", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("title")
   public String getTitle() {
@@ -65,9 +62,10 @@ public class DiaryRequest {
 
   /**
    * Get body
+   *
    * @return body
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "body", example = "たくさんコードを書いた", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("body")
   public String getBody() {
@@ -85,9 +83,11 @@ public class DiaryRequest {
 
   /**
    * Get date
+   *
    * @return date
    */
-  @NotNull @Valid 
+  @NotNull
+  @Valid
   @Schema(name = "date", example = "2025-05-18", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("date")
   public LocalDate getDate() {
@@ -107,9 +107,9 @@ public class DiaryRequest {
       return false;
     }
     DiaryRequest diaryRequest = (DiaryRequest) o;
-    return Objects.equals(this.title, diaryRequest.title) &&
-        Objects.equals(this.body, diaryRequest.body) &&
-        Objects.equals(this.date, diaryRequest.date);
+    return Objects.equals(this.title, diaryRequest.title)
+        && Objects.equals(this.body, diaryRequest.body)
+        && Objects.equals(this.date, diaryRequest.date);
   }
 
   @Override
@@ -129,8 +129,7 @@ public class DiaryRequest {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

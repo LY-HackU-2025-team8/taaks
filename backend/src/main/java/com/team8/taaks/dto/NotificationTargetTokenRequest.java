@@ -4,5 +4,4 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 
 public record NotificationTargetTokenRequest(
-    @NotBlank @JsonProperty("target_token") String targetToken
-) {}
+    @NotBlank @JsonProperty("target_token") String targetToken) {}

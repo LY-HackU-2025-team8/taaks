@@ -1,18 +1,16 @@
 package com.team8.taaks.dto;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
+import java.util.Objects;
 import javax.annotation.Generated;
+import javax.validation.constraints.*;
 
-/**
- * DiarySummary
- */
-
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
+/** DiarySummary */
+@Generated(
+    value = "org.openapitools.codegen.languages.SpringCodegen",
+    date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]",
+    comments = "Generator version: 7.13.0")
 public class DiarySummary {
 
   private Integer id;
@@ -23,9 +21,7 @@ public class DiarySummary {
     super();
   }
 
-  /**
-   * Constructor with only required parameters
-   */
+  /** Constructor with only required parameters */
   public DiarySummary(Integer id, String title) {
     this.id = id;
     this.title = title;
@@ -38,9 +34,10 @@ public class DiarySummary {
 
   /**
    * Get id
+   *
    * @return id
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "id", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public Integer getId() {
@@ -58,9 +55,10 @@ public class DiarySummary {
 
   /**
    * Get title
+   *
    * @return title
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "title", example = "お出かけ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("title")
   public String getTitle() {
@@ -80,8 +78,8 @@ public class DiarySummary {
       return false;
     }
     DiarySummary diarySummary = (DiarySummary) o;
-    return Objects.equals(this.id, diarySummary.id) &&
-        Objects.equals(this.title, diarySummary.title);
+    return Objects.equals(this.id, diarySummary.id)
+        && Objects.equals(this.title, diarySummary.title);
   }
 
   @Override
@@ -100,8 +98,7 @@ public class DiarySummary {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {

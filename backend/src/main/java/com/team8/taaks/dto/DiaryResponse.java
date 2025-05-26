@@ -1,21 +1,19 @@
 package com.team8.taaks.dto;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.Objects;
+import javax.annotation.Generated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
 
-
-import javax.annotation.Generated;
-
-/**
- * DiaryResponse
- */
-
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]", comments = "Generator version: 7.13.0")
+/** DiaryResponse */
+@Generated(
+    value = "org.openapitools.codegen.languages.SpringCodegen",
+    date = "2025-05-19T22:09:31.658172211+09:00[Asia/Tokyo]",
+    comments = "Generator version: 7.13.0")
 public class DiaryResponse {
 
   private String title;
@@ -31,9 +29,7 @@ public class DiaryResponse {
     super();
   }
 
-  /**
-   * Constructor with only required parameters
-   */
+  /** Constructor with only required parameters */
   public DiaryResponse(String title, String body, LocalDate date, Integer id) {
     this.title = title;
     this.body = body;
@@ -48,9 +44,10 @@ public class DiaryResponse {
 
   /**
    * Get title
+   *
    * @return title
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "title", example = "プログラミング", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("title")
   public String getTitle() {
@@ -68,9 +65,10 @@ public class DiaryResponse {
 
   /**
    * Get body
+   *
    * @return body
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "body", example = "たくさんコードを書いた", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("body")
   public String getBody() {
@@ -88,9 +86,11 @@ public class DiaryResponse {
 
   /**
    * Get date
+   *
    * @return date
    */
-  @NotNull @Valid 
+  @NotNull
+  @Valid
   @Schema(name = "date", example = "2025-05-18", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("date")
   public LocalDate getDate() {
@@ -108,9 +108,10 @@ public class DiaryResponse {
 
   /**
    * Get id
+   *
    * @return id
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "id", example = "123", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public Integer getId() {
@@ -130,10 +131,10 @@ public class DiaryResponse {
       return false;
     }
     DiaryResponse diaryResponse = (DiaryResponse) o;
-    return Objects.equals(this.title, diaryResponse.title) &&
-        Objects.equals(this.body, diaryResponse.body) &&
-        Objects.equals(this.date, diaryResponse.date) &&
-        Objects.equals(this.id, diaryResponse.id);
+    return Objects.equals(this.title, diaryResponse.title)
+        && Objects.equals(this.body, diaryResponse.body)
+        && Objects.equals(this.date, diaryResponse.date)
+        && Objects.equals(this.id, diaryResponse.id);
   }
 
   @Override
@@ -154,8 +155,7 @@ public class DiaryResponse {
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
+   * Convert the given object to string with each line indented by 4 spaces (except the first line).
    */
   private String toIndentedString(Object o) {
     if (o == null) {
