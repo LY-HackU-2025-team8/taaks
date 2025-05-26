@@ -276,8 +276,8 @@ export interface components {
             /** @example プログラミング */
             title: string;
         };
+        /** @description エラー時のレスポンス */
         ErrorResponse: {
-            /** @description エラー時のレスポンス */
             message: string;
         };
         GenericMessageResponse: {

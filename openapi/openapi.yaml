@@ -698,10 +698,10 @@ components:
       - title
     ErrorResponse:
       type: object
+      description: エラー時のレスポンス
       properties:
         message:
           type: string
-          description: エラー時のレスポンス
       required:
       - message
     GenericMessageResponse:
