@@ -17,7 +17,7 @@ export const CalendarLarge = ({
         week: 'contents',
         day: 'rounded-3xl flex flex-col items-center justify-center p-2 -m-0.5',
         day_button:
-          'aspect-square max-h-12 bg-background rounded-2xl size-full font-bold font-line-seed',
+          'aspect-square max-h-12 bg-background rounded-2xl w-full h-full font-bold font-line-seed',
         selected: 'text-foreground bg-primary/20',
         today: '',
         button_next:
