@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.team8.taaks.dto.TaskRequest;
 import com.team8.taaks.dto.TaskResponse;
@@ -153,15 +154,15 @@ public class TaskController {
     // タスクの更新
     @PutMapping("/{taskId}")
     @Transactional
-    public ResponseEntity<String> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable("taskId") Integer taskId, @RequestBody TaskRequest taskRequest) {
+    public ResponseEntity<TaskResponse> updateTask(@AuthenticationPrincipal TaakUser user, @PathVariable("taskId") Integer taskId, @RequestBody TaskRequest taskRequest) {
         Optional<TaakTask> optionalTask = taakTaskRepository.findById(taskId);
         if (optionalTask.isEmpty()) {
-            return new ResponseEntity<>("Task not found", HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found");
         }
         TaakTask existingTask = optionalTask.get();
         // 他人のタスクを更新しようとした場合は403エラーを返す
         if (!existingTask.getUser().getId().equals(user.getId())) {
-            return new ResponseEntity<>("You do not have permission to update this task", HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to update this task");
         }
         existingTask.setTitle(taskRequest.title());
         existingTask.setMemo(taskRequest.memo());
@@ -185,6 +186,16 @@ public class TaskController {
                     return taskReminder;
                 }).toList());
         }
-        return new ResponseEntity<>("Task updated successfully", HttpStatus.OK);
+        return ResponseEntity.ok(new TaskResponse(
+            existingTask.getId(),
+            existingTask.getTitle(),
+            existingTask.getMemo(),
+            existingTask.getDueAt(),
+            existingTask.getIsAllDay(),
+            existingTask.getCompletedAt(),
+            existingTask.getLoadScore(),
+            taskReminderRepository.findAllByTaskId(existingTask.getId()).stream()
+                .map(reminder -> reminder.getScheduledAt()).toList()
+        ));
     }
 }
