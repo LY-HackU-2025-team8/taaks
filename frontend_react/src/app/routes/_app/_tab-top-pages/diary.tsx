@@ -1,4 +1,5 @@
 import { BuddySuggestTask } from '@/pages/diary/ui/buddy-suggest-task';
+import { NoDiaryCard } from '@/pages/diary/ui/no-diary-card';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
 import { CalendarLarge } from '@/shared/ui/components/input/calendar-large';
 import { Button } from '@/shared/ui/components/shadcn/button';
@@ -29,6 +30,7 @@ function RouteComponent() {
         </div>
       </PageHeader>
       <PageMain>
+        <NoDiaryCard date={new Date()} />
         <BuddySuggestTask />
       </PageMain>
     </>

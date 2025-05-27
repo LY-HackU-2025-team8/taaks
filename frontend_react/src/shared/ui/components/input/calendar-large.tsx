@@ -13,7 +13,7 @@ export const CalendarLarge = ({
         caption_label: 'text-xl font-bold font-line-seed',
         weekdays: 'contents',
         weekday:
-          'text-sm font-bold font-line-seed first:text-red-700 last:text-blue-700 pb-1',
+          'text-sm uppercase font-bold font-line-seed first:text-red-700 last:text-blue-700 pb-1',
         week: 'contents',
         day: 'rounded-[19px] flex flex-col items-center justify-center p-1.5 -m-0.5',
         day_button:
