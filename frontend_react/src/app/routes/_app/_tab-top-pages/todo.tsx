@@ -1,3 +1,4 @@
+import { BuddyTaskCount } from '@/pages/todo/buddy-task-count';
 import { VerticalTaskList } from '@/pages/todo/vertical-task-list';
 import { CalendarLarge } from '@/shared/ui/components/input/calendar-large';
 import { PageHeader } from '@/shared/ui/page/page-header';
@@ -37,6 +38,7 @@ function RouteComponent() {
           <PageSectionTitle>今日のタスク</PageSectionTitle>
           <VerticalTaskList date={date} />
         </PageSection>
+        <BuddyTaskCount date={date} />
       </PageMain>
     </>
   );

@@ -1,5 +1,5 @@
 import { $api } from '@/shared/api/openapi-fetch';
-import { SERVER_DATETIME_FORMAT } from '@/shared/constant';
+import { SERVER_POST_DATETIME_FORMAT } from '@/shared/constant';
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
@@ -22,9 +22,9 @@ export const useEditTask = (taskId: number) => {
   const editTask = useCallback(
     (options?: Parameters<typeof mutate>[1]) =>
       (data: z.infer<typeof taskFormSchema>) => {
-        const dueAt = format(data.dueAt, SERVER_DATETIME_FORMAT);
+        const dueAt = format(data.dueAt, SERVER_POST_DATETIME_FORMAT);
         const completedAt = data.completedAt
-          ? format(data.completedAt, SERVER_DATETIME_FORMAT)
+          ? format(data.completedAt, SERVER_POST_DATETIME_FORMAT)
           : undefined;
 
         return mutate(
