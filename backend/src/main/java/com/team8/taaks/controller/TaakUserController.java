@@ -10,6 +10,7 @@ import com.team8.taaks.dto.UserRegistrationRequest;
 import com.team8.taaks.dto.UsersResponse;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.repository.TaakUserRepository;
+import java.net.URI;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -74,7 +75,8 @@ public class TaakUserController {
                 userDetails, null, userDetails.getAuthorities()));
     String token = jwtTokenUtil.generateToken(savedUser);
     UsersResponse userResponse = new UsersResponse(savedUser.getUsername(), savedUser.getId());
-    return ResponseEntity.status(HttpStatus.CREATED).body(new LoginResponse(token, userResponse));
+    return ResponseEntity.created(URI.create("/users/me"))
+        .body(new LoginResponse(token, userResponse));
   }
 
   @PatchMapping("/me/username")
@@ -112,12 +114,10 @@ public class TaakUserController {
       @AuthenticationPrincipal TaakUser currentUser,
       @RequestBody DeleteAccountRequest deleteAccountRequest) {
     if (currentUser == null) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .body(new GenericMessageResponse("user not found"));
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
     }
     if (!passwordEncoder.matches(deleteAccountRequest.password(), currentUser.getPassword())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN)
-          .body(new GenericMessageResponse("current password is incorrect"));
+      throw new ResponseStatusException(HttpStatus.FORBIDDEN, "current password is incorrect");
     }
 
     taakUserRepository.delete(currentUser);
