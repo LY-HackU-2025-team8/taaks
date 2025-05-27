@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/notification-target-token")
@@ -61,7 +62,7 @@ public class NotificationTargetTokenController {
       HttpHeaders responseHeaders = new HttpHeaders();
       responseHeaders.setLocation(
           URI.create("/notification-target-token/" + existingToken.getId()));
-      return new ResponseEntity<>(mapToResponse(existingToken), responseHeaders, HttpStatus.OK);
+      return ResponseEntity.ok().headers(responseHeaders).body(mapToResponse(existingToken));
     }
 
     NotificationTargetToken newToken = new NotificationTargetToken();
@@ -69,9 +70,8 @@ public class NotificationTargetTokenController {
     newToken.setTargetToken(request.targetToken());
     NotificationTargetToken savedToken = notificationTargetTokenRepository.save(newToken);
 
-    HttpHeaders responseHeaders = new HttpHeaders();
-    responseHeaders.setLocation(URI.create("/notification-target-token/" + savedToken.getId()));
-    return new ResponseEntity<>(mapToResponse(savedToken), responseHeaders, HttpStatus.CREATED);
+    return ResponseEntity.created(URI.create("/notification-target-token/" + savedToken.getId()))
+        .body(mapToResponse(savedToken));
   }
 
   @GetMapping("/{id}")
@@ -81,6 +81,9 @@ public class NotificationTargetTokenController {
         .findByIdAndUserId(id, user.getId())
         .map(this::mapToResponse)
         .map(ResponseEntity::ok)
-        .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        .orElseThrow(
+            () ->
+                new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Notification target token not found"));
   }
 }

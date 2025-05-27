@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -112,7 +111,7 @@ public class TaskController {
             taskReminderRepository.findAllByTaskId(task.getId()).stream()
                 .map(TaskReminder::getScheduledAt)
                 .toList());
-    return new ResponseEntity<>(taskResponse, HttpStatus.OK);
+    return ResponseEntity.ok(taskResponse);
   }
 
   // タスクの登録
@@ -155,9 +154,8 @@ public class TaskController {
             taskReminderRepository.findAllByTaskId(registeredTask.getId()).stream()
                 .map(reminder -> reminder.getScheduledAt())
                 .toList());
-    HttpHeaders responseHeaders = new HttpHeaders();
-    responseHeaders.setLocation(URI.create("/tasks/" + registeredTask.getId()));
-    return new ResponseEntity<>(taskResponse, responseHeaders, HttpStatus.CREATED);
+    return ResponseEntity.created(URI.create("/tasks/" + registeredTask.getId()))
+        .body(taskResponse);
   }
 
   // タスクの更新

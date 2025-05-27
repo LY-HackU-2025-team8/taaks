@@ -9,6 +9,7 @@ import com.team8.taaks.repository.DiaryRepository;
 import com.team8.taaks.specification.DiarySpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.springdoc.core.annotations.ParameterObject;
@@ -84,7 +85,7 @@ public class DiariesController {
     Diary saved = diaryRepository.save(diary);
     DiaryResponse response =
         new DiaryResponse(saved.getTitle(), saved.getBody(), saved.getDate(), saved.getId());
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
+    return ResponseEntity.created(URI.create("/diaries/" + saved.getId())).body(response);
   }
 
   @GetMapping("/{id}")
@@ -169,6 +170,6 @@ public class DiariesController {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Diary not found");
     }
     diaryRepository.deleteById(id);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    return ResponseEntity.noContent().build();
   }
 }
