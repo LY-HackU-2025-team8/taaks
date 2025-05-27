@@ -19,6 +19,7 @@ const queryClient = new QueryClient({
         }
         return false; // Do not retry on other errors
       },
+      staleTime: 1000 * 30, // 30 seconds
     },
   },
 });

@@ -15,7 +15,7 @@ export const BuddySuggestTask = ({
 }: BuddyMessageCardProps) => {
   return (
     <section className={cn('px-3.5', className)} {...props}>
-      <BuddyMessageCard className="h-45 overflow-hidden">
+      <BuddyMessageCard className="h-40 overflow-hidden">
         <img
           src="/assets/images/todo_3d.png"
           alt="Todo"

@@ -1,4 +1,5 @@
 import { TaskCardLarge } from '@/entities/task/ui/task-card-large';
+import { TaskCardSkeleton } from '@/entities/task/ui/task-card-skeleton';
 import { filterToday } from '@/shared/api/filter-today';
 import { $api } from '@/shared/api/openapi-fetch';
 
@@ -7,7 +8,7 @@ export type VerticalTaskListProps = React.ComponentProps<'div'> & {
 };
 
 export const VerticalTaskList = ({ date, ...props }: VerticalTaskListProps) => {
-  const { data: tasks } = $api.useQuery('get', '/tasks', {
+  const { data: tasks, isLoading } = $api.useQuery('get', '/tasks', {
     params: {
       query: {
         ...(date && filterToday(date)),
@@ -17,9 +18,11 @@ export const VerticalTaskList = ({ date, ...props }: VerticalTaskListProps) => {
 
   return (
     <div className="flex flex-col gap-3.5" {...props}>
-      {tasks?.content?.map((task) => (
-        <TaskCardLarge key={task.id} task={task} />
-      ))}
+      {isLoading
+        ? [...Array(10)].map((_, i) => <TaskCardSkeleton key={i} />)
+        : tasks?.content?.map((task) => (
+            <TaskCardLarge key={task.id} task={task} />
+          ))}
     </div>
   );
 };
