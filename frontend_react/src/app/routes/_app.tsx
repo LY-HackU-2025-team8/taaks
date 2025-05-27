@@ -15,7 +15,12 @@ function RouteComponent() {
   const [hidden, setHidden] = useState(true);
 
   return (
-    <AppNavContext value={{ setHidden }}>
+    <AppNavContext
+      value={{
+        showAppNav: () => setHidden(false),
+        hideAppNav: () => setHidden(true),
+      }}
+    >
       <Outlet />
       <AppNav hidden={hidden} />
     </AppNavContext>

@@ -1,7 +1,5 @@
-import {
-  NewDiaryForm,
-  newDiaryFormSchema,
-} from '@/pages/diary/ui/new-diary-form';
+import { diaryFormSchema } from '@/entities/diary/api/diary-form-schema';
+import { NewDiaryForm } from '@/entities/diary/ui/diary-form';
 import { $api } from '@/shared/api/openapi-fetch';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
@@ -25,7 +23,7 @@ function RouteComponent() {
   const { mutate, isPending, error } = $api.useMutation('post', '/diaries');
 
   const form = useForm({
-    resolver: zodResolver(newDiaryFormSchema),
+    resolver: zodResolver(diaryFormSchema),
     defaultValues: {
       title: '',
       body: '',

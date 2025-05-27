@@ -6,11 +6,12 @@ import { EditIconSmall } from '@/shared/ui/components/icons/edit-icon-small';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {
   Card,
-  CardDescription,
+  CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/shared/ui/components/shadcn/card';
+import { Text } from '@/shared/ui/components/typography/text';
 import { useCallback } from 'react';
 import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
@@ -69,10 +70,14 @@ export const TaskCardLarge = ({
           className="absolute inset-0 z-0"
         />
       )}
-      <CardHeader className="gap-4">
+      <CardHeader className="grid-rows-1">
         <CardTitle>{task.title}</CardTitle>
-        <CardDescription>{task.memo}</CardDescription>
       </CardHeader>
+      <CardContent>
+        <Text variant="muted" className="line-clamp-2 h-9 text-sm">
+          {task.memo}
+        </Text>
+      </CardContent>
       <CardFooter className="justify-end gap-1.5">
         <EditTaskDrawer task={task}>
           <Button

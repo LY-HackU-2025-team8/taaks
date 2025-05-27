@@ -19,6 +19,7 @@ const queryClient = new QueryClient({
         }
         return false; // Do not retry on other errors
       },
+      staleTime: 1000 * 30, // 30 seconds
     },
   },
 });
@@ -28,6 +29,8 @@ const router = createRouter({
   routeTree,
   context: {
     queryClient,
+    htmlClassName: '',
+    appClassName: '',
   },
   defaultPreload: 'intent',
   scrollRestoration: true,

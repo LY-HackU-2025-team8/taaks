@@ -3,6 +3,7 @@ import { $api } from '@/shared/api/openapi-fetch';
 import { ClockIcon } from '@/shared/ui/components/icons/clock-icon';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
 import { EditIcon } from '@/shared/ui/components/icons/edit-icon';
+import { BackButton } from '@/shared/ui/components/router/back-button';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Separator } from '@/shared/ui/components/shadcn/separator';
 import { Heading } from '@/shared/ui/components/typography/heading';
@@ -11,7 +12,7 @@ import { PageHeader } from '@/shared/ui/page/page-header';
 import { PageMain } from '@/shared/ui/page/page-main';
 import { PageSection } from '@/shared/ui/page/page-section';
 import { PageTitleContainer } from '@/shared/ui/page/page-title-container';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { z } from 'zod';
 
@@ -33,15 +34,14 @@ export const Route = createFileRoute('/_app/todo/$taskId')({
 
 function RouteComponent() {
   const { task } = Route.useLoaderData();
-
   return (
     <>
       <PageHeader>
         <PageTitleContainer className="flex items-center justify-between">
           <Button variant="ghost" size="icon" asChild>
-            <Link to="/todo">
+            <BackButton>
               <CloseIcon />
-            </Link>
+            </BackButton>
           </Button>
           <EditTaskDrawer task={task}>
             <Button variant="ghost" size="icon">

@@ -1,5 +1,9 @@
 import { createContext } from 'react';
 
 export const AppNavContext = createContext<{
-  setHidden?: React.Dispatch<React.SetStateAction<boolean>>;
-}>({});
+  hideAppNav: () => void;
+  showAppNav: () => void;
+}>({
+  hideAppNav: () => {},
+  showAppNav: () => {},
+});
