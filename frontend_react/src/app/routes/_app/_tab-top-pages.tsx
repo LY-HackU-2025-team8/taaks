@@ -3,23 +3,22 @@ import { use, useEffect } from 'react';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_app/_tab-top-pages')({
+  context: ({ context }) => ({
+    ...context,
+    htmlClassName: 'bg-muted',
+    appClassName: 'bg-muted pb-[calc(env(safe-area-inset-bottom)+6rem)]',
+  }),
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { setHidden } = use(AppNavContext);
+  const { hideAppNav, showAppNav } = use(AppNavContext);
 
   useEffect(() => {
-    setHidden?.(false);
+    showAppNav();
 
-    return () => {
-      setHidden?.(true);
-    };
-  }, [setHidden]);
+    return () => hideAppNav();
+  }, [hideAppNav, showAppNav]);
 
-  return (
-    <div className="bg-muted flex-1 pb-24">
-      <Outlet />
-    </div>
-  );
+  return <Outlet />;
 }

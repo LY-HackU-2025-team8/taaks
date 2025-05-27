@@ -29,6 +29,8 @@ const router = createRouter({
   routeTree,
   context: {
     queryClient,
+    htmlClassName: '',
+    appClassName: '',
   },
   defaultPreload: 'intent',
   scrollRestoration: true,

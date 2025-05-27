@@ -7,18 +7,13 @@ import {
 } from '@/shared/ui/components/shadcn/form';
 import { useFormContext } from 'react-hook-form';
 import { z } from 'zod';
-
-export const newDiaryFormSchema = z.object({
-  title: z.string(),
-  body: z.string().min(1, '本文を入力してください'),
-  date: z.date(),
-});
+import type { diaryFormSchema } from '../api/diary-form-schema';
 
 export const NewDiaryForm = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<typeof FormItem>) => {
-  const form = useFormContext<z.infer<typeof newDiaryFormSchema>>();
+  const form = useFormContext<z.infer<typeof diaryFormSchema>>();
 
   return (
     <FormField

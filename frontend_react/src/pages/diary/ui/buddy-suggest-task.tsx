@@ -4,21 +4,18 @@ import {
   BuddyMessageCardDescription,
   BuddyMessageCardHeader,
 } from '@/entities/buddy/ui/buddy-message-card';
-import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/components/shadcn/button';
+import { PageSection } from '@/shared/ui/page/page-section';
 
 export type BuddyMessageCardProps = React.ComponentProps<'section'>;
 
-export const BuddySuggestTask = ({
-  className,
-  ...props
-}: BuddyMessageCardProps) => {
+export const BuddySuggestTask = (props: BuddyMessageCardProps) => {
   return (
-    <section className={cn('px-3.5', className)} {...props}>
+    <PageSection {...props}>
       <BuddyMessageCard className="h-40 overflow-hidden">
         <img
           src="/assets/images/todo_3d.png"
-          alt="Todo"
+          alt="タスクバインダーのイラスト"
           className="absolute top-0 -right-8 bottom-0 my-auto size-60"
         />
         <BuddyMessageCardHeader>
@@ -41,6 +38,6 @@ export const BuddySuggestTask = ({
           明日のタスクを追加する
         </Button>
       </BuddyMessageCard>
-    </section>
+    </PageSection>
   );
 };

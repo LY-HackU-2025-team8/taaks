@@ -22,7 +22,7 @@ export const AppNav = ({
   return (
     <nav
       className={cn(
-        'text-app-nav-foreground bg-app-nav-background fixed right-3.5 bottom-3.5 left-3.5 z-15 mb-[env(safe-area-inset-bottom)] rounded-full px-4',
+        'text-app-nav-foreground bg-app-nav-background fixed right-3.5 bottom-[max(env(safe-area-inset-bottom),0.875rem)] left-3.5 z-15 rounded-full px-4',
         { hidden },
         className
       )}
@@ -104,10 +104,7 @@ export const AppNav = ({
           </Link>
         </li>
         <li className="contents">
-          <Link
-            to="/account"
-            className="flex flex-1 flex-col items-center gap-1"
-          >
+          <Link to="/buddy" className="flex flex-1 flex-col items-center gap-1">
             {(state) => (
               <>
                 <RiveIcon
@@ -119,7 +116,7 @@ export const AppNav = ({
                   variant="muted"
                   className="font-line-seed text-2xs line-clamp-1 font-bold"
                 >
-                  アカウント
+                  Buddy
                 </Text>
               </>
             )}

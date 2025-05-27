@@ -6,12 +6,18 @@ import {
 } from '@/entities/buddy/ui/buddy-message-card';
 import { filterToday } from '@/shared/api/filter-today';
 import { $api } from '@/shared/api/openapi-fetch';
+import { cn } from '@/shared/lib/utils';
+import { PageSection } from '@/shared/ui/page/page-section';
 
 export type BuddyTaskCountProps = React.ComponentProps<'section'> & {
   date: Date;
 };
 
-export const BuddyTaskCount = ({ date, ...props }: BuddyTaskCountProps) => {
+export const BuddyTaskCount = ({
+  date,
+  className,
+  ...props
+}: BuddyTaskCountProps) => {
   const { data } = $api.useQuery('get', '/tasks', {
     params: {
       query: {
@@ -21,7 +27,7 @@ export const BuddyTaskCount = ({ date, ...props }: BuddyTaskCountProps) => {
   });
   const totalTasks = data?.totalElements || 0;
   return (
-    <section {...props}>
+    <PageSection className={cn('px-0', className)} {...props}>
       <BuddyMessageCard>
         <BuddyMessageCardHeader>
           <BuddyMessageCardDescription>
@@ -42,6 +48,6 @@ export const BuddyTaskCount = ({ date, ...props }: BuddyTaskCountProps) => {
           )}
         </BuddyMessageCardContent>
       </BuddyMessageCard>
-    </section>
+    </PageSection>
   );
 };
