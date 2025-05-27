@@ -31,7 +31,6 @@ public class DiarySpecification {
       return criteriaBuilder.lessThan(root.get("date"), dateLt);
     };
   }
-  ;
 
   public static Specification<Diary> hasUserId(Long userId) {
     return (root, query, criteriaBuilder) -> {
