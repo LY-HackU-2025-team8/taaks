@@ -36,6 +36,9 @@ public class TaskReminder {
   @Column(name = "scheduled_at", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
   private ZonedDateTime scheduledAt;
 
+  @Column(name = "notified_at", nullable = true, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+  private ZonedDateTime notifiedAt;
+
   /** Record creation timestamp (NOT NULL, DEFAULT CURRENT_TIMESTAMP) */
   @Column(
       name = "created_at",
@@ -85,6 +88,14 @@ public class TaskReminder {
 
   public void setScheduledAt(ZonedDateTime scheduledAt) {
     this.scheduledAt = scheduledAt;
+  }
+
+  public ZonedDateTime getNotifiedAt() {
+    return notifiedAt;
+  }
+
+  public void setNotifiedAt(ZonedDateTime notifiedAt) {
+    this.notifiedAt = notifiedAt;
   }
 
   public OffsetDateTime getCreatedAt() {
