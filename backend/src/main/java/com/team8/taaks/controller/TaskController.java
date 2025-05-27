@@ -5,11 +5,13 @@ import com.team8.taaks.dto.TaskResponse;
 import com.team8.taaks.model.TaakTask;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.model.TaskReminder;
+import com.team8.taaks.dto.LlmResponse;
 import com.team8.taaks.repository.TaakTaskRepository;
 import com.team8.taaks.repository.TaskReminderRepository;
 import com.team8.taaks.specification.TaakTaskSpecification;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import org.springdoc.core.annotations.ParameterObject;
@@ -33,6 +35,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import com.openai.client.OpenAIClient;
+import com.openai.client.okhttp.OpenAIOkHttpClient;
+import com.openai.models.ChatModel;
+import com.openai.models.responses.ResponseCreateParams;
+import com.openai.models.responses.StructuredResponse;
+import com.openai.models.responses.StructuredResponseCreateParams;
 
 @CrossOrigin(origins = {"localhost:3000", "https://taak.app"})
 @RestController
@@ -40,6 +48,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class TaskController {
   private final TaakTaskRepository taakTaskRepository;
   private final TaskReminderRepository taskReminderRepository;
+
+  OpenAIClient client = OpenAIOkHttpClient.fromEnv();
 
   public TaskController(
       TaakTaskRepository taakTaskRepository, TaskReminderRepository taskReminderRepository) {
@@ -126,7 +136,23 @@ public class TaskController {
     task.setDueAt(taskRequest.dueAt());
     task.setIsAllDay(taskRequest.isAllDay());
     task.setCompletedAt(taskRequest.completedAt());
-    task.setLoadScore(taskRequest.loadScore());
+    StructuredResponseCreateParams<LlmResponse> params = ResponseCreateParams.builder()
+      .input("これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル：" + taskRequest.title() + "\n期限までの時間（分）" + Duration.between(LocalDateTime.now(), taskRequest.dueAt()).toMinutes())
+      .text(LlmResponse.class)
+      .model(ChatModel.GPT_4_1)
+      .build();
+    try {
+      StructuredResponse<LlmResponse> response = client.responses().create(params);
+      Optional<LlmResponse> outputOptional = response.output().stream().flatMap(item -> item.message().stream()).flatMap(msg -> msg.content().stream()).flatMap(content -> content.outputText().stream()).findFirst();
+      if (outputOptional.isEmpty()) {
+        throw new OpenAiApiException(500, "Failed to get load score from OpenAI API");
+      }
+      int loadScore = outputOptional.get().loadScore();
+      System.out.println("負荷スコア: " + loadScore);
+      task.setLoadScore(loadScore);
+    } catch (OpenAiApiException e) {
+      throw new OpenAiApiException(502, "An error occurred while communicating: " + e.getMessage());
+    }
     TaakTask registeredTask = taakTaskRepository.save(task);
     if (taskRequest.scheduledAt() == null || taskRequest.scheduledAt().isEmpty()) {
       // スケジュールが指定されていない場合は空のリストを保存
