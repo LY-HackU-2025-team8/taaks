@@ -1,3 +1,4 @@
+import { BuddySuggestTask } from '@/pages/diary/ui/buddy-suggest-task';
 import { PlusIcon } from '@/shared/ui/components/icons/plus-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { PageHeader } from '@/shared/ui/page/page-header';
@@ -22,6 +23,7 @@ function RouteComponent() {
           </Button>
         </PageTitleContainer>
       </PageHeader>
+      <BuddySuggestTask />
     </>
   );
 }

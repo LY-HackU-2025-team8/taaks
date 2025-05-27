@@ -1,5 +1,5 @@
-import { BuddyTaskCount } from '@/pages/todo/buddy-task-count';
-import { VerticalTaskList } from '@/pages/todo/vertical-task-list';
+import { BuddyTaskCount } from '@/pages/todo/ui/buddy-task-count';
+import { VerticalTaskList } from '@/pages/todo/ui/vertical-task-list';
 import { CalendarLarge } from '@/shared/ui/components/input/calendar-large';
 import { PageHeader } from '@/shared/ui/page/page-header';
 import { PageMain } from '@/shared/ui/page/page-main';
