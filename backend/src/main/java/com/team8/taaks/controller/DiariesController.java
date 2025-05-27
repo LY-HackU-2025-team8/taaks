@@ -6,17 +6,21 @@ import com.team8.taaks.dto.ErrorResponse;
 import com.team8.taaks.model.Diary;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.repository.DiaryRepository;
+import com.team8.taaks.specification.DiarySpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -40,9 +45,23 @@ public class DiariesController {
       })
   public ResponseEntity<Page<DiaryResponse>> diariesGet(
       @PageableDefault(size = 10, page = 0, sort = "id", direction = Direction.ASC) @ParameterObject
-          Pageable pageable) {
-    TaakUser user = getAuthenticatedUser();
-    Page<Diary> diaries = diaryRepository.findAllByUserId(user.getId(), pageable);
+          Pageable pageable,
+      @AuthenticationPrincipal TaakUser user,
+      @RequestParam(name = "date_eq", required = false) LocalDate dateEq,
+      @RequestParam(name = "date_gt", required = false) LocalDate dateGt,
+      @RequestParam(name = "date_lt", required = false) LocalDate dateLt) {
+    Specification<Diary> spec = Specification.where(null);
+    if (dateEq != null) {
+      spec = spec.and(DiarySpecification.dateEquals(dateEq));
+    }
+    if (dateGt != null) {
+      spec = spec.and(DiarySpecification.dateGreaterThan(dateGt));
+    }
+    if (dateLt != null) {
+      spec = spec.and(DiarySpecification.dateLessThan(dateLt));
+    }
+    spec = spec.and(DiarySpecification.hasUserId(user.getId()));
+    Page<Diary> diaries = diaryRepository.findAll(spec, pageable);
     Page<DiaryResponse> diaryResponses =
         diaries.map(
             diary ->
@@ -55,8 +74,8 @@ public class DiariesController {
   @Operation(
       summary = "Create a new diary",
       responses = {@ApiResponse(responseCode = "201", description = "Diary created successfully")})
-  public ResponseEntity<DiaryResponse> diariesPost(@RequestBody DiaryRequest diaryRequest) {
-    TaakUser user = getAuthenticatedUser();
+  public ResponseEntity<DiaryResponse> diariesPost(
+      @RequestBody DiaryRequest diaryRequest, @AuthenticationPrincipal TaakUser user) {
     Diary diary = new Diary();
     diary.setTitle(diaryRequest.getTitle());
     diary.setBody(diaryRequest.getBody());
@@ -83,8 +102,8 @@ public class DiariesController {
                         @io.swagger.v3.oas.annotations.media.Schema(
                             implementation = ErrorResponse.class)))
       })
-  public ResponseEntity<DiaryResponse> diariesIdGet(@PathVariable("id") Integer id) {
-    TaakUser user = getAuthenticatedUser();
+  public ResponseEntity<DiaryResponse> diariesIdGet(
+      @PathVariable("id") Integer id, @AuthenticationPrincipal TaakUser user) {
     Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
     if (diaryOpt.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Diary not found");
@@ -111,8 +130,9 @@ public class DiariesController {
                             implementation = ErrorResponse.class)))
       })
   public ResponseEntity<DiaryResponse> diariesIdPut(
-      @PathVariable("id") Integer id, @RequestBody DiaryRequest diaryRequest) {
-    TaakUser user = getAuthenticatedUser();
+      @PathVariable("id") Integer id,
+      @RequestBody DiaryRequest diaryRequest,
+      @AuthenticationPrincipal TaakUser user) {
     Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
     if (diaryOpt.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Diary not found");
@@ -142,25 +162,13 @@ public class DiariesController {
                         @io.swagger.v3.oas.annotations.media.Schema(
                             implementation = ErrorResponse.class)))
       })
-  public ResponseEntity<Void> diariesIdDelete(@PathVariable("id") Integer id) {
-    TaakUser user = getAuthenticatedUser();
+  public ResponseEntity<Void> diariesIdDelete(
+      @PathVariable("id") Integer id, @AuthenticationPrincipal TaakUser user) {
     Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
     if (diaryOpt.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Diary not found");
     }
     diaryRepository.deleteById(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-  }
-
-  // 認証ユーザー取得用のヘルパー
-  private TaakUser getAuthenticatedUser() {
-    Object principal =
-        org.springframework.security.core.context.SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
-    if (principal instanceof TaakUser) {
-      return (TaakUser) principal;
-    }
-    throw new IllegalStateException("認証ユーザーが取得できません");
   }
 }

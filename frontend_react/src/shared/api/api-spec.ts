@@ -615,6 +615,9 @@ export interface operations {
                 size?: number;
                 /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
                 sort?: string[];
+                date_eq?: string;
+                date_gt?: string;
+                date_lt?: string;
             };
             header?: never;
             path?: never;

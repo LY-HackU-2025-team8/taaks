@@ -147,6 +147,24 @@ paths:
           - "id,ASC"
           items:
             type: string
+      - in: query
+        name: date_eq
+        required: false
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: date_gt
+        required: false
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: date_lt
+        required: false
+        schema:
+          type: string
+          format: date
       responses:
         "200":
           content:
