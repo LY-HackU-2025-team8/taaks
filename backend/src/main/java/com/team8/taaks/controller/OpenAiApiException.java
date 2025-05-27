@@ -13,6 +13,7 @@ public class OpenAiApiException extends RuntimeException {
   public int getStatusCode() {
     return statusCode;
   }
+
   public String getErrorBody() {
     return errorBody;
   }
