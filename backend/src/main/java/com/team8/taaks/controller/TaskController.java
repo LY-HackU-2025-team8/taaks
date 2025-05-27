@@ -49,7 +49,7 @@ public class TaskController {
   private final TaakTaskRepository taakTaskRepository;
   private final TaskReminderRepository taskReminderRepository;
 
-  OpenAIClient client = OpenAIOkHttpClient.fromEnv();
+  private final OpenAIClient client = OpenAIOkHttpClient.fromEnv();
 
   public TaskController(
       TaakTaskRepository taakTaskRepository, TaskReminderRepository taskReminderRepository) {
@@ -158,7 +158,7 @@ public class TaskController {
         throw new OpenAiApiException(500, "Failed to get load score from OpenAI API");
       }
       int loadScore = outputOptional.get().loadScore();
-      System.out.println("負荷スコア: " + loadScore);
+      // System.out.println("負荷スコア: " + loadScore);
       task.setLoadScore(loadScore);
     } catch (OpenAiApiException e) {
       throw new OpenAiApiException(502, "An error occurred while communicating: " + e.getMessage());
