@@ -171,6 +171,10 @@ export interface paths {
         get: operations["getTaskDetail"];
         put: operations["updateTask"];
         post?: never;
+        /**
+         * タスクの削除
+         * @description 指定したIDのタスクを削除します。
+         */
         delete: operations["deleteTask"];
         options?: never;
         head?: never;
@@ -1079,8 +1083,8 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK */
-            200: {
+            /** @description 削除成功（No Content） */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };

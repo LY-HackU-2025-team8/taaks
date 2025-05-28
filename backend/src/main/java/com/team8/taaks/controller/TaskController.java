@@ -9,6 +9,8 @@ import com.team8.taaks.repository.TaakTaskRepository;
 import com.team8.taaks.repository.TaskReminderRepository;
 import com.team8.taaks.service.OpenAiChatService;
 import com.team8.taaks.specification.TaakTaskSpecification;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.net.URI;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -234,6 +236,10 @@ public class TaskController {
 
   // タスクの削除
   @Transactional
+  @Operation(
+      summary = "タスクの削除",
+      description = "指定したIDのタスクを削除します。",
+      responses = {@ApiResponse(responseCode = "204", description = "削除成功（No Content）")})
   @DeleteMapping("/{taskId}")
   public ResponseEntity<Void> deleteTask(
       @AuthenticationPrincipal TaakUser user, @PathVariable("taskId") Integer taskId) {
