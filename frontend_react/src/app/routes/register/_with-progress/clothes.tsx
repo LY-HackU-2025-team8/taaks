@@ -23,7 +23,7 @@ export const Route = createFileRoute('/register/_with-progress/clothes')({
 function RouteComponent() {
   const form = useFormContext<z.infer<typeof registerBuddyFormSchema>>();
   const navigate = useNavigate();
-  const inputName = 'clothes';
+  const inputName = 'clothesId';
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -40,8 +40,8 @@ function RouteComponent() {
         <BuddyPreview
           size="large-bottom"
           motionId={2}
-          hairId={form.watch('hairStyle')}
-          clothesId={form.watch('clothes')}
+          hairStyleId={form.watch('hairStyleId')}
+          clothesId={form.watch('clothesId')}
           faceId={5}
         />
         <p className="pt-6 pb-2 text-[1.25rem] font-bold">服装を選択</p>
@@ -55,7 +55,7 @@ function RouteComponent() {
                 <ToggleGroup
                   className="flex h-40 gap-2 overflow-x-scroll"
                   type="single"
-                  {...field}
+                  // {...field}
                   value={field.value ? String(field.value) : '1'}
                   onValueChange={(value) => {
                     if (value) field.onChange(Number(value));

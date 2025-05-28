@@ -23,6 +23,18 @@ const colorThemes = [
   'cyan',
 ];
 
+// export const Route = createFileRoute('/_app')({
+//   beforeLoad: async ({ context: { queryClient } }) => {
+//     await checkLogin(queryClient, { onError: '/' });
+
+//     // const { data: buddy } = await $api.useQuery('get', '/buddy');
+//     // const colorId = typeof buddy?.colorId === 'number' ? buddy.colorId - 1 : 0;
+//     // const selectedTheme = colorThemes[colorId] ?? 'light';
+//     // setTheme(selectedTheme);
+//   },
+//   component: RouteComponent,
+// });
+
 function RouteComponent() {
   const [hidden, setHidden] = useState(true);
 
@@ -37,7 +49,7 @@ function RouteComponent() {
   }, []);
 
   return (
-    <ThemeProvider>
+    <ThemeProvider attribute="class" themes={colorThemes} defaultTheme="light">
       <ThemeInitializer />
       <AppNavContext
         value={{
@@ -63,7 +75,6 @@ const ThemeInitializer = () => {
     const selectedTheme = colorThemes[colorId] ?? 'green';
 
     setTheme(selectedTheme);
-    console.log('Theme set to:', selectedTheme);
   }, [buddy, setTheme]);
 
   return null;

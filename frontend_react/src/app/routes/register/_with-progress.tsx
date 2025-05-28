@@ -9,8 +9,7 @@ export const Route = createFileRoute('/register/_with-progress')({
 function RouteComponent() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const progress =
-    registerSteps.findIndex((step) => currentPath.includes(step)) + 1;
+  const progress = registerSteps.indexOf(currentPath) + 1;
   return (
     <>
       <ProgressBar className="mt-4 h-12 w-full" progress={progress} />

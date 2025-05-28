@@ -7,7 +7,7 @@ const sizeOptions = {
 };
 
 type BuddyPreviewProps = {
-  hairId?: number;
+  hairStyleId?: number;
   clothesId?: number;
   motionId?: number;
   faceId?: number;
@@ -16,7 +16,7 @@ type BuddyPreviewProps = {
 };
 
 export const BuddyPreview = ({
-  hairId = 1,
+  hairStyleId = 1,
   clothesId = 1,
   motionId = 1,
   faceId = 1,
@@ -30,7 +30,7 @@ export const BuddyPreview = ({
         style={{ background: color }}
       >
         <RiveBuddy
-          hairId={hairId}
+          hairId={hairStyleId}
           clothesId={clothesId}
           motionId={motionId}
           faceId={faceId}

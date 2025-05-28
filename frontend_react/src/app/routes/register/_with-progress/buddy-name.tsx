@@ -25,32 +25,20 @@ function RouteComponent() {
 
   const { mutate, isPending, error } = $api.useMutation('put', '/buddy');
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-    const isValid = await form.trigger(inputName);
-    if (isValid) {
-      const values = form.getValues();
-      mutate(
-        {
-          body: {
-            name: values.name,
-            hairStyleId: values.hairStyle,
-            clothesId: values.clothes,
-            colorId: values.color,
-            nickname: values.nickname,
-          },
+  const handleSubmit = form.handleSubmit((data) => {
+    mutate(
+      {
+        body: {
+          ...data,
         },
-        {
-          onSuccess: () => {
-            navigate({ to: '/dashboard' });
-          },
-          onError: (err) => {
-            console.error('Error creating buddy:', err);
-          },
-        }
-      );
-    }
-  };
+      },
+      {
+        onSuccess: () => {
+          navigate({ to: '/dashboard' });
+        },
+      }
+    );
+  });
 
   return (
     <>
@@ -60,7 +48,7 @@ function RouteComponent() {
       >
         <div className="flex items-center justify-center p-3.5">
           {(() => {
-            const selectedValue = String(form.watch('color') ?? '1');
+            const selectedValue = String(form.watch('colorId') ?? '1');
             const selectedColor =
               colorOptions.find((item) => item.value === selectedValue)
                 ?.color ?? '#EAEBE7';
@@ -68,8 +56,8 @@ function RouteComponent() {
               <BuddyPreview
                 motionId={2}
                 faceId={6}
-                hairId={form.watch('hairStyle')}
-                clothesId={form.watch('clothes')}
+                hairStyleId={form.watch('hairStyleId')}
+                clothesId={form.watch('clothesId')}
                 color={selectedColor}
               />
             );
@@ -85,7 +73,7 @@ function RouteComponent() {
               <FormControl>
                 <InlineInput
                   placeholder="Buddy"
-                  className="w-full border-b-1 border-b-[##D9DCD1] py-4"
+                  className="w-full border-b-1 py-4"
                   autoFocus
                   {...field}
                 />
