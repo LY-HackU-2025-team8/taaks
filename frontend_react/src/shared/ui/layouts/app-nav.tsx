@@ -10,6 +10,7 @@ export type AppNavProps = React.ComponentProps<'nav'> & {
   hidden?: boolean;
 };
 
+/** 画面下のグローバルナビゲーション */
 export const AppNav = ({
   hidden = true,
   className,
@@ -17,6 +18,7 @@ export const AppNav = ({
 }: AppNavProps & {
   className?: string;
 }) => {
+  // タスク追加ドロワーの開閉状態
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (

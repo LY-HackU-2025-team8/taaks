@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+/** タスクを作成・編集するためのフォームのスキーマ */
 export const taskFormSchema = z.object({
   title: z.string().min(1, 'タイトルを入力してください'),
   memo: z.string(),

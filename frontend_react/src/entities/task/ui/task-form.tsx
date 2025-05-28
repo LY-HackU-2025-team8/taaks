@@ -2,7 +2,7 @@ import { cn } from '@/shared/lib/utils';
 import { ClockIcon } from '@/shared/ui/components/icons/clock-icon';
 import { MemoPadIcon } from '@/shared/ui/components/icons/memo-pad-icon';
 import { DatePicker } from '@/shared/ui/components/input/date-picker';
-import { InlineTextarea } from '@/shared/ui/components/input/inline-textarea';
+import { UnstyledTextarea } from '@/shared/ui/components/input/unstyled-textarea';
 import {
   DrawerHeader,
   DrawerTitle,
@@ -22,6 +22,7 @@ import { format } from 'date-fns';
 import { z } from 'zod';
 import type { taskFormSchema } from '../api/task-form-schema';
 
+/** タスクを作成・編集するためのフォーム */
 export const TaskForm = ({
   className,
   children,
@@ -29,6 +30,7 @@ export const TaskForm = ({
 }: React.ComponentProps<'form'>) => {
   const form = useFormContext<z.infer<typeof taskFormSchema>>();
 
+  // datepickerで使うため
   const isAllDay = form.watch('isAllDay');
 
   return (
@@ -43,7 +45,7 @@ export const TaskForm = ({
             name="title"
             render={({ field }) => (
               <FormItem>
-                <InlineTextarea
+                <UnstyledTextarea
                   className="w-full text-xl"
                   placeholder="タイトル"
                   disableLineBreaks
@@ -124,7 +126,7 @@ export const TaskForm = ({
               <FormLabel>
                 <MemoPadIcon className="shrink-0" />
               </FormLabel>
-              <InlineTextarea
+              <UnstyledTextarea
                 className="w-full"
                 placeholder="メモ"
                 {...field}

@@ -10,6 +10,7 @@ export type SmallCardProps = {
   deadline: string;
 };
 
+/** タスクを横並びで複数表示するためのカード */
 export const SmallCard = ({ title, deadline }: SmallCardProps) => {
   const [done, setDone] = useState(false);
 

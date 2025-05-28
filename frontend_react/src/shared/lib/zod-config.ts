@@ -1,5 +1,6 @@
 import { type ZodErrorMap, ZodIssueCode, ZodParsedType, util, z } from 'zod';
 
+/** bigintまたはnumberをインクリメント */
 function addOne(x: number | bigint): number | bigint {
   if (typeof x === 'bigint') {
     return x + 1n; // bigint の場合は 1n を足す
@@ -8,6 +9,7 @@ function addOne(x: number | bigint): number | bigint {
   }
 }
 
+/** bigintまたはnumberをデクリメント */
 function subtractOne(x: number | bigint): number | bigint {
   if (typeof x === 'bigint') {
     return x - 1n; // bigint の場合は 1n を引く
@@ -16,6 +18,7 @@ function subtractOne(x: number | bigint): number | bigint {
   }
 }
 
+/** zodのエラーを日本語化する */
 const errorMap: ZodErrorMap = (issue, _ctx) => {
   let message: string;
   switch (issue.code) {
@@ -177,6 +180,7 @@ const errorMap: ZodErrorMap = (issue, _ctx) => {
   return { message };
 };
 
+/** 呼び出すとZodのエラーメッセージを日本語化する */
 export const zodConfig = () => {
   z.setErrorMap(errorMap);
 };

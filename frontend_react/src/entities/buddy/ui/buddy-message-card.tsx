@@ -8,6 +8,7 @@ import {
 
 export type BuddyMessageCardProps = React.ComponentProps<typeof Card>;
 
+/** Buddyからのメッセージとして描画されるカード */
 export const BuddyMessageCard = ({
   className,
   ...props

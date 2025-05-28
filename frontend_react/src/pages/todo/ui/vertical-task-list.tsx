@@ -5,14 +5,27 @@ import { $api } from '@/shared/api/openapi-fetch';
 import { Text } from '@/shared/ui/components/typography/text';
 
 export type VerticalTaskListProps = React.ComponentProps<'div'> & {
-  date?: Date;
+  /** 表示するタスクの日付 */
+  date: Date;
+  /** trueなら完了したタスクを表示する */
+  isCompleted?: boolean;
 };
 
-export const VerticalTaskList = ({ date, ...props }: VerticalTaskListProps) => {
+/**
+ * 縦に並ぶタスクのリスト
+ * 自動的に期限でソートされる
+ */
+export const VerticalTaskList = ({
+  date,
+  isCompleted = false,
+  ...props
+}: VerticalTaskListProps) => {
   const { data: tasks, isLoading } = $api.useQuery('get', '/tasks', {
     params: {
       query: {
-        ...(date && filterToday(date)),
+        ...filterToday(date),
+        isCompleted_eq: isCompleted,
+        sort: ['dueAt,asc'],
       },
     },
   });

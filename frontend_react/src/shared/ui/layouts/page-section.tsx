@@ -5,6 +5,7 @@ export type PageSectionProps = React.ComponentProps<'section'> & {
   asChild?: boolean;
 };
 
+/** メインコンテンツ内のセクション */
 export const PageSection = ({
   className,
   asChild,

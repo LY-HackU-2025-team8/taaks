@@ -8,6 +8,7 @@ export type SmallCardProps = {
   title: string;
 };
 
+/** Buddyからサジェストされたタスクが表示されるカード */
 export const SmallBuddyCard = ({ title }: SmallCardProps) => {
   const [done, setDone] = useState(false);
 

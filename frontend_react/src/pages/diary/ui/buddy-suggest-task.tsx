@@ -5,10 +5,11 @@ import {
   BuddyMessageCardHeader,
 } from '@/entities/buddy/ui/buddy-message-card';
 import { Button } from '@/shared/ui/components/shadcn/button';
-import { PageSection } from '@/shared/ui/page/page-section';
+import { PageSection } from '@/shared/ui/layouts/page-section';
 
 export type BuddyMessageCardProps = React.ComponentProps<'section'>;
 
+/** 明日のタスクを整理することを促すカード */
 export const BuddySuggestTask = (props: BuddyMessageCardProps) => {
   return (
     <PageSection {...props}>

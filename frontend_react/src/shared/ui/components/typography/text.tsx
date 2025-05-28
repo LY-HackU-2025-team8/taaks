@@ -13,12 +13,31 @@ export const textVariants = cva('font-body', {
       muted: 'text-muted-foreground',
       accent: 'text-accent-foreground',
     },
+    size: {
+      '2xs': 'text-2xs',
+      xs: 'text-xs',
+      sm: 'text-sm',
+      base: 'text-base',
+      lg: 'text-lg',
+      xl: 'text-xl',
+      '2xl': 'text-2xl',
+      '3xl': 'text-3xl',
+      '4xl': 'text-4xl',
+    },
+    font: {
+      default: 'font-body',
+      lineSeed: 'font-line-seed',
+      notoSans: 'font-noto-sans',
+    },
   },
   defaultVariants: {
     variant: 'default',
+    size: 'base',
+    font: 'default',
   },
 });
 
+/** テキストのための汎用コンポーネント */
 export type TextProps = React.ComponentProps<'p'> &
   VariantProps<typeof textVariants> & { asChild?: boolean };
 export const Text = ({ className, variant, asChild, ...props }: TextProps) => {

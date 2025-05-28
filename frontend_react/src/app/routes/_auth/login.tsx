@@ -40,8 +40,11 @@ function RouteComponent() {
     onSuccess: (data) => {
       const token = data.token;
       if (!token) return;
+      // トークンをローカルストレージに保存
       localStorage.setItem('token', token);
+      // ユーザー情報のキャッシュを更新
       queryClient.invalidateQueries($api.queryOptions('get', '/users/me'));
+      // ダッシュボードにリダイレクト
       navigate({
         to: '/dashboard',
       });

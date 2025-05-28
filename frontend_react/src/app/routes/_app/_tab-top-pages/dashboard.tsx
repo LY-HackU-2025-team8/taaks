@@ -3,9 +3,9 @@ import { ToolLinkButton } from '@/pages/dashboard/ui/tool-link-button';
 import { cn } from '@/shared/lib/utils';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
-import { PageHeader } from '@/shared/ui/page/page-header';
-import { PageTitle } from '@/shared/ui/page/page-title';
-import { PageTitleContainer } from '@/shared/ui/page/page-title-container';
+import { PageHeader } from '@/shared/ui/layouts/page-header';
+import { PageTitle } from '@/shared/ui/layouts/page-title';
+import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_app/_tab-top-pages/dashboard')({

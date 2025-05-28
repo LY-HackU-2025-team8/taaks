@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import { Calendar } from '../shadcn/calendar';
 
+/** Todo画面、日記画面で使用される日付選択コンポーネント */
 export const CalendarLarge = ({
   ...props
 }: React.ComponentProps<typeof Calendar>) => {
@@ -26,6 +27,7 @@ export const CalendarLarge = ({
           'bg-custom-foreground/10 hover:bg-custom-foreground/15 size-7 rounded-sm flex items-center justify-center transition-all',
       }}
       formatters={{
+        // 日付、曜日の表示形式をここで設定できる
         formatCaption: (date) => format(date, 'M月'),
         formatWeekdayName: (weekday) => format(weekday, 'E'),
       }}
