@@ -4,7 +4,7 @@ import { filterToday } from '@/shared/api/filter-today';
 import { $api } from '@/shared/api/openapi-fetch';
 import { Text } from '@/shared/ui/components/typography/text';
 
-export type VerticalTaskListProps = React.ComponentProps<'div'> & {
+type VerticalTaskListProps = React.ComponentProps<'div'> & {
   /** 表示するタスクの日付 */
   date: Date;
   /** trueなら完了したタスクを表示する */

@@ -37,7 +37,7 @@ export const headingVariants = cva('font-bold', {
   },
 });
 
-export type TextProps = React.ComponentProps<'p'> &
+type TextProps = React.ComponentProps<'p'> &
   VariantProps<typeof headingVariants> & {
     asChild?: boolean;
   };

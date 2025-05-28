@@ -1,7 +1,7 @@
 import { BuddyTaskCount } from '@/pages/todo/ui/buddy-task-count';
 import { VerticalTaskList } from '@/pages/todo/ui/vertical-task-list';
 import { refineDateFormat } from '@/shared/api/zod/refine-date-format';
-import { DATE_DISPLAY_FORMAT, DATE_DATA_FORMAT } from '@/shared/constant';
+import { DATE_DATA_FORMAT, DATE_DISPLAY_FORMAT } from '@/shared/constants';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
 import { cn } from '@/shared/lib/utils';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
@@ -15,7 +15,7 @@ import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { useMemo } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { format } from 'date-fns';
+import { format, isSameDay } from 'date-fns';
 import { z } from 'zod';
 
 const todoParamsSchema = z.object({
@@ -43,10 +43,7 @@ function RouteComponent() {
   const date = useMemo(() => new Date(dateStr), [dateStr]);
 
   const isToday = useMemo(
-    () =>
-      date.getUTCFullYear() === currentDate.getUTCFullYear() &&
-      date.getUTCMonth() === currentDate.getUTCMonth() &&
-      date.getUTCDate() === currentDate.getUTCDate(),
+    () => isSameDay(date, currentDate),
     [date, currentDate]
   );
 

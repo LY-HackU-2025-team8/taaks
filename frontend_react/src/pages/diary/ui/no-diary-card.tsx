@@ -1,3 +1,6 @@
+import { DATE_DISPLAY_FORMAT } from '@/shared/constants';
+import { useCurrentDate } from '@/shared/hooks/use-current-date';
+import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Card, CardContent } from '@/shared/ui/components/shadcn/card';
 import { Separator } from '@/shared/ui/components/shadcn/separator';
@@ -5,23 +8,23 @@ import { Heading } from '@/shared/ui/components/typography/heading';
 import { Text } from '@/shared/ui/components/typography/text';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { Link } from '@tanstack/react-router';
-import { format } from 'date-fns';
+import { format, isSameDay } from 'date-fns';
 
-export type NoDiaryCardProps = Omit<
-  React.ComponentProps<typeof Card>,
-  'children'
-> & {
+type NoDiaryCardProps = ComponentPropsWithoutChildren<typeof Card> & {
   /** 日記を書くよう促す日付 */
   date: Date;
 };
 
 /** 当日の日記がない時に日記を書くように促すカード */
 export const NoDiaryCard = ({ date, ...props }: NoDiaryCardProps) => {
+  const currentDate = useCurrentDate({ timeResolution: 'day' });
+  const isToday = isSameDay(date, currentDate);
+
   return (
     <PageSection>
       <Card {...props}>
         <CardContent className="flex flex-col gap-4">
-          <div className="text-foreground flex w-fit flex-col">
+          <div className="text-foreground flex w-fit flex-col p-1">
             <Heading className="text-4xl leading-none">
               {format(date, 'MM')}
             </Heading>
@@ -33,13 +36,16 @@ export const NoDiaryCard = ({ date, ...props }: NoDiaryCardProps) => {
               {format(date, 'EEE')}
             </Heading>
           </div>
-          <Heading className="mt-3 text-3xl font-bold break-keep">
-            今日の記録を
+          <Heading className="mt-2 text-3xl font-bold break-keep">
+            {isToday ? '今日' : 'この日'}の記録を
             <wbr />
             残しておこう！
           </Heading>
           <Text className="text-sm">
-            今日はまだ日記が記入されていません。今日がどんな日だったか、見返せるように記録してみませんか？
+            {isToday ? '今日' : format(date, DATE_DISPLAY_FORMAT)}
+            はまだ日記が記入されていません。
+            {isToday ? '今日' : 'この日'}
+            がどんな日だったか、見返せるように記録してみませんか？
           </Text>
           <Separator />
           <div className="grid grid-cols-2 grid-rows-[auto_auto] gap-2">

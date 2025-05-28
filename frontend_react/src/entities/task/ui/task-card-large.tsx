@@ -1,5 +1,6 @@
 import { EditTaskDrawer } from '@/features/edit-task/edit-task-drawer';
 import { cn } from '@/shared/lib/utils';
+import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { BackIconSmall } from '@/shared/ui/components/icons/back-icon-small';
 import { CheckIconSmall } from '@/shared/ui/components/icons/check-icon-small';
 import { EditIconSmall } from '@/shared/ui/components/icons/edit-icon-small';
@@ -20,7 +21,7 @@ import { taskFormSchema } from '../api/task-form-schema';
 import type { TaskResponseModel } from '../api/task-model';
 import { useEditTask } from '../api/use-edit-task';
 
-export type TaskCardLargeProps = React.ComponentProps<'div'> & {
+type TaskCardLargeProps = ComponentPropsWithoutChildren<'div'> & {
   /** 情報を表示するタスクのデータ */
   task: TaskResponseModel;
 };

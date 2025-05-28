@@ -7,9 +7,10 @@ import {
 import { filterToday } from '@/shared/api/filter-today';
 import { $api } from '@/shared/api/openapi-fetch';
 import { cn } from '@/shared/lib/utils';
+import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 
-export type BuddyTaskCountProps = React.ComponentProps<'section'> & {
+type BuddyTaskCountProps = ComponentPropsWithoutChildren<'section'> & {
   /** タスク数をカウントする日付 */
   date: Date;
 };

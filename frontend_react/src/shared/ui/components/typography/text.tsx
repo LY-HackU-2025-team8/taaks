@@ -37,9 +37,10 @@ export const textVariants = cva('font-body', {
   },
 });
 
-/** テキストのための汎用コンポーネント */
-export type TextProps = React.ComponentProps<'p'> &
+type TextProps = React.ComponentProps<'p'> &
   VariantProps<typeof textVariants> & { asChild?: boolean };
+
+/** テキストのための汎用コンポーネント */
 export const Text = ({ className, variant, asChild, ...props }: TextProps) => {
   const Comp = asChild ? Slot : 'p';
 
