@@ -21,13 +21,16 @@ export const BuddyPreview = ({
   motionId = 1,
   faceId = 1,
   size = 'medium',
-  color = '#EAEBE7',
+  color,
 }: BuddyPreviewProps) => {
+  // const colorClass = color ? `bg-(custom-${color})` : 'bg-[#EAEBE7]';
+
   return (
     <div className="flex items-center justify-center p-3.5">
       <div
+        // className={cn("relative size-71 overflow-hidden rounded-[105px]", colorClass)}
         className="relative size-71 overflow-hidden rounded-[105px]"
-        style={{ background: color }}
+        style={{ background: color ? `var(--custom-${color})` : '#EAEBE7' }}
       >
         <RiveBuddy
           hairId={hairStyleId}

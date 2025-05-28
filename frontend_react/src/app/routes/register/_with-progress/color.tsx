@@ -11,6 +11,7 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@/shared/ui/components/shadcn/toggle-group';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
@@ -21,6 +22,7 @@ export const Route = createFileRoute('/register/_with-progress/color')({
 });
 
 function RouteComponent() {
+  const [color, setColor] = useState<string>('green');
   const form = useFormContext<z.infer<typeof registerBuddyFormSchema>>();
   const navigate = useNavigate();
   const inputName = 'colorId';
@@ -38,21 +40,20 @@ function RouteComponent() {
         className="mb-22 flex flex-1 flex-col justify-center px-3"
       >
         <div className="flex items-center justify-center p-3.5">
-          {(() => {
+          {/* {(() => {
             const selectedValue = String(form.watch(inputName) ?? '1');
             const selectedColor =
               colorOptions.find((item) => item.value === selectedValue)
                 ?.color ?? 'green';
-            return (
-              <BuddyPreview
-                motionId={1}
-                faceId={3}
-                hairStyleId={form.watch('hairStyleId') ?? 1}
-                clothesId={form.watch('clothesId') ?? 1}
-                color={selectedColor}
-              />
-            );
-          })()}
+            return ( */}
+          <BuddyPreview
+            motionId={1}
+            faceId={3}
+            hairStyleId={form.watch('hairStyleId') ?? 1}
+            clothesId={form.watch('clothesId') ?? 1}
+            color={color}
+          />
+          {/* })()} */}
         </div>
         <p className="pt-6 pb-2 text-[1.25rem] font-bold">色を選択</p>
 
@@ -67,18 +68,22 @@ function RouteComponent() {
                   type="single"
                   value={String(field.value || '1')}
                   onValueChange={(value) => {
-                    if (value) field.onChange(Number(value));
+                    if (value) {
+                      field.onChange(Number(value));
+                      setColor(colorOptions[Number(value)]);
+                    }
                   }}
                 >
-                  {colorOptions.map((item) => (
+                  {Object.entries(colorOptions).map(([value, item]) => (
                     <ToggleGroupItem
-                      key={item.value}
-                      value={item.value}
+                      key={value}
+                      value={value}
                       className="flex size-20 flex-col items-center justify-center rounded-full border-2 p-0"
                     >
                       <div
                         className="size-18 rounded-full"
-                        style={{ backgroundColor: item.color }}
+                        // className={cn("size-18 rounded-full", `bg-custom-${item}$`)}
+                        style={{ backgroundColor: `var(--custom-${item})` }}
                       ></div>
                     </ToggleGroupItem>
                   ))}

@@ -44,8 +44,8 @@ export const registerBuddyFormSchema = z.object({
     .number()
     .int()
     .min(1, { message: '色を選択してください' })
-    .max(colorOptions.length, {
-      message: `色は${colorOptions.length}種類から選択してください`,
+    .max(Object.keys(colorOptions).length, {
+      message: `色は${Object.keys(colorOptions).length}種類から選択してください`,
     }),
   name: z.string().min(1, { message: 'Buddyの名前を入力してください' }).max(5, {
     message: 'Buddyの名前は5文字以内で入力してください',

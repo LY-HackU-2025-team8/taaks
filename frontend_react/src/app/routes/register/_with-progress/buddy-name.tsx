@@ -54,21 +54,13 @@ function RouteComponent() {
         className="mb-22 flex flex-1 flex-col justify-center px-3"
       >
         <div className="flex items-center justify-center p-3.5">
-          {(() => {
-            const selectedValue = String(form.watch('colorId') ?? '1');
-            const selectedColor =
-              colorOptions.find((item) => item.value === selectedValue)
-                ?.color ?? '#EAEBE7';
-            return (
-              <BuddyPreview
-                motionId={2}
-                faceId={6}
-                hairStyleId={form.watch('hairStyleId')}
-                clothesId={form.watch('clothesId')}
-                color={selectedColor}
-              />
-            );
-          })()}
+          <BuddyPreview
+            motionId={2}
+            faceId={6}
+            hairStyleId={form.watch('hairStyleId')}
+            clothesId={form.watch('clothesId')}
+            color={colorOptions[Number(form.watch('colorId'))] ?? 'green'}
+          />
         </div>
         <p className="pt-6 pb-2 text-[1.25rem] font-bold">Buddyの名前</p>
 
