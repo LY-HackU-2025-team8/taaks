@@ -85,15 +85,6 @@
   --card-foreground: oklch(0.3266 0.0176 120.96);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --custom: oklch(0.8917 0.193 120.28);
-  --custom-foreground: oklch(0.1836 0.0336 114.7);
-  --custom-green: oklch(0.8917 0.193 120.28);
-  --custom-yellow: oklch(0.8324 0.1513 97.61);
-  --custom-red: oklch(0.6679 0.1714 22.08);
-  --custom-pink: oklch(0.7749 0.1314 337.17);
-  --custom-purple: oklch(0.687 0.1919 311.68);
-  --custom-blue: oklch(0.6373 0.1684 277.09);
-  --custom-cyan: oklch(0.8278 0.0973 205.42);
   --primary: oklch(0.1836 0.0336 114.7);
   --primary-foreground: oklch(0.9881 0 0);
   --secondary: oklch(0.8891 0.0152 119.13);
@@ -121,6 +112,16 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --custom-foreground: oklch(0.1836 0.0336 114.7);
+  --custom-green: oklch(0.8917 0.193 120.28);
+  --custom-yellow: oklch(0.8324 0.1513 97.61);
+  --custom-red: oklch(0.6679 0.1714 22.08);
+  --custom-pink: oklch(0.7749 0.1314 337.17);
+  --custom-purple: oklch(0.687 0.1919 311.68);
+  --custom-blue: oklch(0.6373 0.1684 277.09);
+  --custom-cyan: oklch(0.8278 0.0973 205.42);
+  --custom: var(--muted);
 
   --app-nav-background: oklch(0.3266 0.0176 120.96);
   --app-nav-foreground: oklch(0.9382 0.0054 117.93);
@@ -169,7 +170,6 @@
 
 /* カスタムカラーを定義 */
 .green {
-  /* --custom: oklch(0.8917 0.193 120.28); */
   --custom: var(--custom-green);
 }
 
