@@ -17,11 +17,15 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-export type EditTaskDrawerProps = React.ComponentProps<typeof Drawer> & {
+type EditTaskDrawerProps = React.ComponentProps<typeof Drawer> & {
   /** 編集対象のタスク */
   task?: TaskResponseModel;
 };
 
+/**
+ * タスクを編集するドロワー
+ * @param children ドロワーのトリガーとなる要素
+ */
 export const EditTaskDrawer = ({
   onOpenChange,
   open,

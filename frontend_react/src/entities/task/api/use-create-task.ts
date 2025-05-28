@@ -1,5 +1,5 @@
 import { $api } from '@/shared/api/openapi-fetch';
-import { DATETIME_DATA_FORMAT } from '@/shared/constant';
+import { DATETIME_DATA_FORMAT } from '@/shared/constants';
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
@@ -27,8 +27,9 @@ export const useCreateTask = () => {
       (data: z.infer<typeof taskFormSchema>) => {
         // DateTimeをサーバーが受け付ける形式にフォーマット
         const dueAt = format(data.dueAt, DATETIME_DATA_FORMAT);
-        const completedAt =
-          data.completedAt && format(data.completedAt, DATETIME_DATA_FORMAT);
+        const completedAt = data.completedAt
+          ? format(data.completedAt, DATETIME_DATA_FORMAT)
+          : undefined;
 
         return mutate(
           {

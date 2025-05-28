@@ -15,8 +15,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-export type AddTaskDrawerProps = React.ComponentProps<typeof Drawer>;
+type AddTaskDrawerProps = React.ComponentProps<typeof Drawer>;
 
+/**
+ * タスクを追加するドロワー
+ * @param children ドロワーのトリガーとなる要素
+ */
 export const AddTaskDrawer = ({
   onOpenChange,
   open,
@@ -35,7 +39,7 @@ export const AddTaskDrawer = ({
       title: '',
       memo: '',
       dueAt: new Date(),
-      completedAt: undefined,
+      completedAt: null,
       isAllDay: false,
       loadScore: 0,
     },

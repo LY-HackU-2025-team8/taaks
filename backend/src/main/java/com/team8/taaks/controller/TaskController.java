@@ -1,11 +1,21 @@
 package com.team8.taaks.controller;
 
+import com.team8.taaks.dto.TaskRequest;
+import com.team8.taaks.dto.TaskResponse;
+import com.team8.taaks.model.TaakTask;
+import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.model.TaskReminder;
+import com.team8.taaks.repository.TaakTaskRepository;
+import com.team8.taaks.repository.TaskReminderRepository;
+import com.team8.taaks.service.OpenAiChatService;
+import com.team8.taaks.specification.TaakTaskSpecification;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.net.URI;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,16 +38,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.team8.taaks.dto.TaskRequest;
-import com.team8.taaks.dto.TaskResponse;
-import com.team8.taaks.model.TaakTask;
-import com.team8.taaks.model.TaakUser;
-import com.team8.taaks.model.TaskReminder;
-import com.team8.taaks.repository.TaakTaskRepository;
-import com.team8.taaks.repository.TaskReminderRepository;
-import com.team8.taaks.service.OpenAiChatService;
-import com.team8.taaks.specification.TaakTaskSpecification;
-
 @CrossOrigin(origins = {"localhost:3000", "https://taak.app"})
 @RestController
 @RequestMapping("/tasks")
@@ -45,8 +46,7 @@ public class TaskController {
   private final TaskReminderRepository taskReminderRepository;
 
   // 環境変数が必要：OPENAI_API_KEY, OPENAI_ORG_ID, OPENAI_PROJECT_ID
-  private final OpenAiChatService openAiChatService =
-      new OpenAiChatService();
+  private final OpenAiChatService openAiChatService = new OpenAiChatService();
 
   public TaskController(
       TaakTaskRepository taakTaskRepository, TaskReminderRepository taskReminderRepository) {
@@ -134,11 +134,12 @@ public class TaskController {
     task.setIsAllDay(taskRequest.isAllDay());
     task.setCompletedAt(taskRequest.completedAt());
     try {
-      int loadScore = openAiChatService.calcLoadScore(
-        "これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル："
-            + taskRequest.title()
-            + "\n期限までの時間（分）"
-            + Duration.between(LocalDateTime.now(), taskRequest.dueAt()).toMinutes());
+      int loadScore =
+          openAiChatService.calcLoadScore(
+              "これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル："
+                  + taskRequest.title()
+                  + "\n期限までの時間（分）"
+                  + Duration.between(LocalDateTime.now(), taskRequest.dueAt()).toMinutes());
       task.setLoadScore(loadScore);
     } catch (Exception e) {
       // OpenAI APIの呼び出しに失敗した場合は、負荷スコアを0に設定
@@ -231,5 +232,29 @@ public class TaskController {
             taskReminderRepository.findAllByTaskId(existingTask.getId()).stream()
                 .map(reminder -> reminder.getScheduledAt())
                 .toList()));
+  }
+
+  // タスクの削除
+  @Transactional
+  @Operation(
+      summary = "タスクの削除",
+      description = "指定したIDのタスクを削除します。",
+      responses = {@ApiResponse(responseCode = "204", description = "削除成功（No Content）")})
+  @DeleteMapping("/{taskId}")
+  public ResponseEntity<Void> deleteTask(
+      @AuthenticationPrincipal TaakUser user, @PathVariable("taskId") Integer taskId) {
+    Optional<TaakTask> optionalTask = taakTaskRepository.findById(taskId);
+    if (optionalTask.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found");
+    }
+    TaakTask existingTask = optionalTask.get();
+    // 他人のタスクを削除しようとした場合は403エラーを返す
+    if (!existingTask.getUser().getId().equals(user.getId())) {
+      throw new ResponseStatusException(
+          HttpStatus.FORBIDDEN, "You do not have permission to delete this task");
+    }
+    taskReminderRepository.deleteAllByTaskId(taskId);
+    taakTaskRepository.delete(existingTask);
+    return ResponseEntity.noContent().build();
   }
 }

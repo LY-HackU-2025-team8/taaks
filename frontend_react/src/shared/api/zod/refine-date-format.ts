@@ -1,4 +1,4 @@
-import { DATE_DATA_REGEX } from '@/shared/constant';
+import { DATE_DATA_REGEX } from '@/shared/constants';
 
 /** YYYY-MM-DD形式のstringをDateにrefineする */
 export const refineDateFormat = (val: string) => {

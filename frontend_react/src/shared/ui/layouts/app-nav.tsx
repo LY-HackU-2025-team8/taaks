@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Text } from '../components/typography/text';
 
-export type AppNavProps = React.ComponentProps<'nav'> & {
+type AppNavProps = React.ComponentProps<'nav'> & {
   hidden?: boolean;
 };
 

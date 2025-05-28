@@ -4,7 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 export type UnstyledTextareaProps = React.ComponentProps<
   typeof TextareaAutosize
 > & {
-  // 改行させない
+  /** 改行を無効化するか */
   disableLineBreaks?: boolean;
 };
 

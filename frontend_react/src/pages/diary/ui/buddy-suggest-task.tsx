@@ -4,10 +4,11 @@ import {
   BuddyMessageCardDescription,
   BuddyMessageCardHeader,
 } from '@/entities/buddy/ui/buddy-message-card';
+import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 
-export type BuddyMessageCardProps = React.ComponentProps<'section'>;
+type BuddyMessageCardProps = ComponentPropsWithoutChildren<typeof PageSection>;
 
 /** 明日のタスクを整理することを促すカード */
 export const BuddySuggestTask = (props: BuddyMessageCardProps) => {
