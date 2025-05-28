@@ -30,9 +30,7 @@ function RouteComponent() {
   const handleSubmit = form.handleSubmit((data) => {
     mutate(
       {
-        body: {
-          ...data,
-        },
+        body: data,
       },
       {
         onSuccess: () => {
