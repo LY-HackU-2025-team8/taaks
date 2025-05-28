@@ -12,7 +12,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 @RequiredArgsConstructor
 public class NotificationJobScheduler {
   private final JobLauncher jobLauncher;
-  private final Job helloJob; // Spring assumes this is the job defined in NotificationBatchConfig
+  private final Job
+      notificationJob; // Spring assumes this is the job defined in NotificationBatchConfig
 
   @Scheduled(cron = "0 * * * * *") // Every minute
   public void launchJob() throws Exception {
@@ -20,6 +21,6 @@ public class NotificationJobScheduler {
         new JobParametersBuilder()
             .addLong("timestamp", System.currentTimeMillis())
             .toJobParameters();
-    jobLauncher.run(helloJob, params);
+    jobLauncher.run(notificationJob, params);
   }
 }

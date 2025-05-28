@@ -42,9 +42,10 @@ public class NotificationBatchConfig {
 
   @Bean
   public Step sendMessageStep(JobRepository jobRepository, PlatformTransactionManager txManager) {
-    return new StepBuilder("helloStep", jobRepository)
+    return new StepBuilder("notificationStep", jobRepository)
         .tasklet(
             (contribution, chunkContext) -> {
+              System.out.println("Starting notification task...");
               List<TaskReminder> notificationTasks =
                   taskReminderRepository.findByNotifiedAtIsNullAndScheduledAtBefore(
                       ZonedDateTime.now());
@@ -75,9 +76,7 @@ public class NotificationBatchConfig {
                           } catch (FirebaseMessagingException e) {
                             System.err.println("Failed to send message: " + e.getMessage());
                           }
-                          return;
                         });
-                    return;
                   });
               return RepeatStatus.FINISHED;
             },
