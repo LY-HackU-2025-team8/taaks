@@ -19,7 +19,7 @@ export const useCreateTask = () => {
 
   /**
    * タスクを作成する関数
-   * @params TanstackQueryのmutateのoptions
+   * @param TanstackQueryのmutateのoptions
    * @return taskFormSchemaのdataを受け取るコールバック
    */
   const createTask = useCallback(
