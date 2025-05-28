@@ -8,6 +8,7 @@ import { Button } from '@/shared/ui/components/shadcn/button';
 import { Separator } from '@/shared/ui/components/shadcn/separator';
 import { Heading } from '@/shared/ui/components/typography/heading';
 import { Text } from '@/shared/ui/components/typography/text';
+import { Loading } from '@/shared/ui/layouts/loading';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
 import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageSection } from '@/shared/ui/layouts/page-section';
@@ -30,6 +31,7 @@ export const Route = createFileRoute('/_app/todo/$taskId')({
     ),
   }),
   component: RouteComponent,
+  pendingComponent: Loading,
 });
 
 function RouteComponent() {

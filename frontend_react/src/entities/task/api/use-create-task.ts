@@ -27,8 +27,9 @@ export const useCreateTask = () => {
       (data: z.infer<typeof taskFormSchema>) => {
         // DateTimeをサーバーが受け付ける形式にフォーマット
         const dueAt = format(data.dueAt, DATETIME_DATA_FORMAT);
-        const completedAt =
-          data.completedAt && format(data.completedAt, DATETIME_DATA_FORMAT);
+        const completedAt = data.completedAt
+          ? format(data.completedAt, DATETIME_DATA_FORMAT)
+          : undefined;
 
         return mutate(
           {

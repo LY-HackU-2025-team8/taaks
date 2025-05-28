@@ -39,7 +39,7 @@ export const AddTaskDrawer = ({
       title: '',
       memo: '',
       dueAt: new Date(),
-      completedAt: undefined,
+      completedAt: null,
       isAllDay: false,
       loadScore: 0,
     },
