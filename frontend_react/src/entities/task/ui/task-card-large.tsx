@@ -49,7 +49,7 @@ export const TaskCardLarge = ({
     editTask()(
       taskFormSchema.parse({
         ...task,
-        completedAt: undefined,
+        completedAt: null,
       })
     );
   }, [editTask, task]);
