@@ -17,7 +17,7 @@ export const DashboardBuddy = () => {
 
   return (
     <div className="relative flex h-72 items-center overflow-x-clip overflow-y-visible">
-      <div className="z-1 flex flex-col gap-3 items-start">
+      <div className="z-1 flex flex-col items-start gap-3">
         <Heading size="xl" variant="custom" className="break-keep">
           {greeting}
           <wbr />
