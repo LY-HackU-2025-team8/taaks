@@ -21,14 +21,11 @@ export const DashboardBuddy = () => {
           <span className="block">{greeting}</span>
           <span className="block">{buddy?.nickname}さん！</span>
         </div>
-        <Button
-          asChild
-          className="bg-primary text-card w-fit rounded-full px-6 py-2 text-sm"
-        >
+        <Button asChild className="w-fit text-sm" variant="primary">
           <Link to="/buddy">{buddy?.name}に会う</Link>
         </Button>
       </div>
-      <div className="flex h-72 w-full flex-col">
+      <div className="flex h-72 w-full flex-col pointer-events-none">
         <RiveBuddy
           className="absolute -top-16 -right-18 size-96 mask-b-from-60% mask-b-to-100%"
           motionId={1}

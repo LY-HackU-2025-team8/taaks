@@ -23,6 +23,8 @@ export const RegisterNavigation = ({
           <Button
             type="submit"
             className="bg-primary h-16 flex-1 rounded-xl"
+            variant="primary"
+            size="lg"
             disabled={disabled}
           >
             次へ

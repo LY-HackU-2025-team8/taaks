@@ -8,9 +8,9 @@ import {
   FormControl,
 } from '@/shared/ui/components/shadcn/form';
 import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from '@/shared/ui/components/shadcn/toggle-group';
+  CustomToggleGroup,
+  CustomToggleGroupItem,
+} from '@/shared/ui/components/wrappers/toggle-group-wrapper';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
@@ -63,7 +63,7 @@ function RouteComponent() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <ToggleGroup
+                <CustomToggleGroup
                   className="flex h-40 gap-2 overflow-x-scroll"
                   type="single"
                   value={String(field.value || '1')}
@@ -75,7 +75,7 @@ function RouteComponent() {
                   }}
                 >
                   {Object.entries(colorOptions).map(([value, item]) => (
-                    <ToggleGroupItem
+                    <CustomToggleGroupItem
                       key={value}
                       value={value}
                       className="flex size-20 flex-col items-center justify-center rounded-full border-2 p-0"
@@ -85,9 +85,9 @@ function RouteComponent() {
                         // className={cn("size-18 rounded-full", `bg-custom-${item}$`)}
                         style={{ backgroundColor: `var(--custom-${item})` }}
                       ></div>
-                    </ToggleGroupItem>
+                    </CustomToggleGroupItem>
                   ))}
-                </ToggleGroup>
+                </CustomToggleGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
