@@ -1,17 +1,11 @@
 package com.team8.taaks.controller;
 
-import com.team8.taaks.dto.TaskRequest;
-import com.team8.taaks.dto.TaskResponse;
-import com.team8.taaks.model.TaakTask;
-import com.team8.taaks.model.TaakUser;
-import com.team8.taaks.model.TaskReminder;
-import com.team8.taaks.repository.TaakTaskRepository;
-import com.team8.taaks.repository.TaskReminderRepository;
-import com.team8.taaks.specification.TaakTaskSpecification;
 import java.net.URI;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,12 +27,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.team8.taaks.dto.TaskRequest;
+import com.team8.taaks.dto.TaskResponse;
+import com.team8.taaks.model.TaakTask;
+import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.model.TaskReminder;
+import com.team8.taaks.repository.TaakTaskRepository;
+import com.team8.taaks.repository.TaskReminderRepository;
+import com.team8.taaks.service.OpenAiChatService;
+import com.team8.taaks.specification.TaakTaskSpecification;
+
 @CrossOrigin(origins = {"localhost:3000", "https://taak.app"})
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
   private final TaakTaskRepository taakTaskRepository;
   private final TaskReminderRepository taskReminderRepository;
+
+  // 環境変数が必要：OPENAI_API_KEY, OPENAI_ORG_ID, OPENAI_PROJECT_ID
+  private final OpenAiChatService openAiChatService =
+      new OpenAiChatService();
 
   public TaskController(
       TaakTaskRepository taakTaskRepository, TaskReminderRepository taskReminderRepository) {
@@ -125,7 +133,18 @@ public class TaskController {
     task.setDueAt(taskRequest.dueAt());
     task.setIsAllDay(taskRequest.isAllDay());
     task.setCompletedAt(taskRequest.completedAt());
-    task.setLoadScore(taskRequest.loadScore());
+    try {
+      int loadScore = openAiChatService.calcLoadScore(
+        "これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル："
+            + taskRequest.title()
+            + "\n期限までの時間（分）"
+            + Duration.between(LocalDateTime.now(), taskRequest.dueAt()).toMinutes());
+      task.setLoadScore(loadScore);
+    } catch (Exception e) {
+      // OpenAI APIの呼び出しに失敗した場合は、負荷スコアを0に設定
+      task.setLoadScore(0);
+      System.err.println("An error occurred while communicating: " + e.getMessage());
+    }
     TaakTask registeredTask = taakTaskRepository.save(task);
     if (taskRequest.scheduledAt() == null || taskRequest.scheduledAt().isEmpty()) {
       // スケジュールが指定されていない場合は空のリストを保存
