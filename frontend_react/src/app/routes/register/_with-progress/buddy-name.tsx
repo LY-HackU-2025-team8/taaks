@@ -13,6 +13,7 @@ import { useFormContext } from 'react-hook-form';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 import { registerBuddyFormSchema } from '../../register';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/register/_with-progress/buddy-name')({
   component: RouteComponent,
@@ -22,6 +23,7 @@ function RouteComponent() {
   const form = useFormContext<z.infer<typeof registerBuddyFormSchema>>();
   const navigate = useNavigate();
   const inputName = 'name';
+  const queryClient = useQueryClient();
 
   const { mutate, isPending, error } = $api.useMutation('put', '/buddy');
 
@@ -34,6 +36,12 @@ function RouteComponent() {
       },
       {
         onSuccess: () => {
+
+          // キャッシュを無効化して最新のデータを取得
+          queryClient.invalidateQueries({
+            queryKey: ['get', '/buddy'],
+          });
+          
           navigate({ to: '/dashboard' });
         },
       }

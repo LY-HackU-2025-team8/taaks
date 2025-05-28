@@ -3,22 +3,14 @@ import {
   hairOptions,
   clothesOptions,
 } from '@/features/create-buddy/constants/registerOptions';
+// import { checkLogin } from '../api/check-login';
 import { BuddyHeader } from '@/features/create-buddy/icons/buddy-header';
 import { Form } from '@/shared/ui/components/shadcn/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { z } from 'zod';
-<<<<<<< HEAD
-
 import { redirectUnlessLoggedIn } from '../api/require-login';
-=======
-import { checkLogin } from '../api/check-login';
-<<<<<<< HEAD
-import { BuddyHeader } from '@/features/create-buddy/icons/buddy-header';
->>>>>>> 33b2e50 (レビュー内容の修正)
-=======
->>>>>>> 81cb929 (applied format)
 
 export const Route = createFileRoute('/register')({
   beforeLoad: async ({ context: { queryClient } }) => {
@@ -27,18 +19,6 @@ export const Route = createFileRoute('/register')({
   component: RouteComponent,
 });
 
-<<<<<<< HEAD
-// import { checkLogin } from '../api/check-login';
-
-// export const Route = createFileRoute('/register')({
-//   beforeLoad: async ({ context: { queryClient } }) =>
-//     checkLogin(queryClient, { onError: '/' }),
-//   component: RouteComponent,
-// });
-
-// TODO: 最大値と最小値を定数で設定する
-=======
->>>>>>> 33b2e50 (レビュー内容の修正)
 export const registerBuddyFormSchema = z.object({
   nickname: z
     .string()

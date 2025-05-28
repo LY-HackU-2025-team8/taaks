@@ -55,7 +55,7 @@ function RouteComponent() {
           )}
         />
       </div>
-      <RegisterNavigation prev_path="/account" />
+      <RegisterNavigation prev_path="/settings" />
     </form>
   );
 }

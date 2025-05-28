@@ -3,8 +3,8 @@ import { AppNav } from '@/shared/ui/layouts/app-nav';
 import { AppNavContext } from '@/shared/ui/layouts/app-nav-context';
 import { useCallback, useState, useEffect } from 'react';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { redirectUnlessLoggedIn } from '../api/require-login';
 import { ThemeProvider, useTheme } from 'next-themes';
+import { redirectUnlessLoggedIn } from '../api/require-login';
 
 export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) => {
@@ -22,18 +22,6 @@ const colorThemes = [
   'blue',
   'cyan',
 ];
-
-// export const Route = createFileRoute('/_app')({
-//   beforeLoad: async ({ context: { queryClient } }) => {
-//     await checkLogin(queryClient, { onError: '/' });
-
-//     // const { data: buddy } = await $api.useQuery('get', '/buddy');
-//     // const colorId = typeof buddy?.colorId === 'number' ? buddy.colorId - 1 : 0;
-//     // const selectedTheme = colorThemes[colorId] ?? 'light';
-//     // setTheme(selectedTheme);
-//   },
-//   component: RouteComponent,
-// });
 
 function RouteComponent() {
   const [hidden, setHidden] = useState(true);
