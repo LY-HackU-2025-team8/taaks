@@ -8,8 +8,11 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 interface RootRouteContext {
+  /** TanstackQueryのQueryClient */
   queryClient: QueryClient;
+  /** HTML要素に追加するクラス名 */
   htmlClassName: string;
+  /** アプリケーションのルート要素に追加するクラス名 */
   appClassName: string;
 }
 
@@ -25,11 +28,13 @@ const RouteComponent = () => {
     const lastMatch = matches[matches.length - 1];
     const htmlClassName = lastMatch?.context?.htmlClassName || '';
     const appClassName = lastMatch?.context?.appClassName || '';
+    // クラス名をスペースで分割して配列に変換
+    const htmlClassNameArray = htmlClassName.split(' ');
+    const appClassNameArray = appClassName.split(' ');
+    // 各要素を取得
     const meta = document.querySelector('meta[name="theme-color"]');
     const html = document.documentElement;
     const app = document.getElementById('app');
-    const htmlClassNameArray = htmlClassName.split(' ');
-    const appClassNameArray = appClassName.split(' ');
     // html, bodyにクラス名を追加
     if (htmlClassName !== '') html.classList.add(...htmlClassNameArray);
     if (appClassName !== '') app?.classList.add(...appClassNameArray);

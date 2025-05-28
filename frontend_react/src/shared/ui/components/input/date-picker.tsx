@@ -8,6 +8,7 @@ export type DatePickerProps = React.ComponentProps<'input'> & {
   withTime?: boolean;
 };
 
+/** 日付選択のための仮置きコンポーネント */
 export function DatePicker({
   className,
   withTime = false,

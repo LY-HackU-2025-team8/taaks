@@ -1,13 +1,13 @@
 import { diaryFormSchema } from '@/entities/diary/api/diary-form-schema';
-import { NewDiaryForm } from '@/entities/diary/ui/diary-form';
+import { DiaryForm } from '@/entities/diary/ui/diary-form';
 import { $api } from '@/shared/api/openapi-fetch';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Form } from '@/shared/ui/components/shadcn/form';
-import { PageHeader } from '@/shared/ui/page/page-header';
-import { PageMain } from '@/shared/ui/page/page-main';
-import { PageSection } from '@/shared/ui/page/page-section';
-import { PageTitleContainer } from '@/shared/ui/page/page-title-container';
+import { PageHeader } from '@/shared/ui/layouts/page-header';
+import { PageMain } from '@/shared/ui/layouts/page-main';
+import { PageSection } from '@/shared/ui/layouts/page-section';
+import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
@@ -77,7 +77,7 @@ function RouteComponent() {
                   {format(date, 'EEEE', { locale: ja })}
                 </span>
               </div>
-              <NewDiaryForm />
+              <DiaryForm />
             </PageSection>
             <PageSection className="mt-auto" asChild>
               <footer>

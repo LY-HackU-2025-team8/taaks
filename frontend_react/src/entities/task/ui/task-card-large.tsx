@@ -21,9 +21,11 @@ import type { TaskResponseModel } from '../api/task-model';
 import { useEditTask } from '../api/use-edit-task';
 
 export type TaskCardLargeProps = React.ComponentProps<'div'> & {
+  /** 情報を表示するタスクのデータ */
   task: TaskResponseModel;
 };
 
+/** タスクの概要を表示するカード */
 export const TaskCardLarge = ({
   task,
   className,
@@ -31,6 +33,7 @@ export const TaskCardLarge = ({
 }: TaskCardLargeProps) => {
   const { editTask, isPending } = useEditTask(z.number().parse(task.id));
 
+  /** タスクを完了する */
   const handleComplete = useCallback(() => {
     editTask()(
       taskFormSchema.parse({
@@ -40,6 +43,7 @@ export const TaskCardLarge = ({
     );
   }, [editTask, task]);
 
+  /** タスクの完了を取り消す */
   const handleUndo = useCallback(() => {
     editTask()(
       taskFormSchema.parse({
@@ -49,6 +53,7 @@ export const TaskCardLarge = ({
     );
   }, [editTask, task]);
 
+  /** タスクが完了しているかどうか */
   const isCompleted = !!task.completedAt;
 
   return (

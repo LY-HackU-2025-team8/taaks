@@ -2,6 +2,7 @@ import { cn } from '@/shared/lib/utils';
 
 export type PageHeaderProps = React.ComponentProps<'div'>;
 
+/** ページ全体のヘッダ */
 export const PageHeader = ({ className, ...props }: PageHeaderProps) => {
   return (
     <header

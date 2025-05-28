@@ -1,13 +1,15 @@
 import { $api } from '@/shared/api/openapi-fetch';
+import { useCurrentDate } from '@/shared/hooks/use-current-date';
 import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Link } from '@tanstack/react-router';
 
+/** ダッシュボード上部のBuddy */
 export const DashboardBuddy = () => {
   const { data: buddy } = $api.useQuery('get', '/buddy');
 
   // 時間帯に応じて挨拶を変更する
-  const date = new Date();
+  const date = useCurrentDate({ timeResolution: 'hour' });
   const hours = date.getHours();
   const greeting =
     hours < 10 ? 'おはよう' : hours < 18 ? 'こんにちは' : 'こんばんは';

@@ -8,23 +8,26 @@ import { routeTree } from './route-tree.gen';
 import reportWebVitals from './shared/lib/reportWebVitals.ts';
 import { zodConfig } from './shared/lib/zod-config.ts';
 
-// Create a client
+// Zodの設定を行う
+zodConfig();
+
+// tanstackQueryのQueryClientを作成
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: (failureCount, error) => {
-        // Retry only on network errors
+        // ネットワークエラーの場合のみリトライする
         if (error instanceof Error && error.name === 'NetworkError') {
-          return failureCount < 3; // Retry up to 3 times
+          return failureCount < 3; // 最大3回リトライする
         }
-        return false; // Do not retry on other errors
+        return false; // その他のエラーではリトライしない
       },
-      staleTime: 1000 * 30, // 30 seconds
+      staleTime: 1000 * 30, // 30秒以内に取得したデータがあるときは再取得しない
     },
   },
 });
 
-// Create a new router instance
+// TanstackRouterのRouterの作成
 const router = createRouter({
   routeTree,
   context: {
@@ -38,14 +41,14 @@ const router = createRouter({
   defaultPreloadStaleTime: 0,
 });
 
-// Register the router instance for type safety
+// 型安全のために型情報を登録
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }
 }
 
-// Render the app
+// Reactをレンダリングするためのルート要素を取得し、ReactDOMを使用してレンダリング
 const rootElement = document.getElementById('app');
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
@@ -62,6 +65,3 @@ if (rootElement && !rootElement.innerHTML) {
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-// Initialize Zod configuration
-zodConfig();

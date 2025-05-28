@@ -1,12 +1,12 @@
-import { AppNav } from '@/shared/ui/app-nav/app-nav';
-import { AppNavContext } from '@/shared/ui/app-nav/app-nav-context';
-import { useState } from 'react';
+import { AppNav } from '@/shared/ui/layouts/app-nav';
+import { AppNavContext } from '@/shared/ui/layouts/app-nav-context';
+import { useCallback, useState } from 'react';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { requireLogin } from '../api/require-login';
+import { redirectUnlessLoggedIn } from '../api/require-login';
 
 export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) => {
-    await requireLogin(queryClient, { to: '/login' });
+    await redirectUnlessLoggedIn(queryClient, { to: '/login' });
   },
   component: RouteComponent,
 });
@@ -14,11 +14,21 @@ export const Route = createFileRoute('/_app')({
 function RouteComponent() {
   const [hidden, setHidden] = useState(true);
 
+  /** AppNavを非表示にする */
+  const showAppNav = useCallback(() => {
+    setHidden(false);
+  }, []);
+
+  /** AppNavを表示する */
+  const hideAppNav = useCallback(() => {
+    setHidden(true);
+  }, []);
+
   return (
     <AppNavContext
       value={{
-        showAppNav: () => setHidden(false),
-        hideAppNav: () => setHidden(true),
+        showAppNav,
+        hideAppNav,
       }}
     >
       <Outlet />

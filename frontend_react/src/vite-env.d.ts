@@ -2,7 +2,7 @@
 
 interface ImportMetaEnv {
   /**
-   * APIのエンドポイント
+   * バックエンドAPIのホスト名
    */
   readonly VITE_BACKEND_HOST: string;
   /**

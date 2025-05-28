@@ -1,7 +1,8 @@
-import { INTERNAL_DATE_REGEX } from '@/shared/constant';
+import { DATE_DATA_REGEX } from '@/shared/constant';
 
+/** YYYY-MM-DD形式のstringをDateにrefineする */
 export const refineDateFormat = (val: string) => {
-  const m = INTERNAL_DATE_REGEX.exec(val);
+  const m = DATE_DATA_REGEX.exec(val);
   if (!m?.groups) return false; // フォーマット不一致
 
   const { year, month, day } = m.groups;

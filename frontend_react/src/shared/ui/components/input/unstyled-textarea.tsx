@@ -1,19 +1,19 @@
 import { cn } from '@/shared/lib/utils';
 import TextareaAutosize from 'react-textarea-autosize';
 
-export type InlineTextareaProps = React.ComponentProps<
+export type UnstyledTextareaProps = React.ComponentProps<
   typeof TextareaAutosize
 > & {
   // 改行させない
   disableLineBreaks?: boolean;
 };
 
-export const InlineTextarea = ({
+export const UnstyledTextarea = ({
   onKeyDown,
   className,
   disableLineBreaks,
   ...props
-}: InlineTextareaProps) => {
+}: UnstyledTextareaProps) => {
   return (
     <TextareaAutosize
       className={cn('resize-none focus:outline-none', className)}

@@ -2,6 +2,7 @@ import { cn } from '@/shared/lib/utils';
 
 export type PageMainProps = React.ComponentProps<'main'>;
 
+/** ページのメインコンテンツ */
 export const PageMain = ({ className, ...props }: PageMainProps) => {
   return (
     <main

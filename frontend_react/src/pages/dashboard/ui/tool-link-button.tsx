@@ -2,6 +2,7 @@ import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Link } from '@tanstack/react-router';
 
+/** @todo もはやコンポーネント化する意味があまりないのでなくす */
 export const ToolLinkButton = ({
   className,
   ...props

@@ -44,9 +44,11 @@ export const EditTaskDrawer = ({
     reValidateMode: 'onChange',
   });
 
+  // FormのSubmit時にタスクを編集する
   const handleSubmit = form.handleSubmit(
     editTask({
       onSuccess: () => {
+        // タスクの編集に成功したらフォームをリセットし、Drawerを閉じる
         form.reset();
         drawerState.onOpenChange(false);
       },

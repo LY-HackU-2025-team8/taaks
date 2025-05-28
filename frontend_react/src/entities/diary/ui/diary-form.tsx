@@ -1,5 +1,5 @@
 import { cn } from '@/shared/lib/utils';
-import { InlineTextarea } from '@/shared/ui/components/input/inline-textarea';
+import { UnstyledTextarea } from '@/shared/ui/components/input/unstyled-textarea';
 import {
   FormField,
   FormItem,
@@ -9,7 +9,8 @@ import { useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 import type { diaryFormSchema } from '../api/diary-form-schema';
 
-export const NewDiaryForm = ({
+/** 日記を作成・編集するためのフォーム */
+export const DiaryForm = ({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<typeof FormItem>) => {
@@ -21,7 +22,7 @@ export const NewDiaryForm = ({
       name="body"
       render={({ field }) => (
         <FormItem className={cn('w-full', className)} {...props}>
-          <InlineTextarea
+          <UnstyledTextarea
             {...field}
             placeholder="今日あったことをここに記録しましょう。"
           />

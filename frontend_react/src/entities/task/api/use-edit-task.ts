@@ -1,16 +1,20 @@
 import { $api } from '@/shared/api/openapi-fetch';
-import { INTERNAL_DATETIME_FORMAT } from '@/shared/constant';
+import { DATETIME_DATA_FORMAT } from '@/shared/constant';
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { z } from 'zod';
 import type { taskFormSchema } from './task-form-schema';
 
+/** タスクを編集する関数を返すHook */
 export const useEditTask = (taskId: number) => {
   const queryClient = useQueryClient();
   const { mutate, ...rest } = $api.useMutation('put', '/tasks/{taskId}', {
+    // なんらかのエラーが発生してもタスクが更新される場合があるのでonSettledを使用
     onSettled: () => {
+      // タスク一覧のキャッシュを破棄
       queryClient.invalidateQueries($api.queryOptions('get', '/tasks'));
+      // タスクの詳細のキャッシュを破棄
       queryClient.invalidateQueries(
         $api.queryOptions('get', '/tasks/{taskId}', {
           params: { path: { taskId } },
@@ -19,12 +23,18 @@ export const useEditTask = (taskId: number) => {
     },
   });
 
+  /**
+   * タスクを編集する関数
+   * @param TanstackQueryのmutateのoptions
+   * @return taskFormSchemaのdataを受け取るコールバック
+   */
   const editTask = useCallback(
     (options?: Parameters<typeof mutate>[1]) =>
       (data: z.infer<typeof taskFormSchema>) => {
-        const dueAt = format(data.dueAt, INTERNAL_DATETIME_FORMAT);
+        // DateTimeをサーバーが受け付ける形にフォーマット
+        const dueAt = format(data.dueAt, DATETIME_DATA_FORMAT);
         const completedAt = data.completedAt
-          ? format(data.completedAt, INTERNAL_DATETIME_FORMAT)
+          ? format(data.completedAt, DATETIME_DATA_FORMAT)
           : undefined;
 
         return mutate(

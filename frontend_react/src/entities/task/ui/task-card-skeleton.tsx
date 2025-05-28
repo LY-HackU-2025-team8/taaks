@@ -7,6 +7,7 @@ import {
 } from '@/shared/ui/components/shadcn/card';
 import { Skeleton } from '@/shared/ui/components/shadcn/skeleton';
 
+/** タスクの読み込み中に表示されるスケルトン */
 export const TaskCardSkeleton = ({
   className,
   ...props
