@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const Elegant: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const HairElegant = (props: React.ComponentProps<'svg'>) => (
   <svg viewBox="0 0 353.5 248.83" xmlns="http://www.w3.org/2000/svg" {...props}>
     <g>
       <path
@@ -24,7 +22,7 @@ export const Elegant: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export const Fusafusa: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const HairFusafusa = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 368.25 252.75"
     xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +34,7 @@ export const Fusafusa: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export const Ikeike: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const HairIkeike = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 358.88 359.68"
     xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +97,7 @@ export const Ikeike: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export const Mocomoco: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const HairMocomoco = (props: React.ComponentProps<'svg'>) => (
   <svg viewBox="0 0 388.9 228.98" xmlns="http://www.w3.org/2000/svg" {...props}>
     <g>
       <circle cx="77.64" cy="154.83" r="40.33" />
@@ -125,7 +123,7 @@ export const Mocomoco: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export const Sarasara: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const Hair = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 346.76 274.41"
     xmlns="http://www.w3.org/2000/svg"
@@ -153,7 +151,7 @@ export const Sarasara: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export const Tied: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const HairTied = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 416.83 339.87"
     xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +180,7 @@ export const Tied: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export const Togetoge: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const HairTogetoge = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 381.53 333.88"
     xmlns="http://www.w3.org/2000/svg"

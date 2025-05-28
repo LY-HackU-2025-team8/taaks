@@ -1,7 +1,7 @@
 import React from 'react';
 
 // カディガン
-export const Cardigan: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const ClothesCardigan = (props: React.ComponentProps<'svg'>) => (
   <svg viewBox="0 0 590.6 325.24" xmlns="http://www.w3.org/2000/svg" {...props}>
     <g>
       <g>
@@ -141,7 +141,7 @@ export const Cardigan: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 // ユニーク
-export const Unique: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const ClothesUnique = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 590.75 352.15"
     xmlns="http://www.w3.org/2000/svg"
@@ -265,7 +265,7 @@ export const Unique: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 // スーツ
-export const Suit: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const ClothesSuit = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 606.61 326.11"
     xmlns="http://www.w3.org/2000/svg"
@@ -409,7 +409,7 @@ export const Suit: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 // トレーナー
-export const Sweatshirt: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const ClothesSweatshirt = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 599.51 322.16"
     xmlns="http://www.w3.org/2000/svg"
@@ -455,7 +455,7 @@ export const Sweatshirt: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 // パーカー
-export const Hoodie: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const ClothesHoodie = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 585.69 357.88"
     xmlns="http://www.w3.org/2000/svg"
@@ -643,7 +643,7 @@ export const Hoodie: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 // Yシャツ
-export const Yshirt: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const ClothesYShirt = (props: React.ComponentProps<'svg'>) => (
   <svg
     viewBox="0 0 577.78 319.57"
     xmlns="http://www.w3.org/2000/svg"

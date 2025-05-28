@@ -21,5 +21,5 @@ export const BackButton = ({
     [onClick, router]
   );
 
-  return <button onClick={handleClick} {...props} />;
+  return <button type="button" onClick={handleClick} {...props} />;
 };

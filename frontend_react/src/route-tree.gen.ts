@@ -11,18 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './app/routes/__root'
-import { Route as RegisterImport } from './app/routes/register'
+import { Route as CreateBuddyImport } from './app/routes/create-buddy'
 import { Route as AuthImport } from './app/routes/_auth'
 import { Route as AppImport } from './app/routes/_app'
 import { Route as IndexImport } from './app/routes/index'
-import { Route as RegisterNicknameImport } from './app/routes/register/nickname'
-import { Route as RegisterWithProgressImport } from './app/routes/register/_with-progress'
+import { Route as CreateBuddyIndexImport } from './app/routes/create-buddy/index'
+import { Route as CreateBuddyWithProgressImport } from './app/routes/create-buddy/_with-progress'
 import { Route as AuthLoginImport } from './app/routes/_auth/login'
 import { Route as AppTabTopPagesImport } from './app/routes/_app/_tab-top-pages'
-import { Route as RegisterWithProgressHairImport } from './app/routes/register/_with-progress/hair'
-import { Route as RegisterWithProgressColorImport } from './app/routes/register/_with-progress/color'
-import { Route as RegisterWithProgressClothesImport } from './app/routes/register/_with-progress/clothes'
-import { Route as RegisterWithProgressBuddyNameImport } from './app/routes/register/_with-progress/buddy-name'
+import { Route as CreateBuddyWithProgressHairImport } from './app/routes/create-buddy/_with-progress/hair'
+import { Route as CreateBuddyWithProgressColorImport } from './app/routes/create-buddy/_with-progress/color'
+import { Route as CreateBuddyWithProgressClothesImport } from './app/routes/create-buddy/_with-progress/clothes'
+import { Route as CreateBuddyWithProgressBuddyNameImport } from './app/routes/create-buddy/_with-progress/buddy-name'
 import { Route as AppTodoTaskIdImport } from './app/routes/_app/todo/$taskId'
 import { Route as AppDiaryNewImport } from './app/routes/_app/diary/new'
 import { Route as AppTabTopPagesTodoImport } from './app/routes/_app/_tab-top-pages/todo'
@@ -33,9 +33,9 @@ import { Route as AppTabTopPagesBuddyImport } from './app/routes/_app/_tab-top-p
 
 // Create/Update Routes
 
-const RegisterRoute = RegisterImport.update({
-  id: '/register',
-  path: '/register',
+const CreateBuddyRoute = CreateBuddyImport.update({
+  id: '/create-buddy',
+  path: '/create-buddy',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -55,15 +55,15 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const RegisterNicknameRoute = RegisterNicknameImport.update({
-  id: '/nickname',
-  path: '/nickname',
-  getParentRoute: () => RegisterRoute,
+const CreateBuddyIndexRoute = CreateBuddyIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CreateBuddyRoute,
 } as any)
 
-const RegisterWithProgressRoute = RegisterWithProgressImport.update({
+const CreateBuddyWithProgressRoute = CreateBuddyWithProgressImport.update({
   id: '/_with-progress',
-  getParentRoute: () => RegisterRoute,
+  getParentRoute: () => CreateBuddyRoute,
 } as any)
 
 const AuthLoginRoute = AuthLoginImport.update({
@@ -77,30 +77,32 @@ const AppTabTopPagesRoute = AppTabTopPagesImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const RegisterWithProgressHairRoute = RegisterWithProgressHairImport.update({
-  id: '/hair',
-  path: '/hair',
-  getParentRoute: () => RegisterWithProgressRoute,
-} as any)
-
-const RegisterWithProgressColorRoute = RegisterWithProgressColorImport.update({
-  id: '/color',
-  path: '/color',
-  getParentRoute: () => RegisterWithProgressRoute,
-} as any)
-
-const RegisterWithProgressClothesRoute =
-  RegisterWithProgressClothesImport.update({
-    id: '/clothes',
-    path: '/clothes',
-    getParentRoute: () => RegisterWithProgressRoute,
+const CreateBuddyWithProgressHairRoute =
+  CreateBuddyWithProgressHairImport.update({
+    id: '/hair',
+    path: '/hair',
+    getParentRoute: () => CreateBuddyWithProgressRoute,
   } as any)
 
-const RegisterWithProgressBuddyNameRoute =
-  RegisterWithProgressBuddyNameImport.update({
+const CreateBuddyWithProgressColorRoute =
+  CreateBuddyWithProgressColorImport.update({
+    id: '/color',
+    path: '/color',
+    getParentRoute: () => CreateBuddyWithProgressRoute,
+  } as any)
+
+const CreateBuddyWithProgressClothesRoute =
+  CreateBuddyWithProgressClothesImport.update({
+    id: '/clothes',
+    path: '/clothes',
+    getParentRoute: () => CreateBuddyWithProgressRoute,
+  } as any)
+
+const CreateBuddyWithProgressBuddyNameRoute =
+  CreateBuddyWithProgressBuddyNameImport.update({
     id: '/buddy-name',
     path: '/buddy-name',
-    getParentRoute: () => RegisterWithProgressRoute,
+    getParentRoute: () => CreateBuddyWithProgressRoute,
   } as any)
 
 const AppTodoTaskIdRoute = AppTodoTaskIdImport.update({
@@ -170,11 +172,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterImport
+    '/create-buddy': {
+      id: '/create-buddy'
+      path: '/create-buddy'
+      fullPath: '/create-buddy'
+      preLoaderRoute: typeof CreateBuddyImport
       parentRoute: typeof rootRoute
     }
     '/_app/_tab-top-pages': {
@@ -191,19 +193,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthImport
     }
-    '/register/_with-progress': {
-      id: '/register/_with-progress'
+    '/create-buddy/_with-progress': {
+      id: '/create-buddy/_with-progress'
       path: ''
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterWithProgressImport
-      parentRoute: typeof RegisterImport
+      fullPath: '/create-buddy'
+      preLoaderRoute: typeof CreateBuddyWithProgressImport
+      parentRoute: typeof CreateBuddyImport
     }
-    '/register/nickname': {
-      id: '/register/nickname'
-      path: '/nickname'
-      fullPath: '/register/nickname'
-      preLoaderRoute: typeof RegisterNicknameImport
-      parentRoute: typeof RegisterImport
+    '/create-buddy/': {
+      id: '/create-buddy/'
+      path: '/'
+      fullPath: '/create-buddy/'
+      preLoaderRoute: typeof CreateBuddyIndexImport
+      parentRoute: typeof CreateBuddyImport
     }
     '/_app/_tab-top-pages/buddy': {
       id: '/_app/_tab-top-pages/buddy'
@@ -254,33 +256,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTodoTaskIdImport
       parentRoute: typeof AppImport
     }
-    '/register/_with-progress/buddy-name': {
-      id: '/register/_with-progress/buddy-name'
+    '/create-buddy/_with-progress/buddy-name': {
+      id: '/create-buddy/_with-progress/buddy-name'
       path: '/buddy-name'
-      fullPath: '/register/buddy-name'
-      preLoaderRoute: typeof RegisterWithProgressBuddyNameImport
-      parentRoute: typeof RegisterWithProgressImport
+      fullPath: '/create-buddy/buddy-name'
+      preLoaderRoute: typeof CreateBuddyWithProgressBuddyNameImport
+      parentRoute: typeof CreateBuddyWithProgressImport
     }
-    '/register/_with-progress/clothes': {
-      id: '/register/_with-progress/clothes'
+    '/create-buddy/_with-progress/clothes': {
+      id: '/create-buddy/_with-progress/clothes'
       path: '/clothes'
-      fullPath: '/register/clothes'
-      preLoaderRoute: typeof RegisterWithProgressClothesImport
-      parentRoute: typeof RegisterWithProgressImport
+      fullPath: '/create-buddy/clothes'
+      preLoaderRoute: typeof CreateBuddyWithProgressClothesImport
+      parentRoute: typeof CreateBuddyWithProgressImport
     }
-    '/register/_with-progress/color': {
-      id: '/register/_with-progress/color'
+    '/create-buddy/_with-progress/color': {
+      id: '/create-buddy/_with-progress/color'
       path: '/color'
-      fullPath: '/register/color'
-      preLoaderRoute: typeof RegisterWithProgressColorImport
-      parentRoute: typeof RegisterWithProgressImport
+      fullPath: '/create-buddy/color'
+      preLoaderRoute: typeof CreateBuddyWithProgressColorImport
+      parentRoute: typeof CreateBuddyWithProgressImport
     }
-    '/register/_with-progress/hair': {
-      id: '/register/_with-progress/hair'
+    '/create-buddy/_with-progress/hair': {
+      id: '/create-buddy/_with-progress/hair'
       path: '/hair'
-      fullPath: '/register/hair'
-      preLoaderRoute: typeof RegisterWithProgressHairImport
-      parentRoute: typeof RegisterWithProgressImport
+      fullPath: '/create-buddy/hair'
+      preLoaderRoute: typeof CreateBuddyWithProgressHairImport
+      parentRoute: typeof CreateBuddyWithProgressImport
     }
   }
 }
@@ -331,43 +333,47 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
-interface RegisterWithProgressRouteChildren {
-  RegisterWithProgressBuddyNameRoute: typeof RegisterWithProgressBuddyNameRoute
-  RegisterWithProgressClothesRoute: typeof RegisterWithProgressClothesRoute
-  RegisterWithProgressColorRoute: typeof RegisterWithProgressColorRoute
-  RegisterWithProgressHairRoute: typeof RegisterWithProgressHairRoute
+interface CreateBuddyWithProgressRouteChildren {
+  CreateBuddyWithProgressBuddyNameRoute: typeof CreateBuddyWithProgressBuddyNameRoute
+  CreateBuddyWithProgressClothesRoute: typeof CreateBuddyWithProgressClothesRoute
+  CreateBuddyWithProgressColorRoute: typeof CreateBuddyWithProgressColorRoute
+  CreateBuddyWithProgressHairRoute: typeof CreateBuddyWithProgressHairRoute
 }
 
-const RegisterWithProgressRouteChildren: RegisterWithProgressRouteChildren = {
-  RegisterWithProgressBuddyNameRoute: RegisterWithProgressBuddyNameRoute,
-  RegisterWithProgressClothesRoute: RegisterWithProgressClothesRoute,
-  RegisterWithProgressColorRoute: RegisterWithProgressColorRoute,
-  RegisterWithProgressHairRoute: RegisterWithProgressHairRoute,
+const CreateBuddyWithProgressRouteChildren: CreateBuddyWithProgressRouteChildren =
+  {
+    CreateBuddyWithProgressBuddyNameRoute:
+      CreateBuddyWithProgressBuddyNameRoute,
+    CreateBuddyWithProgressClothesRoute: CreateBuddyWithProgressClothesRoute,
+    CreateBuddyWithProgressColorRoute: CreateBuddyWithProgressColorRoute,
+    CreateBuddyWithProgressHairRoute: CreateBuddyWithProgressHairRoute,
+  }
+
+const CreateBuddyWithProgressRouteWithChildren =
+  CreateBuddyWithProgressRoute._addFileChildren(
+    CreateBuddyWithProgressRouteChildren,
+  )
+
+interface CreateBuddyRouteChildren {
+  CreateBuddyWithProgressRoute: typeof CreateBuddyWithProgressRouteWithChildren
+  CreateBuddyIndexRoute: typeof CreateBuddyIndexRoute
 }
 
-const RegisterWithProgressRouteWithChildren =
-  RegisterWithProgressRoute._addFileChildren(RegisterWithProgressRouteChildren)
-
-interface RegisterRouteChildren {
-  RegisterWithProgressRoute: typeof RegisterWithProgressRouteWithChildren
-  RegisterNicknameRoute: typeof RegisterNicknameRoute
+const CreateBuddyRouteChildren: CreateBuddyRouteChildren = {
+  CreateBuddyWithProgressRoute: CreateBuddyWithProgressRouteWithChildren,
+  CreateBuddyIndexRoute: CreateBuddyIndexRoute,
 }
 
-const RegisterRouteChildren: RegisterRouteChildren = {
-  RegisterWithProgressRoute: RegisterWithProgressRouteWithChildren,
-  RegisterNicknameRoute: RegisterNicknameRoute,
-}
-
-const RegisterRouteWithChildren = RegisterRoute._addFileChildren(
-  RegisterRouteChildren,
+const CreateBuddyRouteWithChildren = CreateBuddyRoute._addFileChildren(
+  CreateBuddyRouteChildren,
 )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AppTabTopPagesRouteWithChildren
-  '/register': typeof RegisterWithProgressRouteWithChildren
+  '/create-buddy': typeof CreateBuddyWithProgressRouteWithChildren
   '/login': typeof AuthLoginRoute
-  '/register/nickname': typeof RegisterNicknameRoute
+  '/create-buddy/': typeof CreateBuddyIndexRoute
   '/buddy': typeof AppTabTopPagesBuddyRoute
   '/dashboard': typeof AppTabTopPagesDashboardRoute
   '/diary': typeof AppTabTopPagesDiaryRoute
@@ -375,18 +381,17 @@ export interface FileRoutesByFullPath {
   '/todo': typeof AppTabTopPagesTodoRoute
   '/diary/new': typeof AppDiaryNewRoute
   '/todo/$taskId': typeof AppTodoTaskIdRoute
-  '/register/buddy-name': typeof RegisterWithProgressBuddyNameRoute
-  '/register/clothes': typeof RegisterWithProgressClothesRoute
-  '/register/color': typeof RegisterWithProgressColorRoute
-  '/register/hair': typeof RegisterWithProgressHairRoute
+  '/create-buddy/buddy-name': typeof CreateBuddyWithProgressBuddyNameRoute
+  '/create-buddy/clothes': typeof CreateBuddyWithProgressClothesRoute
+  '/create-buddy/color': typeof CreateBuddyWithProgressColorRoute
+  '/create-buddy/hair': typeof CreateBuddyWithProgressHairRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AppTabTopPagesRouteWithChildren
-  '/register': typeof RegisterWithProgressRouteWithChildren
   '/login': typeof AuthLoginRoute
-  '/register/nickname': typeof RegisterNicknameRoute
+  '/create-buddy': typeof CreateBuddyIndexRoute
   '/buddy': typeof AppTabTopPagesBuddyRoute
   '/dashboard': typeof AppTabTopPagesDashboardRoute
   '/diary': typeof AppTabTopPagesDiaryRoute
@@ -394,10 +399,10 @@ export interface FileRoutesByTo {
   '/todo': typeof AppTabTopPagesTodoRoute
   '/diary/new': typeof AppDiaryNewRoute
   '/todo/$taskId': typeof AppTodoTaskIdRoute
-  '/register/buddy-name': typeof RegisterWithProgressBuddyNameRoute
-  '/register/clothes': typeof RegisterWithProgressClothesRoute
-  '/register/color': typeof RegisterWithProgressColorRoute
-  '/register/hair': typeof RegisterWithProgressHairRoute
+  '/create-buddy/buddy-name': typeof CreateBuddyWithProgressBuddyNameRoute
+  '/create-buddy/clothes': typeof CreateBuddyWithProgressClothesRoute
+  '/create-buddy/color': typeof CreateBuddyWithProgressColorRoute
+  '/create-buddy/hair': typeof CreateBuddyWithProgressHairRoute
 }
 
 export interface FileRoutesById {
@@ -405,11 +410,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
-  '/register': typeof RegisterRouteWithChildren
+  '/create-buddy': typeof CreateBuddyRouteWithChildren
   '/_app/_tab-top-pages': typeof AppTabTopPagesRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
-  '/register/_with-progress': typeof RegisterWithProgressRouteWithChildren
-  '/register/nickname': typeof RegisterNicknameRoute
+  '/create-buddy/_with-progress': typeof CreateBuddyWithProgressRouteWithChildren
+  '/create-buddy/': typeof CreateBuddyIndexRoute
   '/_app/_tab-top-pages/buddy': typeof AppTabTopPagesBuddyRoute
   '/_app/_tab-top-pages/dashboard': typeof AppTabTopPagesDashboardRoute
   '/_app/_tab-top-pages/diary': typeof AppTabTopPagesDiaryRoute
@@ -417,10 +422,10 @@ export interface FileRoutesById {
   '/_app/_tab-top-pages/todo': typeof AppTabTopPagesTodoRoute
   '/_app/diary/new': typeof AppDiaryNewRoute
   '/_app/todo/$taskId': typeof AppTodoTaskIdRoute
-  '/register/_with-progress/buddy-name': typeof RegisterWithProgressBuddyNameRoute
-  '/register/_with-progress/clothes': typeof RegisterWithProgressClothesRoute
-  '/register/_with-progress/color': typeof RegisterWithProgressColorRoute
-  '/register/_with-progress/hair': typeof RegisterWithProgressHairRoute
+  '/create-buddy/_with-progress/buddy-name': typeof CreateBuddyWithProgressBuddyNameRoute
+  '/create-buddy/_with-progress/clothes': typeof CreateBuddyWithProgressClothesRoute
+  '/create-buddy/_with-progress/color': typeof CreateBuddyWithProgressColorRoute
+  '/create-buddy/_with-progress/hair': typeof CreateBuddyWithProgressHairRoute
 }
 
 export interface FileRouteTypes {
@@ -428,9 +433,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
-    | '/register'
+    | '/create-buddy'
     | '/login'
-    | '/register/nickname'
+    | '/create-buddy/'
     | '/buddy'
     | '/dashboard'
     | '/diary'
@@ -438,17 +443,16 @@ export interface FileRouteTypes {
     | '/todo'
     | '/diary/new'
     | '/todo/$taskId'
-    | '/register/buddy-name'
-    | '/register/clothes'
-    | '/register/color'
-    | '/register/hair'
+    | '/create-buddy/buddy-name'
+    | '/create-buddy/clothes'
+    | '/create-buddy/color'
+    | '/create-buddy/hair'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
-    | '/register'
     | '/login'
-    | '/register/nickname'
+    | '/create-buddy'
     | '/buddy'
     | '/dashboard'
     | '/diary'
@@ -456,20 +460,20 @@ export interface FileRouteTypes {
     | '/todo'
     | '/diary/new'
     | '/todo/$taskId'
-    | '/register/buddy-name'
-    | '/register/clothes'
-    | '/register/color'
-    | '/register/hair'
+    | '/create-buddy/buddy-name'
+    | '/create-buddy/clothes'
+    | '/create-buddy/color'
+    | '/create-buddy/hair'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/_auth'
-    | '/register'
+    | '/create-buddy'
     | '/_app/_tab-top-pages'
     | '/_auth/login'
-    | '/register/_with-progress'
-    | '/register/nickname'
+    | '/create-buddy/_with-progress'
+    | '/create-buddy/'
     | '/_app/_tab-top-pages/buddy'
     | '/_app/_tab-top-pages/dashboard'
     | '/_app/_tab-top-pages/diary'
@@ -477,10 +481,10 @@ export interface FileRouteTypes {
     | '/_app/_tab-top-pages/todo'
     | '/_app/diary/new'
     | '/_app/todo/$taskId'
-    | '/register/_with-progress/buddy-name'
-    | '/register/_with-progress/clothes'
-    | '/register/_with-progress/color'
-    | '/register/_with-progress/hair'
+    | '/create-buddy/_with-progress/buddy-name'
+    | '/create-buddy/_with-progress/clothes'
+    | '/create-buddy/_with-progress/color'
+    | '/create-buddy/_with-progress/hair'
   fileRoutesById: FileRoutesById
 }
 
@@ -488,14 +492,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
-  RegisterRoute: typeof RegisterRouteWithChildren
+  CreateBuddyRoute: typeof CreateBuddyRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
-  RegisterRoute: RegisterRouteWithChildren,
+  CreateBuddyRoute: CreateBuddyRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -511,7 +515,7 @@ export const routeTree = rootRoute
         "/",
         "/_app",
         "/_auth",
-        "/register"
+        "/create-buddy"
       ]
     },
     "/": {
@@ -531,11 +535,11 @@ export const routeTree = rootRoute
         "/_auth/login"
       ]
     },
-    "/register": {
-      "filePath": "register.tsx",
+    "/create-buddy": {
+      "filePath": "create-buddy.tsx",
       "children": [
-        "/register/_with-progress",
-        "/register/nickname"
+        "/create-buddy/_with-progress",
+        "/create-buddy/"
       ]
     },
     "/_app/_tab-top-pages": {
@@ -553,19 +557,19 @@ export const routeTree = rootRoute
       "filePath": "_auth/login.tsx",
       "parent": "/_auth"
     },
-    "/register/_with-progress": {
-      "filePath": "register/_with-progress.tsx",
-      "parent": "/register",
+    "/create-buddy/_with-progress": {
+      "filePath": "create-buddy/_with-progress.tsx",
+      "parent": "/create-buddy",
       "children": [
-        "/register/_with-progress/buddy-name",
-        "/register/_with-progress/clothes",
-        "/register/_with-progress/color",
-        "/register/_with-progress/hair"
+        "/create-buddy/_with-progress/buddy-name",
+        "/create-buddy/_with-progress/clothes",
+        "/create-buddy/_with-progress/color",
+        "/create-buddy/_with-progress/hair"
       ]
     },
-    "/register/nickname": {
-      "filePath": "register/nickname.tsx",
-      "parent": "/register"
+    "/create-buddy/": {
+      "filePath": "create-buddy/index.tsx",
+      "parent": "/create-buddy"
     },
     "/_app/_tab-top-pages/buddy": {
       "filePath": "_app/_tab-top-pages/buddy.tsx",
@@ -595,21 +599,21 @@ export const routeTree = rootRoute
       "filePath": "_app/todo/$taskId.tsx",
       "parent": "/_app"
     },
-    "/register/_with-progress/buddy-name": {
-      "filePath": "register/_with-progress/buddy-name.tsx",
-      "parent": "/register/_with-progress"
+    "/create-buddy/_with-progress/buddy-name": {
+      "filePath": "create-buddy/_with-progress/buddy-name.tsx",
+      "parent": "/create-buddy/_with-progress"
     },
-    "/register/_with-progress/clothes": {
-      "filePath": "register/_with-progress/clothes.tsx",
-      "parent": "/register/_with-progress"
+    "/create-buddy/_with-progress/clothes": {
+      "filePath": "create-buddy/_with-progress/clothes.tsx",
+      "parent": "/create-buddy/_with-progress"
     },
-    "/register/_with-progress/color": {
-      "filePath": "register/_with-progress/color.tsx",
-      "parent": "/register/_with-progress"
+    "/create-buddy/_with-progress/color": {
+      "filePath": "create-buddy/_with-progress/color.tsx",
+      "parent": "/create-buddy/_with-progress"
     },
-    "/register/_with-progress/hair": {
-      "filePath": "register/_with-progress/hair.tsx",
-      "parent": "/register/_with-progress"
+    "/create-buddy/_with-progress/hair": {
+      "filePath": "create-buddy/_with-progress/hair.tsx",
+      "parent": "/create-buddy/_with-progress"
     }
   }
 }

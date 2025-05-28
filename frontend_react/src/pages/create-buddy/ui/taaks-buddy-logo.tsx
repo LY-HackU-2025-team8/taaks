@@ -1,12 +1,11 @@
-import React from 'react';
-
-export const BuddyHeader: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const TaaksBuddyLogo = (props: React.ComponentProps<'svg'>) => (
   <svg
     width="171"
     height="26"
     viewBox="0 0 171 26"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    aria-description="Taaks Buddy Logo"
     {...props}
   >
     <g clipPath="url(#clip0_461_2319)">

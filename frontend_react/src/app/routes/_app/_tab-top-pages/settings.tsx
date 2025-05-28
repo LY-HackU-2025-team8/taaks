@@ -10,7 +10,7 @@ function RouteComponent() {
   return (
     <div className="flex h-full flex-col items-center justify-center">
       <Button asChild className="mb-4">
-        <Link to="/register/nickname">バディの設定</Link>
+        <Link to="/create-buddy">バディの設定</Link>
       </Button>
       <Button
         /** @todo 関数として分離 */

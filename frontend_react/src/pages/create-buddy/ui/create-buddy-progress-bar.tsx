@@ -1,21 +1,19 @@
 import { useEffect } from 'react';
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
 
-type ProgressBarProps = {
-  /** クラス名 */
-  className?: string;
-  progress?: number;
+type CreateBuddyProgressBarProps = React.ComponentProps<'canvas'> & {
+  step?: number;
 };
 
-export const ProgressBar = ({
-  className = '',
-  progress = 1,
-}: ProgressBarProps) => {
+export const CreateBuddyProgressBar = ({
+  step = 1,
+  ...props
+}: CreateBuddyProgressBarProps) => {
   const STATE_MACHINE_NAME = 'FlowState';
   const INPUT_NAME = 'flow';
 
   const { rive, RiveComponent } = useRive({
-    src: '/assets/animations/flownav.riv',
+    src: '/assets/animations/flow_nav.riv',
     stateMachines: STATE_MACHINE_NAME,
     autoplay: true,
   });
@@ -28,15 +26,15 @@ export const ProgressBar = ({
 
   useEffect(() => {
     if (progressInput) {
-      progressInput.value = progress;
+      progressInput.value = step;
     }
-  }, [rive, progressInput, progress]);
+  }, [rive, progressInput, step]);
 
   return (
     <RiveComponent
-      className={className}
       role="img"
-      aria-label="Progress Bar Animation"
+      aria-label="Buddy Creation Progress Bar"
+      {...props}
     />
   );
 };

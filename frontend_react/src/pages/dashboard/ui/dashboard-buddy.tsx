@@ -2,6 +2,7 @@ import { $api } from '@/shared/api/openapi-fetch';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
 import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
 import { Button } from '@/shared/ui/components/shadcn/button';
+import { Heading } from '@/shared/ui/components/typography/heading';
 import { Link } from '@tanstack/react-router';
 
 /** ダッシュボード上部のBuddy */
@@ -16,12 +17,13 @@ export const DashboardBuddy = () => {
 
   return (
     <div className="relative flex h-72 items-center overflow-x-clip overflow-y-visible">
-      <div className="z-10 flex flex-col gap-3">
-        <div className="flex flex-col text-xl font-bold whitespace-nowrap">
-          <span className="block">{greeting}</span>
-          <span className="block">{buddy?.nickname}さん！</span>
-        </div>
-        <Button asChild className="w-fit text-sm" variant="primary">
+      <div className="z-1 flex flex-col gap-3 items-start">
+        <Heading size="xl" variant="custom" className="break-keep">
+          {greeting}
+          <wbr />
+          {buddy?.nickname}さん！
+        </Heading>
+        <Button asChild size="sm" variant="primary">
           <Link to="/buddy">{buddy?.name}に会う</Link>
         </Button>
       </div>
