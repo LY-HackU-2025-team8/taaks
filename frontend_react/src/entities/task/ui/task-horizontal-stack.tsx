@@ -1,3 +1,4 @@
+import { cn } from '@/shared/lib/utils';
 import type { TaskResponseModel } from '../api/task-model';
 import { TaskCardSummary } from './task-card-summary';
 
@@ -14,7 +15,7 @@ export const TaskHorizontalStack = ({
 }: TaskHorizontalStackProps) => {
   return (
     <div
-      className={`flex flex-row gap-4 overflow-x-auto ${className}`}
+      className={cn('flex gap-4 overflow-x-auto py-1', className)}
       {...props}
     >
       {tasks.map((task) => (

@@ -26,7 +26,7 @@ export const BuddyTaskCount = ({
       query: {
         ...filterToday(date),
         isCompleted_eq: false,
-        sort: ['dueAt,asc'], // ここでソートは必要ないが、Tanstack Queryのキャッシュを活かすために設定
+        page: 0,
       },
     },
   });

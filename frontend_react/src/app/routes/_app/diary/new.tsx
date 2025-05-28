@@ -1,5 +1,6 @@
 import { diaryFormSchema } from '@/entities/diary/api/diary-form-schema';
 import { DiaryForm } from '@/entities/diary/ui/diary-form';
+import { DiarySummary } from '@/pages/diary/ui/diary-summary';
 import { $api } from '@/shared/api/openapi-fetch';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
@@ -79,7 +80,8 @@ function RouteComponent() {
               </div>
               <DiaryForm />
             </PageSection>
-            <PageSection className="mt-auto" asChild>
+            <DiarySummary date={date} />
+            <PageSection asChild>
               <footer>
                 <div className="flex gap-2">
                   <Button variant="secondary" className="flex-1" asChild>

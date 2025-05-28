@@ -46,6 +46,8 @@ type TextProps = React.ComponentProps<'p'> &
 export const Heading = ({
   className,
   variant,
+  size,
+  font,
   asChild,
   ...props
 }: TextProps) => {
@@ -54,7 +56,7 @@ export const Heading = ({
   return (
     <Comp
       data-slot="heading"
-      className={cn(headingVariants({ variant }), className)}
+      className={cn(headingVariants({ variant, size, font }), className)}
       {...props}
     />
   );
