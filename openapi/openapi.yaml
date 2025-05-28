@@ -498,6 +498,26 @@ paths:
       tags:
       - task-controller
   /tasks/{taskId}:
+    delete:
+      operationId: deleteTask
+      parameters:
+      - in: path
+        name: taskId
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - task-controller
     get:
       operationId: getTaskDetail
       parameters:
