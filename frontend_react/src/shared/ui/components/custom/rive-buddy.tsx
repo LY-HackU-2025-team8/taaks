@@ -1,13 +1,26 @@
-import { randInt } from '@/shared/lib/random-number';
 import { useEffect } from 'react';
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
 
 type RiveBuddyProps = {
   /** クラス名 */
   className?: string;
+  /** 顔のパーツのID */
+  faceId?: number;
+  /** 服のパーツのID */
+  clothesId?: number;
+  /** 頭のパーツのID */
+  hairId?: number;
+  /** モーションのID */
+  motionId?: number;
 };
 
-export const RiveBuddy = ({ className = '' }: RiveBuddyProps) => {
+export const RiveBuddy = ({
+  className = '',
+  faceId = 3,
+  clothesId = 2,
+  hairId = 1,
+  motionId = 0,
+}: RiveBuddyProps) => {
   const STATE_MACHINE_NAME = 'base State Machine ';
 
   const { rive, RiveComponent } = useRive({
@@ -20,15 +33,24 @@ export const RiveBuddy = ({ className = '' }: RiveBuddyProps) => {
   const headParts = useStateMachineInput(rive, STATE_MACHINE_NAME, 'HeadParts');
   const motion = useStateMachineInput(rive, STATE_MACHINE_NAME, 'motioninputs');
 
-  // ランダムにパーツを変更する
   useEffect(() => {
     if (fukuParts && faceParts && headParts && motion) {
-      fukuParts.value = randInt(1, 6);
-      faceParts.value = randInt(1, 6);
-      headParts.value = randInt(1, 7);
-      motion.value = randInt(0, 2);
+      fukuParts.value = clothesId;
+      faceParts.value = faceId;
+      headParts.value = hairId;
+      motion.value = motionId;
     }
-  }, [rive, fukuParts, faceParts, headParts, motion]);
+  }, [
+    rive,
+    fukuParts,
+    faceParts,
+    headParts,
+    motion,
+    faceId,
+    clothesId,
+    hairId,
+    motionId,
+  ]);
 
   return (
     <RiveComponent

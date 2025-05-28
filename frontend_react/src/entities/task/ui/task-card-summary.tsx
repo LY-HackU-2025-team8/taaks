@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/ui/components/shadcn/card';
-import { Text } from '@/shared/ui/components/typography/text';
+import { Heading } from '@/shared/ui/components/typography/heading';
 import { format, isAfter, isBefore } from 'date-fns';
 import { CheckIcon } from 'lucide-react';
 import type { TaskResponseModel } from '../api/task-model';
@@ -26,25 +26,23 @@ export const TaskCardSummary = ({
     <Card className={cn('min-w-80 gap-1', className)} {...props}>
       <CardContent>
         <div className="flex items-center gap-2">
-          <Text
+          <Heading
             variant="muted"
-            font="lineSeed"
-            className={cn('font-bold', { 'line-through': !!completedAt })}
+            className={cn({ 'line-through': !!completedAt })}
           >
             {format(new Date(dueAt), 'H:mm')}
-          </Text>
+          </Heading>
           {completedAt && (
-            <Text
+            <Heading
               variant="muted"
-              font="lineSeed"
-              className={cn('flex items-center gap-1 font-bold', {
+              className={cn('flex items-center gap-1', {
                 'text-error': isBefore(new Date(dueAt), new Date(completedAt)),
                 'text-success': isAfter(new Date(dueAt), new Date(completedAt)),
               })}
             >
               <CheckIcon className="size-4" />
               {format(new Date(completedAt), 'H:mm')}
-            </Text>
+            </Heading>
           )}
         </div>
       </CardContent>

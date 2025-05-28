@@ -8,3 +8,13 @@ export const DATETIME_DATA_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 export const DATE_DATA_FORMAT = 'yyyy-MM-dd';
 export const DATE_DATA_REGEX = /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})$/;
 export const DATE_DISPLAY_FORMAT = 'yyyy年M月d日';
+
+export const CUSTOM_COLORS = new Map([
+  [1, 'green'],
+  [2, 'yellow'],
+  [3, 'red'],
+  [4, 'pink'],
+  [5, 'purple'],
+  [6, 'blue'],
+  [7, 'cyan'],
+]);

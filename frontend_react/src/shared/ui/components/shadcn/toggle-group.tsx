@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/shared/lib/utils';
 import { toggleVariants } from '@/shared/ui/components/shadcn/toggle';
 import * as React from 'react';
@@ -25,7 +27,7 @@ function ToggleGroup({
       data-variant={variant}
       data-size={size}
       className={cn(
-        'group/toggle-group flex w-fit flex-wrap items-center gap-1.5 rounded-md data-[variant=outline]:shadow-xs',
+        'group/toggle-group flex w-fit items-center gap-2 rounded-md',
         className
       )}
       {...props}
@@ -57,7 +59,7 @@ function ToggleGroupItem({
           variant: context.variant || variant,
           size: context.size || size,
         }),
-        'min-w-0 flex-shrink-0 flex-grow-0 rounded-full px-4 py-[7px] font-bold shadow-none focus:z-10 focus-visible:z-10 data-[variant=outline]:border-l-0 data-[variant=outline]:first:border-l',
+        'min-w-0 flex-1 shrink-0 focus:z-10 focus-visible:z-10',
         className
       )}
       {...props}

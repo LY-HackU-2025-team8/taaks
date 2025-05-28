@@ -2,7 +2,7 @@ import { cn } from '@/shared/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-export const textVariants = cva('font-normal', {
+export const textVariants = cva('font-body', {
   variants: {
     variant: {
       default: '',
@@ -24,16 +24,15 @@ export const textVariants = cva('font-normal', {
       '3xl': 'text-3xl',
       '4xl': 'text-4xl',
     },
-    font: {
-      default: 'font-body',
-      lineSeed: 'font-line-seed',
-      notoSans: 'font-noto-sans',
+    weight: {
+      normal: 'font-normal',
+      bold: 'font-bold',
     },
   },
   defaultVariants: {
     variant: 'default',
     size: 'base',
-    font: 'default',
+    weight: 'normal',
   },
 });
 
@@ -45,7 +44,7 @@ export const Text = ({
   className,
   variant,
   size,
-  font,
+  weight,
   asChild,
   ...props
 }: TextProps) => {
@@ -54,7 +53,7 @@ export const Text = ({
   return (
     <Comp
       data-slot="text"
-      className={cn(textVariants({ variant, size, font }), className)}
+      className={cn(textVariants({ variant, size, weight, className }))}
       {...props}
     />
   );
