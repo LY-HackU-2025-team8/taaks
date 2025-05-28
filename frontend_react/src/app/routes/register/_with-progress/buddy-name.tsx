@@ -10,10 +10,10 @@ import {
   FormControl,
 } from '@/shared/ui/components/shadcn/form';
 import { useFormContext } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 import { registerBuddyFormSchema } from '../../register';
-import { useQueryClient } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/register/_with-progress/buddy-name')({
   component: RouteComponent,
@@ -36,12 +36,11 @@ function RouteComponent() {
       },
       {
         onSuccess: () => {
-
           // キャッシュを無効化して最新のデータを取得
           queryClient.invalidateQueries({
             queryKey: ['get', '/buddy'],
           });
-          
+
           navigate({ to: '/dashboard' });
         },
       }
