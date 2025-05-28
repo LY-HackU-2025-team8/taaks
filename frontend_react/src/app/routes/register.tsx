@@ -67,7 +67,7 @@ function RouteComponent() {
   });
 
   return (
-    <div className="bg-background flex min-h-screen flex-col">
+    <div className="bg-background flex min-h-screen flex-col pb-[calc(env(safe-area-inset-bottom)+6rem)]">
       <div className="flex items-center justify-center p-3.5">
         <BuddyHeader className="w-42.75" />
       </div>

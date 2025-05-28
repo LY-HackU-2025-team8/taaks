@@ -25,7 +25,7 @@ export const DashboardBuddy = () => {
           <Link to="/buddy">{buddy?.name}に会う</Link>
         </Button>
       </div>
-      <div className="flex h-72 w-full flex-col pointer-events-none">
+      <div className="pointer-events-none flex h-72 w-full flex-col">
         <RiveBuddy
           className="absolute -top-16 -right-18 size-96 mask-b-from-60% mask-b-to-100%"
           motionId={1}

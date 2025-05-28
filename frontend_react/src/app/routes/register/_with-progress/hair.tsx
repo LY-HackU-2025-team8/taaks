@@ -36,7 +36,7 @@ function RouteComponent() {
       {/* <ProgressBar className="mt-4 h-12 w-full" progress={1} /> */}
       <form
         onSubmit={handleSubmit}
-        className="mb-22 flex flex-1 flex-col justify-center px-3"
+        className="flex flex-1 flex-col justify-center px-3"
       >
         <BuddyPreview
           hairStyleId={form.watch('hairStyleId') ?? 1}

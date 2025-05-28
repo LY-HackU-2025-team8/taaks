@@ -37,7 +37,7 @@ function RouteComponent() {
     <>
       <form
         onSubmit={handleSubmit}
-        className="mb-22 flex flex-1 flex-col justify-center px-3"
+        className="flex flex-1 flex-col justify-center px-3"
       >
         <div className="flex items-center justify-center p-3.5">
           {/* {(() => {

@@ -12,7 +12,7 @@ export const RegisterNavigation = ({
   disabled = false,
 }: NavigationProps) => {
   return (
-    <nav className="text-muted fixed right-2 bottom-3.5 left-2 z-20 mb-[env(safe-area-inset-bottom)]">
+    <nav className="text-muted fixed right-2 bottom-[max(env(safe-area-inset-bottom),0.875rem)] left-2 z-20 mb-[env(safe-area-inset-bottom)]">
       <ul className="flex h-16 items-center justify-around gap-2">
         <li className="contents">
           <Button asChild className="bg-primary size-16 rounded-xl">
