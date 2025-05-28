@@ -61,14 +61,14 @@ function RouteComponent() {
                     if (value) field.onChange(Number(value));
                   }}
                 >
-                  {clothesOptions.map((item) => (
+                  {clothesOptions.map(({ value, icon: Icon, name }) => (
                     <ToggleGroupItem
-                      key={item.value}
-                      value={item.value}
-                      className="flex h-[8.625rem] w-[6.6875rem] flex-col items-center justify-center rounded-2xl border-2"
+                      key={value}
+                      value={value}
+                      className="flex h-34.5 w-27 flex-col items-center justify-center rounded-2xl border-2"
                     >
-                      <item.icon className="size-18" />
-                      <span className="mt-2">{item.name}</span>
+                      <Icon className="size-18" />
+                      <span className="mt-2">{name}</span>
                     </ToggleGroupItem>
                   ))}
                 </ToggleGroup>
