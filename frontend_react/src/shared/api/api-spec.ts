@@ -171,7 +171,11 @@ export interface paths {
         get: operations["getTaskDetail"];
         put: operations["updateTask"];
         post?: never;
-        delete?: never;
+        /**
+         * タスクの削除
+         * @description 指定したIDのタスクを削除します。
+         */
+        delete: operations["deleteTask"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1056,6 +1060,35 @@ export interface operations {
                 content: {
                     "*/*": components["schemas"]["TaskResponse"];
                 };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    deleteTask: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                taskId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 削除成功（No Content） */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description exception */
             default: {

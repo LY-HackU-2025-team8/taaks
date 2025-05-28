@@ -498,6 +498,28 @@ paths:
       tags:
       - task-controller
   /tasks/{taskId}:
+    delete:
+      description: 指定したIDのタスクを削除します。
+      operationId: deleteTask
+      parameters:
+      - in: path
+        name: taskId
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "204":
+          description: 削除成功（No Content）
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      summary: タスクの削除
+      tags:
+      - task-controller
     get:
       operationId: getTaskDetail
       parameters:
