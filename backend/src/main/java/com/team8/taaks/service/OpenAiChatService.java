@@ -12,11 +12,15 @@ import com.team8.taaks.controller.OpenAiApiException;
 import com.team8.taaks.dto.LlmResponse;
 
 public class OpenAiChatService implements ChatService {
-  // 3つの環境変数が必要：OPENAI_API_KEY, OPENAI_ORG_ID, OPENAI_PROJECT_ID
-  // 値自体はダミーでも動く
-  private final OpenAIClient client = OpenAIOkHttpClient.fromEnv();
-
   public int calcLoadScore(String prompt) {
+    OpenAIClient client;
+    try {
+      // 3つの環境変数が必要：OPENAI_API_KEY, OPENAI_ORG_ID, OPENAI_PROJECT_ID
+      // 値自体はダミーでも動く
+      client = OpenAIOkHttpClient.fromEnv();
+    } catch (Exception e) {
+      throw new RuntimeException("Failed to initialize OpenAI client", e);
+    }
     StructuredResponseCreateParams<LlmResponse> params =
         ResponseCreateParams.builder()
             .input(prompt)
