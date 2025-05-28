@@ -3,7 +3,7 @@
 import { cn } from '@/shared/lib/utils';
 import * as React from 'react';
 
-export type DatePickerProps = React.ComponentProps<'input'> & {
+type DatePickerProps = React.ComponentProps<'input'> & {
   /** 時刻を選択させるか */
   withTime?: boolean;
 };

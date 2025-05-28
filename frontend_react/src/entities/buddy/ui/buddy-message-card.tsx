@@ -6,13 +6,11 @@ import {
   CardHeader,
 } from '@/shared/ui/components/shadcn/card';
 
-export type BuddyMessageCardProps = React.ComponentProps<typeof Card>;
-
 /** Buddyからのメッセージとして描画されるカード */
 export const BuddyMessageCard = ({
   className,
   ...props
-}: BuddyMessageCardProps) => {
+}: React.ComponentProps<typeof Card>) => {
   return (
     <Card
       data-slot="buddy-message-card"

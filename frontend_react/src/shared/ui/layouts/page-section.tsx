@@ -1,7 +1,7 @@
 import { cn } from '@/shared/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 
-export type PageSectionProps = React.ComponentProps<'section'> & {
+type PageSectionProps = React.ComponentProps<'section'> & {
   asChild?: boolean;
 };
 

@@ -1,4 +1,5 @@
 import { cn } from '@/shared/lib/utils';
+import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import {
   Card,
   CardContent,
@@ -11,7 +12,7 @@ import { Skeleton } from '@/shared/ui/components/shadcn/skeleton';
 export const TaskCardSkeleton = ({
   className,
   ...props
-}: React.ComponentProps<typeof Card>) => {
+}: ComponentPropsWithoutChildren<typeof Card>) => {
   return (
     <Card className={cn('relative rounded-2xl pl-16', className)} {...props}>
       <div className="absolute top-3.5 bottom-3.5 left-0 flex w-16 flex-col items-end border-r px-3.5">

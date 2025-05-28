@@ -1,5 +1,5 @@
 import { $api } from '@/shared/api/openapi-fetch';
-import { DATETIME_DATA_FORMAT } from '@/shared/constant';
+import { DATETIME_DATA_FORMAT } from '@/shared/constants';
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';

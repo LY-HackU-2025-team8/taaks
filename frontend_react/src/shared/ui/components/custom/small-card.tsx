@@ -1,4 +1,4 @@
-import { CLIPING_PATH } from '@/shared/constant';
+import { TASK_CARD_SMALL_PATH } from '@/shared/constants';
 import { RiveCheckButton } from '@/shared/ui/components/custom/rive-check-button';
 import { useState, useCallback } from 'react';
 import { Edit, MoreHorizontal } from 'lucide-react';
@@ -35,7 +35,7 @@ export const SmallCard = ({ title, deadline }: SmallCardProps) => {
       <div
         className="bg-card relative z-0 flex h-38.75 w-44.75"
         style={{
-          clipPath: `path("${CLIPING_PATH}")`,
+          clipPath: `path("${TASK_CARD_SMALL_PATH}")`,
         }}
       >
         <div className="z-1 p-3">
