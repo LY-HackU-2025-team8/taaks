@@ -25,7 +25,7 @@ export const useEditTask = (taskId: number) => {
 
   /**
    * タスクを編集する関数
-   * @params TanstackQueryのmutateのoptions
+   * @param TanstackQueryのmutateのoptions
    * @return taskFormSchemaのdataを受け取るコールバック
    */
   const editTask = useCallback(
