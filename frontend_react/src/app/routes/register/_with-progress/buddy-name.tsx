@@ -35,10 +35,7 @@ function RouteComponent() {
       {
         onSuccess: () => {
           // キャッシュを無効化して最新のデータを取得
-          queryClient.invalidateQueries({
-            queryKey: ['get', '/buddy'],
-          });
-
+          queryClient.invalidateQueries($api.queryOptions('get', '/buddy'));
           navigate({ to: '/dashboard' });
         },
       }
