@@ -31,7 +31,7 @@ export const useEditTask = (taskId: number) => {
   const editTask = useCallback(
     (options?: Parameters<typeof mutate>[1]) =>
       (data: z.infer<typeof taskFormSchema>) => {
-        // DateTimeをサーバーが会社機できる形にフォーマット
+        // DateTimeをサーバーが受け付ける形にフォーマット
         const dueAt = format(data.dueAt, DATETIME_DATA_FORMAT);
         const completedAt = data.completedAt
           ? format(data.completedAt, DATETIME_DATA_FORMAT)
