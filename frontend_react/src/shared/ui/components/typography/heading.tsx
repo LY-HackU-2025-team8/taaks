@@ -2,7 +2,7 @@ import { cn } from '@/shared/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-export const headingVariants = cva('font-bold', {
+export const headingVariants = cva('font-heading', {
   variants: {
     variant: {
       default: '',
@@ -24,16 +24,15 @@ export const headingVariants = cva('font-bold', {
       '3xl': 'text-3xl',
       '4xl': 'text-4xl',
     },
-    font: {
-      default: 'font-heading',
-      lineSeed: 'font-line-seed',
-      notoSans: 'font-noto-sans',
+    weight: {
+      normal: 'font-normal',
+      bold: 'font-bold',
     },
   },
   defaultVariants: {
     variant: 'default',
     size: 'base',
-    font: 'default',
+    weight: 'bold',
   },
 });
 
@@ -47,7 +46,7 @@ export const Heading = ({
   className,
   variant,
   size,
-  font,
+  weight,
   asChild,
   ...props
 }: TextProps) => {
@@ -56,7 +55,7 @@ export const Heading = ({
   return (
     <Comp
       data-slot="heading"
-      className={cn(headingVariants({ variant, size, font }), className)}
+      className={cn(headingVariants({ variant, size, weight, className }))}
       {...props}
     />
   );
