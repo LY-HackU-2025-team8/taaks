@@ -3,6 +3,7 @@ import {
   hairOptions,
   clothesOptions,
 } from '@/features/create-buddy/constants/registerOptions';
+import { BuddyHeader } from '@/features/create-buddy/icons/buddy-header';
 import { Form } from '@/shared/ui/components/shadcn/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,8 +14,11 @@ import { z } from 'zod';
 import { redirectUnlessLoggedIn } from '../api/require-login';
 =======
 import { checkLogin } from '../api/check-login';
+<<<<<<< HEAD
 import { BuddyHeader } from '@/features/create-buddy/icons/buddy-header';
 >>>>>>> 33b2e50 (レビュー内容の修正)
+=======
+>>>>>>> 81cb929 (applied format)
 
 export const Route = createFileRoute('/register')({
   beforeLoad: async ({ context: { queryClient } }) => {
@@ -85,7 +89,7 @@ function RouteComponent() {
   return (
     <div className="bg-background flex min-h-screen flex-col">
       <div className="flex items-center justify-center p-3.5">
-        <BuddyHeader className="w-42.75"/>
+        <BuddyHeader className="w-42.75" />
       </div>
       <Form {...form}>
         <Outlet />
