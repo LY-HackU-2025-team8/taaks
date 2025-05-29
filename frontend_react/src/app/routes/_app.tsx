@@ -12,26 +12,15 @@ export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) => {
     await redirectUnlessLoggedIn(queryClient, { to: '/login' });
   },
-  loader: async ({ context: { queryClient } }) => {
-    return {
-      buddy: await queryClient.fetchQuery($api.queryOptions('get', '/buddy')),
-    };
-  },
   component: RouteComponent,
   pendingComponent: Loading,
 });
 
-const colorThemes = [
-  'default', // ユーザーが選択する前
-  ...CUSTOM_COLORS.values(),
-];
-
 function RouteComponent() {
   const [hidden, setHidden] = useState(true);
   const { setTheme } = useTheme();
-  const {
-    buddy: { colorId },
-  } = Route.useLoaderData();
+  const { data: buddy } = $api.useQuery('get', '/buddy');
+  const colorId = buddy?.colorId;
 
   /** AppNavを非表示にする */
   const showAppNav = useCallback(() => {
@@ -45,7 +34,7 @@ function RouteComponent() {
 
   useEffect(() => {
     // ユーザーが選択した色に応じてテーマを設定
-    if (colorId) {
+    if (colorId !== undefined) {
       setTheme(CUSTOM_COLORS.get(colorId) || 'default');
     } else {
       setTheme('default'); // デフォルトテーマ
@@ -53,20 +42,14 @@ function RouteComponent() {
   }, [colorId, setTheme]);
 
   return (
-    <ThemeProvider
-      attribute="class"
-      themes={colorThemes}
-      defaultTheme="default"
+    <AppNavContext
+      value={{
+        showAppNav,
+        hideAppNav,
+      }}
     >
-      <AppNavContext
-        value={{
-          showAppNav,
-          hideAppNav,
-        }}
-      >
-        <Outlet />
-        <AppNav hidden={hidden} />
-      </AppNavContext>
-    </ThemeProvider>
+      <Outlet />
+      <AppNav hidden={hidden} />
+    </AppNavContext>
   );
 }
