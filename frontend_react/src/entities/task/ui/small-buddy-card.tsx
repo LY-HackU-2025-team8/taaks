@@ -10,6 +10,7 @@ import {
 } from '@/shared/ui/components/shadcn/card';
 import { Heading } from '@/shared/ui/components/typography/heading';
 import { useCallback, useState } from 'react';
+import { Link } from '@tanstack/react-router';
 import { taskFormSchema } from '../api/task-form-schema';
 import type { TaskResponseModel } from '../api/task-model';
 import { useCreateTask } from '../api/use-create-task';
@@ -26,11 +27,16 @@ export const TaskCardSmallBuddy = ({
 }: TaskCardSmallBuddyProps) => {
   const { createTask, isPending } = useCreateTask();
   const [added, setAdded] = useState(false);
+  const [createdTask, setCreatedTask] = useState<TaskResponseModel>();
 
   /** タスクを追加する */
   const handleAdd = useCallback(() => {
     setAdded(true);
-    createTask()(taskFormSchema.parse(task));
+    createTask({
+      onSuccess: (task) => {
+        setCreatedTask(task);
+      },
+    })(taskFormSchema.parse(task));
   }, [createTask, task]);
 
   return (
@@ -40,11 +46,18 @@ export const TaskCardSmallBuddy = ({
       {...props}
     >
       <Card
-        className="from-buddy-blue via-buddy-green to-buddy-yellow relative h-38.75 w-44.75 bg-gradient-to-br"
+        className="from-buddy-blue via-buddy-green to-buddy-yellow relative h-38.75 w-44.75 bg-gradient-to-br [&_button]:relative [&_button]:z-1"
         style={{
           clipPath: `path("${TASK_CARD_SMALL_PATH}")`,
         }}
       >
+        {createdTask && (
+          <Link
+            to="/todo/$taskId"
+            params={{ taskId: createdTask.id }}
+            className="absolute inset-0"
+          />
+        )}
         <CardHeader>
           <CardDescription className="font-line-seed text-primary-foreground w-20 text-sm font-bold break-keep">
             Buddyからの
