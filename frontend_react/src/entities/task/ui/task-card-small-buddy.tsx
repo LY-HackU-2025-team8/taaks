@@ -66,7 +66,9 @@ export const TaskCardSmallBuddy = ({
           </CardDescription>
         </CardHeader>
         <CardContent className="flex-1">
-          <Heading variant="primary">{task.title}</Heading>
+          <Heading variant="primary" className="line-clamp-3">
+            {task.title}
+          </Heading>
         </CardContent>
       </Card>
 

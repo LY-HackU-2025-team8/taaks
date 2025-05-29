@@ -88,7 +88,7 @@ export const TaskCardSmall = ({
           </CardDescription>
         </CardHeader>
         <CardContent className="flex-1">
-          <Heading>{task.title}</Heading>
+          <Heading className="line-clamp-3">{task.title}</Heading>
         </CardContent>
         <CardFooter className="justify-between">
           <Heading variant="muted" size="sm">
