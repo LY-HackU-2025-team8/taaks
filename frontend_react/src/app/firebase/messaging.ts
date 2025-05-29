@@ -13,7 +13,10 @@ export const requestFirebaseMessagingPermission = async () => {
     return token;
   } catch (error) {
     console.error('Failed to get Firebase messaging token', error);
-    throw new Error('Failed to get Firebase messaging token: ' + (error instanceof Error ? error.message : String(error)));
+    throw new Error(
+      'Failed to get Firebase messaging token: ' +
+        (error instanceof Error ? error.message : String(error))
+    );
   }
 };
 
