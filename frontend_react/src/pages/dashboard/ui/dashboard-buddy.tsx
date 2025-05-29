@@ -7,7 +7,7 @@ import { Link } from '@tanstack/react-router';
 
 /** ダッシュボード上部のBuddy */
 export const DashboardBuddy = () => {
-  const { data: buddy } = $api.useQuery('get', '/buddy');
+  const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
 
   // 時間帯に応じて挨拶を変更する
   const date = useCurrentDate({ timeResolution: 'hour' });
