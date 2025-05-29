@@ -5,7 +5,7 @@ import { AppNavContext } from '@/shared/ui/layouts/app-nav-context';
 import { Loading } from '@/shared/ui/layouts/loading';
 import { useCallback, useEffect, useState } from 'react';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { ThemeProvider, useTheme } from 'next-themes';
+import { useTheme } from 'next-themes';
 import { redirectUnlessLoggedIn } from '../api/require-login';
 
 export const Route = createFileRoute('/_app')({
