@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from '@/shared/ui/components/shadcn/card';
 import { Heading } from '@/shared/ui/components/typography/heading';
+import { Link } from '@tanstack/react-router';
 import { format, isAfter, isBefore } from 'date-fns';
 import { CheckIcon } from 'lucide-react';
 import type { TaskResponseModel } from '../api/task-model';
@@ -18,38 +19,46 @@ type TaskCardSummaryProps = ComponentPropsWithoutChildren<typeof Card> & {
 };
 
 export const TaskCardSummary = ({
-  task: { dueAt, completedAt, title, memo },
+  task: { id, dueAt, completedAt, title, memo },
   className,
   ...props
 }: TaskCardSummaryProps) => {
   return (
-    <Card className={cn('min-w-80 gap-1', className)} {...props}>
-      <CardContent>
-        <div className="flex items-center gap-2">
-          <Heading
-            variant="muted"
-            className={cn({ 'line-through': !!completedAt })}
-          >
-            {format(new Date(dueAt), 'H:mm')}
-          </Heading>
-          {completedAt && (
+    <Link to="/todo/$taskId" params={{ taskId: id }}>
+      <Card className={cn('min-w-80 gap-1', className)} {...props}>
+        <CardContent>
+          <div className="flex items-center gap-2">
             <Heading
               variant="muted"
-              className={cn('flex items-center gap-1', {
-                'text-error': isBefore(new Date(dueAt), new Date(completedAt)),
-                'text-success': isAfter(new Date(dueAt), new Date(completedAt)),
-              })}
+              className={cn({ 'line-through': !!completedAt })}
             >
-              <CheckIcon className="size-4" />
-              {format(new Date(completedAt), 'H:mm')}
+              {format(new Date(dueAt), 'H:mm')}
             </Heading>
-          )}
-        </div>
-      </CardContent>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription className="line-clamp-1">{memo}</CardDescription>
-      </CardHeader>
-    </Card>
+            {completedAt && (
+              <Heading
+                variant="muted"
+                className={cn('flex items-center gap-1', {
+                  'text-error': isBefore(
+                    new Date(dueAt),
+                    new Date(completedAt)
+                  ),
+                  'text-success': isAfter(
+                    new Date(dueAt),
+                    new Date(completedAt)
+                  ),
+                })}
+              >
+                <CheckIcon className="size-4" />
+                {format(new Date(completedAt), 'H:mm')}
+              </Heading>
+            )}
+          </div>
+        </CardContent>
+        <CardHeader>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription className="line-clamp-1">{memo}</CardDescription>
+        </CardHeader>
+      </Card>
+    </Link>
   );
 };
