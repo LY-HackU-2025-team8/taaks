@@ -42,8 +42,14 @@ export const RiveCheckButton = ({
   );
 
   useEffect(() => {
-    if (input) {
-      input.value = Number(done);
+    try {
+      if (input) {
+        input.value = Number(done);
+      }
+    } catch {
+      // エラーの握りつぶし
+      // 良い子のみんなは真似しないでね！
+      void 0;
     }
   }, [input, done]);
 

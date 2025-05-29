@@ -30,7 +30,10 @@ export const useEditDiary = (diaryId: number) => {
    * @return taskFormSchemaのdataを受け取るコールバック
    */
   const editDiary = useCallback(
-    (options?: Parameters<typeof mutateAsync>[1]) =>
+    (
+      options?: Parameters<typeof mutateAsync>[1],
+      toastOptions?: Parameters<typeof toast.promise>[1]
+    ) =>
       (data: z.infer<typeof diaryFormSchema>) => {
         // DateTimeをサーバーが受け付ける形式にフォーマット
         const date = format(data.date, DATE_DATA_FORMAT);
@@ -52,6 +55,7 @@ export const useEditDiary = (diaryId: number) => {
             error: (err) => {
               return err.message || '日記の更新に失敗しました。';
             },
+            ...toastOptions,
           }
         );
       },

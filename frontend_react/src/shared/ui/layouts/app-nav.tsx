@@ -1,6 +1,6 @@
 import { AddTaskDrawer } from '@/entities/task/ui/add-task-drawer';
 import { cn } from '@/shared/lib/utils';
-import { RiveIcon } from '@/shared/ui/components/custom/rive-icon';
+import { RiveIcon } from '@/shared/ui/components/rive/rive-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';

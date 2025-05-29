@@ -78,7 +78,7 @@ if (rootElement && !rootElement.innerHTML) {
             themes={colorThemes}
             defaultTheme="default"
           >
-            <RouterProvider router={router} />Ø
+            <RouterProvider router={router} />
           </ThemeProvider>
         </QueryErrorResetBoundary>
       </QueryClientProvider>

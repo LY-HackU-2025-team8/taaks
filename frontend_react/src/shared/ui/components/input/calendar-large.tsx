@@ -16,10 +16,10 @@ export const CalendarLarge = ({
         weekday:
           'text-sm uppercase font-bold font-line-seed first:text-red-700 last:text-blue-700 pb-1',
         week: 'contents',
-        day: 'rounded-[19px] flex flex-col items-center justify-center p-1.5 -m-0.5',
+        day: 'text-foreground rounded-[19px] flex flex-col items-center justify-center p-1.5 -m-0.5',
         day_button:
           'aspect-square max-h-12 bg-background rounded-lg w-full h-full font-bold font-line-seed',
-        selected: 'text-foreground bg-primary/20',
+        selected: 'bg-primary/20',
         today: '',
         button_next:
           'bg-custom-foreground/10 hover:bg-custom-foreground/15 size-7 rounded-sm flex items-center justify-center transition-all',

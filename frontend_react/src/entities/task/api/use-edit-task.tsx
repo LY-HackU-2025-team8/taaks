@@ -12,13 +12,24 @@ export const useEditTask = (taskId: number) => {
   const queryClient = useQueryClient();
   const { mutateAsync, ...rest } = $api.useMutation('put', '/tasks/{taskId}', {
     // なんらかのエラーが発生してもタスクが更新される場合があるのでonSettledを使用
-    onSettled: () => {
+    onSettled: (data) => {
       // タスク一覧のキャッシュを破棄
       queryClient.invalidateQueries($api.queryOptions('get', '/tasks'));
       // タスクの詳細のキャッシュを破棄
       queryClient.invalidateQueries(
         $api.queryOptions('get', '/tasks/{taskId}', {
           params: { path: { taskId } },
+        })
+      );
+      // 今日の進捗のキャッシュを破棄
+      queryClient.invalidateQueries($api.queryOptions('get', '/days/today'));
+      queryClient.invalidateQueries(
+        $api.queryOptions('get', '/days/{day}', {
+          params: {
+            path: {
+              day: format(new Date(data?.dueAt || Date.now()), 'yyyy-MM-dd'),
+            },
+          },
         })
       );
     },
@@ -30,7 +41,10 @@ export const useEditTask = (taskId: number) => {
    * @return taskFormSchemaのdataを受け取るコールバック
    */
   const editTask = useCallback(
-    (options?: Parameters<typeof mutateAsync>[1]) =>
+    (
+      options?: Parameters<typeof mutateAsync>[1],
+      toastOptions?: Parameters<typeof toast.promise>[1]
+    ) =>
       (data: z.infer<typeof taskFormSchema>) => {
         // DateTimeをサーバーが受け付ける形にフォーマット
         const dueAt = format(data.dueAt, DATETIME_DATA_FORMAT);
@@ -56,6 +70,7 @@ export const useEditTask = (taskId: number) => {
             error: (err) => {
               return err.message || 'タスクの更新に失敗しました。';
             },
+            ...toastOptions,
           }
         );
       },

@@ -73,7 +73,7 @@ export const DiaryContentCard = ({ date, ...props }: DiaryContentCardProps) => {
             <Text className="text-sm">こなしたタスク数</Text>
             <Text className="text-sm">負荷スコア</Text>
             <Text className="font-line-seed text-3xl font-bold">
-              {stats.uncompletedTaskCount}
+              {stats.completedTaskCount}
             </Text>
             <Text className="font-line-seed text-3xl font-bold">
               {stats.loadScore}

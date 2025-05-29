@@ -17,7 +17,17 @@ export const useCreateTask = () => {
     onSettled: (data) => {
       // タスク一覧のキャッシュを破棄
       queryClient.invalidateQueries($api.queryOptions('get', '/tasks'));
-      return data;
+      // 今日の進捗のキャッシュを破棄
+      queryClient.invalidateQueries($api.queryOptions('get', '/days/today'));
+      queryClient.invalidateQueries(
+        $api.queryOptions('get', '/days/{day}', {
+          params: {
+            path: {
+              day: format(new Date(data?.dueAt || Date.now()), 'yyyy-MM-dd'),
+            },
+          },
+        })
+      );
     },
   });
   const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
@@ -28,7 +38,10 @@ export const useCreateTask = () => {
    * @return taskFormSchemaのdataを受け取るコールバック
    */
   const createTask = useCallback(
-    (options?: Parameters<typeof mutateAsync>[1]) =>
+    (
+      options?: Parameters<typeof mutateAsync>[1],
+      toastOptions?: Parameters<typeof toast.promise>[1]
+    ) =>
       (data: z.infer<typeof taskFormSchema>) => {
         // DateTimeをサーバーが受け付ける形式にフォーマット
         const dueAt = format(data.dueAt, DATETIME_DATA_FORMAT);
@@ -64,6 +77,7 @@ export const useCreateTask = () => {
             error: (err) => {
               return err.message || 'タスクの登録に失敗しました。';
             },
+            ...toastOptions,
           }
         );
       },

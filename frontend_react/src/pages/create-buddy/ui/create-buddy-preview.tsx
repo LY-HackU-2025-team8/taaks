@@ -1,6 +1,6 @@
 import { CUSTOM_COLORS } from '@/shared/constants';
 import { cn } from '@/shared/lib/utils';
-import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
+import { RiveBuddy } from '@/shared/ui/components/rive/rive-buddy';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const createBuddyPreviewVariants = cva('absolute transition-all', {

@@ -1,4 +1,3 @@
-import { TaskCardSkeleton } from '@/entities/task/ui/task-card-skeleton';
 import { TaskVerticalStack } from '@/entities/task/ui/task-vertical-stack';
 import { filterTodayTasks } from '@/shared/api/filter-today';
 import { getNextPageParam } from '@/shared/api/get-next-page-param';
@@ -6,6 +5,7 @@ import { $api } from '@/shared/api/openapi-fetch';
 import { DATE_DISPLAY_FORMAT } from '@/shared/constants';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
 import type { ComponentPropsWithoutChildren } from '@/shared/types';
+import { Button } from '@/shared/ui/components/shadcn/button';
 import { Text } from '@/shared/ui/components/typography/text';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
@@ -23,7 +23,7 @@ type TodoPendingTasksProps = ComponentPropsWithoutChildren<
  */
 export const TodoPendingTasks = ({ date, ...props }: TodoPendingTasksProps) => {
   const currentDate = useCurrentDate({ timeResolution: 'day' });
-  const { data, isLoading } = $api.useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage } = $api.useInfiniteQuery(
     'get',
     '/tasks',
     {
@@ -32,6 +32,7 @@ export const TodoPendingTasks = ({ date, ...props }: TodoPendingTasksProps) => {
           ...filterTodayTasks(date),
           isCompleted_eq: false,
           sort: ['dueAt,asc'],
+          size: 6, // 一度に取得するタスクの数
         },
       },
     },
@@ -51,12 +52,20 @@ export const TodoPendingTasks = ({ date, ...props }: TodoPendingTasksProps) => {
       <PageSectionTitle>
         {isToday ? '今日' : format(date, DATE_DISPLAY_FORMAT)}のタスク
       </PageSectionTitle>
-      {isLoading ? (
-        [...Array(10)].map((_, i) => <TaskCardSkeleton key={i} />)
-      ) : !tasks.length ? (
+      {!tasks.length ? (
         <Text variant="muted">タスクはありません</Text>
       ) : (
-        <TaskVerticalStack tasks={tasks} />
+        <TaskVerticalStack tasks={tasks}>
+          {hasNextPage && (
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => fetchNextPage()}
+            >
+              もっと見る
+            </Button>
+          )}
+        </TaskVerticalStack>
       )}
     </PageSection>
   );

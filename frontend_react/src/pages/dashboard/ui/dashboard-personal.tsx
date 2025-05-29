@@ -1,4 +1,4 @@
-import { TaskLoadScoreCard } from '@/features/task-load-score/task-load-score-card';
+import { TaskLoadScoreCard } from '@/features/task-load-score/ui/task-load-score-card';
 import { $api } from '@/shared/api/openapi-fetch';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
@@ -9,7 +9,7 @@ export const DashboardPersonal = () => {
   return (
     <PageSection>
       <PageSectionTitle>パーソナル</PageSectionTitle>
-      <TaskLoadScoreCard loadScore={data?.loadScore} />
+      <TaskLoadScoreCard loadScore={data.loadScore || 0} />
     </PageSection>
   );
 };
