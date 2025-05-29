@@ -14,7 +14,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 
-export const Route = createFileRoute('/create-buddy/_with-progress/buddy-name')(
+export const Route = createFileRoute('/_app/create-buddy/_with-progress/buddy-name')(
   {
     component: RouteComponent,
   }

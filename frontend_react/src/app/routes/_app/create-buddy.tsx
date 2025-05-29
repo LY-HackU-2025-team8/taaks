@@ -5,16 +5,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { z } from 'zod';
-import { redirectUnlessLoggedIn } from '../api/require-login';
 
-export const Route = createFileRoute('/create-buddy')({
+export const Route = createFileRoute('/_app/create-buddy')({
   context: ({ context }) => ({
     ...context,
     htmlClassName: cn(context.htmlClassName, 'bg-background'),
   }),
-  beforeLoad: async ({ context: { queryClient } }) => {
-    await redirectUnlessLoggedIn(queryClient, { to: '/login' });
-  },
   component: RouteComponent,
 });
 
