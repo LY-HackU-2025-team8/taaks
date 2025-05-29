@@ -46,12 +46,12 @@ function RouteComponent() {
   return (
     <form onSubmit={handleSubmit} className="contents">
       <Heading size="lg">Buddyの名前</Heading>
-      <div className="mb-auto h-36 py-2">
+      <div className="mb-auto py-3.5">
         <FormField
           control={form.control}
           name={inputName}
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="h-36">
               <FormControl>
                 <Input
                   placeholder="Buddy"

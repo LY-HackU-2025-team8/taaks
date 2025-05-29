@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
 
-type RiveBuddyProps = {
-  /** クラス名 */
-  className?: string;
+type RiveBuddyProps = React.ComponentProps<'canvas'> & {
   /** 顔のパーツのID */
   faceId?: number;
   /** 服のパーツのID */
@@ -15,11 +13,11 @@ type RiveBuddyProps = {
 };
 
 export const RiveBuddy = ({
-  className = '',
   faceId = 3,
   clothesId = 2,
   hairId = 1,
   motionId = 0,
+  ...props
 }: RiveBuddyProps) => {
   const STATE_MACHINE_NAME = 'base State Machine ';
 
@@ -52,11 +50,5 @@ export const RiveBuddy = ({
     motionId,
   ]);
 
-  return (
-    <RiveComponent
-      className={className}
-      role="img"
-      aria-label="Buddy Animation"
-    />
-  );
+  return <RiveComponent role="img" aria-label="Buddy Animation" {...props} />;
 };

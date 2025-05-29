@@ -5,10 +5,12 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
 import './fonts.css';
 import './index.css';
+import { ErrorPage } from './pages/error/ui/error-page.tsx';
 import { routeTree } from './route-tree.gen';
 import { CUSTOM_COLORS } from './shared/constants/index.ts';
 import reportWebVitals from './shared/lib/reportWebVitals.ts';
 import { zodConfig } from './shared/lib/zod-config.ts';
+import { Loading } from './shared/ui/layouts/loading.tsx';
 
 // Zodの設定を行う
 zodConfig();
@@ -40,7 +42,10 @@ const router = createRouter({
   defaultPreload: 'intent',
   scrollRestoration: true,
   defaultStructuralSharing: true,
-  defaultPreloadStaleTime: 0,
+  defaultErrorComponent: ErrorPage,
+  defaultPendingComponent: Loading,
+  defaultPendingMs: 100,
+  defaultPendingMinMs: 1000,
 });
 
 // 型安全のために型情報を登録

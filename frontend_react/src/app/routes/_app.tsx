@@ -2,7 +2,6 @@ import { $api } from '@/shared/api/openapi-fetch';
 import { CUSTOM_COLORS } from '@/shared/constants';
 import { AppNav } from '@/shared/ui/layouts/app-nav';
 import { AppNavContext } from '@/shared/ui/layouts/app-nav-context';
-import { Loading } from '@/shared/ui/layouts/loading';
 import { useCallback, useEffect, useState } from 'react';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useTheme } from 'next-themes';
@@ -12,14 +11,14 @@ export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) => {
     await redirectUnlessLoggedIn(queryClient, { to: '/login' });
   },
+
   component: RouteComponent,
-  pendingComponent: Loading,
 });
 
 function RouteComponent() {
   const [hidden, setHidden] = useState(true);
   const { setTheme } = useTheme();
-  const { data: buddy } = $api.useQuery('get', '/buddy');
+  const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
   const colorId = buddy?.colorId;
 
   /** AppNavを非表示にする */
