@@ -31,8 +31,8 @@ public interface TaakTaskRepository
       @Param("end") LocalDateTime end);
 
   @Query(
-      "SELECT COUNT(t) FROM TaakTask t WHERE t.user.id = :userId AND t.completedAt IS NOT NULL AND t.dueAt >= :start AND t.dueAt <= :end")
-  Long countCompletedTasksBetweenDueDates(
+      "SELECT COUNT(t) FROM TaakTask t WHERE t.user.id = :userId AND t.dueAt >= :start AND t.dueAt <= :end")
+  Long countTasksBetweenDueDates(
       @Param("userId") Long userId,
       @Param("start") LocalDateTime start,
       @Param("end") LocalDateTime end);

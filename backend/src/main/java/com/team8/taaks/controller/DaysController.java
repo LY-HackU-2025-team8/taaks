@@ -26,8 +26,8 @@ public class DaysController {
       @AuthenticationPrincipal TaakUser user, @PathVariable("day") LocalDate day) {
     Long loadScore = dayService.getLoadScoreForDay(user, day);
     Long uncompletedTaskCount = dayService.getUncompletedTaskCountForDay(user, day);
-    Long completedTaskCount = dayService.getCompletedTaskCountForDay(user, day);
-    Long taskCount = uncompletedTaskCount + completedTaskCount;
+    Long taskCount = dayService.getTaskCountForDay(user, day);
+    Long completedTaskCount = taskCount - uncompletedTaskCount;
     DayResponse response =
         new DayResponse(day, loadScore, uncompletedTaskCount, completedTaskCount, taskCount);
     return ResponseEntity.ok(response);

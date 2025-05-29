@@ -9,5 +9,7 @@ public interface DayService {
 
   public Long getUncompletedTaskCountForDay(TaakUser user, LocalDate day);
 
+  public Long getTaskCountForDay(TaakUser user, LocalDate day);
+
   public Long getCompletedTaskCountForDay(TaakUser user, LocalDate day);
 }
