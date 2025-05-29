@@ -2,10 +2,8 @@ package com.team8.taaks.controller;
 
 import com.team8.taaks.dto.DayResponse;
 import com.team8.taaks.model.TaakUser;
-import com.team8.taaks.repository.TaakTaskRepository;
+import com.team8.taaks.service.DayService;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,23 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/days")
 public class DaysController {
-  TaakTaskRepository taakTaskRepository;
 
-  public DaysController(TaakTaskRepository taakTaskRepository) {
-    this.taakTaskRepository = taakTaskRepository;
+  private final DayService dayService;
+
+  public DaysController(DayService dayService) {
+    this.dayService = dayService;
   }
 
   @GetMapping("/{day}")
   public ResponseEntity<DayResponse> diarySummary(
       @AuthenticationPrincipal TaakUser user, @PathVariable("day") LocalDate day) {
-    LocalDateTime startOfDay = day.atStartOfDay();
-    LocalDateTime endOfDay = LocalDateTime.of(day, LocalTime.MAX);
-    Long loadScore =
-        taakTaskRepository
-            .sumQuadrupleLoadScoreForCompletedTasksBetweenDueDates(
-                user.getId(), startOfDay, endOfDay)
-            .orElse(0L);
-    DayResponse response = new DayResponse(day, loadScore);
+    Long loadScore = dayService.getLoadScoreForDay(user, day);
+    Long uncompletedTaskCount = dayService.getUncompletedTaskCountForDay(user, day);
+    DayResponse response = new DayResponse(day, loadScore, uncompletedTaskCount);
     return ResponseEntity.ok(response);
   }
 
