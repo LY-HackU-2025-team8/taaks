@@ -11,7 +11,6 @@ export const Route = createFileRoute('/_app/_tab-top-pages/buddy')({
   context: ({ context }) => ({
     ...context,
     htmlClassName: cn(context.htmlClassName, 'bg-custom'),
-    appClassName: cn(context.appClassName, 'bg-custom'),
   }),
   component: RouteComponent,
 });

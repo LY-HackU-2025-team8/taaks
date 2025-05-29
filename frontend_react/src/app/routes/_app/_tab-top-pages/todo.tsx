@@ -30,6 +30,7 @@ export const Route = createFileRoute('/_app/_tab-top-pages/todo')({
   context: ({ context }) => ({
     ...context,
     htmlClassName: cn(context.htmlClassName, 'bg-custom'),
+    appClassName: cn(context.appClassName, 'bg-muted'),
   }),
   component: RouteComponent,
 });
