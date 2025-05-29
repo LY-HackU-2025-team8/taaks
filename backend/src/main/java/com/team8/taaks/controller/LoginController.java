@@ -4,7 +4,7 @@ import com.team8.taaks.dto.LoginRequest;
 import com.team8.taaks.dto.LoginResponse;
 import com.team8.taaks.dto.LoginServiceResponse;
 import com.team8.taaks.dto.UsersResponse;
-import com.team8.taaks.service.LoginSerivce;
+import com.team8.taaks.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-  private final LoginSerivce loginService;
+  private final LoginService loginService;
 
-  public LoginController(LoginSerivce loginService) {
+  public LoginController(LoginService loginService) {
     this.loginService = loginService;
   }
 

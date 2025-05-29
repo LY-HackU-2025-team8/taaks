@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface LoginSerivce {
+public interface LoginService {
   LoginServiceResponse login(
       LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response);
 }

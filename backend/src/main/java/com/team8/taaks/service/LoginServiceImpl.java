@@ -17,7 +17,7 @@ import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginServiceImpl implements LoginSerivce {
+public class LoginServiceImpl implements LoginService {
   private final AuthenticationManager authenticationManager;
   private final SecurityContextRepository securityContextRepository;
   private final SecurityContextHolderStrategy securityContextHolderStrategy;
@@ -44,7 +44,6 @@ public class LoginServiceImpl implements LoginSerivce {
     SecurityContext context = securityContextHolderStrategy.createEmptyContext();
     authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
     context.setAuthentication(authenticationResponse);
-    authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
     if (authenticationResponse.isAuthenticated()) {
       TaakUser user = (TaakUser) authenticationResponse.getPrincipal();
       JwtToken token = jwtTokenUtil.generateToken(user);
