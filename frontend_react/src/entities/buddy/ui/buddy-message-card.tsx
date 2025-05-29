@@ -43,7 +43,10 @@ export const BuddyMessageCardDescription = ({
   return (
     <CardDescription
       data-slot="buddy-message-card-description"
-      className={cn('text-custom-foreground/70', className)}
+      className={cn(
+        'text-custom-foreground/70 font-line-seed font-bold',
+        className
+      )}
       {...props}
     />
   );
