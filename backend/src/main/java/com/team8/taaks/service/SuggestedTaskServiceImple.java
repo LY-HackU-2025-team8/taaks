@@ -1,0 +1,51 @@
+package com.team8.taaks.service;
+
+import com.team8.taaks.dto.TaskResponse;
+import com.team8.taaks.model.TaakUser;
+import com.team8.taaks.repository.TaakTaskRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SuggestedTaskServiceImple implements SuggestedTaskService {
+  private final TaakTaskRepository taakTaskRepository;
+  private final List<List<String>> suggestedTasksList;
+
+  public SuggestedTaskServiceImple(TaakTaskRepository taakTaskRepository) {
+    this.taakTaskRepository = taakTaskRepository;
+    this.suggestedTasksList =
+        List.of(
+            List.of("部屋の一部分を片付ける🧹", "読みたかった本を読む📕", "行きたいと思っていたカフェに行く☕️"),
+            List.of("自炊をしてみよう🍚", "1週間の予定を立てる📅", "デジタルデトックスをする📱"),
+            List.of("気分転換にお散歩する🚶", "机の上を片付ける🪴", "好きな音楽を流す🎧"),
+            List.of("ダッシュボードを活用してタスクを整理する", "1日3食食べる", "タスクの入れ忘れがないか確認する"),
+            List.of("ほっと一息お茶休憩しよう！", "忘れずご飯を食べる", "5秒間目を閉じて目を休めよう！"),
+            List.of("ここまでお疲れ様一旦深呼吸しよう！", "少し立ってストレッチしよう🙆", "入浴剤を買って帰る🛀"));
+  }
+
+  @Override
+  public TaskResponse getSuggestedTasks(TaakUser user) {
+    LocalDateTime startOfToday =
+        LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+    LocalDateTime endOfToday = startOfToday.plusDays(1).minusNanos(1);
+    Long totalLoadScore =
+        taakTaskRepository
+            .sumQuadrupleLoadScoreForCompletedTasksBetweenDueDates(
+                user.getId(), startOfToday, endOfToday)
+            .orElse(0L);
+    int listIndex = Math.min(suggestedTasksList.size() - 1, (int) (totalLoadScore / 10));
+    String title = suggestedTasksList.get(listIndex).get((int) (Math.random() * 3));
+    TaskResponse response =
+        new TaskResponse(
+            -1,
+            title,
+            "suggested task",
+            LocalDateTime.now().plusDays(1),
+            false,
+            null,
+            0,
+            List.of());
+    return response;
+  }
+}
