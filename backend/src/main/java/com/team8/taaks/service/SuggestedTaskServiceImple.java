@@ -35,7 +35,10 @@ public class SuggestedTaskServiceImple implements SuggestedTaskService {
                 user.getId(), startOfToday, endOfToday)
             .orElse(0L);
     int listIndex = Math.min(suggestedTasksList.size() - 1, (int) (totalLoadScore / 10));
-    String title = suggestedTasksList.get(listIndex).get((int) (Math.random() * suggestedTasksList.get(listIndex).size()));
+    String title =
+        suggestedTasksList
+            .get(listIndex)
+            .get((int) (Math.random() * suggestedTasksList.get(listIndex).size()));
     TaskResponse response =
         new TaskResponse(
             -1,
