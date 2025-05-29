@@ -1,8 +1,8 @@
 import { cn } from '@/shared/lib/utils';
 import { Text } from '@/shared/ui/components/typography/text';
 import type { TaskResponseModel } from '../api/task-model';
-import { TaskCardSmallBuddy } from './small-buddy-card';
 import { TaskCardSmall } from './task-card-small';
+import { TaskCardSmallBuddy } from './task-card-small-buddy';
 
 type TaskHorizontalSmallStackProps = React.ComponentProps<'div'> & {
   /** タスクのリスト */
