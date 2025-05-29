@@ -1,6 +1,6 @@
 import { $api } from '@/shared/api/openapi-fetch';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
-import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
+import { RiveBuddy } from '@/shared/ui/components/rive/rive-buddy';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Heading } from '@/shared/ui/components/typography/heading';
 import { Link } from '@tanstack/react-router';

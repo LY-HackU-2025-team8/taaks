@@ -24,7 +24,7 @@ export const TaskCardSummary = ({
   ...props
 }: TaskCardSummaryProps) => {
   return (
-    <Link to="/todo/$taskId" params={{ taskId: id }}>
+    <Link to="/todo/$taskId" params={{ taskId: id }} className="contents">
       <Card className={cn('min-w-80 gap-1', className)} {...props}>
         <CardContent>
           <div className="flex items-center gap-2">

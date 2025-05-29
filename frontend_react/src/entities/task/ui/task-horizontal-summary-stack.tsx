@@ -3,20 +3,23 @@ import { Text } from '@/shared/ui/components/typography/text';
 import type { TaskResponseModel } from '../api/task-model';
 import { TaskCardSummary } from './task-card-summary';
 
-type TaskHorizontalStackProps = React.ComponentProps<'div'> & {
+type TaskHorizontalSummaryStackProps = React.ComponentProps<'div'> & {
   /** タスクのリスト */
   tasks: TaskResponseModel[];
 };
 
-export const TaskHorizontalStack = ({
+export const TaskHorizontalSummaryStack = ({
   tasks,
   className,
   children,
   ...props
-}: TaskHorizontalStackProps) => {
+}: TaskHorizontalSummaryStackProps) => {
   return (
     <div
-      className={cn('flex gap-4 overflow-x-auto py-1', className)}
+      className={cn(
+        'flex items-stretch gap-3.5 overflow-x-auto py-1',
+        className
+      )}
       {...props}
     >
       {tasks.length ? (

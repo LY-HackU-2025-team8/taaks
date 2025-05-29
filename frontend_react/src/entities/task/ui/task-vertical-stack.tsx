@@ -14,7 +14,10 @@ export const TaskVerticalStack = ({
   ...props
 }: TaskVerticalStackProps) => {
   return (
-    <div className={cn('flex flex-col gap-3.5', className)} {...props}>
+    <div
+      className={cn('flex flex-col items-stretch gap-3.5', className)}
+      {...props}
+    >
       {tasks.map((task) => (
         <TaskCardLarge task={task} key={task.id} />
       ))}

@@ -8,7 +8,7 @@ import { $api } from '@/shared/api/openapi-fetch';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { cn } from '@/shared/lib/utils';
 import type { ComponentPropsWithoutChildren } from '@/shared/types';
-import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
+import { RiveBuddy } from '@/shared/ui/components/rive/rive-buddy';
 import { Skeleton } from '@/shared/ui/components/shadcn/skeleton';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { format } from 'date-fns';
