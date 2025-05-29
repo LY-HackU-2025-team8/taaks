@@ -8,11 +8,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SuggestedTaskServiceImple implements SuggestedTaskService {
+public class SuggestedTaskServiceImpl implements SuggestedTaskService {
   private final TaakTaskRepository taakTaskRepository;
   private final List<List<String>> suggestedTasksList;
 
-  public SuggestedTaskServiceImple(TaakTaskRepository taakTaskRepository) {
+  public SuggestedTaskServiceImpl(TaakTaskRepository taakTaskRepository) {
     this.taakTaskRepository = taakTaskRepository;
     this.suggestedTasksList =
         List.of(
