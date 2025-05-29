@@ -1,7 +1,5 @@
 package com.team8.taaks.service;
 
-import java.util.Optional;
-
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
 import com.openai.models.ChatModel;
@@ -10,6 +8,7 @@ import com.openai.models.responses.StructuredResponse;
 import com.openai.models.responses.StructuredResponseCreateParams;
 import com.team8.taaks.controller.OpenAiApiException;
 import com.team8.taaks.dto.LlmResponse;
+import java.util.Optional;
 
 public class OpenAiChatService implements ChatService {
   public int calcLoadScore(String prompt) {

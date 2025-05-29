@@ -406,6 +406,24 @@ paths:
           description: exception
       tags:
       - notification-target-token-controller
+  /suggested-tasks/today:
+    get:
+      operationId: suggestTask
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+          description: OK
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      tags:
+      - suggested-task-controller
   /tasks:
     get:
       operationId: getTask
