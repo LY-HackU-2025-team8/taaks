@@ -303,6 +303,8 @@ export interface components {
             date?: string;
             /** Format: int64 */
             loadScore?: number;
+            /** Format: int64 */
+            uncompletedTaskCount?: number;
         };
         DeleteAccountRequest: {
             password?: string;

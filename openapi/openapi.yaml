@@ -775,6 +775,9 @@ components:
         loadScore:
           type: integer
           format: int64
+        uncompletedTaskCount:
+          type: integer
+          format: int64
     DeleteAccountRequest:
       type: object
       properties:
