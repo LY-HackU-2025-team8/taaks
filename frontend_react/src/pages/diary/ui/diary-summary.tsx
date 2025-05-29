@@ -1,3 +1,4 @@
+import { BuddySuggestAddTask } from '@/entities/buddy/ui/buddy-suggest-add-task';
 import { TaskHorizontalStack } from '@/entities/task/ui/task-horizontal-stack';
 import { filterToday } from '@/shared/api/filter-today';
 import { getNextPageParam } from '@/shared/api/get-next-page-param';
@@ -41,6 +42,13 @@ export const DiarySummary = ({ date, ...props }: DiarySummaryProps) => {
       <TaskHorizontalStack
         tasks={data?.pages.flatMap((page) => page.content || []) || []}
       />
+      <BuddySuggestAddTask buttonText="明日のタスクを追加する">
+        もしまだ余裕があれば
+        <wbr />
+        明日やることを
+        <wbr />
+        整理してみませんか？
+      </BuddySuggestAddTask>
     </PageSection>
   );
 };

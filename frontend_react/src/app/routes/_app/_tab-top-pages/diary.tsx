@@ -1,6 +1,5 @@
-import { BuddySuggestTask } from '@/pages/diary/ui/buddy-suggest-task';
+import { DiaryEmptyCard } from '@/pages/diary/ui/diary-empty-card';
 import { DiarySummary } from '@/pages/diary/ui/diary-summary';
-import { NoDiaryCard } from '@/pages/diary/ui/no-diary-card';
 import { refineDateFormat } from '@/shared/api/zod/refine-date-format';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
@@ -65,9 +64,8 @@ function RouteComponent() {
         </div>
       </PageHeader>
       <PageMain>
-        <NoDiaryCard date={date} />
+        <DiaryEmptyCard date={date} />
         <DiarySummary date={date} />
-        <BuddySuggestTask />
       </PageMain>
     </>
   );

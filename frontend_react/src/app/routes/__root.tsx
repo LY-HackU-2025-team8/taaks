@@ -1,11 +1,5 @@
-import { ErrorPage } from '@/pages/error/ui/error-page';
-import { Loading } from '@/shared/ui/layouts/loading';
-import { Suspense, useEffect } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import {
-  QueryErrorResetBoundary,
-  type QueryClient,
-} from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { type QueryClient } from '@tanstack/react-query';
 import {
   Outlet,
   createRootRouteWithContext,
@@ -60,22 +54,11 @@ const RouteComponent = () => {
   }, [matches]);
 
   return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <ErrorBoundary
-          fallbackRender={({ error, resetErrorBoundary }) => (
-            <ErrorPage error={error} reset={resetErrorBoundary} />
-          )}
-          onReset={reset}
-        >
-          <Suspense fallback={<Loading />}>
-            <Outlet />
-            {import.meta.env.VITE_SHOW_TANSTACK_ROUTER_DEVTOOLS === 'true' && (
-              <TanStackRouterDevtools position="top-right" />
-            )}
-          </Suspense>
-        </ErrorBoundary>
+    <>
+      <Outlet />
+      {import.meta.env.VITE_SHOW_TANSTACK_ROUTER_DEVTOOLS === 'true' && (
+        <TanStackRouterDevtools position="top-right" />
       )}
-    </QueryErrorResetBoundary>
+    </>
   );
 };

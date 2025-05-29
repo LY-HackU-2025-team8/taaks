@@ -11,7 +11,7 @@ import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
 import { format, isSameDay } from 'date-fns';
 
-type TaskListNotCompletedProps = ComponentPropsWithoutChildren<
+type TodoCompletedTasksProps = ComponentPropsWithoutChildren<
   typeof PageSection
 > & {
   /** 表示するタスクの日付 */
@@ -21,10 +21,10 @@ type TaskListNotCompletedProps = ComponentPropsWithoutChildren<
 /**
  * 未完了タスクのリスト
  */
-export const TaskListNotCompleted = ({
+export const TodoCompletedTasks = ({
   date,
   ...props
-}: TaskListNotCompletedProps) => {
+}: TodoCompletedTasksProps) => {
   const currentDate = useCurrentDate({ timeResolution: 'day' });
   const { data, isLoading } = $api.useInfiniteQuery(
     'get',
@@ -33,7 +33,7 @@ export const TaskListNotCompleted = ({
       params: {
         query: {
           ...filterToday(date),
-          isCompleted_eq: false,
+          isCompleted_eq: true,
           sort: ['dueAt,asc'],
         },
       },
@@ -51,12 +51,12 @@ export const TaskListNotCompleted = ({
   return (
     <PageSection {...props}>
       <PageSectionTitle>
-        {isToday ? '今日' : format(date, DATE_DISPLAY_FORMAT)}のタスク
+        {isToday ? '今日' : format(date, DATE_DISPLAY_FORMAT)}の完了済みタスク
       </PageSectionTitle>
       {isLoading ? (
         [...Array(10)].map((_, i) => <TaskCardSkeleton key={i} />)
       ) : !tasks.length ? (
-        <Text variant="muted">タスクはありません</Text>
+        <Text variant="muted">完了済みのタスクはありません</Text>
       ) : (
         <TaskVerticalStack tasks={tasks} />
       )}

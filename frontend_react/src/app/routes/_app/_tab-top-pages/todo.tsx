@@ -1,6 +1,7 @@
-import { BuddyTaskCount } from '@/pages/todo/ui/buddy-task-count';
-import { TaskListCompleted } from '@/pages/todo/ui/task-list-completed';
-import { TaskListNotCompleted } from '@/pages/todo/ui/task-list-not-completed';
+import { TodoBuddyTaskCount } from '@/pages/todo/ui/todo-buddy-task-count';
+import { TodoCompletedTasks } from '@/pages/todo/ui/todo-completed-tasks';
+import { TodoMainTasks } from '@/pages/todo/ui/todo-main-tasks';
+import { TodoPendingTasks } from '@/pages/todo/ui/todo-not-completed';
 import { refineDateFormat } from '@/shared/api/zod/refine-date-format';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { cn } from '@/shared/lib/utils';
@@ -69,9 +70,10 @@ function RouteComponent() {
         />
       </PageHeader>
       <PageMain>
-        <TaskListNotCompleted date={date} />
-        <BuddyTaskCount date={date} />
-        <TaskListCompleted date={date} />
+        <TodoMainTasks date={date} />
+        <TodoPendingTasks date={date} />
+        <TodoBuddyTaskCount date={date} />
+        <TodoCompletedTasks date={date} />
       </PageMain>
     </>
   );

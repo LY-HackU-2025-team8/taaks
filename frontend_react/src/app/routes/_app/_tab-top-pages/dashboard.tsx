@@ -1,9 +1,11 @@
 import { DashboardBuddy } from '@/pages/dashboard/ui/dashboard-buddy';
+import { DashboardPersonal } from '@/pages/dashboard/ui/dashboard-personal';
 import { ToolLinkButton } from '@/pages/dashboard/ui/tool-link-button';
 import { cn } from '@/shared/lib/utils';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
+import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { createFileRoute, Link } from '@tanstack/react-router';
@@ -39,6 +41,9 @@ function App() {
           </div>
         </div>
       </PageHeader>
+      <PageMain>
+        <DashboardPersonal />
+      </PageMain>
     </>
   );
 }

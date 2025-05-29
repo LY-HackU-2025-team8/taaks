@@ -8,7 +8,6 @@ import { Button } from '@/shared/ui/components/shadcn/button';
 import { Separator } from '@/shared/ui/components/shadcn/separator';
 import { Heading } from '@/shared/ui/components/typography/heading';
 import { Text } from '@/shared/ui/components/typography/text';
-import { Loading } from '@/shared/ui/layouts/loading';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
 import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageSection } from '@/shared/ui/layouts/page-section';
@@ -23,19 +22,17 @@ const paramsSchema = z.object({
 
 export const Route = createFileRoute('/_app/todo/$taskId')({
   params: paramsSchema,
-  loader: async ({ params: { taskId }, context: { queryClient } }) => ({
-    task: await queryClient.ensureQueryData(
-      $api.queryOptions('get', '/tasks/{taskId}', {
-        params: { path: { taskId } },
-      })
-    ),
-  }),
   component: RouteComponent,
-  pendingComponent: Loading,
 });
 
 function RouteComponent() {
-  const { task } = Route.useLoaderData();
+  const { taskId } = Route.useParams();
+  const { data: task } = $api.useSuspenseQuery('get', '/tasks/{taskId}', {
+    params: {
+      path: { taskId: taskId },
+    },
+  });
+
   return (
     <>
       <PageHeader>
