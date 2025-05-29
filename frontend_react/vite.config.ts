@@ -19,7 +19,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     TanStackRouterVite({
-      autoCodeSplitting: true,
+      autoCodeSplitting: false,
       routesDirectory: './src/app/routes',
       generatedRouteTree: './src/route-tree.gen.ts',
     }),
