@@ -16,7 +16,7 @@ export const TaskHorizontalStack = ({
 }: TaskHorizontalStackProps) => {
   return (
     <div
-      className={cn('flex gap-4 overflow-x-auto py-1', className)}
+      className={cn('flex items-stretch gap-4 overflow-x-auto py-1', className)}
       {...props}
     >
       {tasks.length ? (
