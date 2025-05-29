@@ -24,7 +24,7 @@ export const AppNav = ({
   return (
     <nav
       className={cn(
-        'text-app-nav-foreground bg-app-nav-background fixed right-3.5 bottom-[max(env(safe-area-inset-bottom),0.875rem)] left-3.5 z-15 rounded-full px-4',
+        'text-app-nav-foreground bg-app-nav-background fixed right-3.5 bottom-[max(calc(env(safe-area-inset-bottom)-0.125rem),0.875rem)] left-3.5 z-15 rounded-full px-4',
         { hidden },
         className
       )}
