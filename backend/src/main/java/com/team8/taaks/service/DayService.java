@@ -8,4 +8,6 @@ public interface DayService {
   public Long getLoadScoreForDay(TaakUser user, LocalDate day);
 
   public Long getUncompletedTaskCountForDay(TaakUser user, LocalDate day);
+
+  public Long getCompletedTaskCountForDay(TaakUser user, LocalDate day);
 }

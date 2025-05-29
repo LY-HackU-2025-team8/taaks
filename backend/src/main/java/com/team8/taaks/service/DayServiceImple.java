@@ -31,4 +31,12 @@ public class DayServiceImple implements DayService {
     return taakTaskRepository.countUncompletedTasksBetweenDueDates(
         user.getId(), startOfDay, endOfDay);
   }
+
+  @Override
+  public Long getCompletedTaskCountForDay(TaakUser user, LocalDate day) {
+    LocalDateTime startOfDay = day.atStartOfDay();
+    LocalDateTime endOfDay = LocalDateTime.of(day, LocalTime.MAX);
+    return taakTaskRepository.countCompletedTasksBetweenDueDates(
+        user.getId(), startOfDay, endOfDay);
+  }
 }

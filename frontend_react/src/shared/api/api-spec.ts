@@ -299,10 +299,14 @@ export interface components {
             newUsername?: string;
         };
         DayResponse: {
+            /** Format: int64 */
+            completedTaskCount?: number;
             /** Format: date */
             date?: string;
             /** Format: int64 */
             loadScore?: number;
+            /** Format: int64 */
+            taskCount?: number;
             /** Format: int64 */
             uncompletedTaskCount?: number;
         };
