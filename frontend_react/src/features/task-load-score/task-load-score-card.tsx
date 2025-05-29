@@ -43,7 +43,7 @@ export const TaskLoadScoreCard = ({
         )}
       </BuddyMessageCardContent>
       <BuddyMessageCardContent className="relative z-2 mt-2 -mr-40">
-        <Progress value={Math.min(loadScore || 1, 100)} />
+        <Progress value={Math.min(loadScore || 0, 100)} />
       </BuddyMessageCardContent>
     </BuddyMessageCard>
   );
