@@ -24,7 +24,7 @@ export const TodoBuddyTaskCount = ({
   className,
   ...props
 }: TodoBuddyTaskCountProps) => {
-  const { data } = $api.useQuery('get', '/days/{day}', {
+  const { data } = $api.useSuspenseQuery('get', '/days/{day}', {
     params: {
       path: {
         day: format(date, DATE_DATA_FORMAT),

@@ -8,11 +8,12 @@ import { cn } from '@/shared/lib/utils';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
 import { CalendarLarge } from '@/shared/ui/components/input/calendar-large';
 import { Button } from '@/shared/ui/components/shadcn/button';
+import { Loading } from '@/shared/ui/layouts/loading';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
 import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { z } from 'zod';
@@ -70,10 +71,12 @@ function RouteComponent() {
         />
       </PageHeader>
       <PageMain>
-        <TodoMainTasks date={date} />
-        <TodoPendingTasks date={date} />
-        <TodoBuddyTaskCount date={date} />
-        <TodoCompletedTasks date={date} />
+        <Suspense fallback={<Loading />}>
+          <TodoMainTasks date={date} />
+          <TodoPendingTasks date={date} />
+          <TodoBuddyTaskCount date={date} />
+          <TodoCompletedTasks date={date} />
+        </Suspense>
       </PageMain>
     </>
   );

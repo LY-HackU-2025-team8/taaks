@@ -4,10 +4,12 @@ import { ToolLinkButton } from '@/pages/dashboard/ui/tool-link-button';
 import { cn } from '@/shared/lib/utils';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
+import { Loading } from '@/shared/ui/layouts/loading';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
 import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
+import { Suspense } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_app/_tab-top-pages/dashboard')({
@@ -42,7 +44,9 @@ function App() {
         </div>
       </PageHeader>
       <PageMain>
-        <DashboardPersonal />
+        <Suspense fallback={<Loading />}>
+          <DashboardPersonal />
+        </Suspense>
       </PageMain>
     </>
   );

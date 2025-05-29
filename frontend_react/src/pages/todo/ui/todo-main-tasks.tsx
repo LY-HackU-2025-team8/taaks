@@ -12,7 +12,7 @@ type TodoMainTasksProps = ComponentPropsWithoutChildren<typeof PageSection> & {
 };
 
 export const TodoMainTasks = ({ date, ...props }: TodoMainTasksProps) => {
-  const { data } = $api.useQuery('get', '/days/{day}', {
+  const { data } = $api.useSuspenseQuery('get', '/days/{day}', {
     params: {
       path: {
         day: format(date, DATE_DATA_FORMAT),

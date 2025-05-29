@@ -1,6 +1,6 @@
 import { TaskCardSkeleton } from '@/entities/task/ui/task-card-skeleton';
 import { TaskVerticalStack } from '@/entities/task/ui/task-vertical-stack';
-import { filterToday } from '@/shared/api/filter-today';
+import { filterTodayTasks } from '@/shared/api/filter-today';
 import { getNextPageParam } from '@/shared/api/get-next-page-param';
 import { $api } from '@/shared/api/openapi-fetch';
 import { DATE_DISPLAY_FORMAT } from '@/shared/constants';
@@ -32,7 +32,7 @@ export const TodoCompletedTasks = ({
     {
       params: {
         query: {
-          ...filterToday(date),
+          ...filterTodayTasks(date),
           isCompleted_eq: true,
           sort: ['dueAt,asc'],
         },
@@ -42,6 +42,7 @@ export const TodoCompletedTasks = ({
       pageParamName: 'page',
       initialPageParam: 0,
       getNextPageParam,
+      suspense: true,
     }
   );
 

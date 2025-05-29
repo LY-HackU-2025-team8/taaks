@@ -1,7 +1,7 @@
 import { diaryFormSchema } from '@/entities/diary/api/diary-form-schema';
+import { useCreateDiary } from '@/entities/diary/api/use-create-diary';
 import { DiaryForm } from '@/entities/diary/ui/diary-form';
 import { DiarySummary } from '@/pages/diary/ui/diary-summary';
-import { $api } from '@/shared/api/openapi-fetch';
 import { refineDateFormat } from '@/shared/api/zod/refine-date-format';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
@@ -35,7 +35,7 @@ export const Route = createFileRoute('/_app/diary/new')({
 function RouteComponent() {
   const navigate = useNavigate();
   const { date: dateStr } = Route.useSearch();
-  const { mutate, isPending, error } = $api.useMutation('post', '/diaries');
+  const { createDiary, isPending, error } = useCreateDiary();
 
   const form = useForm({
     resolver: zodResolver(diaryFormSchema),
@@ -48,24 +48,16 @@ function RouteComponent() {
     reValidateMode: 'onChange',
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
-    mutate(
-      {
-        body: {
-          ...data,
-          date: format(data.date, DATE_DATA_FORMAT),
-        },
+  const handleSubmit = form.handleSubmit(
+    createDiary({
+      onSuccess: () => {
+        form.reset();
+        navigate({
+          to: '/diary',
+        });
       },
-      {
-        onSuccess: () => {
-          form.reset();
-          navigate({
-            to: '/diary',
-          });
-        },
-      }
-    );
-  });
+    })
+  );
 
   const date = form.watch('date');
 
