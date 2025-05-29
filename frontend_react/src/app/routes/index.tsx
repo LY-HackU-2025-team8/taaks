@@ -1,6 +1,6 @@
+import { TaaksLogo } from '@/shared/ui/components/icons/taaks-logo';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { TaaksLogo } from '@/shared/ui/components/icons/taaks-logo';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -9,35 +9,34 @@ export const Route = createFileRoute('/')({
 function RouteComponent() {
   return (
     <div className="flex h-full w-screen flex-col">
-
-      <div className="overflow-hidden relative h-full flex flex-col items-center justify-center gap-4 mt-[5vh]">
+      <div className="relative mt-[5vh] flex h-full flex-col items-center justify-center gap-4 overflow-hidden">
         <img
           src="/assets/images/todo_3d.png"
           width={120}
           height={120}
           alt="Todo 3D"
-          className='absolute top-20 -left-2 -z-10'
+          className="absolute top-20 -left-2 -z-10"
         />
         <img
           src="/assets/images/diary_3d.png"
           width={240}
           height={240}
           alt="Diary 3D"
-          className='absolute -top-5 -right-5 z-10 -rotate-12'
+          className="absolute -top-5 -right-5 z-10 -rotate-12"
         />
         <img
           src="/assets/images/todo_3d.png"
           width={200}
           height={200}
           alt="Todo 3D"
-          className='absolute bottom-5 -left-5'
+          className="absolute bottom-5 -left-5"
         />
         <img
           src="/assets/images/diary_3d.png"
           width={147}
           height={147}
           alt="Diary 3D"
-          className='absolute bottom-15 right-0 -z-10 -rotate-12'
+          className="absolute right-0 bottom-15 -z-10 -rotate-12"
         />
         <TaaksLogo className="size-52" aria-label="Taaks Logo" role="img" />
         <p className="text-[3.75rem] font-bold">Taaks!</p>
