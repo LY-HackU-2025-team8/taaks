@@ -17,9 +17,9 @@ const TYPES = {
     inputName: 'ToDoinputs',
   },
   buddy: {
-    artboard: 'Baddy',
-    stateMachineName: 'Baddy_btn_State',
-    inputName: 'Baddyinputs',
+    artboard: 'Buddy',
+    stateMachineName: 'Buddy_btn_State',
+    inputName: 'Buddyinputs',
   },
 } as const;
 
