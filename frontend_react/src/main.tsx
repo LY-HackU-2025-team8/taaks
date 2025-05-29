@@ -2,9 +2,11 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { ThemeProvider } from 'next-themes';
 import './fonts.css';
 import './index.css';
 import { routeTree } from './route-tree.gen';
+import { CUSTOM_COLORS } from './shared/constants/index.ts';
 import reportWebVitals from './shared/lib/reportWebVitals.ts';
 import { zodConfig } from './shared/lib/zod-config.ts';
 
@@ -48,6 +50,12 @@ declare module '@tanstack/react-router' {
   }
 }
 
+// ユーザーが選択できるカスタムカラーの定義
+const colorThemes = [
+  'default', // ユーザーが選択する前
+  ...CUSTOM_COLORS.values(),
+];
+
 // Reactをレンダリングするためのルート要素を取得し、ReactDOMを使用してレンダリング
 const rootElement = document.getElementById('app');
 if (rootElement && !rootElement.innerHTML) {
@@ -55,7 +63,13 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <ThemeProvider
+          attribute="class"
+          themes={colorThemes}
+          defaultTheme="default"
+        >
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>
   );
