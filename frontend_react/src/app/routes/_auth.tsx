@@ -24,7 +24,7 @@ function RouteComponent() {
           width={120}
           height={120}
           alt="Todo 3D"
-          className='absolute top-20 left-10 -z-10'
+          className='absolute top-20 -left-2 -z-10'
         />
         <img
           src="/assets/images/diary_3d.png"
