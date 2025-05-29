@@ -769,10 +769,16 @@ components:
     DayResponse:
       type: object
       properties:
+        completedTaskCount:
+          type: integer
+          format: int64
         date:
           type: string
           format: date
         loadScore:
+          type: integer
+          format: int64
+        taskCount:
           type: integer
           format: int64
         uncompletedTaskCount:
