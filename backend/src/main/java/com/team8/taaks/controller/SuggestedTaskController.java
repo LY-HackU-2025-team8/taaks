@@ -19,7 +19,7 @@ public class SuggestedTaskController {
   }
 
   @GetMapping("/today")
-  public ResponseEntity<TaskResponse> sugestTask(@AuthenticationPrincipal TaakUser user) {
+  public ResponseEntity<TaskResponse> suggestTask(@AuthenticationPrincipal TaakUser user) {
     return ResponseEntity.ok(suggestedTaskService.getSuggestedTasks(user));
   }
 }

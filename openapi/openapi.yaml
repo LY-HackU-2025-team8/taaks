@@ -408,7 +408,7 @@ paths:
       - notification-target-token-controller
   /suggested-tasks/today:
     get:
-      operationId: sugestTask
+      operationId: suggestTask
       responses:
         "200":
           content:

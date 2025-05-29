@@ -152,7 +152,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["sugestTask"];
+        get: operations["suggestTask"];
         put?: never;
         post?: never;
         delete?: never;
@@ -949,7 +949,7 @@ export interface operations {
             };
         };
     };
-    sugestTask: {
+    suggestTask: {
         parameters: {
             query?: never;
             header?: never;
