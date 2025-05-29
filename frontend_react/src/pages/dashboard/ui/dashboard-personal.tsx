@@ -4,7 +4,7 @@ import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
 
 export const DashboardPersonal = () => {
-  const { data } = $api.useQuery('get', '/days/today');
+  const { data } = $api.useSuspenseQuery('get', '/days/today');
 
   return (
     <PageSection>

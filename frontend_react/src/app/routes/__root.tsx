@@ -1,3 +1,4 @@
+import { Toaster } from '@/shared/ui/components/shadcn/sonner';
 import { useEffect } from 'react';
 import { type QueryClient } from '@tanstack/react-query';
 import {
@@ -56,6 +57,14 @@ const RouteComponent = () => {
   return (
     <>
       <Outlet />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          classNames: {
+            toast: 'font-line-seed',
+          },
+        }}
+      />
       {import.meta.env.VITE_SHOW_TANSTACK_ROUTER_DEVTOOLS === 'true' && (
         <TanStackRouterDevtools position="top-right" />
       )}

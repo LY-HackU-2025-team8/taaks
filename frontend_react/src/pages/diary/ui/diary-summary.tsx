@@ -1,6 +1,6 @@
 import { BuddySuggestAddTask } from '@/entities/buddy/ui/buddy-suggest-add-task';
 import { TaskHorizontalStack } from '@/entities/task/ui/task-horizontal-stack';
-import { filterToday } from '@/shared/api/filter-today';
+import { filterTodayTasks } from '@/shared/api/filter-today';
 import { getNextPageParam } from '@/shared/api/get-next-page-param';
 import { $api } from '@/shared/api/openapi-fetch';
 import { DATE_DISPLAY_FORMAT } from '@/shared/constants';
@@ -22,7 +22,7 @@ export const DiarySummary = ({ date, ...props }: DiarySummaryProps) => {
     {
       params: {
         query: {
-          ...filterToday(date),
+          ...filterTodayTasks(date),
           sort: ['dueAt,asc'],
         },
       },
@@ -31,6 +31,7 @@ export const DiarySummary = ({ date, ...props }: DiarySummaryProps) => {
       pageParamName: 'page',
       initialPageParam: 0,
       getNextPageParam,
+      suspense: true,
     }
   );
 

@@ -12,6 +12,7 @@ import { Heading } from '@/shared/ui/components/typography/heading';
 import { useFormContext } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 export const Route = createFileRoute(
@@ -26,18 +27,29 @@ function RouteComponent() {
   const inputName = 'name';
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, error } = $api.useMutation('put', '/buddy');
+  const { mutateAsync, isPending, error } = $api.useMutation('put', '/buddy');
 
   const handleSubmit = form.handleSubmit((data) => {
-    mutate(
+    toast.promise(
+      mutateAsync(
+        {
+          body: data,
+        },
+        {
+          onSuccess: () => {
+            // キャッシュを無効化して最新のデータを取得
+            queryClient.invalidateQueries($api.queryOptions('get', '/buddy'));
+            navigate({ to: '/dashboard' });
+          },
+        }
+      ),
       {
-        body: data,
-      },
-      {
-        onSuccess: () => {
-          // キャッシュを無効化して最新のデータを取得
-          queryClient.invalidateQueries($api.queryOptions('get', '/buddy'));
-          navigate({ to: '/dashboard' });
+        loading: 'Buddyを作成しています…',
+        success: (res) => {
+          return `${res.name}が今日からあなたのBuddyです！`;
+        },
+        error: (err) => {
+          return err.message || 'Buddyの名前の登録に失敗しました。';
         },
       }
     );

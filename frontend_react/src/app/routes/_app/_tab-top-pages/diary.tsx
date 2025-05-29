@@ -1,15 +1,16 @@
-import { DiaryEmptyCard } from '@/pages/diary/ui/diary-empty-card';
+import { DiaryContentCard } from '@/pages/diary/ui/diary-content-card';
 import { DiarySummary } from '@/pages/diary/ui/diary-summary';
 import { refineDateFormat } from '@/shared/api/zod/refine-date-format';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
 import { CalendarLarge } from '@/shared/ui/components/input/calendar-large';
 import { Button } from '@/shared/ui/components/shadcn/button';
+import { Loading } from '@/shared/ui/layouts/loading';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
 import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { z } from 'zod';
@@ -64,8 +65,10 @@ function RouteComponent() {
         </div>
       </PageHeader>
       <PageMain>
-        <DiaryEmptyCard date={date} />
-        <DiarySummary date={date} />
+        <Suspense fallback={<Loading />}>
+          <DiaryContentCard date={date} />
+          <DiarySummary date={date} />
+        </Suspense>
       </PageMain>
     </>
   );

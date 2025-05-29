@@ -3,13 +3,14 @@ import { DATETIME_DATA_FORMAT } from '@/shared/constants';
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import { toast } from 'sonner';
 import { z } from 'zod';
 import type { taskFormSchema } from './task-form-schema';
 
 /** タスクを編集する関数を返すHook */
 export const useEditTask = (taskId: number) => {
   const queryClient = useQueryClient();
-  const { mutate, ...rest } = $api.useMutation('put', '/tasks/{taskId}', {
+  const { mutateAsync, ...rest } = $api.useMutation('put', '/tasks/{taskId}', {
     // なんらかのエラーが発生してもタスクが更新される場合があるのでonSettledを使用
     onSettled: () => {
       // タスク一覧のキャッシュを破棄
@@ -29,7 +30,7 @@ export const useEditTask = (taskId: number) => {
    * @return taskFormSchemaのdataを受け取るコールバック
    */
   const editTask = useCallback(
-    (options?: Parameters<typeof mutate>[1]) =>
+    (options?: Parameters<typeof mutateAsync>[1]) =>
       (data: z.infer<typeof taskFormSchema>) => {
         // DateTimeをサーバーが受け付ける形にフォーマット
         const dueAt = format(data.dueAt, DATETIME_DATA_FORMAT);
@@ -37,19 +38,28 @@ export const useEditTask = (taskId: number) => {
           ? format(data.completedAt, DATETIME_DATA_FORMAT)
           : undefined;
 
-        return mutate(
-          {
-            params: { path: { taskId } },
-            body: {
-              ...data,
-              dueAt,
-              completedAt,
+        return toast.promise(
+          mutateAsync(
+            {
+              params: { path: { taskId } },
+              body: {
+                ...data,
+                dueAt,
+                completedAt,
+              },
             },
-          },
-          options
+            options
+          ),
+          {
+            loading: 'タスクを更新しています...',
+            success: (res) => `タスク「${res.title}」を更新しました！`,
+            error: (err) => {
+              return err.message || 'タスクの更新に失敗しました。';
+            },
+          }
         );
       },
-    [mutate, taskId]
+    [mutateAsync, taskId]
   );
 
   return { editTask, ...rest };
