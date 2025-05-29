@@ -6,7 +6,6 @@ export const Route = createFileRoute('/_app/_tab-top-pages')({
   context: ({ context }) => ({
     ...context,
     htmlClassName: 'bg-muted',
-    appClassName: 'bg-muted pb-[calc(env(safe-area-inset-bottom)+6rem)]',
   }),
   component: RouteComponent,
 });
@@ -21,5 +20,9 @@ function RouteComponent() {
     return () => hideAppNav();
   }, [hideAppNav, showAppNav]);
 
-  return <Outlet />;
+  return (
+    <div className="flex flex-1 flex-col pb-[calc(env(safe-area-inset-bottom)+6rem)]">
+      <Outlet />
+    </div>
+  );
 }
