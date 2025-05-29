@@ -1,4 +1,4 @@
-import { AddTaskDrawer } from '@/features/add-task/ui/add-task-drawer';
+import { AddTaskDrawer } from '@/entities/task/ui/add-task-drawer';
 import { cn } from '@/shared/lib/utils';
 import { RiveIcon } from '@/shared/ui/components/custom/rive-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
