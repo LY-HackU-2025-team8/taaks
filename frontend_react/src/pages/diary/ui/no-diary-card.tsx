@@ -1,4 +1,4 @@
-import { DATE_DISPLAY_FORMAT } from '@/shared/constants';
+import { DATE_DATA_FORMAT, DATE_DISPLAY_FORMAT } from '@/shared/constants';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
 import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { Button } from '@/shared/ui/components/shadcn/button';
@@ -55,7 +55,12 @@ export const NoDiaryCard = ({ date, ...props }: NoDiaryCardProps) => {
             <Text className="font-line-seed text-3xl font-bold">100</Text>
           </div>
           <Button size="lg" asChild>
-            <Link to="/diary/new">日記を作成</Link>
+            <Link
+              to="/diary/new"
+              search={{ date: format(date, DATE_DATA_FORMAT) }}
+            >
+              日記を作成
+            </Link>
           </Button>
         </CardContent>
       </Card>

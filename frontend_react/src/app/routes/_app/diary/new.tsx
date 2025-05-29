@@ -2,6 +2,8 @@ import { diaryFormSchema } from '@/entities/diary/api/diary-form-schema';
 import { DiaryForm } from '@/entities/diary/ui/diary-form';
 import { DiarySummary } from '@/pages/diary/ui/diary-summary';
 import { $api } from '@/shared/api/openapi-fetch';
+import { refineDateFormat } from '@/shared/api/zod/refine-date-format';
+import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Form } from '@/shared/ui/components/shadcn/form';
@@ -14,13 +16,25 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
+import { z } from 'zod';
+
+const newDiaryParamsSchema = z.object({
+  date: z
+    .string()
+    .default(() => format(new Date(), DATE_DATA_FORMAT))
+    .refine(refineDateFormat, {
+      message: '日付は yyyy-MM-dd の形式で指定してください。',
+    }),
+});
 
 export const Route = createFileRoute('/_app/diary/new')({
+  validateSearch: newDiaryParamsSchema,
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const navigate = useNavigate();
+  const { date: dateStr } = Route.useSearch();
   const { mutate, isPending, error } = $api.useMutation('post', '/diaries');
 
   const form = useForm({
@@ -28,7 +42,7 @@ function RouteComponent() {
     defaultValues: {
       title: '',
       body: '',
-      date: new Date(),
+      date: new Date(dateStr),
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -39,7 +53,7 @@ function RouteComponent() {
       {
         body: {
           ...data,
-          date: format(data.date, 'yyyy-MM-dd'),
+          date: format(data.date, DATE_DATA_FORMAT),
         },
       },
       {
