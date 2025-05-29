@@ -13,7 +13,7 @@ public class JwtTokenUtil {
   @Value("${jwt.secret}")
   private String jwtSecret;
 
-  public record JwtToken(String token) {}
+  public record JwtToken(String tokenString) {}
 
   public JwtToken generateToken(TaakUser user) {
     return new JwtToken(
