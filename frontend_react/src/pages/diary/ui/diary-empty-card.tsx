@@ -10,13 +10,13 @@ import { PageSection } from '@/shared/ui/layouts/page-section';
 import { Link } from '@tanstack/react-router';
 import { format, isSameDay } from 'date-fns';
 
-type NoDiaryCardProps = ComponentPropsWithoutChildren<typeof Card> & {
+type DiaryEmptyCardProps = ComponentPropsWithoutChildren<typeof Card> & {
   /** 日記を書くよう促す日付 */
   date: Date;
 };
 
 /** 当日の日記がない時に日記を書くように促すカード */
-export const NoDiaryCard = ({ date, ...props }: NoDiaryCardProps) => {
+export const DiaryEmptyCard = ({ date, ...props }: DiaryEmptyCardProps) => {
   const currentDate = useCurrentDate({ timeResolution: 'day' });
   const isToday = isSameDay(date, currentDate);
 

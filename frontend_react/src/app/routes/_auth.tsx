@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_auth')({
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { isFetched } = $api.useQuery('get', '/users/me');
+  const { isFetched } = $api.useSuspenseQuery('get', '/users/me');
 
   // ログインしている場合はダッシュボードへリダイレクト
   useEffect(() => {

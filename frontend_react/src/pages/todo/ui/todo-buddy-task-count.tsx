@@ -11,17 +11,17 @@ import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 
-type BuddyTaskCountProps = ComponentPropsWithoutChildren<'section'> & {
+type TodoBuddyTaskCountProps = ComponentPropsWithoutChildren<'section'> & {
   /** タスク数をカウントする日付 */
   date: Date;
 };
 
 /** 今日の残りタスク数を教えてくれるカード */
-export const BuddyTaskCount = ({
+export const TodoBuddyTaskCount = ({
   date,
   className,
   ...props
-}: BuddyTaskCountProps) => {
+}: TodoBuddyTaskCountProps) => {
   const { data } = $api.useQuery('get', '/tasks', {
     params: {
       query: {

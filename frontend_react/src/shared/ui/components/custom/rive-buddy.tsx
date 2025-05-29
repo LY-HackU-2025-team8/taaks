@@ -12,6 +12,8 @@ type RiveBuddyProps = React.ComponentProps<'canvas'> & {
   motionId?: number;
 };
 
+const STATE_MACHINE_NAME = 'base State Machine ';
+
 export const RiveBuddy = ({
   faceId = 3,
   clothesId = 2,
@@ -19,8 +21,6 @@ export const RiveBuddy = ({
   motionId = 0,
   ...props
 }: RiveBuddyProps) => {
-  const STATE_MACHINE_NAME = 'base State Machine ';
-
   const { rive, RiveComponent } = useRive({
     src: '/assets/animations/buddy.riv',
     stateMachines: STATE_MACHINE_NAME,
@@ -32,11 +32,17 @@ export const RiveBuddy = ({
   const motion = useStateMachineInput(rive, STATE_MACHINE_NAME, 'motioninputs');
 
   useEffect(() => {
-    if (fukuParts && faceParts && headParts && motion) {
-      fukuParts.value = clothesId;
-      faceParts.value = faceId;
-      headParts.value = hairId;
-      motion.value = motionId;
+    try {
+      if (fukuParts && faceParts && headParts && motion) {
+        fukuParts.value = clothesId;
+        faceParts.value = faceId;
+        headParts.value = hairId;
+        motion.value = motionId;
+      }
+    } catch {
+      // エラーが発生しても無視する
+      // 良い子のみんなは真似しないでね！！！
+      void 0;
     }
   }, [
     rive,

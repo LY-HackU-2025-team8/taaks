@@ -1,6 +1,10 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryErrorResetBoundary,
+} from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
 import { onForegroundMessage } from './app/firebase/messaging';
@@ -46,7 +50,6 @@ const router = createRouter({
   defaultErrorComponent: ErrorPage,
   defaultPendingComponent: Loading,
   defaultPendingMs: 100,
-  defaultPendingMinMs: 1000,
 });
 
 // 型安全のために型情報を登録
@@ -69,13 +72,15 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider
-          attribute="class"
-          themes={colorThemes}
-          defaultTheme="default"
-        >
-          <RouterProvider router={router} />
-        </ThemeProvider>
+        <QueryErrorResetBoundary>
+          <ThemeProvider
+            attribute="class"
+            themes={colorThemes}
+            defaultTheme="default"
+          >
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </QueryErrorResetBoundary>
       </QueryClientProvider>
     </StrictMode>
   );

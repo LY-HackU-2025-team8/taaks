@@ -8,7 +8,7 @@ export const redirectUnlessLoggedIn = async (
   options: Parameters<typeof redirect>[0]
 ) => {
   try {
-    await queryClient.ensureQueryData($api.queryOptions('get', '/users/me'));
+    await queryClient.fetchQuery($api.queryOptions('get', '/users/me'));
   } catch {
     // ユーザーデータの取得に失敗した場合
     throw redirect(options);

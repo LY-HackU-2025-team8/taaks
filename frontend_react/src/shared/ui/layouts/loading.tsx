@@ -7,7 +7,10 @@ type LoadingProps = ComponentPropsWithoutChildren<'div'>;
 export const Loading = ({ className, ...props }: LoadingProps) => {
   return (
     <div
-      className={cn('flex flex-1 items-center justify-center', className)}
+      className={cn(
+        'flex shrink-0 grow-1 items-center justify-center',
+        className
+      )}
       {...props}
     >
       <LoaderCircleIcon className="text-muted-foreground size-6 animate-spin" />

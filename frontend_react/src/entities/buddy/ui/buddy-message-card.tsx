@@ -5,6 +5,9 @@ import {
   CardDescription,
   CardHeader,
 } from '@/shared/ui/components/shadcn/card';
+import type { PropsWithChildren } from 'react';
+import { Slot } from '@radix-ui/react-slot';
+import type { ClassNameValue } from 'tailwind-merge';
 
 /** Buddyからのメッセージとして描画されるカード */
 export const BuddyMessageCard = ({
@@ -65,5 +68,21 @@ export const BuddyMessageCardContent = ({
       )}
       {...props}
     />
+  );
+};
+
+export const BuddyMessageCardRightElement = ({
+  children,
+  className,
+}: PropsWithChildren<{ className?: ClassNameValue }>) => {
+  return (
+    <Slot
+      className={cn(
+        'absolute top-0 -right-8 bottom-0 my-auto size-60',
+        className
+      )}
+    >
+      {children}
+    </Slot>
   );
 };

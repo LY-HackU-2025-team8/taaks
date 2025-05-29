@@ -5,6 +5,7 @@ import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
 import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
+import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 
 type ErrorPageProps = {
@@ -13,6 +14,8 @@ type ErrorPageProps = {
 };
 
 export const ErrorPage = ({ error, reset }: ErrorPageProps) => {
+  const { reset: resetErrorBoundary } = useQueryErrorResetBoundary();
+
   return (
     <>
       <PageHeader>
@@ -35,6 +38,7 @@ export const ErrorPage = ({ error, reset }: ErrorPageProps) => {
               size="lg"
               onClick={() => {
                 reset?.();
+                resetErrorBoundary();
               }}
             >
               エラーをリセットする
