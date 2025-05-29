@@ -13,13 +13,16 @@ public class JwtTokenUtil {
   @Value("${jwt.secret}")
   private String jwtSecret;
 
-  public String generateToken(TaakUser user) {
-    return JWT.create()
-        .withSubject(user.getUsername())
-        .withClaim("username", user.getUsername())
-        .withIssuedAt(new Date())
-        .withExpiresAt(new Date(System.currentTimeMillis() + 86400000)) // 1日有効
-        .sign(Algorithm.HMAC256(jwtSecret));
+  public record JwtToken(String tokenString) {}
+
+  public JwtToken generateToken(TaakUser user) {
+    return new JwtToken(
+        JWT.create()
+            .withSubject(user.getUsername())
+            .withClaim("username", user.getUsername())
+            .withIssuedAt(new Date())
+            .withExpiresAt(new Date(System.currentTimeMillis() + 86400000)) // 1日有効
+            .sign(Algorithm.HMAC256(jwtSecret)));
   }
 
   public DecodedJWT decodeToken(String token) {
