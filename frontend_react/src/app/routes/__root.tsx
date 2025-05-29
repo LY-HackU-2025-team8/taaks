@@ -1,4 +1,5 @@
 import { Toaster } from '@/shared/ui/components/shadcn/sonner';
+import { useEffect } from 'react';
 import { type QueryClient } from '@tanstack/react-query';
 import {
   Outlet,
@@ -6,7 +7,6 @@ import {
   useMatches,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { useEffect } from 'react';
 
 interface RootRouteContext {
   /** TanstackQueryのQueryClient */
