@@ -4,12 +4,14 @@ import {
   BuddyMessageCardDescription,
   BuddyMessageCardHeader,
 } from '@/entities/buddy/ui/buddy-message-card';
-import { filterToday } from '@/shared/api/filter-today';
 import { $api } from '@/shared/api/openapi-fetch';
+import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { cn } from '@/shared/lib/utils';
 import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
+import { Skeleton } from '@/shared/ui/components/shadcn/skeleton';
 import { PageSection } from '@/shared/ui/layouts/page-section';
+import { format } from 'date-fns';
 
 type TodoBuddyTaskCountProps = ComponentPropsWithoutChildren<'section'> & {
   /** タスク数をカウントする日付 */
@@ -22,17 +24,15 @@ export const TodoBuddyTaskCount = ({
   className,
   ...props
 }: TodoBuddyTaskCountProps) => {
-  const { data } = $api.useQuery('get', '/tasks', {
+  const { data } = $api.useQuery('get', '/days/{day}', {
     params: {
-      query: {
-        ...filterToday(date),
-        isCompleted_eq: false,
-        page: 0,
+      path: {
+        day: format(date, DATE_DATA_FORMAT),
       },
     },
   });
   /** 合計残りタスク数 */
-  const totalTasks = data?.totalElements || 0;
+  const totalTasks = data?.uncompletedTaskCount;
   return (
     <PageSection className={cn('px-0 pt-12', className)} {...props}>
       <BuddyMessageCard className="overflow-x-clip">
@@ -42,7 +42,9 @@ export const TodoBuddyTaskCount = ({
           </BuddyMessageCardDescription>
         </BuddyMessageCardHeader>
         <BuddyMessageCardContent className="min-h-24 text-lg break-keep">
-          {totalTasks ? (
+          {totalTasks === undefined ? (
+            <Skeleton className="h-24 w-full" />
+          ) : totalTasks ? (
             <>
               今日のタスクは
               <wbr />
