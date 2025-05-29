@@ -4,10 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
 // Initialize Firebase configuration
-import {
-  requestFirebaseMessagingPermission,
-  onForegroundMessage,
-} from './app/firebase/messaging';
+import { onForegroundMessage } from './app/firebase/messaging';
 import './fonts.css';
 import './index.css';
 import { routeTree } from './route-tree.gen';
@@ -85,7 +82,7 @@ if (rootElement && !rootElement.innerHTML) {
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-requestFirebaseMessagingPermission();
 onForegroundMessage((payload) => {
+  // ここでフォアグラウンド時に受信した通知を処理
   alert(`通知: ${payload.notification?.title}\n${payload.notification?.body}`);
 });
