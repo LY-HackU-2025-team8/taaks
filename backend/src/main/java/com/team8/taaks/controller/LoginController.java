@@ -48,7 +48,7 @@ public class LoginController {
     SecurityContext context = securityContextHolderStrategy.createEmptyContext();
     context.setAuthentication(authenticationResponse);
     TaakUser user = (TaakUser) authenticationResponse.getPrincipal();
-    String token = jwtTokenUtil.generateToken(user);
+    String token = jwtTokenUtil.generateToken(user).token();
     response.setHeader("X-AUTH-TOKEN", "Bearer " + token);
     response.setContentType("application/json");
     securityContextHolderStrategy.setContext(context);

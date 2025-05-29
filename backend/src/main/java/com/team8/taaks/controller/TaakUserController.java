@@ -73,7 +73,7 @@ public class TaakUserController {
         .setAuthentication(
             new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities()));
-    String token = jwtTokenUtil.generateToken(savedUser);
+    String token = jwtTokenUtil.generateToken(savedUser).token();
     UsersResponse userResponse = new UsersResponse(savedUser.getUsername(), savedUser.getId());
     return ResponseEntity.created(URI.create("/users/me"))
         .body(new LoginResponse(token, userResponse));
