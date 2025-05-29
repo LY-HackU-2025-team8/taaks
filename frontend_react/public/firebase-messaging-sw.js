@@ -2,10 +2,10 @@
 /* global firebase */
 /* eslint-disable no-undef */
 importScripts(
-  'https://www.gstatic.com/firebasejs/11.7.3/firebase-app-compat.js'
+  'https://www.gstatic.com/firebasejs/11.8.1/firebase-app-compat.js'
 );
 importScripts(
-  'https://www.gstatic.com/firebasejs/11.7.3/firebase-messaging-compat.js'
+  'https://www.gstatic.com/firebasejs/11.8.1/firebase-messaging-compat.js'
 );
 
 // 公開してもいいAPIキーらしい

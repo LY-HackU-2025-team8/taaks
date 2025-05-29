@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
-// Initialize Firebase configuration
 import { onForegroundMessage } from './app/firebase/messaging';
 import './fonts.css';
 import './index.css';

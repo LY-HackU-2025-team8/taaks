@@ -66,7 +66,6 @@ function RouteComponent() {
             {
               onSuccess: () => {
                 console.log('FCMデバイストークンをサーバーに送信しました');
-                console.log(targetToken);
               },
               onError: (error) => {
                 console.error('FCMデバイストークンの送信に失敗しました', error);
