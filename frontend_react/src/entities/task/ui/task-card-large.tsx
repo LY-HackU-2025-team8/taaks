@@ -1,4 +1,4 @@
-import { EditTaskDrawer } from '@/features/edit-task/edit-task-drawer';
+import { EditTaskDrawer } from '@/entities/task/ui/edit-task-drawer';
 import { cn } from '@/shared/lib/utils';
 import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { BackIconSmall } from '@/shared/ui/components/icons/back-icon-small';

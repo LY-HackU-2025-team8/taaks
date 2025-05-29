@@ -1,4 +1,4 @@
-import { EditTaskDrawer } from '@/features/edit-task/edit-task-drawer';
+import { EditTaskDrawer } from '@/entities/task/ui/edit-task-drawer';
 import { $api } from '@/shared/api/openapi-fetch';
 import { ClockIcon } from '@/shared/ui/components/icons/clock-icon';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
