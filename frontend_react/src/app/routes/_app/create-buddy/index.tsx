@@ -1,24 +1,8 @@
-import type { createBuddyFormSchema } from '@/pages/create-buddy/api/create-buddy-form-schema';
 import { useCreateBuddyStep } from '@/pages/create-buddy/api/use-create-buddy-step';
-import { CreateBuddyNavigation } from '@/pages/create-buddy/ui/create-buddy-navigation';
 import { TaaksBuddyLogo } from '@/pages/create-buddy/ui/taaks-buddy-logo';
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/shared/ui/components/shadcn/form';
-import { Input } from '@/shared/ui/components/shadcn/input';
-import { Heading } from '@/shared/ui/components/typography/heading';
-import { PageHeader } from '@/shared/ui/layouts/page-header';
-import { PageMain } from '@/shared/ui/layouts/page-main';
-import { PageSection } from '@/shared/ui/layouts/page-section';
-import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
+import { Button } from '@/shared/ui/components/shadcn/button';
 import { useCallback } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
-import { z } from 'zod';
 
 export const Route = createFileRoute('/_app/create-buddy/')({
   component: RouteComponent,
@@ -26,58 +10,45 @@ export const Route = createFileRoute('/_app/create-buddy/')({
 
 function RouteComponent() {
   const { nextStep } = useCreateBuddyStep();
-  const form = useFormContext<z.infer<typeof createBuddyFormSchema>>();
   const navigate = Route.useNavigate();
-  const inputName = 'nickname';
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
-    async (e) => {
-      e.preventDefault();
-      const isValid = await form.trigger(inputName);
-      if (isValid) navigate({ to: nextStep.pathname });
-    },
-    [form, inputName, navigate, nextStep]
-  );
+  const handleContinue = useCallback(() => {
+    navigate({ to: nextStep.pathname });
+  }, [navigate, nextStep.pathname]);
 
   return (
-    <>
-      <PageHeader>
-        <PageTitleContainer>
-          <TaaksBuddyLogo className="w-42.75" />
-        </PageTitleContainer>
-      </PageHeader>
-      <PageMain>
-        <form onSubmit={handleSubmit} className="contents">
-          <PageSection className="flex flex-1 flex-col gap-3.5">
-            <Heading size="2xl" className="mt-auto break-keep">
-              まずはあなたの呼び方を
-              <wbr />
-              教えてください
-            </Heading>
-            <div className="mb-auto">
-              <FormField
-                control={form.control}
-                name={inputName}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        variant="flushed"
-                        placeholder="ユーザー"
-                        autoFocus
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>5文字以内</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <CreateBuddyNavigation />
-          </PageSection>
-        </form>
-      </PageMain>
-    </>
+    <div className="bg-background flex h-screen flex-col">
+      <div className="relative flex-grow mask-t-from-80% mask-t-to-100% mask-b-from-80% mask-b-to-100%">
+        <video
+          src="/assets/videos/buddies.mp4"
+          autoPlay
+          loop
+          muted
+          className="absolute top-0 left-0 h-full w-full object-cover"
+        />
+      </div>
+
+      <div className="bg-background flex h-[340px] flex-shrink-0 flex-col items-center justify-center gap-6 px-3.5 py-5 text-center">
+        <TaaksBuddyLogo className="h-12 w-84" />
+        <p className="text-2xl font-bold">
+          あなたを支える唯一無二の
+          <br />
+          バディを作成しよう
+        </p>
+        <p className="text-muted-foreground text-sm">
+          TaaksBuddyはあなたを支えるAIバディーです。
+          <br />
+          あなたの好きなヘアスタイル、服装にカスタマイズしましょう。
+        </p>
+        <Button
+          variant="primary"
+          size="lg"
+          className="mt-auto w-full max-w-md"
+          onClick={handleContinue}
+        >
+          続行
+        </Button>
+      </div>
+    </div>
   );
 }

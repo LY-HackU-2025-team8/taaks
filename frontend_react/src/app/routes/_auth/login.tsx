@@ -100,7 +100,7 @@ function RouteComponent() {
   );
 
   return (
-    <div className="flex h-full flex-col p-7">
+    <div className="flex w-full flex-col p-7">
       <Form {...form}>
         <form className="mt-auto" onSubmit={handleSubmit}>
           <Card className="rounded-5xl gap-5 py-5">

@@ -8,6 +8,7 @@ const steps: {
   size?: 'medium' | 'large-top' | 'large-bottom';
 }[] = [
   { pathname: '/create-buddy' },
+  { pathname: '/create-buddy/nickname' },
   { pathname: '/create-buddy/hair', motionId: 1, faceId: 1, size: 'large-top' },
   {
     pathname: '/create-buddy/clothes',
