@@ -8,6 +8,7 @@ import { filterToday } from '@/shared/api/filter-today';
 import { $api } from '@/shared/api/openapi-fetch';
 import { cn } from '@/shared/lib/utils';
 import type { ComponentPropsWithoutChildren } from '@/shared/types';
+import { RiveBuddy } from '@/shared/ui/components/custom/rive-buddy';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 
 type BuddyTaskCountProps = ComponentPropsWithoutChildren<'section'> & {
@@ -33,14 +34,14 @@ export const BuddyTaskCount = ({
   /** 合計残りタスク数 */
   const totalTasks = data?.totalElements || 0;
   return (
-    <PageSection className={cn('px-0', className)} {...props}>
+    <PageSection className={cn('px-0 pt-12', className)} {...props}>
       <BuddyMessageCard>
         <BuddyMessageCardHeader>
           <BuddyMessageCardDescription>
             Buddyからのメッセージ
           </BuddyMessageCardDescription>
         </BuddyMessageCardHeader>
-        <BuddyMessageCardContent className="text-lg break-keep">
+        <BuddyMessageCardContent className="min-h-24 text-lg break-keep">
           {totalTasks ? (
             <>
               今日のタスクは
@@ -53,6 +54,9 @@ export const BuddyTaskCount = ({
             <>今日もお疲れ様！</>
           )}
         </BuddyMessageCardContent>
+        <div className="absolute -right-4 bottom-0 size-64">
+          <RiveBuddy motionId={1} faceId={6} />
+        </div>
       </BuddyMessageCard>
     </PageSection>
   );
