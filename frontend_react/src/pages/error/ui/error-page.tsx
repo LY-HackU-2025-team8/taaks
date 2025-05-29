@@ -26,7 +26,7 @@ export const ErrorPage = ({ error, reset }: ErrorPageProps) => {
       <PageMain>
         <PageSection className="flex flex-1 flex-col">
           <PageSectionTitle>エラーの詳細</PageSectionTitle>
-          <pre className="overflow-x-auto">
+          <pre className="w-full overflow-x-auto">
             {error?.stack || 'エラーのスタックトレースがありません。'}
           </pre>
           <div className="mt-auto flex gap-3.5">

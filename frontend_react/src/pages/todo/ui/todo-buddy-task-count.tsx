@@ -35,7 +35,7 @@ export const TodoBuddyTaskCount = ({
   const totalTasks = data?.totalElements || 0;
   return (
     <PageSection className={cn('px-0 pt-12', className)} {...props}>
-      <BuddyMessageCard>
+      <BuddyMessageCard className="overflow-x-clip">
         <BuddyMessageCardHeader>
           <BuddyMessageCardDescription>
             Buddyからのメッセージ
