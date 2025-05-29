@@ -7,6 +7,7 @@ import { Link } from '@tanstack/react-router';
 
 /** ダッシュボード上部のBuddy */
 export const DashboardBuddy = () => {
+  // TODO: 取得できなかった時のエラーハンドリングを追加する
   const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
 
   // 時間帯に応じて挨拶を変更する
