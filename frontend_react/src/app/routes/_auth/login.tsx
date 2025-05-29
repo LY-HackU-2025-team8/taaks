@@ -1,3 +1,4 @@
+import { requestFirebaseMessagingPermission } from '@/app/firebase/messaging';
 import { $api } from '@/shared/api/openapi-fetch';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import {
@@ -36,14 +37,46 @@ function RouteComponent() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
+  // FCMのデバイストークンをサーバーに送信するためのミューテーションを定義
+  const {
+    mutate: mutateNotificationTargetToken,
+    // isPending: isNotificationTargetTokenPending,
+    // error: notificationTargetTokenError,
+  } = $api.useMutation('post', '/notification-target-token');
+
   const { mutate, isPending, error } = $api.useMutation('post', '/login', {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       const token = data.token;
       if (!token) return;
       // トークンをローカルストレージに保存
       localStorage.setItem('token', token);
       // ユーザー情報のキャッシュを更新
       queryClient.invalidateQueries($api.queryOptions('get', '/users/me'));
+
+      // FCMのデバイストークンをサーバーに送信
+      try {
+        const targetToken = await requestFirebaseMessagingPermission();
+        if (targetToken != null) {
+          mutateNotificationTargetToken(
+            {
+              body: {
+                target_token: targetToken,
+              },
+            },
+            {
+              onSuccess: () => {
+                console.log('FCMデバイストークンをサーバーに送信しました');
+              },
+              onError: (error) => {
+                console.error('FCMデバイストークンの送信に失敗しました', error);
+              },
+            }
+          );
+        }
+      } catch (error) {
+        console.error('FCMデバイストークンの取得に失敗しました', error);
+      }
+
       // ダッシュボードにリダイレクト
       navigate({
         to: '/dashboard',

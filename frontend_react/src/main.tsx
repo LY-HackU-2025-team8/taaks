@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { ThemeProvider } from 'next-themes';
+import { onForegroundMessage } from './app/firebase/messaging';
 import './fonts.css';
 import './index.css';
 import { ErrorPage } from './pages/error/ui/error-page.tsx';
@@ -84,3 +85,8 @@ if (rootElement && !rootElement.innerHTML) {
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+onForegroundMessage((payload) => {
+  // ここでフォアグラウンド時に受信した通知を処理
+  alert(`通知: ${payload.notification?.title}\n${payload.notification?.body}`);
+});

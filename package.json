@@ -39,5 +39,8 @@
   ],
   "devDependencies": {
     "npm-run-all2": "^8.0.1"
+  },
+  "dependencies": {
+    "firebase": "^11.8.1"
   }
 }
