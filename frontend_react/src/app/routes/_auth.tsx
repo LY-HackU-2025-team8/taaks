@@ -8,12 +8,12 @@ export const Route = createFileRoute('/_auth')({
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { isFetched } = $api.useSuspenseQuery('get', '/users/me');
+  const { isSuccess } = $api.useQuery('get', '/users/me');
 
   // ログインしている場合はダッシュボードへリダイレクト
   useEffect(() => {
-    if (isFetched) navigate({ to: '/dashboard' });
-  }, [isFetched, navigate]);
+    if (isSuccess) navigate({ to: '/dashboard' });
+  }, [isSuccess, navigate]);
 
   return <Outlet />;
 }

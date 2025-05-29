@@ -24,18 +24,8 @@ const addAuthHeader: Middleware = {
   },
 };
 
-/** バックエンドがエラー時にBodyを返さなかった時に、強制的にエラーを投げる */
-const forceThrowError: Middleware = {
-  async onResponse({ response }) {
-    if (!response.ok && (await response.text()) === '') {
-      throw new Error('Unexpected error');
-    }
-  },
-};
-
 // ミドルウェアをFetchClientに追加
 fetchClient.use(addAuthHeader);
-fetchClient.use(forceThrowError);
 
 /**
  * @see https://openapi-ts.dev/ja/openapi-react-query/

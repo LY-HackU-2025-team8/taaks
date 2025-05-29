@@ -11,7 +11,6 @@ export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) => {
     await redirectUnlessLoggedIn(queryClient, { to: '/login' });
   },
-
   component: RouteComponent,
 });
 

@@ -1,7 +1,7 @@
 import type { createBuddyFormSchema } from '@/pages/create-buddy/api/create-buddy-form-schema';
 import { useCreateBuddyStep } from '@/pages/create-buddy/api/use-create-buddy-step';
 import { CreateBuddyNavigation } from '@/pages/create-buddy/ui/create-buddy-navigation';
-import { CLOTHES_OPTIONS } from '@/shared/constants/buddy-options';
+import { HAIR_OPTIONS } from '@/shared/constants/buddy-options';
 import {
   FormControl,
   FormField,
@@ -13,11 +13,12 @@ import {
   ToggleGroupItem,
 } from '@/shared/ui/components/shadcn/toggle-group';
 import { Heading } from '@/shared/ui/components/typography/heading';
+import { useCallback } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
-export const Route = createFileRoute('/create-buddy/_with-progress/clothes')({
+export const Route = createFileRoute('/_app/create-buddy/_with-progress/hair')({
   component: RouteComponent,
 });
 
@@ -25,17 +26,20 @@ function RouteComponent() {
   const { nextStep } = useCreateBuddyStep();
   const form = useFormContext<z.infer<typeof createBuddyFormSchema>>();
   const navigate = Route.useNavigate();
-  const inputName = 'clothesId';
+  const inputName = 'hairStyleId';
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-    const isValid = await form.trigger(inputName);
-    if (isValid) navigate({ to: nextStep.pathname });
-  };
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const isValid = await form.trigger(inputName);
+      if (isValid) navigate({ to: nextStep.pathname });
+    },
+    [form, inputName, navigate, nextStep]
+  );
 
   return (
     <form onSubmit={handleSubmit} className="contents">
-      <Heading size="lg">服装を選択</Heading>
+      <Heading size="lg">ヘアスタイルを選択</Heading>
       <FormField
         control={form.control}
         name={inputName}
@@ -48,7 +52,7 @@ function RouteComponent() {
                 value={String(field.value)}
                 onValueChange={field.onChange}
               >
-                {CLOTHES_OPTIONS.map(({ value, icon: Icon, name }) => (
+                {HAIR_OPTIONS.map(({ value, icon: Icon, name }) => (
                   <FormControl key={value}>
                     <ToggleGroupItem
                       value={value}
