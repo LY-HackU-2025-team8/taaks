@@ -19,7 +19,7 @@ import { z } from 'zod';
 
 type EditTaskDrawerProps = React.ComponentProps<typeof Drawer> & {
   /** 編集対象のタスク */
-  task?: TaskResponseModel;
+  task: TaskResponseModel;
 };
 
 /**
@@ -33,9 +33,7 @@ export const EditTaskDrawer = ({
   children,
   ...props
 }: EditTaskDrawerProps) => {
-  const { editTask, isPending, error } = useEditTask(
-    z.number().parse(task?.id)
-  );
+  const { editTask, isPending, error } = useEditTask(task);
   const drawerState = useDrawerState({
     open,
     onOpenChange,
@@ -49,12 +47,14 @@ export const EditTaskDrawer = ({
   });
 
   // FormのSubmit時にタスクを編集する
-  const handleSubmit = form.handleSubmit(
-    editTask({
-      onSuccess: () => {
-        // タスクの編集に成功したらフォームをリセットし、Drawerを閉じる
-        form.reset();
-        drawerState.onOpenChange(false);
+  const handleSubmit = form.handleSubmit((data) =>
+    editTask(data, {
+      mutateOptions: {
+        onSuccess: () => {
+          // タスクの編集に成功したらフォームをリセットし、Drawerを閉じる
+          form.reset();
+          drawerState.onOpenChange(false);
+        },
       },
     })
   );

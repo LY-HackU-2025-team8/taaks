@@ -13,11 +13,8 @@ import {
   CardTitle,
 } from '@/shared/ui/components/shadcn/card';
 import { Text } from '@/shared/ui/components/typography/text';
-import { useCallback } from 'react';
 import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
-import { z } from 'zod';
-import { taskFormSchema } from '../api/task-form-schema';
 import type { TaskResponseModel } from '../api/task-model';
 import { useEditTask } from '../api/use-edit-task';
 
@@ -32,27 +29,8 @@ export const TaskCardLarge = ({
   className,
   ...props
 }: TaskCardLargeProps) => {
-  const { editTask, isPending } = useEditTask(z.number().parse(task.id));
-
-  /** タスクを完了する */
-  const handleComplete = useCallback(() => {
-    editTask()(
-      taskFormSchema.parse({
-        ...task,
-        completedAt: new Date(),
-      })
-    );
-  }, [editTask, task]);
-
-  /** タスクの完了を取り消す */
-  const handleUndo = useCallback(() => {
-    editTask()(
-      taskFormSchema.parse({
-        ...task,
-        completedAt: null,
-      })
-    );
-  }, [editTask, task]);
+  const { handleCompleteTask, handleUnCompleteTask, isPending } =
+    useEditTask(task);
 
   /** タスクが完了しているかどうか */
   const isCompleted = !!task.completedAt;
@@ -99,7 +77,7 @@ export const TaskCardLarge = ({
           size="icon-sm"
           className="border-card-foreground text-card-foreground"
           disabled={isPending}
-          onClick={isCompleted ? handleUndo : handleComplete}
+          onClick={isCompleted ? handleUnCompleteTask : handleCompleteTask}
         >
           {isCompleted ? <BackIconSmall /> : <CheckIconSmall />}
         </Button>
