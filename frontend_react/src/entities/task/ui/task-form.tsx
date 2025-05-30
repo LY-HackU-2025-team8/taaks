@@ -111,7 +111,7 @@ export const TaskForm = ({
                 step={1}
               />
               <FormDescription className="w-8 text-center">
-                {field.value !== -1 ? '自動' : field.value}
+                {field.value === -1 ? '自動' : field.value}
               </FormDescription>
               <FormMessage />
             </FormItem>
