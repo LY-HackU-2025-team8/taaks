@@ -16,7 +16,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 export const Route = createFileRoute(
-  '/_app/create-buddy/_with-progress/buddy-name'
+  '/create-buddy/_with-progress/buddy-name'
 )({
   component: RouteComponent,
 });

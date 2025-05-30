@@ -5,11 +5,13 @@ import { AppNavContext } from '@/shared/ui/layouts/app-nav-context';
 import { useCallback, useEffect, useState } from 'react';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useTheme } from 'next-themes';
-import { redirectUnlessLoggedIn } from '../api/require-login';
+import { redirectUnlessBuddyExists } from '../api/redirect-unless-buddy-exists';
+import { redirectUnlessLoggedIn } from '../api/redirect-unless-logged-in';
 
 export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) => {
     await redirectUnlessLoggedIn(queryClient, { to: '/login' });
+    await redirectUnlessBuddyExists(queryClient, { to: '/create-buddy' });
   },
   component: RouteComponent,
 });
