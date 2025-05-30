@@ -17,7 +17,7 @@ export const TaskHorizontalSummaryStack = ({
   return (
     <div
       className={cn(
-        'flex items-stretch gap-3.5 overflow-x-auto py-1',
+        '-mx-3.5 flex items-stretch gap-3.5 overflow-x-auto px-3.5 py-1',
         className
       )}
       {...props}

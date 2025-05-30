@@ -21,7 +21,7 @@ export const TaskHorizontalSmallStack = ({
   return (
     <div
       className={cn(
-        'flex items-stretch gap-3.5 overflow-x-auto py-1',
+        '-mx-3.5 flex items-stretch gap-3.5 overflow-x-auto px-3.5 py-1',
         className
       )}
       {...props}
@@ -30,11 +30,18 @@ export const TaskHorizontalSmallStack = ({
         <TaskCardSmallBuddy
           task={task}
           key={task.id}
-          className="flex-shrink-0"
+          className="-order-2 flex-shrink-0"
         />
       ))}
-      {tasks.map((task) => (
-        <TaskCardSmall task={task} key={task.id} className="flex-shrink-0" />
+      {tasks.map((task, i) => (
+        <TaskCardSmall
+          task={task}
+          key={task.id}
+          className={cn('flex-shrink-0', {
+            '-order-3': i === 0,
+            '-order-2': i > 0,
+          })}
+        />
       ))}
       {!tasks.length && !suggestedTasks?.length && (
         <Text variant="muted">タスクがありません</Text>
