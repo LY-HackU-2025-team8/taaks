@@ -13,4 +13,4 @@ public record TaskRegisterRequest(
     @Schema(required = true) LocalDateTime completedAt,
     @Schema(required = true) int loadScore,
     @Schema(required = true) List<ZonedDateTime> scheduledAt,
-    @Schema(required = true) boolean autoCalculateLoadScore) {}
+    boolean autoCalculateLoadScore) {}
