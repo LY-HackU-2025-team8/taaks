@@ -7,16 +7,11 @@ import type { ComponentPropsWithoutChildren } from '@/shared/types';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
-import { isSameDay } from 'date-fns';
 
-type TodoMainTasksProps = ComponentPropsWithoutChildren<typeof PageSection> & {
-  /** 表示するタスクの日付 */
-  date: Date;
-};
+type DashboardMainTaskProps = ComponentPropsWithoutChildren<typeof PageSection>;
 
-export const TodoMainTasks = ({ date, ...props }: TodoMainTasksProps) => {
-  const currentDate = useCurrentDate({ timeResolution: 'day' });
-  const isToday = isSameDay(date, currentDate);
+export const DashboardMainTask = ({ ...props }: DashboardMainTaskProps) => {
+  const date = useCurrentDate({ timeResolution: 'day' });
   const { data: suggestedTask } = $api.useSuspenseQuery(
     'get',
     '/suggested-tasks/today'
@@ -41,11 +36,12 @@ export const TodoMainTasks = ({ date, ...props }: TodoMainTasksProps) => {
       suspense: true,
     }
   );
+
   return (
     <PageSection {...props}>
       <PageSectionTitle>主要なタスク</PageSectionTitle>
       <TaskHorizontalSmallStack
-        suggestedTasks={isToday ? [suggestedTask] : []}
+        suggestedTasks={[suggestedTask]}
         tasks={data?.pages.flatMap((page) => page.content || []) || []}
       >
         {hasNextPage && (

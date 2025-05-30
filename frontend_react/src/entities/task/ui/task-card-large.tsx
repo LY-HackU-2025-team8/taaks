@@ -65,7 +65,7 @@ export const TaskCardLarge = ({
       </CardContent>
       <CardFooter className="justify-end gap-1.5">
         <Heading variant="muted" size="sm" className="mr-auto">
-          負荷スコア {task.loadScore}点
+          負荷スコア {task.loadScore}
         </Heading>
         <EditTaskDrawer task={task}>
           <Button

@@ -2,6 +2,7 @@ import { TodoBuddyTaskCount } from '@/pages/todo/ui/todo-buddy-task-count';
 import { TodoCompletedTasks } from '@/pages/todo/ui/todo-completed-tasks';
 import { TodoMainTasks } from '@/pages/todo/ui/todo-main-tasks';
 import { TodoPendingTasks } from '@/pages/todo/ui/todo-not-completed';
+import { TodoTaskLoadScore } from '@/pages/todo/ui/todo-task-load-score';
 import { refineDateFormat } from '@/shared/api/zod/refine-date-format';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { cn } from '@/shared/lib/utils';
@@ -73,6 +74,7 @@ function RouteComponent() {
       <PageMain>
         <Suspense fallback={<Loading />}>
           <TodoMainTasks date={date} />
+          <TodoTaskLoadScore date={date} />
           <TodoPendingTasks date={date} />
           <TodoBuddyTaskCount date={date} />
           <TodoCompletedTasks date={date} />

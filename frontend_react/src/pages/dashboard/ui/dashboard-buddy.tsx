@@ -30,7 +30,7 @@ export const DashboardBuddy = () => {
       </div>
       <div className="pointer-events-none flex h-72 w-full flex-col">
         <RiveBuddy
-          className="absolute -top-16 -right-18 size-96 mask-b-from-60% mask-b-to-100%"
+          className="absolute -top-16 -right-18 size-96 mask-b-from-60% mask-b-to-90%"
           motionId={1}
           faceId={3}
           hairId={buddy?.hairStyleId ?? 1}
