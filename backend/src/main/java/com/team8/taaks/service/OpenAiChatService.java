@@ -75,6 +75,7 @@ public class OpenAiChatService implements ChatService {
       List<GeneratedTask> generatedTasks = outputOptional.get().tasks();
       return generatedTasks;
     } catch (OpenAiApiException e) {
+      System.err.println("Failed to generate tasks from OpenAI API: " + e.getMessage());
       throw new OpenAiApiException(
           e.getStatusCode(), e.getErrorBody() != null ? e.getErrorBody() : "Unknown error");
     }
@@ -89,6 +90,6 @@ public class OpenAiChatService implements ChatService {
   public List<GeneratedTask> getSuggestedTasks(String prompt) {
     List<GeneratedTask> generatedTasks = generateTasks(prompt);
     System.out.println("Generated tasks: " + generatedTasks);
-    return generatedTasks; // ダミーのタスクを返す
+    return generatedTasks;
   }
 }
