@@ -256,7 +256,7 @@ public class DiariesController {
           HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while using the AI service");
     }
     // 提案するタスクの有無を確認
-    if (suggestedTasks.get(0).title().equals("なし")) {
+    if (suggestedTasks.isEmpty() || suggestedTasks.get(0).title().equals("なし")) {
       List<GeneratedTaskResponse> response = new ArrayList<>();
       return ResponseEntity.ok(response);
     }
