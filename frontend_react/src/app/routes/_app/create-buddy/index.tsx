@@ -24,8 +24,8 @@ function RouteComponent() {
           autoPlay
           loop
           muted
-          playsInline
-          preload="auto"
+          playsInline  // ios端末でのフルスクリーンを防ぐため
+          preload="metadata"
           className="absolute top-0 left-0 h-full w-full object-cover"
         />
       </div>
