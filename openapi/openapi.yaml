@@ -301,6 +301,40 @@ paths:
       summary: Update a diary by ID
       tags:
       - diaries-controller
+  /diaries/{id}/suggested-tasks:
+    get:
+      operationId: diariesIdSuggestedTasks
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GeneratedTask"
+          description: Successfully retrieved suggested tasks
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: An error occurred while using the AI service
+        default:
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: exception
+      summary: Get suggested tasks from a diary
+      tags:
+      - diaries-controller
   /login:
     post:
       operationId: login
@@ -836,6 +870,14 @@ components:
           type: string
       required:
       - message
+    GeneratedTask:
+      type: object
+      properties:
+        loadScore:
+          type: integer
+          format: int32
+        title:
+          type: string
     GenericMessageResponse:
       type: object
       properties:
