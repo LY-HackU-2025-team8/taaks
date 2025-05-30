@@ -21,7 +21,7 @@ function RouteComponent() {
   const { setTheme } = useTheme();
   const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
   const colorId = buddy?.colorId;
-  
+
   /** AppNavを非表示にする */
   const showAppNav = useCallback(() => {
     setHidden(false);
