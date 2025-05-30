@@ -1,5 +1,5 @@
 import { $api } from '@/shared/api/openapi-fetch';
-import { useCurrentDate } from '@/shared/hooks/use-current-date';
+import { useGreeting } from '@/shared/hooks/use-greeting';
 import { RiveBuddy } from '@/shared/ui/components/rive/rive-buddy';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Heading } from '@/shared/ui/components/typography/heading';
@@ -11,16 +11,12 @@ export const DashboardBuddy = () => {
   const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
 
   // 時間帯に応じて挨拶を変更する
-  const date = useCurrentDate({ timeResolution: 'hour' });
-  const hours = date.getHours();
-  const greeting =
-    hours < 10 ? 'おはよう' : hours < 18 ? 'こんにちは' : 'こんばんは';
-
+  const { casual } = useGreeting();
   return (
     <div className="relative flex h-72 items-center overflow-x-clip overflow-y-visible">
       <div className="z-1 flex flex-col items-start gap-3">
         <Heading size="xl" variant="custom" className="break-keep">
-          {greeting}
+          {casual}
           <wbr />
           {buddy?.nickname}さん！
         </Heading>
