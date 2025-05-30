@@ -39,6 +39,7 @@ public class OpenAiChatService implements ChatService {
               .findFirst();
       if (outputOptional.isEmpty()) {
         System.err.println("Failed to get load score from OpenAI API");
+        return 0; // 負荷スコアが取得できなかった場合は0を返す
       }
       int loadScore = outputOptional.get().loadScore();
       // System.out.println("負荷スコア: " + loadScore);
@@ -72,6 +73,10 @@ public class OpenAiChatService implements ChatService {
               .flatMap(msg -> msg.content().stream())
               .flatMap(content -> content.outputText().stream())
               .findFirst();
+      if (outputOptional.isEmpty()) {
+        System.err.println("Failed to generate tasks from OpenAI API");
+        return List.of(); // 空のリストを返す
+      }
       List<GeneratedTask> generatedTasks = outputOptional.get().tasks();
       return generatedTasks;
     } catch (OpenAiApiException e) {
