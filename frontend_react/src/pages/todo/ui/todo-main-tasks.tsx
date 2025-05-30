@@ -39,7 +39,7 @@ export const TodoMainTasks = ({ date, ...props }: TodoMainTasksProps) => {
           ...filterTodayTasks(date),
           isCompleted_eq: false,
           sort: ['loadScore,desc'],
-          size: 4,
+          size: 6,
         },
       },
     },
