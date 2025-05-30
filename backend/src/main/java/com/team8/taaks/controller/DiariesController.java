@@ -227,7 +227,8 @@ public class DiariesController {
     try {
       suggestedTasks = openAiChatService.getSuggestedTasks(prompt);
     } catch (Exception e) {
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while using the AI service");
+      throw new ResponseStatusException(
+          HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while using the AI service");
     }
     // 提案するタスクの有無を確認
     if (suggestedTasks.get(0).title().equals("なし")) {
