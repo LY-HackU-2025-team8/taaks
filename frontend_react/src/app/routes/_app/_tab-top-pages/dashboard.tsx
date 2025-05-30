@@ -1,5 +1,6 @@
 import { DashboardBuddy } from '@/pages/dashboard/ui/dashboard-buddy';
 import { DashboardMainTask } from '@/pages/dashboard/ui/dashboard-main-task';
+import { DashboardBuddySuggestion } from '@/pages/dashboard/ui/dashboard-buddy-suggestion';
 import { DashboardPersonal } from '@/pages/dashboard/ui/dashboard-personal';
 import { DashboardTaskLoadScore } from '@/pages/dashboard/ui/dashboard-task-load-score';
 import { ToolLinkButton } from '@/pages/dashboard/ui/tool-link-button';
@@ -13,7 +14,6 @@ import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { Suspense } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { DashboardBuddySuggestion } from '@/pages/dashboard/ui/dashboard-buddy-suggestion';
 
 export const Route = createFileRoute('/_app/_tab-top-pages/dashboard')({
   context: ({ context }) => ({

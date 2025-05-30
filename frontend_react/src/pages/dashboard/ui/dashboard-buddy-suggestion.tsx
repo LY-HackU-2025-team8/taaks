@@ -1,22 +1,20 @@
-import { PageSection } from '@/shared/ui/layouts/page-section';
 import {
   BuddyMessageCard,
   BuddyMessageCardHeader,
   BuddyMessageCardDescription,
   BuddyMessageCardContent,
 } from '@/entities/buddy/ui/buddy-message-card';
-import { useCurrentDate } from '@/shared/hooks/use-current-date';
-import { Button } from '@/shared/ui/components/shadcn/button';
 import { AddTaskDrawer } from '@/entities/task/ui/add-task-drawer';
-import { Link } from '@tanstack/react-router';
+import { useCurrentDate } from '@/shared/hooks/use-current-date';
 import { useGreeting } from '@/shared/hooks/use-greeting';
+import { Button } from '@/shared/ui/components/shadcn/button';
+import { PageSection } from '@/shared/ui/layouts/page-section';
+import { Link } from '@tanstack/react-router';
 
 const MorningSuggestion = () => {
   const { formal } = useGreeting();
   return (
-    <BuddyMessageCard
-      className='overflow-clip flex flex-col relative'
-    >
+    <BuddyMessageCard className="relative flex flex-col overflow-clip">
       <img
         src="/assets/images/todo_3d.png"
         alt="タスクバインダーのイラスト"
@@ -48,17 +46,14 @@ const MorningSuggestion = () => {
           タスクを入れる
         </Button>
       </AddTaskDrawer>
-
     </BuddyMessageCard>
   );
-}
+};
 
 const EveningSuggestion = () => {
   const { formal } = useGreeting();
   return (
-    <BuddyMessageCard
-      className='overflow-clip min-h-40'
-    >
+    <BuddyMessageCard className="min-h-40 overflow-clip">
       <img
         src="/assets/images/diary_3d.png"
         alt="日記帳のイラスト"
@@ -86,30 +81,20 @@ const EveningSuggestion = () => {
         className="absolute right-3.5 bottom-3.5"
         asChild
       >
-        <Link
-          to="/diary"
-        >
-          日記を書く
-        </Link>
+        <Link to="/diary">日記を書く</Link>
       </Button>
-
     </BuddyMessageCard>
   );
-}
+};
 
 export const DashboardBuddySuggestion = () => {
-
   const date = useCurrentDate({ timeResolution: 'day' });
   const hour = date.getHours();
   console.log('Current hour:', hour);
 
   return (
     <PageSection>
-      {hour < 19 ? (
-        <MorningSuggestion />
-      ) : (
-        <EveningSuggestion />
-      )}
+      {hour < 19 ? <MorningSuggestion /> : <EveningSuggestion />}
     </PageSection>
   );
 };

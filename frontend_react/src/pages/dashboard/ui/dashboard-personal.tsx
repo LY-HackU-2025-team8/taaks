@@ -1,10 +1,10 @@
 import { $api } from '@/shared/api/openapi-fetch';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
+import { useCurrentDate } from '@/shared/hooks/use-current-date';
 import { CardContent } from '@/shared/ui/components/shadcn/card';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
 import { format } from 'date-fns';
-import { useCurrentDate } from '@/shared/hooks/use-current-date';
 
 export const DashboardPersonal = () => {
   const date = useCurrentDate({ timeResolution: 'day' });
