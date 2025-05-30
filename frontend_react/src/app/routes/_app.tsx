@@ -19,11 +19,8 @@ export const Route = createFileRoute('/_app')({
 function RouteComponent() {
   const [hidden, setHidden] = useState(true);
   const { setTheme } = useTheme();
-
-  const { data: buddy, isSuccess } = $api.useQuery('get', '/buddy');
-  console.log(isSuccess, buddy);
-  const colorId = isSuccess ? buddy?.colorId : 1;
-  
+  const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
+  const colorId = buddy?.colorId;
   /** AppNavを非表示にする */
   const showAppNav = useCallback(() => {
     setHidden(false);
