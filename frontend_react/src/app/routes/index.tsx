@@ -44,7 +44,7 @@ function RouteComponent() {
 
       <div className="mt-auto mb-[env(safe-area-inset-bottom)] flex gap-4 p-7">
         <Button className="flex-1" size="lg" asChild>
-          <Link to="/login">はじめて使う</Link>
+          <Link to="/register">はじめて使う</Link>
         </Button>
         <Button className="flex-1" variant="outline" size="lg" asChild>
           <Link to="/login">ログイン</Link>

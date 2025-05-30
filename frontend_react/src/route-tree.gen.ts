@@ -18,6 +18,7 @@ import { Route as IndexImport } from './app/routes/index'
 import { Route as CreateBuddyIndexImport } from './app/routes/create-buddy/index'
 import { Route as CreateBuddyNicknameImport } from './app/routes/create-buddy/nickname'
 import { Route as CreateBuddyWithProgressImport } from './app/routes/create-buddy/_with-progress'
+import { Route as AuthRegisterImport } from './app/routes/_auth/register'
 import { Route as AuthLoginImport } from './app/routes/_auth/login'
 import { Route as AppTabTopPagesImport } from './app/routes/_app/_tab-top-pages'
 import { Route as CreateBuddyWithProgressHairImport } from './app/routes/create-buddy/_with-progress/hair'
@@ -71,6 +72,12 @@ const CreateBuddyNicknameRoute = CreateBuddyNicknameImport.update({
 const CreateBuddyWithProgressRoute = CreateBuddyWithProgressImport.update({
   id: '/_with-progress',
   getParentRoute: () => CreateBuddyRoute,
+} as any)
+
+const AuthRegisterRoute = AuthRegisterImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 const AuthLoginRoute = AuthLoginImport.update({
@@ -198,6 +205,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterImport
       parentRoute: typeof AuthImport
     }
     '/create-buddy/_with-progress': {
@@ -339,10 +353,12 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface AuthRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -389,6 +405,7 @@ export interface FileRoutesByFullPath {
   '': typeof AppTabTopPagesRouteWithChildren
   '/create-buddy': typeof CreateBuddyWithProgressRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
   '/create-buddy/nickname': typeof CreateBuddyNicknameRoute
   '/create-buddy/': typeof CreateBuddyIndexRoute
   '/buddy': typeof AppTabTopPagesBuddyRoute
@@ -408,6 +425,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AppTabTopPagesRouteWithChildren
   '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
   '/create-buddy': typeof CreateBuddyIndexRoute
   '/create-buddy/nickname': typeof CreateBuddyNicknameRoute
   '/buddy': typeof AppTabTopPagesBuddyRoute
@@ -431,6 +449,7 @@ export interface FileRoutesById {
   '/create-buddy': typeof CreateBuddyRouteWithChildren
   '/_app/_tab-top-pages': typeof AppTabTopPagesRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
+  '/_auth/register': typeof AuthRegisterRoute
   '/create-buddy/_with-progress': typeof CreateBuddyWithProgressRouteWithChildren
   '/create-buddy/nickname': typeof CreateBuddyNicknameRoute
   '/create-buddy/': typeof CreateBuddyIndexRoute
@@ -454,6 +473,7 @@ export interface FileRouteTypes {
     | ''
     | '/create-buddy'
     | '/login'
+    | '/register'
     | '/create-buddy/nickname'
     | '/create-buddy/'
     | '/buddy'
@@ -472,6 +492,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/login'
+    | '/register'
     | '/create-buddy'
     | '/create-buddy/nickname'
     | '/buddy'
@@ -493,6 +514,7 @@ export interface FileRouteTypes {
     | '/create-buddy'
     | '/_app/_tab-top-pages'
     | '/_auth/login'
+    | '/_auth/register'
     | '/create-buddy/_with-progress'
     | '/create-buddy/nickname'
     | '/create-buddy/'
@@ -554,7 +576,8 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/login"
+        "/_auth/login",
+        "/_auth/register"
       ]
     },
     "/create-buddy": {
@@ -578,6 +601,10 @@ export const routeTree = rootRoute
     },
     "/_auth/login": {
       "filePath": "_auth/login.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/register": {
+      "filePath": "_auth/register.tsx",
       "parent": "/_auth"
     },
     "/create-buddy/_with-progress": {
