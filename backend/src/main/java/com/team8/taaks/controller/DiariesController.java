@@ -3,14 +3,20 @@ package com.team8.taaks.controller;
 import com.team8.taaks.dto.DiaryRequest;
 import com.team8.taaks.dto.DiaryResponse;
 import com.team8.taaks.dto.ErrorResponse;
+import com.team8.taaks.dto.GeneratedTask;
+import com.team8.taaks.dto.GeneratedTaskResponse;
 import com.team8.taaks.model.Diary;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.repository.DiaryRepository;
+import com.team8.taaks.service.OpenAiChatService;
 import com.team8.taaks.specification.DiarySpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +42,8 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/diaries")
 public class DiariesController {
+  private final OpenAiChatService openAiChatService = new OpenAiChatService();
+
   @Autowired private DiaryRepository diaryRepository;
 
   @GetMapping
@@ -171,5 +179,96 @@ public class DiariesController {
     }
     diaryRepository.deleteById(id);
     return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/{id}/suggested-tasks")
+  @Operation(
+      summary = "Get suggested tasks from a diary",
+      responses = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved suggested tasks"),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Diary not found",
+            content =
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema =
+                        @io.swagger.v3.oas.annotations.media.Schema(
+                            implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "500",
+            description = "An error occurred while using the AI service",
+            content =
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema =
+                        @io.swagger.v3.oas.annotations.media.Schema(
+                            implementation = ErrorResponse.class)))
+      })
+  public ResponseEntity<List<GeneratedTaskResponse>> diariesIdSuggestedTasks(
+      @PathVariable("id") Integer id, @AuthenticationPrincipal TaakUser user) {
+    Optional<Diary> diaryOpt = diaryRepository.findByIdAndUserId(id, user.getId());
+    if (diaryOpt.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Diary not found");
+    }
+    Diary diary = diaryOpt.get();
+    String prompt =
+        "指示,\n"
+            + //
+            "バディの書いた以下の日記を解析して、次の日のタスクを教えてください。また、タスクがある場合はその負荷のスコアと期限までの時間も見積もってください。タスクが複数ある場合は、複数提案してください。\n"
+            + "=".repeat(20)
+            + "\n"
+            + "背景,\n"
+            + "バディが大事なタスクを忘れないように、バディが毎日書く日記を見て、リマインドしています。 \n"
+            + "=".repeat(20)
+            + "\n"
+            + "出力のフォーマット,\n"
+            + "タスクのタイトル（title）と負荷スコア（loadScore）を返してください。負荷スコアは1~10の間で算出してください。期限までの時間はhour単位で出力してください。期限がわからないときは24時間としてください。 \n"
+            + "=".repeat(20)
+            + "\n"
+            + "要件,\n"
+            + "提案するタスクがない場合は、タイトルを「なし」で負荷スコアを「0」としたタスクを一つ返してください。現在時刻は"
+            + LocalDateTime.now()
+            + "とします。"
+            + "「提案するタスクは：」などの内容とは関係ない表現は必要ありません。 \n"
+            + "=".repeat(20)
+            + "\n"
+            + "例題,\n"
+            + "＜入力＞\n"
+            + "タイトル： 研究室での一日\n"
+            + "本文：今日も朝から研究室。卒論の進捗が芳しくなくて、教授に軽く詰められる。午後はオンラインで面接1本、終わったあと一気に疲れが来た。先週受けた１次面接が通っていたのでとても嬉しい。何に一番力を入れるべきか分からなくなってきたけど、とりあえず目の前のことを一つずつやるしかない。\n"
+            + //
+            "＜出力＞\n"
+            + "title: ２次面接の予約をする, loadScore: 2, due_at: ＜次の日の同じ時刻＞\n"
+            + "=".repeat(20)
+            + "\n"
+            + "入力,\n"
+            + "タイトル： "
+            + diary.getTitle()
+            + "\n本文： "
+            + diary.getBody(); // This should be replaced with the actual diary content
+    List<GeneratedTask> suggestedTasks;
+    try {
+      suggestedTasks = openAiChatService.getSuggestedTasks(prompt);
+    } catch (Exception e) {
+      System.err.println("Error while using AI service: " + e.getMessage());
+      throw new ResponseStatusException(
+          HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while using the AI service");
+    }
+    // 提案するタスクの有無を確認
+    if (suggestedTasks.isEmpty() || suggestedTasks.get(0).title().equals("なし")) {
+      List<GeneratedTaskResponse> response = new ArrayList<>();
+      return ResponseEntity.ok(response);
+    }
+    List<GeneratedTaskResponse> suggestedTaskResponses =
+        suggestedTasks.stream()
+            .map(
+                task ->
+                    new GeneratedTaskResponse(
+                        task.title(),
+                        LocalDateTime.now().plusHours(task.hoursUntilDeadline()),
+                        task.loadScore()))
+            .toList();
+    return ResponseEntity.ok(suggestedTaskResponses);
   }
 }

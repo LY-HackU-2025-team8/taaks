@@ -97,6 +97,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/diaries/{id}/suggested-tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get suggested tasks from a diary */
+        get: operations["diariesIdSuggestedTasks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/login": {
         parameters: {
             query?: never;
@@ -343,6 +360,13 @@ export interface components {
         /** @description エラー時のレスポンス */
         ErrorResponse: {
             message: string;
+        };
+        GeneratedTaskResponse: {
+            /** Format: date-time */
+            dueAt: string;
+            /** Format: int32 */
+            loadScore: number;
+            title: string;
         };
         GenericMessageResponse: {
             message: string;
@@ -808,6 +832,55 @@ export interface operations {
             };
             /** @description Diary not found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description exception */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    diariesIdSuggestedTasks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successfully retrieved suggested tasks */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GeneratedTaskResponse"][];
+                };
+            };
+            /** @description Diary not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description An error occurred while using the AI service */
+            500: {
                 headers: {
                     [name: string]: unknown;
                 };
