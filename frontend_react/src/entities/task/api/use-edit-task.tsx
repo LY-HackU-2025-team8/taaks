@@ -57,6 +57,10 @@ export const useEditTask = (task: TaskResponseModel) => {
       const completedAt = data.completedAt
         ? format(data.completedAt, DATETIME_DATA_FORMAT)
         : undefined;
+      const scheduledAt =
+        data.scheduledAt && Array.isArray(data.scheduledAt)
+          ? data.scheduledAt.map((d) => format(d, DATETIME_DATA_FORMAT))
+          : undefined;
 
       const promise = mutateAsync(
         {
@@ -65,6 +69,7 @@ export const useEditTask = (task: TaskResponseModel) => {
             ...data,
             dueAt,
             completedAt,
+            scheduledAt,
           },
         },
         mutateOptions

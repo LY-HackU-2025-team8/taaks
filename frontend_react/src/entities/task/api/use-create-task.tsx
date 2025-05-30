@@ -63,6 +63,9 @@ export const useCreateTask = () => {
             ...data,
             dueAt,
             completedAt,
+            scheduledAt: data.scheduledAt
+              ? data.scheduledAt.map((d) => format(d, DATETIME_DATA_FORMAT))
+              : undefined,
           },
         },
         mutateOptions
