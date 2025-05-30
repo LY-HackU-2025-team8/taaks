@@ -15,11 +15,11 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-export const Route = createFileRoute(
-  '/create-buddy/_with-progress/buddy-name'
-)({
-  component: RouteComponent,
-});
+export const Route = createFileRoute('/create-buddy/_with-progress/buddy-name')(
+  {
+    component: RouteComponent,
+  }
+);
 
 function RouteComponent() {
   const form = useFormContext<z.infer<typeof createBuddyFormSchema>>();

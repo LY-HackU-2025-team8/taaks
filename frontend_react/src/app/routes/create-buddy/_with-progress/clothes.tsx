@@ -17,9 +17,7 @@ import { useFormContext } from 'react-hook-form';
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
-export const Route = createFileRoute(
-  '/create-buddy/_with-progress/clothes'
-)({
+export const Route = createFileRoute('/create-buddy/_with-progress/clothes')({
   component: RouteComponent,
 });
 
