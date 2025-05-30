@@ -41,7 +41,7 @@ export const AddTaskDrawer = ({
       dueAt: new Date(),
       completedAt: null,
       isAllDay: false,
-      loadScore: 0,
+      loadScore: null,
       autoCalculateLoadScore: true,
     },
     mode: 'onBlur',
