@@ -56,6 +56,11 @@ export const useCreateTask = () => {
       const completedAt = data.completedAt
         ? format(data.completedAt, DATETIME_DATA_FORMAT)
         : undefined;
+      const scheduledAt = data.scheduledAt
+        ? data.scheduledAt.map((d) =>
+            d instanceof Date ? d.toISOString() : new Date(d).toISOString()
+          )
+        : undefined;
 
       const promise = mutateAsync(
         {
@@ -63,6 +68,7 @@ export const useCreateTask = () => {
             ...data,
             dueAt,
             completedAt,
+            scheduledAt,
           },
         },
         mutateOptions

@@ -8,4 +8,5 @@ export const taskFormSchema = z.object({
   completedAt: z.coerce.date().nullable(),
   isAllDay: z.boolean(),
   loadScore: z.number().min(0).max(10),
+  scheduledAt: z.array(z.coerce.date()).nullable(),
 });
