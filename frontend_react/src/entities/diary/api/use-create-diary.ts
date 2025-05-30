@@ -19,40 +19,45 @@ export const useCreateDiary = () => {
   });
 
   /**
-   * タスクを作成する関数
-   * @param TanstackQueryのmutateのoptions
-   * @return taskFormSchemaのdataを受け取るコールバック
+   * 日記を作成する関数
    */
   const createDiary = useCallback(
     (
-      options?: Parameters<typeof mutateAsync>[1],
-      toastOptions?: Parameters<typeof toast.promise>[1]
-    ) =>
-      (data: z.infer<typeof diaryFormSchema>) => {
-        // DateTimeをサーバーが受け付ける形式にフォーマット
-        const date = format(data.date, DATE_DATA_FORMAT);
+      data: z.infer<typeof diaryFormSchema>,
+      {
+        mutateOptions,
+        toastOptions,
+      }: {
+        mutateOptions?: Parameters<typeof mutateAsync>[1];
+        toastOptions?: Parameters<
+          typeof toast.promise<Awaited<ReturnType<typeof mutateAsync>>>
+        >[1];
+      } = {}
+    ) => {
+      // DateTimeをサーバーが受け付ける形式にフォーマット
+      const date = format(data.date, DATE_DATA_FORMAT);
 
-        return toast.promise(
-          mutateAsync(
-            {
-              body: {
-                ...data,
-                date,
-              },
-            },
-            options
-          ),
+      return toast.promise(
+        mutateAsync(
           {
-            loading: '日記を作成しています...',
-            success: (res) =>
-              `${format(res.date, DATE_DISPLAY_FORMAT)}の日記を作成しました！`,
-            error: (err) => {
-              return err.message || '日記の作成に失敗しました。';
+            body: {
+              ...data,
+              date,
             },
-            ...toastOptions,
-          }
-        );
-      },
+          },
+          mutateOptions
+        ),
+        {
+          loading: '日記を作成しています...',
+          success: (res) =>
+            `${format(res.date, DATE_DISPLAY_FORMAT)}の日記を作成しました！`,
+          error: (err) => {
+            return err.message || '日記の作成に失敗しました。';
+          },
+          ...toastOptions,
+        }
+      );
+    },
     [mutateAsync]
   );
 

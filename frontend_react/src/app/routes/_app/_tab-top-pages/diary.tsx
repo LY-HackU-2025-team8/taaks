@@ -67,7 +67,7 @@ function RouteComponent() {
       <PageMain>
         <Suspense fallback={<Loading />}>
           <DiaryContentCard date={date} />
-          <DiarySummary date={date} />
+          <DiarySummary date={date} showSuggestAddTask />
         </Suspense>
       </PageMain>
     </>

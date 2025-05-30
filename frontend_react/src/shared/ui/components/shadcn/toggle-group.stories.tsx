@@ -14,7 +14,7 @@ const ToggleGroupDemo = (props: React.ComponentProps<typeof ToggleGroup>) => (
 
 const meta = {
   title: 'Shared/Components/Shadcn/ToggleGroup',
-  component: ToggleGroup,
+  component: ToggleGroupDemo,
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
@@ -39,7 +39,7 @@ const meta = {
       options: ['sm', 'default', 'lg'],
     },
   },
-} satisfies Meta<typeof ToggleGroup>;
+} satisfies Meta<typeof ToggleGroupDemo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -49,5 +49,4 @@ export const Default: Story = {
     type: 'single',
     defaultValue: '1',
   },
-  render: (args) => <ToggleGroupDemo {...args} />,
 };

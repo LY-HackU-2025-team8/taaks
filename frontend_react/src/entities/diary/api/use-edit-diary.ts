@@ -1,14 +1,15 @@
 import { $api } from '@/shared/api/openapi-fetch';
-import { DATE_DATA_FORMAT } from '@/shared/constants';
+import { DATE_DATA_FORMAT, DATE_DISPLAY_FORMAT } from '@/shared/constants';
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 import type { diaryFormSchema } from './diary-form-schema';
+import type { DiaryResponseModel } from './diary-model';
 
 /** 日記を編集する関数を返すHook */
-export const useEditDiary = (diaryId: number) => {
+export const useEditDiary = (diary: DiaryResponseModel) => {
   const queryClient = useQueryClient();
   const { mutateAsync, ...rest } = $api.useMutation('put', '/diaries/{id}', {
     // なんらかのエラーが発生しても日記が更新される場合があるのでonSettledを使用
@@ -18,7 +19,7 @@ export const useEditDiary = (diaryId: number) => {
       // 日記の詳細のキャッシュを破棄
       queryClient.invalidateQueries(
         $api.queryOptions('get', '/diaries/{id}', {
-          params: { path: { id: diaryId } },
+          params: { path: { id: diary.id } },
         })
       );
     },
@@ -31,35 +32,43 @@ export const useEditDiary = (diaryId: number) => {
    */
   const editDiary = useCallback(
     (
-      options?: Parameters<typeof mutateAsync>[1],
-      toastOptions?: Parameters<typeof toast.promise>[1]
-    ) =>
-      (data: z.infer<typeof diaryFormSchema>) => {
-        // DateTimeをサーバーが受け付ける形式にフォーマット
-        const date = format(data.date, DATE_DATA_FORMAT);
+      data: z.infer<typeof diaryFormSchema>,
+      {
+        mutateOptions,
+        toastOptions,
+      }: {
+        mutateOptions?: Parameters<typeof mutateAsync>[1];
+        toastOptions?: Parameters<
+          typeof toast.promise<Awaited<ReturnType<typeof mutateAsync>>>
+        >[1];
+      } = {}
+    ) => {
+      // DateTimeをサーバーが受け付ける形式にフォーマット
+      const date = format(data.date, DATE_DATA_FORMAT);
 
-        return toast.promise(
-          mutateAsync(
-            {
-              params: { path: { id: diaryId } },
-              body: {
-                ...data,
-                date,
-              },
-            },
-            options
-          ),
+      return toast.promise(
+        mutateAsync(
           {
-            loading: '日記を更新しています...',
-            success: (res) => `日記「${res.title}」を更新しました！`,
-            error: (err) => {
-              return err.message || '日記の更新に失敗しました。';
+            params: { path: { id: diary.id } },
+            body: {
+              ...data,
+              date,
             },
-            ...toastOptions,
-          }
-        );
-      },
-    [mutateAsync, diaryId]
+          },
+          mutateOptions
+        ),
+        {
+          loading: '日記を更新しています...',
+          success: (res) =>
+            `${format(res.date, DATE_DISPLAY_FORMAT)}の日記を更新しました！`,
+          error: (err) => {
+            return err.message || '日記の更新に失敗しました。';
+          },
+          ...toastOptions,
+        }
+      );
+    },
+    [mutateAsync, diary.id]
   );
 
   return { editDiary, ...rest };

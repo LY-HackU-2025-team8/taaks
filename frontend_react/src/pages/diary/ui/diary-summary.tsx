@@ -13,10 +13,16 @@ import { format } from 'date-fns';
 type DiarySummaryProps = ComponentPropsWithoutChildren<typeof PageSection> & {
   /** Summaryを表示する日付 */
   date: Date;
+  /** Buddyからの提案カードを表示するか */
+  showSuggestAddTask?: boolean;
 };
 
 /** 日記ページの今日のサマリー */
-export const DiarySummary = ({ date, ...props }: DiarySummaryProps) => {
+export const DiarySummary = ({
+  date,
+  showSuggestAddTask,
+  ...props
+}: DiarySummaryProps) => {
   const { data, hasNextPage, fetchNextPage } = $api.useInfiniteQuery(
     'get',
     '/tasks',
@@ -24,7 +30,7 @@ export const DiarySummary = ({ date, ...props }: DiarySummaryProps) => {
       params: {
         query: {
           ...filterTodayTasks(date),
-          sort: ['dueAt,asc'],
+          sort: ['dueAt,asc', 'id,asc'],
         },
       },
     },
@@ -55,13 +61,15 @@ export const DiarySummary = ({ date, ...props }: DiarySummaryProps) => {
           </Button>
         )}
       </TaskHorizontalSummaryStack>
-      <BuddySuggestAddTask buttonText="明日のタスクを追加する">
-        もしまだ余裕があれば
-        <wbr />
-        明日やることを
-        <wbr />
-        整理してみませんか？
-      </BuddySuggestAddTask>
+      {showSuggestAddTask && (
+        <BuddySuggestAddTask buttonText="明日のタスクを追加する">
+          もしまだ余裕があれば
+          <wbr />
+          明日やることを
+          <wbr />
+          整理してみませんか？
+        </BuddySuggestAddTask>
+      )}
     </PageSection>
   );
 };

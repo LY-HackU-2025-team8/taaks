@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/ui/components/shadcn/card';
+import { Heading } from '@/shared/ui/components/typography/heading';
 import { Text } from '@/shared/ui/components/typography/text';
 import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
@@ -63,6 +64,9 @@ export const TaskCardLarge = ({
         </Text>
       </CardContent>
       <CardFooter className="justify-end gap-1.5">
+        <Heading variant="muted" size="sm" className="mr-auto">
+          負荷スコア {task.loadScore}点
+        </Heading>
         <EditTaskDrawer task={task}>
           <Button
             variant="outline"

@@ -38,7 +38,7 @@ export const TodoMainTasks = ({ date, ...props }: TodoMainTasksProps) => {
         query: {
           ...filterTodayTasks(date),
           isCompleted_eq: false,
-          sort: ['loadScore,desc'],
+          sort: ['loadScore,desc', 'dueAt,asc', 'id,asc'],
           size: 6,
         },
       },
