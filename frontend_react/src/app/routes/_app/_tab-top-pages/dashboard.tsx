@@ -1,6 +1,6 @@
 import { DashboardBuddy } from '@/pages/dashboard/ui/dashboard-buddy';
-import { DashboardMainTask } from '@/pages/dashboard/ui/dashboard-main-task';
 import { DashboardBuddySuggestion } from '@/pages/dashboard/ui/dashboard-buddy-suggestion';
+import { DashboardMainTask } from '@/pages/dashboard/ui/dashboard-main-task';
 import { DashboardPersonal } from '@/pages/dashboard/ui/dashboard-personal';
 import { DashboardTaskLoadScore } from '@/pages/dashboard/ui/dashboard-task-load-score';
 import { ToolLinkButton } from '@/pages/dashboard/ui/tool-link-button';
