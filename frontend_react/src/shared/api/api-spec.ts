@@ -365,7 +365,7 @@ export interface components {
             /** Format: date-time */
             dueAt: string;
             /** Format: int32 */
-            loadScore: number;
+            loadScore?: number;
             title: string;
         };
         GenericMessageResponse: {
@@ -1056,7 +1056,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["TaskResponse"];
+                    "*/*": components["schemas"]["GeneratedTaskResponse"][];
                 };
             };
             /** @description exception */

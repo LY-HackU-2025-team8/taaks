@@ -59,11 +59,11 @@ export const TaskCardLarge = ({
         <CardTitle>{task.title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Text variant="muted" className="line-clamp-2 h-9 text-sm">
+        <Text variant="muted" className="line-clamp-2 text-sm">
           {task.memo}
         </Text>
       </CardContent>
-      <CardFooter className="justify-end gap-1.5">
+      <CardFooter className="mt-auto justify-end gap-1.5">
         <Heading variant="muted" size="sm" className="mr-auto">
           負荷スコア {task.loadScore}
         </Heading>

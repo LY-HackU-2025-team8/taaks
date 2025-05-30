@@ -106,12 +106,12 @@ export const TaskForm = ({
                 onValueChange={(value) => {
                   field.onChange(value[0]);
                 }}
-                min={0}
+                min={-1}
                 max={10}
                 step={1}
               />
-              <FormDescription className="w-3 text-center">
-                {field.value}
+              <FormDescription className="w-8 text-center">
+                {field.value !== -1 ? '自動' : field.value}
               </FormDescription>
               <FormMessage />
             </FormItem>

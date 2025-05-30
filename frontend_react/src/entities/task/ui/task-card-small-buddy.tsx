@@ -39,6 +39,8 @@ export const TaskCardSmallBuddy = ({
         memo: '',
         completedAt: null,
         isAllDay: false,
+        autoCalculateLoadScore: task.loadScore === null,
+        loadScore: task.loadScore ?? 0,
       }),
       {
         mutateOptions: {
