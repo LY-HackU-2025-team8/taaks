@@ -464,17 +464,17 @@ export interface components {
             unsorted?: boolean;
         };
         TaskRegisterRequest: {
-            autoCalculateLoadScore?: boolean;
+            autoCalculateLoadScore: boolean;
             /** Format: date-time */
-            completedAt?: string;
+            completedAt: string;
             /** Format: date-time */
-            dueAt?: string;
-            isAllDay?: boolean;
+            dueAt: string;
+            isAllDay: boolean;
             /** Format: int32 */
-            loadScore?: number;
-            memo?: string;
-            scheduledAt?: string[];
-            title?: string;
+            loadScore: number;
+            memo: string;
+            scheduledAt: string[];
+            title: string;
         };
         TaskRequest: {
             /** Format: date-time */

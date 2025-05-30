@@ -1094,6 +1094,15 @@ components:
             format: date-time
         title:
           type: string
+      required:
+      - autoCalculateLoadScore
+      - completedAt
+      - dueAt
+      - isAllDay
+      - loadScore
+      - memo
+      - scheduledAt
+      - title
     TaskRequest:
       type: object
       properties:

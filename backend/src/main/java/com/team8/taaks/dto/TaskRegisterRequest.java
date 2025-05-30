@@ -1,15 +1,16 @@
 package com.team8.taaks.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 public record TaskRegisterRequest(
-    String title,
-    String memo,
-    LocalDateTime dueAt,
-    boolean isAllDay,
-    LocalDateTime completedAt,
-    int loadScore,
-    List<ZonedDateTime> scheduledAt,
-    boolean autoCalculateLoadScore) {}
+    @Schema(required = true) String title,
+    @Schema(required = true) String memo,
+    @Schema(required = true) LocalDateTime dueAt,
+    @Schema(required = true) boolean isAllDay,
+    @Schema(required = true) LocalDateTime completedAt,
+    @Schema(required = true) int loadScore,
+    @Schema(required = true) List<ZonedDateTime> scheduledAt,
+    @Schema(required = true) boolean autoCalculateLoadScore) {}
