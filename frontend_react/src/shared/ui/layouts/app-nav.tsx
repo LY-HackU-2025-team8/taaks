@@ -47,7 +47,7 @@ export const AppNav = ({
                   variant="muted"
                   className="font-line-seed text-2xs line-clamp-1 font-bold"
                 >
-                  ホーム
+                  Home
                 </Text>
               </>
             )}
@@ -99,7 +99,7 @@ export const AppNav = ({
                   variant="muted"
                   className="font-line-seed text-2xs line-clamp-1 font-bold"
                 >
-                  日記
+                  Diary
                 </Text>
               </>
             )}
