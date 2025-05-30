@@ -318,8 +318,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/GeneratedTask"
+                  $ref: "#/components/schemas/GeneratedTaskResponse"
           description: Successfully retrieved suggested tasks
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Diary not found
         "500":
           content:
             application/json:
@@ -870,14 +876,21 @@ components:
           type: string
       required:
       - message
-    GeneratedTask:
+    GeneratedTaskResponse:
       type: object
       properties:
+        dueAt:
+          type: string
+          format: date-time
         loadScore:
           type: integer
           format: int32
         title:
           type: string
+      required:
+      - dueAt
+      - loadScore
+      - title
     GenericMessageResponse:
       type: object
       properties:

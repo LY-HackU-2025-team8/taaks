@@ -361,10 +361,12 @@ export interface components {
         ErrorResponse: {
             message: string;
         };
-        GeneratedTask: {
+        GeneratedTaskResponse: {
+            /** Format: date-time */
+            dueAt: string;
             /** Format: int32 */
-            loadScore?: number;
-            title?: string;
+            loadScore: number;
+            title: string;
         };
         GenericMessageResponse: {
             message: string;
@@ -865,7 +867,16 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["GeneratedTask"][];
+                    "*/*": components["schemas"]["GeneratedTaskResponse"][];
+                };
+            };
+            /** @description Diary not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description An error occurred while using the AI service */
