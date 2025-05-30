@@ -143,7 +143,7 @@ function RouteComponent() {
               />
               {error && (
                 <div className="text-destructive">
-                  {error?.message ?? 'ログインに失敗しました'}
+                  {error?.message ?? '登録に失敗しました'}
                 </div>
               )}
             </CardContent>
