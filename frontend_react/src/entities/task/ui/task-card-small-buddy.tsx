@@ -11,12 +11,13 @@ import {
 import { Heading } from '@/shared/ui/components/typography/heading';
 import { useCallback, useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import type { SuggestedTaskResponseModel } from '../api/suggested-task-model';
 import { taskFormSchema } from '../api/task-form-schema';
 import type { TaskResponseModel } from '../api/task-model';
 import { useCreateTask } from '../api/use-create-task';
 
 type TaskCardSmallBuddyProps = ComponentPropsWithoutChildren<typeof Card> & {
-  task: TaskResponseModel;
+  task: SuggestedTaskResponseModel;
 };
 
 /** Buddyからサジェストされたタスクが表示されるカード */
@@ -32,13 +33,21 @@ export const TaskCardSmallBuddy = ({
   /** タスクを追加する */
   const handleAdd = useCallback(() => {
     setAdded(true);
-    createTask(taskFormSchema.parse(task), {
-      mutateOptions: {
-        onSuccess: (task) => {
-          setCreatedTask(task);
+    createTask(
+      taskFormSchema.parse({
+        ...task,
+        memo: '',
+        completedAt: null,
+        isAllDay: false,
+      }),
+      {
+        mutateOptions: {
+          onSuccess: (task) => {
+            setCreatedTask(task);
+          },
         },
-      },
-    });
+      }
+    );
   }, [createTask, task]);
 
   return (
@@ -48,7 +57,7 @@ export const TaskCardSmallBuddy = ({
       {...props}
     >
       <Card
-        className="from-buddy-blue via-buddy-green to-buddy-yellow relative h-38.75 w-44.75 bg-gradient-to-br [&_button]:relative [&_button]:z-1"
+        className="from-buddy-gradient-from via-buddy-gradient-via to-buddy-gradient-end relative h-38.75 w-44.75 bg-gradient-to-br [&_button]:relative [&_button]:z-1"
         style={{
           clipPath: `path("${TASK_CARD_SMALL_PATH}")`,
         }}

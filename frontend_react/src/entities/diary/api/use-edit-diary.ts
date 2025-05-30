@@ -22,6 +22,12 @@ export const useEditDiary = (diary: DiaryResponseModel) => {
           params: { path: { id: diary.id } },
         })
       );
+      // 提案されたタスクのキャッシュを破棄
+      queryClient.invalidateQueries(
+        $api.queryOptions('get', '/diaries/{id}/suggested-tasks', {
+          params: { path: { id: diary.id } },
+        })
+      );
     },
   });
 

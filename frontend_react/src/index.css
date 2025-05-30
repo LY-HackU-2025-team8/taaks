@@ -67,9 +67,9 @@
   --color-app-nav-background: var(--app-nav-background);
   --color-app-nav-foreground: var(--app-nav-foreground);
 
-  --color-buddy-blue: var(--buddy-blue);
-  --color-buddy-green: var(--buddy-green);
-  --color-buddy-yellow: var(--buddy-yellow);
+  --color-buddy-gradient-from: var(--buddy-gradient-from);
+  --color-buddy-gradient-via: var(--buddy-gradient-via);
+  --color-buddy-gradient-end: var(--buddy-gradient-end);
 
   --font-body: var(--noto-sans), var(--font-sans); /* 本文 */
   --font-heading: var(--line-seed), var(--font-sans); /* 見出し */
@@ -126,9 +126,9 @@
   --app-nav-background: oklch(0.3266 0.0176 120.96);
   --app-nav-foreground: oklch(0.9382 0.0054 117.93);
 
-  --buddy-blue: lch(62.12 55.99 259.19);
-  --buddy-green: lch(81.48 72.77 153.04);
-  --buddy-yellow: lch(83.36 92.54 121.17);
+  --buddy-gradient-from: lch(62.12 55.99 259.19);
+  --buddy-gradient-via: lch(81.48 72.77 153.04);
+  --buddy-gradient-end: lch(83.36 92.54 121.17);
 
   --line-seed: 'LINE Seed JP';
   --noto-sans: 'Noto Sans JP';

@@ -18,6 +18,7 @@ type DiaryContentCardProps = ComponentPropsWithoutChildren<typeof Card> & {
 
 /** 当日の日記がない時に日記を書くように促すカード */
 export const DiaryContentCard = ({ date, ...props }: DiaryContentCardProps) => {
+  const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
   const { data: diaries } = $api.useSuspenseQuery('get', '/diaries', {
     params: {
       query: {
@@ -81,7 +82,15 @@ export const DiaryContentCard = ({ date, ...props }: DiaryContentCardProps) => {
             </Text>
           </div>
           {diary ? (
-            <div className="flex justify-end">
+            <div className="flex justify-between">
+              <Button size="sm" asChild>
+                <Link
+                  to="/diary/$diaryId/suggest-tasks"
+                  params={{ diaryId: diary.id }}
+                >
+                  {buddy?.name}に日記を読んでもらう
+                </Link>
+              </Button>
               <Button size="sm" asChild>
                 <Link
                   to="/diary/$date"
