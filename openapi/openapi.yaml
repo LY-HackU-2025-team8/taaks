@@ -538,7 +538,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TaskRequest"
+              $ref: "#/components/schemas/TaskRegisterRequest"
         required: true
       responses:
         "200":
@@ -1069,6 +1069,31 @@ components:
           type: boolean
         unsorted:
           type: boolean
+    TaskRegisterRequest:
+      type: object
+      properties:
+        autoCalculateLoadScore:
+          type: boolean
+        completedAt:
+          type: string
+          format: date-time
+        dueAt:
+          type: string
+          format: date-time
+        isAllDay:
+          type: boolean
+        loadScore:
+          type: integer
+          format: int32
+        memo:
+          type: string
+        scheduledAt:
+          type: array
+          items:
+            type: string
+            format: date-time
+        title:
+          type: string
     TaskRequest:
       type: object
       properties:

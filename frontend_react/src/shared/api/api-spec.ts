@@ -463,6 +463,19 @@ export interface components {
             sorted?: boolean;
             unsorted?: boolean;
         };
+        TaskRegisterRequest: {
+            autoCalculateLoadScore?: boolean;
+            /** Format: date-time */
+            completedAt?: string;
+            /** Format: date-time */
+            dueAt?: string;
+            isAllDay?: boolean;
+            /** Format: int32 */
+            loadScore?: number;
+            memo?: string;
+            scheduledAt?: string[];
+            title?: string;
+        };
         TaskRequest: {
             /** Format: date-time */
             completedAt?: string;
@@ -1106,7 +1119,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TaskRequest"];
+                "application/json": components["schemas"]["TaskRegisterRequest"];
             };
         };
         responses: {

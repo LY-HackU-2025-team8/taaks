@@ -1,5 +1,6 @@
 package com.team8.taaks.controller;
 
+import com.team8.taaks.dto.TaskRegisterRequest;
 import com.team8.taaks.dto.TaskRequest;
 import com.team8.taaks.dto.TaskResponse;
 import com.team8.taaks.model.TaakTask;
@@ -125,7 +126,7 @@ public class TaskController {
   // タスクの登録
   @PostMapping
   public ResponseEntity<TaskResponse> createTask(
-      @AuthenticationPrincipal TaakUser user, @RequestBody TaskRequest taskRequest) {
+      @AuthenticationPrincipal TaakUser user, @RequestBody TaskRegisterRequest taskRequest) {
     TaakTask task = new TaakTask();
     task.setUser(user);
     task.setTitle(taskRequest.title());
@@ -133,18 +134,23 @@ public class TaskController {
     task.setDueAt(taskRequest.dueAt());
     task.setIsAllDay(taskRequest.isAllDay());
     task.setCompletedAt(taskRequest.completedAt());
-    try {
-      int loadScore =
-          openAiChatService.calcLoadScore(
-              "これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル："
-                  + taskRequest.title()
-                  + "\n期限までの時間（分）"
-                  + Duration.between(LocalDateTime.now(), taskRequest.dueAt()).toMinutes());
-      task.setLoadScore(loadScore);
-    } catch (Exception e) {
-      // OpenAI APIの呼び出しに失敗した場合は、負荷スコアを0に設定
-      task.setLoadScore(0);
-      System.err.println("An error occurred while communicating: " + e.getMessage());
+    if (taskRequest.autoCalculateLoadScore()) {
+      // 負荷スコアをLLMで自動計算
+      try {
+        int loadScore =
+            openAiChatService.calcLoadScore(
+                "これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル："
+                    + taskRequest.title()
+                    + "\n期限までの時間（分）"
+                    + Duration.between(LocalDateTime.now(), taskRequest.dueAt()).toMinutes());
+        task.setLoadScore(loadScore);
+      } catch (Exception e) {
+        // OpenAI APIの呼び出しに失敗した場合は、負荷スコアを0に設定
+        task.setLoadScore(0);
+        System.err.println("An error occurred while communicating: " + e.getMessage());
+      }
+    } else {
+      task.setLoadScore(taskRequest.loadScore());
     }
     TaakTask registeredTask = taakTaskRepository.save(task);
     if (taskRequest.scheduledAt() == null || taskRequest.scheduledAt().isEmpty()) {
