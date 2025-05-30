@@ -7,6 +7,6 @@ export const taskFormSchema = z.object({
   dueAt: z.coerce.date(),
   completedAt: z.coerce.date().nullable(),
   isAllDay: z.boolean(),
-  loadScore: z.number().min(0).max(10),
+  loadScore: z.number().min(0).max(10).nullable(),
   autoCalculateLoadScore: z.boolean().optional(),
 });

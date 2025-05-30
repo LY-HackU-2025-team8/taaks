@@ -102,16 +102,16 @@ export const TaskForm = ({
               <FormLabel className="shrink-0">負荷スコア</FormLabel>
               <Slider
                 className="flex-1"
-                value={[field.value]}
+                value={[field.value || -1]}
                 onValueChange={(value) => {
-                  field.onChange(value[0]);
+                  field.onChange(value[0] === -1 ? null : value[0]); // -1 is for auto calculation
                 }}
                 min={-1}
                 max={10}
                 step={1}
               />
               <FormDescription className="w-8 text-center">
-                {field.value === -1 ? '自動' : field.value}
+                {field.value === null ? '自動' : field.value}
               </FormDescription>
               <FormMessage />
             </FormItem>
