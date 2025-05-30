@@ -21,6 +21,7 @@ export const BuddyGreeting = ({
         clothesId={buddy?.clothesId}
         hairId={buddy?.hairStyleId}
         faceId={buddyFaceId}
+        motionId={2}
       />
       {children}
     </div>
