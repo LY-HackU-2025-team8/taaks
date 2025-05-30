@@ -464,7 +464,7 @@ export interface components {
             unsorted?: boolean;
         };
         TaskRegisterRequest: {
-            autoCalculateLoadScore: boolean;
+            autoCalculateLoadScore?: boolean;
             /** Format: date-time */
             completedAt: string;
             /** Format: date-time */

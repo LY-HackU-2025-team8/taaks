@@ -1095,7 +1095,6 @@ components:
         title:
           type: string
       required:
-      - autoCalculateLoadScore
       - completedAt
       - dueAt
       - isAllDay
