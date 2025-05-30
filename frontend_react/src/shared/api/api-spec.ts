@@ -393,44 +393,18 @@ export interface components {
             /** Format: int64 */
             userId: number;
         };
-        PageDiaryResponse: {
-            content?: components["schemas"]["DiaryResponse"][];
-            empty?: boolean;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
+        PageMetadata: {
+            /** Format: int64 */
             number?: number;
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            /** Format: int32 */
+            /** Format: int64 */
             size?: number;
-            sort?: components["schemas"]["SortObject"];
             /** Format: int64 */
             totalElements?: number;
-            /** Format: int32 */
+            /** Format: int64 */
             totalPages?: number;
         };
         PageNotificationTargetTokenResponse: {
             content?: components["schemas"]["NotificationTargetTokenResponse"][];
-            empty?: boolean;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            number?: number;
-            /** Format: int32 */
-            numberOfElements?: number;
-            pageable?: components["schemas"]["PageableObject"];
-            /** Format: int32 */
-            size?: number;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            totalPages?: number;
-        };
-        PageTaskResponse: {
-            content?: components["schemas"]["TaskResponse"][];
             empty?: boolean;
             first?: boolean;
             last?: boolean;
@@ -457,6 +431,14 @@ export interface components {
             paged?: boolean;
             sort?: components["schemas"]["SortObject"];
             unpaged?: boolean;
+        };
+        PagedModelDiaryResponse: {
+            content?: components["schemas"]["DiaryResponse"][];
+            page?: components["schemas"]["PageMetadata"];
+        };
+        PagedModelTaskResponse: {
+            content?: components["schemas"]["TaskResponse"][];
+            page?: components["schemas"]["PageMetadata"];
         };
         SortObject: {
             empty?: boolean;
@@ -694,7 +676,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageDiaryResponse"];
+                    "*/*": components["schemas"]["PagedModelDiaryResponse"];
                 };
             };
             /** @description exception */
@@ -1096,7 +1078,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["PageTaskResponse"];
+                    "*/*": components["schemas"]["PagedModelTaskResponse"];
                 };
             };
             /** @description exception */

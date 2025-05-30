@@ -25,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -52,7 +53,7 @@ public class DiariesController {
       responses = {
         @ApiResponse(responseCode = "200", description = "Successfully retrieved diaries")
       })
-  public ResponseEntity<Page<DiaryResponse>> diariesGet(
+  public ResponseEntity<PagedModel<DiaryResponse>> diariesGet(
       @PageableDefault(size = 10, page = 0, sort = "id", direction = Direction.ASC) @ParameterObject
           Pageable pageable,
       @AuthenticationPrincipal TaakUser user,
@@ -71,11 +72,12 @@ public class DiariesController {
     }
     spec = spec.and(DiarySpecification.hasUserId(user.getId()));
     Page<Diary> diaries = diaryRepository.findAll(spec, pageable);
-    Page<DiaryResponse> diaryResponses =
-        diaries.map(
-            diary ->
-                new DiaryResponse(
-                    diary.getTitle(), diary.getBody(), diary.getDate(), diary.getId()));
+    PagedModel<DiaryResponse> diaryResponses =
+        new PagedModel<>(
+            diaries.map(
+                diary ->
+                    new DiaryResponse(
+                        diary.getTitle(), diary.getBody(), diary.getDate(), diary.getId())));
     return ResponseEntity.ok(diaryResponses);
   }
 

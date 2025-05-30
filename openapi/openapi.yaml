@@ -170,7 +170,7 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/PageDiaryResponse"
+                $ref: "#/components/schemas/PagedModelDiaryResponse"
           description: Successfully retrieved diaries
         default:
           content:
@@ -524,7 +524,7 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/PageTaskResponse"
+                $ref: "#/components/schemas/PagedModelTaskResponse"
           description: OK
         default:
           content:
@@ -947,38 +947,21 @@ components:
       - targetToken
       - updatedAt
       - userId
-    PageDiaryResponse:
+    PageMetadata:
       type: object
       properties:
-        content:
-          type: array
-          items:
-            $ref: "#/components/schemas/DiaryResponse"
-        empty:
-          type: boolean
-        first:
-          type: boolean
-        last:
-          type: boolean
         number:
           type: integer
-          format: int32
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: "#/components/schemas/PageableObject"
+          format: int64
         size:
           type: integer
-          format: int32
-        sort:
-          $ref: "#/components/schemas/SortObject"
+          format: int64
         totalElements:
           type: integer
           format: int64
         totalPages:
           type: integer
-          format: int32
+          format: int64
     PageNotificationTargetTokenResponse:
       type: object
       properties:
@@ -986,38 +969,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/NotificationTargetTokenResponse"
-        empty:
-          type: boolean
-        first:
-          type: boolean
-        last:
-          type: boolean
-        number:
-          type: integer
-          format: int32
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: "#/components/schemas/PageableObject"
-        size:
-          type: integer
-          format: int32
-        sort:
-          $ref: "#/components/schemas/SortObject"
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
-    PageTaskResponse:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: "#/components/schemas/TaskResponse"
         empty:
           type: boolean
         first:
@@ -1061,6 +1012,24 @@ components:
           $ref: "#/components/schemas/SortObject"
         unpaged:
           type: boolean
+    PagedModelDiaryResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiaryResponse"
+        page:
+          $ref: "#/components/schemas/PageMetadata"
+    PagedModelTaskResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaskResponse"
+        page:
+          $ref: "#/components/schemas/PageMetadata"
     SortObject:
       type: object
       properties:

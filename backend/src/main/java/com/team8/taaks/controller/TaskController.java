@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -57,7 +58,7 @@ public class TaskController {
 
   // タスク一覧の取得
   @GetMapping
-  public ResponseEntity<Page<TaskResponse>> getTask(
+  public ResponseEntity<PagedModel<TaskResponse>> getTask(
       @AuthenticationPrincipal TaakUser user,
       @RequestParam(name = "dueAt_gt", required = false) LocalDateTime dueAtGt,
       @RequestParam(name = "dueAt_lt", required = false) LocalDateTime dueAtLt,
@@ -80,20 +81,21 @@ public class TaskController {
     }
     spec = spec.and(TaakTaskSpecification.hasUserId(user.getId()));
     Page<TaakTask> tasks = taakTaskRepository.findAll(spec, pageable);
-    Page<TaskResponse> taskResponses =
-        tasks.map(
-            task ->
-                new TaskResponse(
-                    task.getId(),
-                    task.getTitle(),
-                    task.getMemo(),
-                    task.getDueAt(),
-                    task.getIsAllDay(),
-                    task.getCompletedAt(),
-                    task.getLoadScore(),
-                    taskReminderRepository.findAllByTaskId(task.getId()).stream()
-                        .map(TaskReminder::getScheduledAt)
-                        .toList()));
+    PagedModel<TaskResponse> taskResponses =
+        new PagedModel<>(
+            tasks.map(
+                task ->
+                    new TaskResponse(
+                        task.getId(),
+                        task.getTitle(),
+                        task.getMemo(),
+                        task.getDueAt(),
+                        task.getIsAllDay(),
+                        task.getCompletedAt(),
+                        task.getLoadScore(),
+                        taskReminderRepository.findAllByTaskId(task.getId()).stream()
+                            .map(TaskReminder::getScheduledAt)
+                            .toList())));
     return ResponseEntity.ok(taskResponses);
   }
 
