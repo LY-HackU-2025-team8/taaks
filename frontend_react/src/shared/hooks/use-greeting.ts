@@ -11,7 +11,7 @@ export const useGreeting = () => {
     if (hours >= 4 && hours < 12) {
       setFormal('おはようございます');
       setCasual('おはよう');
-    } else if (hours >= 13 && hours < 18) {
+    } else if (hours >= 12 && hours < 18) {
       setFormal('こんにちは');
       setCasual('やあ');
     } else if (hours >= 18) {
