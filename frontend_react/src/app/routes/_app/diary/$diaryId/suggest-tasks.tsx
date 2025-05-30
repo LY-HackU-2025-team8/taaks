@@ -16,7 +16,7 @@ import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { Suspense } from 'react';
 import { useIsFetching } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { format } from 'date-fns';
+import { addDays, format } from 'date-fns';
 import { z } from 'zod';
 
 const paramsSchema = z.object({
@@ -108,7 +108,10 @@ function RouteComponent() {
                 <Link
                   to="/todo"
                   search={{
-                    date: format(new Date(diary?.date), DATE_DATA_FORMAT),
+                    date: format(
+                      addDays(new Date(diary?.date), 1),
+                      DATE_DATA_FORMAT
+                    ),
                   }}
                 >
                   タスク一覧を見る
