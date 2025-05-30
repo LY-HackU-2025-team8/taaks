@@ -24,6 +24,8 @@ function RouteComponent() {
           autoPlay
           loop
           muted
+          playsInline
+          preload="auto"
           className="absolute top-0 left-0 h-full w-full object-cover"
         />
       </div>
