@@ -454,7 +454,9 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/GeneratedTaskResponse"
+                type: array
+                items:
+                  $ref: "#/components/schemas/GeneratedTaskResponse"
           description: OK
         default:
           content:

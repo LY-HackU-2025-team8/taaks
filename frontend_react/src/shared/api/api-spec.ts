@@ -1056,7 +1056,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["GeneratedTaskResponse"];
+                    "*/*": components["schemas"]["GeneratedTaskResponse"][];
                 };
             };
             /** @description exception */
