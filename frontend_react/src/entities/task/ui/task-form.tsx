@@ -56,13 +56,13 @@ export const TaskForm = ({
   const isAllDay = form.watch('isAllDay');
 
   // リマインド日時を計算する
-  const getRimaindDatetime = (
+  const getReminderDatetime = (
     dueAt: Date,
     scheduleOption: keyof typeof scheduleOptions
   ) => {
-    setScheduleOption(scheduleOption);
+    // setScheduleOption(scheduleOption);
     if (!dueAt || scheduleOption === 'null') {
-      return [];
+      return null;
     }
 
     const timeDelta = scheduleOptions[scheduleOption].timeDelta;
@@ -74,7 +74,7 @@ export const TaskForm = ({
   const dueAt = form.watch('dueAt');
   useEffect(() => {
     console.log('dueAt', dueAt, 'scheduleOption', scheduleOption);
-    const remaindDatetime = getRimaindDatetime(dueAt, scheduleOption);
+    const remaindDatetime = getReminderDatetime(dueAt, scheduleOption);
     form.setValue('scheduledAt', remaindDatetime);
   }, [dueAt, isAllDay, form, scheduleOption]);
 
@@ -150,11 +150,12 @@ export const TaskForm = ({
               <Select
                 onValueChange={(e) => {
                   const dueAt = form.getValues('dueAt') as Date;
-                  const remaindDatetime = getRimaindDatetime(
+                  const remaindDatetime = getReminderDatetime(
                     dueAt,
                     e as keyof typeof scheduleOptions
                   );
                   field.onChange(remaindDatetime);
+                  setScheduleOption(e as keyof typeof scheduleOptions);
                 }}
                 value={String(scheduleOption)}
               >
