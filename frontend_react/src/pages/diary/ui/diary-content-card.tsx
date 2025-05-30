@@ -18,13 +18,14 @@ type DiaryContentCardProps = ComponentPropsWithoutChildren<typeof Card> & {
 
 /** 当日の日記がない時に日記を書くように促すカード */
 export const DiaryContentCard = ({ date, ...props }: DiaryContentCardProps) => {
-  const { data: diary } = $api.useSuspenseQuery('get', '/diaries', {
+  const { data: diaries } = $api.useSuspenseQuery('get', '/diaries', {
     params: {
       query: {
         date_eq: format(date, DATE_DATA_FORMAT),
       },
     },
   });
+  const diary = diaries.content?.[0];
   const { data: stats } = $api.useSuspenseQuery('get', '/days/{day}', {
     params: {
       path: {
@@ -51,8 +52,8 @@ export const DiaryContentCard = ({ date, ...props }: DiaryContentCardProps) => {
               {format(date, 'EEE')}
             </Heading>
           </div>
-          {diary.content?.length ? (
-            <Text>{diary.content[0].body}</Text>
+          {diary ? (
+            <Text>{diary.body}</Text>
           ) : (
             <>
               <Heading className="mt-2 text-3xl font-bold break-keep">
@@ -79,14 +80,27 @@ export const DiaryContentCard = ({ date, ...props }: DiaryContentCardProps) => {
               {stats.loadScore}
             </Text>
           </div>
-          <Button size="lg" asChild>
-            <Link
-              to="/diary/new"
-              search={{ date: format(date, DATE_DATA_FORMAT) }}
-            >
-              日記を作成
-            </Link>
-          </Button>
+          {diary ? (
+            <div className="flex justify-end">
+              <Button size="sm" asChild>
+                <Link
+                  to="/diary/$date"
+                  params={{ date: format(date, DATE_DATA_FORMAT) }}
+                >
+                  日記を編集
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <Button size="lg" asChild>
+              <Link
+                to="/diary/$date"
+                params={{ date: format(date, DATE_DATA_FORMAT) }}
+              >
+                日記を作成
+              </Link>
+            </Button>
+          )}
         </CardContent>
       </Card>
     </PageSection>

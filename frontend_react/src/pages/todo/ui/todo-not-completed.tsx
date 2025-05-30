@@ -31,7 +31,7 @@ export const TodoPendingTasks = ({ date, ...props }: TodoPendingTasksProps) => {
         query: {
           ...filterTodayTasks(date),
           isCompleted_eq: false,
-          sort: ['dueAt,asc'],
+          sort: ['dueAt,asc', 'id,asc'],
           size: 6, // 一度に取得するタスクの数
         },
       },

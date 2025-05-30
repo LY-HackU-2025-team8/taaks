@@ -34,7 +34,7 @@ export const TodoCompletedTasks = ({
         query: {
           ...filterTodayTasks(date),
           isCompleted_eq: true,
-          sort: ['dueAt,asc'],
+          sort: ['dueAt,asc', 'id,asc'],
           size: 6, // 一度に取得するタスクの数
         },
       },

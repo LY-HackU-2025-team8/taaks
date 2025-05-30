@@ -25,7 +25,7 @@ import { Route as CreateBuddyWithProgressColorImport } from './app/routes/create
 import { Route as CreateBuddyWithProgressClothesImport } from './app/routes/create-buddy/_with-progress/clothes'
 import { Route as CreateBuddyWithProgressBuddyNameImport } from './app/routes/create-buddy/_with-progress/buddy-name'
 import { Route as AppTodoTaskIdImport } from './app/routes/_app/todo/$taskId'
-import { Route as AppDiaryNewImport } from './app/routes/_app/diary/new'
+import { Route as AppDiaryDateImport } from './app/routes/_app/diary/$date'
 import { Route as AppTabTopPagesTodoImport } from './app/routes/_app/_tab-top-pages/todo'
 import { Route as AppTabTopPagesSettingsImport } from './app/routes/_app/_tab-top-pages/settings'
 import { Route as AppTabTopPagesDiaryImport } from './app/routes/_app/_tab-top-pages/diary'
@@ -118,9 +118,9 @@ const AppTodoTaskIdRoute = AppTodoTaskIdImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 
-const AppDiaryNewRoute = AppDiaryNewImport.update({
-  id: '/diary/new',
-  path: '/diary/new',
+const AppDiaryDateRoute = AppDiaryDateImport.update({
+  id: '/diary/$date',
+  path: '/diary/$date',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -256,11 +256,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTabTopPagesTodoImport
       parentRoute: typeof AppTabTopPagesImport
     }
-    '/_app/diary/new': {
-      id: '/_app/diary/new'
-      path: '/diary/new'
-      fullPath: '/diary/new'
-      preLoaderRoute: typeof AppDiaryNewImport
+    '/_app/diary/$date': {
+      id: '/_app/diary/$date'
+      path: '/diary/$date'
+      fullPath: '/diary/$date'
+      preLoaderRoute: typeof AppDiaryDateImport
       parentRoute: typeof AppImport
     }
     '/_app/todo/$taskId': {
@@ -325,13 +325,13 @@ const AppTabTopPagesRouteWithChildren = AppTabTopPagesRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppTabTopPagesRoute: typeof AppTabTopPagesRouteWithChildren
-  AppDiaryNewRoute: typeof AppDiaryNewRoute
+  AppDiaryDateRoute: typeof AppDiaryDateRoute
   AppTodoTaskIdRoute: typeof AppTodoTaskIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppTabTopPagesRoute: AppTabTopPagesRouteWithChildren,
-  AppDiaryNewRoute: AppDiaryNewRoute,
+  AppDiaryDateRoute: AppDiaryDateRoute,
   AppTodoTaskIdRoute: AppTodoTaskIdRoute,
 }
 
@@ -396,7 +396,7 @@ export interface FileRoutesByFullPath {
   '/diary': typeof AppTabTopPagesDiaryRoute
   '/settings': typeof AppTabTopPagesSettingsRoute
   '/todo': typeof AppTabTopPagesTodoRoute
-  '/diary/new': typeof AppDiaryNewRoute
+  '/diary/$date': typeof AppDiaryDateRoute
   '/todo/$taskId': typeof AppTodoTaskIdRoute
   '/create-buddy/buddy-name': typeof CreateBuddyWithProgressBuddyNameRoute
   '/create-buddy/clothes': typeof CreateBuddyWithProgressClothesRoute
@@ -415,7 +415,7 @@ export interface FileRoutesByTo {
   '/diary': typeof AppTabTopPagesDiaryRoute
   '/settings': typeof AppTabTopPagesSettingsRoute
   '/todo': typeof AppTabTopPagesTodoRoute
-  '/diary/new': typeof AppDiaryNewRoute
+  '/diary/$date': typeof AppDiaryDateRoute
   '/todo/$taskId': typeof AppTodoTaskIdRoute
   '/create-buddy/buddy-name': typeof CreateBuddyWithProgressBuddyNameRoute
   '/create-buddy/clothes': typeof CreateBuddyWithProgressClothesRoute
@@ -439,7 +439,7 @@ export interface FileRoutesById {
   '/_app/_tab-top-pages/diary': typeof AppTabTopPagesDiaryRoute
   '/_app/_tab-top-pages/settings': typeof AppTabTopPagesSettingsRoute
   '/_app/_tab-top-pages/todo': typeof AppTabTopPagesTodoRoute
-  '/_app/diary/new': typeof AppDiaryNewRoute
+  '/_app/diary/$date': typeof AppDiaryDateRoute
   '/_app/todo/$taskId': typeof AppTodoTaskIdRoute
   '/create-buddy/_with-progress/buddy-name': typeof CreateBuddyWithProgressBuddyNameRoute
   '/create-buddy/_with-progress/clothes': typeof CreateBuddyWithProgressClothesRoute
@@ -461,7 +461,7 @@ export interface FileRouteTypes {
     | '/diary'
     | '/settings'
     | '/todo'
-    | '/diary/new'
+    | '/diary/$date'
     | '/todo/$taskId'
     | '/create-buddy/buddy-name'
     | '/create-buddy/clothes'
@@ -479,7 +479,7 @@ export interface FileRouteTypes {
     | '/diary'
     | '/settings'
     | '/todo'
-    | '/diary/new'
+    | '/diary/$date'
     | '/todo/$taskId'
     | '/create-buddy/buddy-name'
     | '/create-buddy/clothes'
@@ -501,7 +501,7 @@ export interface FileRouteTypes {
     | '/_app/_tab-top-pages/diary'
     | '/_app/_tab-top-pages/settings'
     | '/_app/_tab-top-pages/todo'
-    | '/_app/diary/new'
+    | '/_app/diary/$date'
     | '/_app/todo/$taskId'
     | '/create-buddy/_with-progress/buddy-name'
     | '/create-buddy/_with-progress/clothes'
@@ -547,7 +547,7 @@ export const routeTree = rootRoute
       "filePath": "_app.tsx",
       "children": [
         "/_app/_tab-top-pages",
-        "/_app/diary/new",
+        "/_app/diary/$date",
         "/_app/todo/$taskId"
       ]
     },
@@ -618,8 +618,8 @@ export const routeTree = rootRoute
       "filePath": "_app/_tab-top-pages/todo.tsx",
       "parent": "/_app/_tab-top-pages"
     },
-    "/_app/diary/new": {
-      "filePath": "_app/diary/new.tsx",
+    "/_app/diary/$date": {
+      "filePath": "_app/diary/$date.tsx",
       "parent": "/_app"
     },
     "/_app/todo/$taskId": {
