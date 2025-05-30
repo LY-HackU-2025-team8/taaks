@@ -1095,12 +1095,10 @@ components:
         title:
           type: string
       required:
-      - completedAt
       - dueAt
       - isAllDay
       - loadScore
       - memo
-      - scheduledAt
       - title
     TaskRequest:
       type: object

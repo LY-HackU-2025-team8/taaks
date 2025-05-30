@@ -10,7 +10,7 @@ public record TaskRegisterRequest(
     @Schema(required = true) String memo,
     @Schema(required = true) LocalDateTime dueAt,
     @Schema(required = true) boolean isAllDay,
-    @Schema(required = true) LocalDateTime completedAt,
+    LocalDateTime completedAt,
     @Schema(required = true) int loadScore,
-    @Schema(required = true) List<ZonedDateTime> scheduledAt,
+    List<ZonedDateTime> scheduledAt,
     boolean autoCalculateLoadScore) {}

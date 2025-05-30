@@ -466,14 +466,14 @@ export interface components {
         TaskRegisterRequest: {
             autoCalculateLoadScore?: boolean;
             /** Format: date-time */
-            completedAt: string;
+            completedAt?: string;
             /** Format: date-time */
             dueAt: string;
             isAllDay: boolean;
             /** Format: int32 */
             loadScore: number;
             memo: string;
-            scheduledAt: string[];
+            scheduledAt?: string[];
             title: string;
         };
         TaskRequest: {
