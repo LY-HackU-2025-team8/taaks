@@ -47,17 +47,21 @@ export const EditTaskDrawer = ({
   });
 
   // FormのSubmit時にタスクを編集する
-  const handleSubmit = form.handleSubmit((data) =>
+  const handleSubmit = form.handleSubmit((data) => {
+    drawerState.onOpenChange(false);
     editTask(data, {
       mutateOptions: {
         onSuccess: () => {
           // タスクの編集に成功したらフォームをリセットし、Drawerを閉じる
           form.reset();
-          drawerState.onOpenChange(false);
+        },
+        onError: () => {
+          // タスクの編集に失敗した場合はDrawerを開いたままにする
+          drawerState.onOpenChange(true);
         },
       },
-    })
-  );
+    });
+  });
 
   return (
     <Drawer repositionInputs={false} autoFocus {...drawerState} {...props}>
