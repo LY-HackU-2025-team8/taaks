@@ -25,7 +25,7 @@ public class SuggestedTaskServiceImpl implements SuggestedTaskService {
   }
 
   @Override
-  public GeneratedTaskResponse getSuggestedTasks(TaakUser user) {
+  public List<GeneratedTaskResponse> getSuggestedTasks(TaakUser user) {
     LocalDateTime startOfToday =
         LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
     LocalDateTime endOfToday = startOfToday.plusDays(1).minusNanos(1);
@@ -35,12 +35,8 @@ public class SuggestedTaskServiceImpl implements SuggestedTaskService {
                 user.getId(), startOfToday, endOfToday)
             .orElse(0L);
     int listIndex = Math.min(suggestedTasksList.size() - 1, (int) (totalLoadScore / 10));
-    String title =
-        suggestedTasksList
-            .get(listIndex)
-            .get((int) (Math.random() * suggestedTasksList.get(listIndex).size()));
-    GeneratedTaskResponse response =
-        new GeneratedTaskResponse(title, LocalDateTime.now().plusDays(1), 0);
-    return response;
+    return suggestedTasksList.get(listIndex).stream()
+        .map(task -> new GeneratedTaskResponse(task, startOfToday.plusDays(1), 0))
+        .toList();
   }
 }
