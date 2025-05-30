@@ -131,6 +131,20 @@ HTTP/1.1 200 OK
 Content-Type: text/plain;charset=UTF-8
 ```
 
+# デプロイ
+## 構成
+バックエンド：Spring boot
+
+データベース：PostgreSQL
+
+LLM：OpenAI API
+## Heroku
+PaaSのHerokuを使って、バックエンドのサーバ（Spring boot）とデータベース（PostgreSQL）をデプロイしています。
+ビルドパッケージは以下の3つを使っています。
+- `https://github.com/lstoll/heroku-buildpack-monorepo`：サブディレクトリを起点にビルド＆デプロイをするため
+- `heroku/gradle`：Gradleでビルドをするため
+- （）：Firebase Cloud MessagingのAPIの認証に必要なCredentialを保管するため
+
 # 補足
 Cookieによるセッション管理やフォームログインは廃止しました。
 
