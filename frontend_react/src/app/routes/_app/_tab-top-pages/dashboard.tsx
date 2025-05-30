@@ -3,9 +3,11 @@ import { DashboardBuddySuggestion } from '@/pages/dashboard/ui/dashboard-buddy-s
 import { DashboardMainTask } from '@/pages/dashboard/ui/dashboard-main-task';
 import { DashboardPersonal } from '@/pages/dashboard/ui/dashboard-personal';
 import { DashboardTaskLoadScore } from '@/pages/dashboard/ui/dashboard-task-load-score';
-import { ToolLinkButton } from '@/pages/dashboard/ui/tool-link-button';
 import { cn } from '@/shared/lib/utils';
+import { NoteIcon } from '@/shared/ui/components/icons/note-icon';
 import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
+import { TodoIcon } from '@/shared/ui/components/icons/todo-icon';
+import { UserIcon } from '@/shared/ui/components/icons/user-icon';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Loading } from '@/shared/ui/layouts/loading';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
@@ -38,11 +40,38 @@ function App() {
         </PageTitleContainer>
         <DashboardBuddy />
         <div className="space-y-1.5">
-          <h3 className="font-bold">Tools</h3>
+          <h3 className="font-bold">Features</h3>
           <div className="flex gap-2.25">
-            <ToolLinkButton to="/todo">ToDoリスト</ToolLinkButton>
-            <ToolLinkButton to="/diary">日記</ToolLinkButton>
-            <ToolLinkButton to="/buddy">Buddy</ToolLinkButton>
+            <Button
+              variant="outline"
+              className="border-accent bg-accent/30 hover:bg-accent/50 h-12.5"
+              asChild
+            >
+              <Link to="/todo">
+                <TodoIcon />
+                Todo
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="border-accent bg-accent/30 hover:bg-accent/50 h-12.5"
+              asChild
+            >
+              <Link to="/diary">
+                <NoteIcon />
+                日記
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="border-accent bg-accent/30 hover:bg-accent/50 h-12.5"
+              asChild
+            >
+              <Link to="/buddy">
+                <UserIcon />
+                Buddy
+              </Link>
+            </Button>
           </div>
         </div>
       </PageHeader>
