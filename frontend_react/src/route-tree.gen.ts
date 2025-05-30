@@ -31,6 +31,7 @@ import { Route as AppTabTopPagesSettingsImport } from './app/routes/_app/_tab-to
 import { Route as AppTabTopPagesDiaryImport } from './app/routes/_app/_tab-top-pages/diary'
 import { Route as AppTabTopPagesDashboardImport } from './app/routes/_app/_tab-top-pages/dashboard'
 import { Route as AppTabTopPagesBuddyImport } from './app/routes/_app/_tab-top-pages/buddy'
+import { Route as AppDiaryDiaryIdSuggestTasksImport } from './app/routes/_app/diary/$diaryId/suggest-tasks'
 
 // Create/Update Routes
 
@@ -153,6 +154,13 @@ const AppTabTopPagesBuddyRoute = AppTabTopPagesBuddyImport.update({
   path: '/buddy',
   getParentRoute: () => AppTabTopPagesRoute,
 } as any)
+
+const AppDiaryDiaryIdSuggestTasksRoute =
+  AppDiaryDiaryIdSuggestTasksImport.update({
+    id: '/diary/$diaryId/suggest-tasks',
+    path: '/diary/$diaryId/suggest-tasks',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -298,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreateBuddyWithProgressHairImport
       parentRoute: typeof CreateBuddyWithProgressImport
     }
+    '/_app/diary/$diaryId/suggest-tasks': {
+      id: '/_app/diary/$diaryId/suggest-tasks'
+      path: '/diary/$diaryId/suggest-tasks'
+      fullPath: '/diary/$diaryId/suggest-tasks'
+      preLoaderRoute: typeof AppDiaryDiaryIdSuggestTasksImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
@@ -327,12 +342,14 @@ interface AppRouteChildren {
   AppTabTopPagesRoute: typeof AppTabTopPagesRouteWithChildren
   AppDiaryDateRoute: typeof AppDiaryDateRoute
   AppTodoTaskIdRoute: typeof AppTodoTaskIdRoute
+  AppDiaryDiaryIdSuggestTasksRoute: typeof AppDiaryDiaryIdSuggestTasksRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppTabTopPagesRoute: AppTabTopPagesRouteWithChildren,
   AppDiaryDateRoute: AppDiaryDateRoute,
   AppTodoTaskIdRoute: AppTodoTaskIdRoute,
+  AppDiaryDiaryIdSuggestTasksRoute: AppDiaryDiaryIdSuggestTasksRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -402,6 +419,7 @@ export interface FileRoutesByFullPath {
   '/create-buddy/clothes': typeof CreateBuddyWithProgressClothesRoute
   '/create-buddy/color': typeof CreateBuddyWithProgressColorRoute
   '/create-buddy/hair': typeof CreateBuddyWithProgressHairRoute
+  '/diary/$diaryId/suggest-tasks': typeof AppDiaryDiaryIdSuggestTasksRoute
 }
 
 export interface FileRoutesByTo {
@@ -421,6 +439,7 @@ export interface FileRoutesByTo {
   '/create-buddy/clothes': typeof CreateBuddyWithProgressClothesRoute
   '/create-buddy/color': typeof CreateBuddyWithProgressColorRoute
   '/create-buddy/hair': typeof CreateBuddyWithProgressHairRoute
+  '/diary/$diaryId/suggest-tasks': typeof AppDiaryDiaryIdSuggestTasksRoute
 }
 
 export interface FileRoutesById {
@@ -445,6 +464,7 @@ export interface FileRoutesById {
   '/create-buddy/_with-progress/clothes': typeof CreateBuddyWithProgressClothesRoute
   '/create-buddy/_with-progress/color': typeof CreateBuddyWithProgressColorRoute
   '/create-buddy/_with-progress/hair': typeof CreateBuddyWithProgressHairRoute
+  '/_app/diary/$diaryId/suggest-tasks': typeof AppDiaryDiaryIdSuggestTasksRoute
 }
 
 export interface FileRouteTypes {
@@ -467,6 +487,7 @@ export interface FileRouteTypes {
     | '/create-buddy/clothes'
     | '/create-buddy/color'
     | '/create-buddy/hair'
+    | '/diary/$diaryId/suggest-tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -485,6 +506,7 @@ export interface FileRouteTypes {
     | '/create-buddy/clothes'
     | '/create-buddy/color'
     | '/create-buddy/hair'
+    | '/diary/$diaryId/suggest-tasks'
   id:
     | '__root__'
     | '/'
@@ -507,6 +529,7 @@ export interface FileRouteTypes {
     | '/create-buddy/_with-progress/clothes'
     | '/create-buddy/_with-progress/color'
     | '/create-buddy/_with-progress/hair'
+    | '/_app/diary/$diaryId/suggest-tasks'
   fileRoutesById: FileRoutesById
 }
 
@@ -548,7 +571,8 @@ export const routeTree = rootRoute
       "children": [
         "/_app/_tab-top-pages",
         "/_app/diary/$date",
-        "/_app/todo/$taskId"
+        "/_app/todo/$taskId",
+        "/_app/diary/$diaryId/suggest-tasks"
       ]
     },
     "/_auth": {
@@ -641,6 +665,10 @@ export const routeTree = rootRoute
     "/create-buddy/_with-progress/hair": {
       "filePath": "create-buddy/_with-progress/hair.tsx",
       "parent": "/create-buddy/_with-progress"
+    },
+    "/_app/diary/$diaryId/suggest-tasks": {
+      "filePath": "_app/diary/$diaryId/suggest-tasks.tsx",
+      "parent": "/_app"
     }
   }
 }

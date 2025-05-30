@@ -2,7 +2,6 @@ import { diaryFormSchema } from '@/entities/diary/api/diary-form-schema';
 import { useCreateDiary } from '@/entities/diary/api/use-create-diary';
 import { DiaryForm } from '@/entities/diary/ui/diary-form';
 import { DiarySummary } from '@/pages/diary/ui/diary-summary';
-import { fetchClient } from '@/shared/api/openapi-fetch';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Form } from '@/shared/ui/components/shadcn/form';
 import { PageSection } from '@/shared/ui/layouts/page-section';
@@ -36,12 +35,10 @@ export const DiaryCreateForm = ({ date }: Props) => {
       mutateOptions: {
         onSuccess: async (res) => {
           form.reset(data);
-          navigate({ to: '/diary' });
-          console.log(
-            await fetchClient.GET('/diaries/{id}/suggested-tasks', {
-              params: { path: { id: res.id } },
-            })
-          );
+          navigate({
+            to: '/diary/$diaryId/suggest-tasks',
+            params: { diaryId: res.id },
+          });
         },
       },
     })
