@@ -1,4 +1,5 @@
 import { DashboardBuddy } from '@/pages/dashboard/ui/dashboard-buddy';
+import { DashboardBuddySuggestion } from '@/pages/dashboard/ui/dashboard-buddy-suggestion';
 import { DashboardMainTask } from '@/pages/dashboard/ui/dashboard-main-task';
 import { DashboardPersonal } from '@/pages/dashboard/ui/dashboard-personal';
 import { DashboardTaskLoadScore } from '@/pages/dashboard/ui/dashboard-task-load-score';
@@ -49,6 +50,7 @@ function App() {
         <Suspense fallback={<Loading />}>
           <DashboardTaskLoadScore />
           <DashboardMainTask />
+          <DashboardBuddySuggestion />
           <DashboardPersonal />
         </Suspense>
       </PageMain>
