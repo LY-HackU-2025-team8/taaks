@@ -32,11 +32,6 @@ const MorningSuggestion = () => {
         <wbr />
         しますか？
       </BuddyMessageCardContent>
-      {/* <BuddyMessageCardContent className="text-card-foreground">
-        <BuddyMessageCardDescription>
-          ToDoを入れてしっかり管理しよう。
-        </BuddyMessageCardDescription>
-      </BuddyMessageCardContent> */}
       <AddTaskDrawer>
         <Button
           variant="primary-inverted"
@@ -70,11 +65,6 @@ const EveningSuggestion = () => {
         <wbr />
         どんな1日でしたか？
       </BuddyMessageCardContent>
-      {/* <BuddyMessageCardContent className="text-card-foreground">
-        <BuddyMessageCardDescription>
-          忘れないうちに日記を書いておこう。
-        </BuddyMessageCardDescription>
-      </BuddyMessageCardContent> */}
       <Button
         variant="primary-inverted"
         size="sm"
@@ -90,7 +80,6 @@ const EveningSuggestion = () => {
 export const DashboardBuddySuggestion = () => {
   const date = useCurrentDate({ timeResolution: 'day' });
   const hour = date.getHours();
-  console.log('Current hour:', hour);
 
   return (
     <PageSection>
