@@ -1,5 +1,6 @@
 import { BuddyGreeting } from '@/features/buddy-greeting/ui/buddy-greeting';
 import { BuddyMainTask } from '@/pages/buddy/buddy-main-task';
+import { BuddyScore } from '@/pages/buddy/buddy-score';
 import { BuddySuggestion } from '@/pages/buddy/buddy-suggestion';
 import { $api } from '@/shared/api/openapi-fetch';
 import { useGreeting } from '@/shared/hooks/use-greeting';
@@ -15,7 +16,6 @@ import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { Suspense } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { BuddyScore } from '@/pages/buddy/buddy-score';
 
 export const Route = createFileRoute('/_app/_tab-top-pages/buddy')({
   context: ({ context }) => ({

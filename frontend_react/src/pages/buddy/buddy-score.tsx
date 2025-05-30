@@ -1,3 +1,4 @@
+import { BuddyTaskLoadScore } from '@/pages/buddy/buddy-task-load-score';
 import { $api } from '@/shared/api/openapi-fetch';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
@@ -5,7 +6,6 @@ import { CardContent } from '@/shared/ui/components/shadcn/card';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
 import { format } from 'date-fns';
-import { BuddyTaskLoadScore } from '@/pages/buddy/buddy-task-load-score';
 
 export const BuddyScore = () => {
   const date = useCurrentDate({ timeResolution: 'day' });
@@ -23,7 +23,7 @@ export const BuddyScore = () => {
 
       <BuddyTaskLoadScore />
 
-      <div className="flex flex-row gap-3.5 text-primary-foreground">
+      <div className="text-primary-foreground flex flex-row gap-3.5">
         <CardContent className="bg-primary flex flex-1 flex-col gap-2 rounded-lg p-3.5">
           <p className="text-[13px] font-bold">今日のタスク数</p>
           <p className="text-md text-right text-xl">{stats.taskCount}</p>
