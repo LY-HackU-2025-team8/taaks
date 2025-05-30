@@ -14,6 +14,14 @@ import {
   FormLabel,
   FormMessage,
 } from '@/shared/ui/components/shadcn/form';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/ui/components/shadcn/select';
 import { Separator } from '@/shared/ui/components/shadcn/separator';
 import { Slider } from '@/shared/ui/components/shadcn/slider';
 import { Switch } from '@/shared/ui/components/shadcn/switch';
@@ -93,6 +101,34 @@ export const TaskForm = ({
             </FormItem>
           )}
         />
+      
+        <FormField
+          control={form.control}
+          name="remainderAt"
+          render={({ field }) => (
+            <FormItem className="flex gap-4 px-7">
+              {/* <FormLabel>リマインダー</FormLabel> */}
+              <Select
+                onValueChange={(e) => {
+                  field.onChange(e === 'null' ? null : new Date(e));
+                }}
+              >
+                <SelectTrigger className="w-[12rem]">
+                  <SelectValue placeholder="リマインド時刻" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="banana">5分前</SelectItem>
+                    <SelectItem value="blueberry">1時間前</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        >
+        </FormField>
+        
         <Separator />
         <FormField
           control={form.control}
