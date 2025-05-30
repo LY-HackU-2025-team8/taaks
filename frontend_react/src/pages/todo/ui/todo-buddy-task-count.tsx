@@ -24,6 +24,7 @@ export const TodoBuddyTaskCount = ({
   className,
   ...props
 }: TodoBuddyTaskCountProps) => {
+  const { data: buddy } = $api.useSuspenseQuery('get', '/buddy');
   const { data } = $api.useSuspenseQuery('get', '/days/{day}', {
     params: {
       path: {
@@ -34,11 +35,14 @@ export const TodoBuddyTaskCount = ({
   /** 合計残りタスク数 */
   const totalTasks = data?.uncompletedTaskCount;
   return (
-    <PageSection className={cn('px-0 pt-12', className)} {...props}>
-      <BuddyMessageCard className="overflow-x-clip">
+    <PageSection
+      className={cn('overflow-x-clip overflow-y-visible px-0 pt-12', className)}
+      {...props}
+    >
+      <BuddyMessageCard>
         <BuddyMessageCardHeader>
           <BuddyMessageCardDescription>
-            Buddyからのメッセージ
+            {buddy.name}からのメッセージ
           </BuddyMessageCardDescription>
         </BuddyMessageCardHeader>
         <BuddyMessageCardContent className="min-h-24 text-lg break-keep">
@@ -57,7 +61,12 @@ export const TodoBuddyTaskCount = ({
           )}
         </BuddyMessageCardContent>
         <div className="absolute -right-4 bottom-0 size-64">
-          <RiveBuddy motionId={1} faceId={6} />
+          <RiveBuddy
+            motionId={1}
+            faceId={6}
+            clothesId={buddy?.clothesId}
+            hairId={buddy?.hairStyleId}
+          />
         </div>
       </BuddyMessageCard>
     </PageSection>

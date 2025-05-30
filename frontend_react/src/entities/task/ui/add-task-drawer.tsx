@@ -48,12 +48,14 @@ export const AddTaskDrawer = ({
   });
 
   // FormのSubmit時にタスクを作成する
-  const handleSubmit = form.handleSubmit(
-    createTask({
-      onSuccess: () => {
-        // タスクの作成に成功したらフォームをリセットし、Drawerを閉じる
-        form.reset();
-        drawerState.onOpenChange(false);
+  const handleSubmit = form.handleSubmit((data) =>
+    createTask(data, {
+      mutateOptions: {
+        onSuccess: () => {
+          // タスクの作成に成功したらフォームをリセットし、Drawerを閉じる
+          form.reset();
+          drawerState.onOpenChange(false);
+        },
       },
     })
   );

@@ -15,7 +15,6 @@ import { Heading } from '@/shared/ui/components/typography/heading';
 import { useCallback, useRef, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
-import { taskFormSchema } from '../api/task-form-schema';
 import type { TaskResponseModel } from '../api/task-model';
 import { useEditTask } from '../api/use-edit-task';
 import { EditTaskDrawer } from './edit-task-drawer';
@@ -30,7 +29,8 @@ export const TaskCardSmall = ({
   className,
   ...props
 }: TaskCardSmallProps) => {
-  const { editTask, isPending } = useEditTask(task.id);
+  const { handleCompleteTask, handleUnCompleteTask, isPending } =
+    useEditTask(task);
   const [done, setDone] = useState(!!task.completedAt);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -40,30 +40,20 @@ export const TaskCardSmall = ({
     clearTimeout(timeoutRef.current!);
     timeoutRef.current = setTimeout(() => {
       // アニメーションのために遅延させる
-      editTask()(
-        taskFormSchema.parse({
-          ...task,
-          completedAt: new Date(),
-        })
-      );
+      handleCompleteTask();
       timeoutRef.current = null;
     }, 1500);
-  }, [editTask, task]);
+  }, [handleCompleteTask]);
 
   /** タスクの完了を取り消す */
-  const handleUndo = useCallback(() => {
+  const handleUnComplete = useCallback(() => {
     setDone(false);
     clearTimeout(timeoutRef.current!);
     timeoutRef.current = setTimeout(() => {
-      editTask()(
-        taskFormSchema.parse({
-          ...task,
-          completedAt: null,
-        })
-      );
+      handleUnCompleteTask();
       timeoutRef.current = null;
     }, 1500);
-  }, [editTask, task]);
+  }, [handleUnCompleteTask]);
 
   return (
     <div
@@ -107,7 +97,7 @@ export const TaskCardSmall = ({
         type="button"
         className="absolute top-0 right-0 h-11.25 w-13.25"
         disabled={timeoutRef.current !== null || isPending}
-        onClick={done ? handleUndo : handleComplete}
+        onClick={done ? handleUnComplete : handleComplete}
       >
         <RiveCheckButton className="h-full w-full" type="todo" done={done} />
       </button>

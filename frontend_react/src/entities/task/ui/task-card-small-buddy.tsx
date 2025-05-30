@@ -32,11 +32,13 @@ export const TaskCardSmallBuddy = ({
   /** タスクを追加する */
   const handleAdd = useCallback(() => {
     setAdded(true);
-    createTask({
-      onSuccess: (task) => {
-        setCreatedTask(task);
+    createTask(taskFormSchema.parse(task), {
+      mutateOptions: {
+        onSuccess: (task) => {
+          setCreatedTask(task);
+        },
       },
-    })(taskFormSchema.parse(task));
+    });
   }, [createTask, task]);
 
   return (
