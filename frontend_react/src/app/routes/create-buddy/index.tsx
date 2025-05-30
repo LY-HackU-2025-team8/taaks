@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/components/shadcn/button';
 import { useCallback } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_app/create-buddy/')({
+export const Route = createFileRoute('/create-buddy/')({
   component: RouteComponent,
 });
 
