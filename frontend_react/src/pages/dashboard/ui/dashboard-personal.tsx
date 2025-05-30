@@ -4,9 +4,10 @@ import { CardContent } from '@/shared/ui/components/shadcn/card';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
 import { format } from 'date-fns';
+import { useCurrentDate } from '@/shared/hooks/use-current-date';
 
 export const DashboardPersonal = () => {
-  const date = new Date();
+  const date = useCurrentDate({ timeResolution: 'day' });
   const { data: stats } = $api.useSuspenseQuery('get', '/days/{day}', {
     params: {
       path: {

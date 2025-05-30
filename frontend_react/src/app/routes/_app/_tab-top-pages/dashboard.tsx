@@ -13,6 +13,7 @@ import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { Suspense } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { DashboardBuddySuggestion } from '@/pages/dashboard/ui/dashboard-buddy-suggestion';
 
 export const Route = createFileRoute('/_app/_tab-top-pages/dashboard')({
   context: ({ context }) => ({
@@ -49,6 +50,7 @@ function App() {
         <Suspense fallback={<Loading />}>
           <DashboardTaskLoadScore />
           <DashboardMainTask />
+          <DashboardBuddySuggestion />
           <DashboardPersonal />
         </Suspense>
       </PageMain>
