@@ -64,7 +64,7 @@ export const TaskForm = ({
   ) => {
     setScheduleOption(scheduleOption);
     if (!dueAt || scheduleOption === 'null') {
-      return null;
+      return [];
     }
 
     const timeDelta = scheduleOptions[scheduleOption].timeDelta;
