@@ -1,6 +1,7 @@
 import { TaskHorizontalSmallStack } from '@/entities/task/ui/task-horizontal-small-stack';
 import { filterTodayTasks } from '@/shared/api/filter-today';
 import { getNextPageParam } from '@/shared/api/get-next-page-param';
+import { selectRandomOne } from '@/shared/api/get-random-one';
 import { $api } from '@/shared/api/openapi-fetch';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
 import type { ComponentPropsWithoutChildren } from '@/shared/types';
@@ -12,7 +13,7 @@ type DashboardMainTaskProps = ComponentPropsWithoutChildren<typeof PageSection>;
 
 export const DashboardMainTask = ({ ...props }: DashboardMainTaskProps) => {
   const date = useCurrentDate({ timeResolution: 'day' });
-  const { data: suggestedTask } = $api.useSuspenseQuery(
+  const { data: suggestedTasks } = $api.useSuspenseQuery(
     'get',
     '/suggested-tasks/today'
   );
@@ -41,7 +42,7 @@ export const DashboardMainTask = ({ ...props }: DashboardMainTaskProps) => {
     <PageSection {...props}>
       <PageSectionTitle>主要なタスク</PageSectionTitle>
       <TaskHorizontalSmallStack
-        suggestedTasks={[suggestedTask]}
+        suggestedTasks={selectRandomOne(suggestedTasks)}
         tasks={data?.pages.flatMap((page) => page.content || []) || []}
       >
         {hasNextPage && (
