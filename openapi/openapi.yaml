@@ -454,7 +454,7 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/TaskResponse"
+                $ref: "#/components/schemas/GeneratedTaskResponse"
           description: OK
         default:
           content:

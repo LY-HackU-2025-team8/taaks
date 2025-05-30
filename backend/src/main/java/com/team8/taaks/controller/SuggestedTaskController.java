@@ -1,6 +1,6 @@
 package com.team8.taaks.controller;
 
-import com.team8.taaks.dto.TaskResponse;
+import com.team8.taaks.dto.GeneratedTaskResponse;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.service.SuggestedTaskService;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class SuggestedTaskController {
   }
 
   @GetMapping("/today")
-  public ResponseEntity<TaskResponse> suggestTask(@AuthenticationPrincipal TaakUser user) {
+  public ResponseEntity<GeneratedTaskResponse> suggestTask(@AuthenticationPrincipal TaakUser user) {
     return ResponseEntity.ok(suggestedTaskService.getSuggestedTasks(user));
   }
 }

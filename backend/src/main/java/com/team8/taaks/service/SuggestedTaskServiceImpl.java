@@ -1,6 +1,6 @@
 package com.team8.taaks.service;
 
-import com.team8.taaks.dto.TaskResponse;
+import com.team8.taaks.dto.GeneratedTaskResponse;
 import com.team8.taaks.model.TaakUser;
 import com.team8.taaks.repository.TaakTaskRepository;
 import java.time.LocalDateTime;
@@ -25,7 +25,7 @@ public class SuggestedTaskServiceImpl implements SuggestedTaskService {
   }
 
   @Override
-  public TaskResponse getSuggestedTasks(TaakUser user) {
+  public GeneratedTaskResponse getSuggestedTasks(TaakUser user) {
     LocalDateTime startOfToday =
         LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
     LocalDateTime endOfToday = startOfToday.plusDays(1).minusNanos(1);
@@ -39,16 +39,8 @@ public class SuggestedTaskServiceImpl implements SuggestedTaskService {
         suggestedTasksList
             .get(listIndex)
             .get((int) (Math.random() * suggestedTasksList.get(listIndex).size()));
-    TaskResponse response =
-        new TaskResponse(
-            -1,
-            title,
-            "suggested task",
-            LocalDateTime.now().plusDays(1),
-            false,
-            null,
-            0,
-            List.of());
+    GeneratedTaskResponse response =
+        new GeneratedTaskResponse(title, LocalDateTime.now().plusDays(1), 0);
     return response;
   }
 }
