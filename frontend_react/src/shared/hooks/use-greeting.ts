@@ -8,14 +8,17 @@ export const useGreeting = () => {
 
   useEffect(() => {
     const hours = currentDate.getHours();
-    if (hours < 12) {
+    if (hours >= 4 && hours < 12) {
       setFormal('おはようございます');
       setCasual('おはよう');
-    } else if (hours < 18) {
+    } else if (hours >= 13 && hours < 18) {
       setFormal('こんにちは');
       setCasual('やあ');
-    } else {
+    } else if (hours >= 18) {
       setFormal('お疲れ様でした');
+      setCasual('こんばんは');
+    } else {
+      setFormal('こんばんは');
       setCasual('こんばんは');
     }
   }, [currentDate]);
