@@ -16,6 +16,11 @@ public interface TaakTaskRepository
 
   Optional<TaakTask> findByIdAndUserId(Integer id, Long userId);
 
+  List<TaakTask> findAllByUserIdAndDueAtBetween(
+      @Param("userId") Long userId,
+      @Param("start") LocalDateTime start,
+      @Param("end") LocalDateTime end);
+
   @Query(
       "SELECT SUM(t.loadScore) * 4 FROM TaakTask t WHERE t.user.id = :userId AND t.dueAt >= :start AND t.dueAt <= :end")
   Optional<Long> sumQuadrupleLoadScoreForCompletedTasksBetweenDueDates(
