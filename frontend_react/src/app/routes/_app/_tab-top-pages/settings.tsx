@@ -34,15 +34,13 @@ function RouteComponent() {
   return (
     <>
       <PageHeader>
-        <PageTitleContainer>
+        <PageTitleContainer className="pr-10">
           <Button variant="ghost" size="icon" asChild>
             <BackButton>
               <ChevronLeftIcon />
             </BackButton>
           </Button>
-        </PageTitleContainer>
-        <PageTitleContainer>
-          <PageTitle>Settings</PageTitle>
+          <PageTitle className="mx-auto">Settings</PageTitle>
         </PageTitleContainer>
       </PageHeader>
       <PageMain className="flex flex-col">
