@@ -13,9 +13,11 @@ import { BackButton } from '@/shared/ui/components/router/back-button';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Card, CardContent } from '@/shared/ui/components/shadcn/card';
 import { Heading } from '@/shared/ui/components/typography/heading';
+import { Text } from '@/shared/ui/components/typography/text';
 import { Loading } from '@/shared/ui/layouts/loading';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
 import { PageMain } from '@/shared/ui/layouts/page-main';
+import { PageTitle } from '@/shared/ui/layouts/page-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
 import { Suspense } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
@@ -24,7 +26,10 @@ import { format } from 'date-fns';
 export const Route = createFileRoute('/_app/_tab-top-pages/buddy')({
   context: ({ context }) => ({
     ...context,
-    htmlClassName: cn(context.htmlClassName, 'bg-custom'),
+    htmlClassName: cn(
+      context.htmlClassName,
+      'bg-custom text-custom-foreground'
+    ),
   }),
   component: RouteComponent,
 });
@@ -50,6 +55,7 @@ function RouteComponent() {
               <ChevronLeftIcon />
             </BackButton>
           </Button>
+          <PageTitle className="mx-auto">{buddy.name}</PageTitle>
           <Button variant="ghost" size="icon" asChild>
             <Link to="/settings">
               <SettingsIcon />
@@ -58,23 +64,20 @@ function RouteComponent() {
         </PageTitleContainer>
         <BuddyGreeting className="flex flex-col">
           <div className="flex w-full flex-row items-center gap-4">
-            <div className="flex flex-1 flex-col">
+            <div className="flex flex-1 flex-col gap-1">
               <Heading className="break-keep" size="4xl" variant="custom">
                 {casual}
                 <wbr />
                 {buddy?.nickname}さん！
               </Heading>
-              {/* FIXME: ここハードコーディングしてる */}
-              <p className="text-md text-[#33362C]">
+              <Text className="text-current/85">
                 今日は忙しい1日になりそうだね、 こまめな休憩を忘れないようにね。
-              </p>
+              </Text>
             </div>
             <Card className="bg-primary text-primary-foreground mt-auto w-24 flex-shrink-0">
-              <CardContent className="flex flex-1 flex-col items-center">
-                <p className="text-[13px] font-bold">タスクの数</p>
-                <p className="text-primary-foreground text-[40px]">
-                  {stats.taskCount}
-                </p>
+              <CardContent className="flex flex-1 flex-col items-center gap-3.5">
+                <Heading size="sm">タスクの数</Heading>
+                <Heading size="4xl">{stats.taskCount}</Heading>
               </CardContent>
             </Card>
           </div>

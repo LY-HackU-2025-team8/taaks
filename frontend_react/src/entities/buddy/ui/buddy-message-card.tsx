@@ -5,21 +5,36 @@ import {
   CardDescription,
   CardHeader,
 } from '@/shared/ui/components/shadcn/card';
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
 import type { ClassNameValue } from 'tailwind-merge';
+
+const buddyMessageCardVariant = cva('', {
+  variants: {
+    variant: {
+      'primary-invert': 'bg-primary-foreground text-primary',
+      custom: 'bg-custom text-custom-foreground',
+    },
+  },
+  defaultVariants: {
+    variant: 'custom',
+  },
+});
 
 /** Buddyからのメッセージとして描画されるカード */
 export const BuddyMessageCard = ({
   className,
+  variant,
   ...props
-}: React.ComponentProps<typeof Card>) => {
+}: React.ComponentProps<typeof Card> &
+  VariantProps<typeof buddyMessageCardVariant>) => {
   return (
     <Card
       data-slot="buddy-message-card"
       className={cn(
-        'bg-custom text-custom-foreground relative border-none py-6 pr-40 shadow-none',
-        className
+        'relative min-h-40 border-none py-6 pr-40 shadow-none',
+        buddyMessageCardVariant({ variant, className })
       )}
       {...props}
     />
@@ -46,10 +61,7 @@ export const BuddyMessageCardDescription = ({
   return (
     <CardDescription
       data-slot="buddy-message-card-description"
-      className={cn(
-        'text-custom-foreground/70 font-line-seed font-bold',
-        className
-      )}
+      className={cn('font-line-seed font-bold text-current/70', className)}
       {...props}
     />
   );

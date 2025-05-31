@@ -3,6 +3,7 @@ import {
   BuddyMessageCardContent,
   BuddyMessageCardDescription,
   BuddyMessageCardHeader,
+  BuddyMessageCardRightElement,
 } from '@/entities/buddy/ui/buddy-message-card';
 import { AddTaskDrawer } from '@/entities/task/ui/add-task-drawer';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
@@ -15,12 +16,13 @@ import { Link } from '@tanstack/react-router';
 const MorningSuggestion = () => {
   const { formal } = useGreeting();
   return (
-    <BuddyMessageCard className="bg-card relative flex flex-col overflow-clip">
-      <img
-        src="/assets/images/todo_3d.png"
-        alt="タスクバインダーのイラスト"
-        className="absolute top-0 -right-8 bottom-0 my-auto size-60"
-      />
+    <BuddyMessageCard variant="primary-invert">
+      <BuddyMessageCardRightElement>
+        <img
+          src="/assets/images/todo_3d.png"
+          alt="タスクバインダーのイラスト"
+        />
+      </BuddyMessageCardRightElement>
       <BuddyMessageCardHeader>
         <BuddyMessageCardDescription>
           Buddyからの提案
@@ -49,13 +51,10 @@ const MorningSuggestion = () => {
 const EveningSuggestion = () => {
   const { formal } = useGreeting();
   return (
-    <BuddyMessageCard className="bg-card min-h-40 overflow-clip">
-      <img
-        src="/assets/images/diary_3d.png"
-        alt="日記帳のイラスト"
-        className="absolute top-0 -right-8 bottom-0 my-auto size-54"
-      />
-
+    <BuddyMessageCard variant="primary-invert">
+      <BuddyMessageCardRightElement>
+        <img src="/assets/images/diary_3d.png" alt="日記帳のイラスト" />
+      </BuddyMessageCardRightElement>
       <BuddyMessageCardHeader>
         <BuddyMessageCardDescription>
           Buddyからの提案
@@ -83,7 +82,7 @@ export const BuddySuggestion = () => {
   const hours = date.getHours();
 
   return (
-    <PageSection>
+    <PageSection className="overflow-clip">
       <PageSectionTitle>僕からの提案だよ</PageSectionTitle>
       {hours < 12 ? <MorningSuggestion /> : <EveningSuggestion />}
     </PageSection>

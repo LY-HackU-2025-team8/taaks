@@ -1,8 +1,9 @@
-import { BuddyTaskLoadScore } from '@/pages/buddy/buddy-task-load-score';
+import { TaskLoadScoreCard } from '@/features/task-load-score/ui/task-load-score-card';
 import { $api } from '@/shared/api/openapi-fetch';
 import { DATE_DATA_FORMAT } from '@/shared/constants';
 import { useCurrentDate } from '@/shared/hooks/use-current-date';
-import { CardContent } from '@/shared/ui/components/shadcn/card';
+import { Card, CardContent } from '@/shared/ui/components/shadcn/card';
+import { Heading } from '@/shared/ui/components/typography/heading';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
 import { format } from 'date-fns';
@@ -20,20 +21,27 @@ export const BuddyScore = () => {
   return (
     <PageSection>
       <PageSectionTitle>今日のスコア</PageSectionTitle>
-
-      <BuddyTaskLoadScore />
-
-      <div className="text-primary-foreground flex flex-row gap-3.5">
-        <CardContent className="bg-primary flex flex-1 flex-col gap-2 rounded-lg p-3.5">
-          <p className="text-[13px] font-bold">今日のタスク数</p>
-          <p className="text-md text-right text-xl">{stats.taskCount}</p>
-        </CardContent>
-        <CardContent className="bg-primary flex flex-1 flex-col gap-2 rounded-lg p-3.5">
-          <p className="text-[13px] font-bold">完了したタスク数</p>
-          <p className="text-md text-right text-xl">
-            {stats.completedTaskCount}
-          </p>
-        </CardContent>
+      <TaskLoadScoreCard
+        loadScore={stats.loadScore || 0}
+        variant="primary-invert"
+      />
+      <div className="flex gap-3.5">
+        <Card className="bg-primary text-primary-foreground flex-1">
+          <CardContent>
+            <Heading size="sm">今日のタスク数</Heading>
+            <Heading size="xl" className="text-right">
+              {stats.taskCount}
+            </Heading>
+          </CardContent>
+        </Card>
+        <Card className="bg-primary text-primary-foreground flex-1">
+          <CardContent>
+            <Heading size="sm">完了したタスク数</Heading>
+            <Heading size="xl" className="text-right">
+              {stats.completedTaskCount}
+            </Heading>
+          </CardContent>
+        </Card>
       </div>
 
       {/* TODO: 累計タスク完了数を返すAPIが出来上がったらコメントアウト外す */}
