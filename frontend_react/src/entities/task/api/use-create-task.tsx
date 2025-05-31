@@ -56,6 +56,7 @@ export const useCreateTask = () => {
       const completedAt = data.completedAt
         ? format(data.completedAt, DATETIME_DATA_FORMAT)
         : undefined;
+      const autoCalculateTaskScore = data.autoCalculateLoadScore;
 
       const promise = mutateAsync(
         {
@@ -69,7 +70,9 @@ export const useCreateTask = () => {
       );
 
       const toastPromise = toast.promise(promise, {
-        loading: `${buddy?.name}がタスクの負荷スコアを考えています...`,
+        loading: autoCalculateTaskScore
+          ? `${buddy?.name}がタスクの負荷スコアを考えています...`
+          : 'タスクを登録しています',
         success: (res) => ({
           icon: (
             <RiveBuddy
@@ -84,15 +87,9 @@ export const useCreateTask = () => {
             icon: 'p-7',
           },
           message: buddy.name || 'Buddy',
-          description: (
-            <div className="break-keep">
-              「{res.title}」の
-              <wbr />
-              負荷スコアは
-              <wbr />
-              {res.loadScore}です！
-            </div>
-          ),
+          description: autoCalculateTaskScore
+            ? `「${res.title}」の負荷スコアは${res.loadScore}です！`
+            : `「${res.title}」を登録しました！達成できるように頑張ろう！`,
           action: (
             <Button
               size="sm"
