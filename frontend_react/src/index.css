@@ -113,7 +113,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  --custom-foreground: oklch(0.1836 0.0336 114.7);
+  --custom-foreground: var(--foreground);
   --custom-green: oklch(0.8917 0.193 120.28);
   --custom-yellow: oklch(0.8324 0.1513 97.61);
   --custom-red: oklch(0.6679 0.1714 22.08);

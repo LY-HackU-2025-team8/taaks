@@ -44,7 +44,7 @@ function App() {
           <div className="flex gap-2.25">
             <Button
               variant="outline"
-              className="border-accent bg-accent/30 hover:bg-accent/50 h-12.5"
+              className="border-primary-foreground bg-primary-foreground/30 hover:bg-primary-foreground/50 text-primary hover:text-primary h-12.5"
               asChild
             >
               <Link to="/todo">
@@ -54,7 +54,7 @@ function App() {
             </Button>
             <Button
               variant="outline"
-              className="border-accent bg-accent/30 hover:bg-accent/50 h-12.5"
+              className="border-primary-foreground bg-primary-foreground/30 hover:bg-primary-foreground/50 text-primary hover:text-primary h-12.5"
               asChild
             >
               <Link to="/diary">
@@ -64,7 +64,7 @@ function App() {
             </Button>
             <Button
               variant="outline"
-              className="border-accent bg-accent/30 hover:bg-accent/50 h-12.5"
+              className="border-primary-foreground bg-primary-foreground/30 hover:bg-primary-foreground/50 text-primary hover:text-primary h-12.5"
               asChild
             >
               <Link to="/buddy">
