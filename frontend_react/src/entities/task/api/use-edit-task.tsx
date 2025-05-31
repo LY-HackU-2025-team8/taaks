@@ -107,15 +107,7 @@ export const useEditTask = (task: TaskResponseModel) => {
             icon: 'p-7',
           },
           message: buddy.name || 'Buddy',
-          description: (
-            <div className="break-keep">
-              「{res.title}」
-              <wbr />
-              を完了しました！
-              <wbr />
-              お疲れ様！
-            </div>
-          ),
+          description: `「${res.title}」 を完了しました！お疲れ様！`,
         }),
       },
     });
@@ -144,13 +136,7 @@ export const useEditTask = (task: TaskResponseModel) => {
             icon: 'p-7 relative',
           },
           message: buddy.name || 'Buddy',
-          description: (
-            <div className="break-keep">
-              「{res.title}」
-              <wbr />
-              を未完了にしました！
-            </div>
-          ),
+          description: `「${res.title}」 を未完了にしました！`,
         }),
       },
     });

@@ -1,5 +1,9 @@
+import { useDeleteTask } from '@/entities/task/api/use-delete-task';
+import { useEditTask } from '@/entities/task/api/use-edit-task';
 import { EditTaskDrawer } from '@/entities/task/ui/edit-task-drawer';
 import { $api } from '@/shared/api/openapi-fetch';
+import { BackIconSmall } from '@/shared/ui/components/icons/back-icon-small';
+import { CheckIconSmall } from '@/shared/ui/components/icons/check-icon-small';
 import { ClockIcon } from '@/shared/ui/components/icons/clock-icon';
 import { CloseIcon } from '@/shared/ui/components/icons/close-icon';
 import { EditIcon } from '@/shared/ui/components/icons/edit-icon';
@@ -12,8 +16,10 @@ import { PageHeader } from '@/shared/ui/layouts/page-header';
 import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
+import { useCallback } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { format } from 'date-fns';
+import { Trash2Icon } from 'lucide-react';
 import { z } from 'zod';
 
 const paramsSchema = z.object({
@@ -26,12 +32,28 @@ export const Route = createFileRoute('/_app/todo/$taskId')({
 });
 
 function RouteComponent() {
+  const navigate = Route.useNavigate();
   const { taskId } = Route.useParams();
   const { data: task } = $api.useSuspenseQuery('get', '/tasks/{taskId}', {
     params: {
       path: { taskId: taskId },
     },
   });
+  const { deleteTask } = useDeleteTask(task);
+  const { handleCompleteTask, handleUnCompleteTask } = useEditTask(task);
+  const isCompleted = !!task.completedAt;
+
+  const handleDeleteTask = useCallback(() => {
+    deleteTask({
+      mutateOptions: {
+        onSuccess: () => {
+          navigate({
+            to: '/todo',
+          });
+        },
+      },
+    });
+  }, [deleteTask, navigate]);
 
   return (
     <>
@@ -69,7 +91,7 @@ function RouteComponent() {
           </ul>
         </PageSection>
         <Separator />
-        <PageSection>
+        <PageSection className="flex-1">
           <Heading asChild>
             <div className="flex items-center gap-2">
               <h2>負荷スコア</h2>
@@ -87,6 +109,24 @@ function RouteComponent() {
             負荷スコアはAIによる予測スコアであり、実際に感じる負荷とは異なる場合があります。その場合は、手動で負荷スコアを調整してください。
           </Text>
         </PageSection>
+        <footer className="flex gap-3.5 px-3.5">
+          <Button
+            className="flex-1"
+            variant="destructive"
+            onClick={handleDeleteTask}
+          >
+            <Trash2Icon />
+            タスクを削除
+          </Button>
+          <Button
+            className="flex-1"
+            variant={isCompleted ? 'outline' : 'primary'}
+            onClick={isCompleted ? handleUnCompleteTask : handleCompleteTask}
+          >
+            {isCompleted ? <BackIconSmall /> : <CheckIconSmall />}
+            タスクを{isCompleted ? '未完了' : '完了'}
+          </Button>
+        </footer>
       </PageMain>
     </>
   );
