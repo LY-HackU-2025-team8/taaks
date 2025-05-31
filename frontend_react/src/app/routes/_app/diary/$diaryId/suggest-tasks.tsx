@@ -8,12 +8,13 @@ import { SettingsIcon } from '@/shared/ui/components/icons/settings-icon';
 import { BackButton } from '@/shared/ui/components/router/back-button';
 import { Button } from '@/shared/ui/components/shadcn/button';
 import { Heading } from '@/shared/ui/components/typography/heading';
+import { Loading } from '@/shared/ui/layouts/loading';
 import { PageHeader } from '@/shared/ui/layouts/page-header';
 import { PageMain } from '@/shared/ui/layouts/page-main';
 import { PageSection } from '@/shared/ui/layouts/page-section';
 import { PageSectionTitle } from '@/shared/ui/layouts/page-section-title';
 import { PageTitleContainer } from '@/shared/ui/layouts/page-title-container';
-import { Suspense } from 'react';
+import { Suspense, useMemo } from 'react';
 import { useIsFetching } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { addDays, format } from 'date-fns';
@@ -54,6 +55,39 @@ function RouteComponent() {
     })
   );
 
+  const footerElement = useMemo(
+    () => (
+      <PageSection>
+        <div className="flex gap-3.5">
+          <Button variant="secondary" className="flex-1" asChild>
+            <Link
+              to="/diary"
+              search={{
+                date: format(new Date(diary?.date), DATE_DATA_FORMAT),
+              }}
+            >
+              日記に戻る
+            </Link>
+          </Button>
+          <Button className="flex-1" asChild>
+            <Link
+              to="/todo"
+              search={{
+                date: format(
+                  addDays(new Date(diary?.date), 1),
+                  DATE_DATA_FORMAT
+                ),
+              }}
+            >
+              タスク一覧を見る
+            </Link>
+          </Button>
+        </div>
+      </PageSection>
+    ),
+    [diary]
+  );
+
   return (
     <>
       <PageHeader className="bg-custom text-custom-foreground rounded-b-4xl pb-8">
@@ -84,41 +118,19 @@ function RouteComponent() {
       <PageMain>
         <Suspense
           fallback={
-            <PageSection>
-              <PageSectionTitle>
-                {buddy?.name}が日記を読んでいます。
-              </PageSectionTitle>
-            </PageSection>
+            <>
+              <PageSection>
+                <PageSectionTitle>
+                  {buddy?.name}が日記を読んでいます。
+                </PageSectionTitle>
+              </PageSection>
+              <Loading />
+              {footerElement}
+            </>
           }
         >
           <DiarySuggestTasks className="flex-1" diaryId={diaryId} />
-          <PageSection>
-            <div className="flex gap-3.5">
-              <Button variant="secondary" className="flex-1" asChild>
-                <Link
-                  to="/diary"
-                  search={{
-                    date: format(new Date(diary?.date), DATE_DATA_FORMAT),
-                  }}
-                >
-                  日記に戻る
-                </Link>
-              </Button>
-              <Button className="flex-1" asChild>
-                <Link
-                  to="/todo"
-                  search={{
-                    date: format(
-                      addDays(new Date(diary?.date), 1),
-                      DATE_DATA_FORMAT
-                    ),
-                  }}
-                >
-                  タスク一覧を見る
-                </Link>
-              </Button>
-            </div>
-          </PageSection>
+          {footerElement}
         </Suspense>
       </PageMain>
     </>
