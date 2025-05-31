@@ -40,7 +40,7 @@ export const DiaryContentCard = ({ date, ...props }: DiaryContentCardProps) => {
   return (
     <PageSection>
       <Card {...props}>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="relative z-10 flex flex-col gap-4 overflow-hidden">
           <div className="text-foreground flex w-fit flex-col p-1">
             <Heading className="text-4xl leading-none">
               {format(date, 'MM')}
@@ -110,6 +110,13 @@ export const DiaryContentCard = ({ date, ...props }: DiaryContentCardProps) => {
               </Link>
             </Button>
           )}
+          <video
+            className="absolute top-0 -right-5 -z-10 h-40"
+            autoPlay
+            muted
+            playsInline
+            src="/assets/videos/book-opening.mp4"
+          />
         </CardContent>
       </Card>
     </PageSection>
