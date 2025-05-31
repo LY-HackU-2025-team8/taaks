@@ -136,13 +136,39 @@ public class TaskController {
     task.setCompletedAt(taskRequest.completedAt());
     if (taskRequest.autoCalculateLoadScore()) {
       // 負荷スコアをLLMで自動計算
+      List<TaakTask> existingTasks =
+          taakTaskRepository.findAllByUserIdAndDueAtBetween(
+              user.getId(),
+              LocalDateTime.now().minusDays(7), // 過去7日間のタスクを考慮
+              LocalDateTime.now());
+      System.out.println(existingTasks);
+      String prompt = "### 指示,\n"
+            + //
+            "バディの追加したタスクを解析して、ストレスレベルを返答してください。\n"
+            + "### 背景,\n"
+            + "あなたのバディが１日の見通しを立てられるように、タスクの負荷スコアを考える必要があります。 \n"
+            + "### 出力のフォーマット,\n"
+            + "負荷スコアを1~10の間で算出してください。返答は数字のみでお願いします。 \n"
+            // + "### 考え方,\n"
+            // + "負荷スコアはタスクの難しさやストレスレベルを表す指標です。タスクの内容、期限までの時間、タスクの重要度などを考慮して、1から10の範囲でスコアを算出してください。\n"
+            + "### 例題,\n"
+            + "タイトル： 部屋の掃除をする"
+            + "\n期限までの時間（hours）： 24\n"
+            + "出力： 2\n"
+            + existingTasks.stream()
+              .limit(5)
+              .map(t -> "\nタイトル： " + t.getTitle()
+                + "\n出力： " + t.getLoadScore() + "\n")
+              .reduce("", (a, b) -> a + b)
+            + "### 入力"
+            + "タイトル： " + taskRequest.title()
+            + "\n期限までの時間（hours）： "
+            + Duration.between(LocalDateTime.now(), taskRequest.dueAt()).toHours();
+        System.out.println(prompt);
       try {
         int loadScore =
-            openAiChatService.calcLoadScore(
-                "これから記入するタスクを全て1~10の値の範囲でストレスレベルを返答してください。返答は数字のみでお願いします。タスクは以下の通りです。\nタスクのタイトル："
-                    + taskRequest.title()
-                    + "\n期限までの時間（分）"
-                    + Duration.between(LocalDateTime.now(), taskRequest.dueAt()).toMinutes());
+            openAiChatService.calcLoadScore(prompt
+              );
         task.setLoadScore(loadScore);
       } catch (Exception e) {
         // OpenAI APIの呼び出しに失敗した場合は、負荷スコアを0に設定
