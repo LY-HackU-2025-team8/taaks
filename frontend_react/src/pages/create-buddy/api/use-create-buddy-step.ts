@@ -22,8 +22,12 @@ const steps: {
 
 export const useCreateBuddyStep = () => {
   const pathname = useLocation({ select: (location) => location.pathname });
-  const currentStep = steps.findIndex((step) => step.pathname === pathname);
-  const nextStep = steps[currentStep + 1];
+  const STEP_OFFSET = 1;
+  const NEXT_STEP_OFFSET = 2;
+
+  const currentStep =
+    steps.findIndex((step) => step.pathname === pathname) - STEP_OFFSET;
+  const nextStep = steps[currentStep + NEXT_STEP_OFFSET];
 
   return {
     currentStep,
