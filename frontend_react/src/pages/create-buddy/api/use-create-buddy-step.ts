@@ -25,7 +25,8 @@ export const useCreateBuddyStep = () => {
   const STEP_OFFSET = 1;
   const NEXT_STEP_OFFSET = 2;
 
-  const currentStep = steps.findIndex((step) => step.pathname === pathname) - STEP_OFFSET;
+  const currentStep =
+    steps.findIndex((step) => step.pathname === pathname) - STEP_OFFSET;
   const nextStep = steps[currentStep + NEXT_STEP_OFFSET];
 
   return {
