@@ -16,7 +16,7 @@ import { Link } from '@tanstack/react-router';
 const MorningSuggestion = () => {
   const { formal } = useGreeting();
   return (
-    <BuddyMessageCard variant="primary-invert">
+    <BuddyMessageCard variant="primary-invert" className="overflow-clip">
       <BuddyMessageCardRightElement>
         <img
           src="/assets/images/todo_3d.png"
@@ -51,7 +51,7 @@ const MorningSuggestion = () => {
 const EveningSuggestion = () => {
   const { formal } = useGreeting();
   return (
-    <BuddyMessageCard variant="primary-invert">
+    <BuddyMessageCard variant="primary-invert" className="overflow-clip">
       <BuddyMessageCardRightElement>
         <img src="/assets/images/diary_3d.png" alt="日記帳のイラスト" />
       </BuddyMessageCardRightElement>
