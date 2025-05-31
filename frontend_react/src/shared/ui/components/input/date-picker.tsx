@@ -1,24 +1,50 @@
 'use client';
 
+import { DATE_DISPLAY_FORMAT } from '@/shared/constants';
 import { cn } from '@/shared/lib/utils';
-import * as React from 'react';
+import { Button } from '@/shared/ui/components/shadcn/button';
+import { Calendar } from '@/shared/ui/components/shadcn/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/shared/ui/components/shadcn/popover';
+import { format } from 'date-fns';
 
-type DatePickerProps = React.ComponentProps<'input'> & {
-  /** 時刻を選択させるか */
-  withTime?: boolean;
-};
+type DatePickerProps = {
+  value: Date;
+  onChange: (date: Date) => void;
+} & Omit<React.ComponentPropsWithoutRef<typeof Button>, 'onChange' | 'value'>;
 
-/** 日付選択のための仮置きコンポーネント */
-export function DatePicker({
+export const DatePicker = ({
+  value,
+  onChange,
   className,
-  withTime = false,
   ...props
-}: DatePickerProps) {
+}: DatePickerProps) => {
   return (
-    <input
-      className={cn('font-bold', className)}
-      type={withTime ? 'datetime-local' : 'date'}
-      {...props}
-    />
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className={cn(
+            'justify-start text-left font-normal',
+            !value && 'text-muted-foreground',
+            className
+          )}
+          {...props}
+        >
+          {value ? (
+            format(value, DATE_DISPLAY_FORMAT)
+          ) : (
+            <span>Pick a date</span>
+          )}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar required mode="single" selected={value} onSelect={onChange} />
+      </PopoverContent>
+    </Popover>
   );
-}
+};

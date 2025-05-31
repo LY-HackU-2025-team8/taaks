@@ -2,6 +2,7 @@ import { cn } from '@/shared/lib/utils';
 import { ClockIcon } from '@/shared/ui/components/icons/clock-icon';
 import { MemoPadIcon } from '@/shared/ui/components/icons/memo-pad-icon';
 import { DatePicker } from '@/shared/ui/components/input/date-picker';
+import { TimePicker } from '@/shared/ui/components/input/time-picker';
 import { UnstyledTextarea } from '@/shared/ui/components/input/unstyled-textarea';
 import {
   DrawerHeader,
@@ -18,7 +19,6 @@ import { Separator } from '@/shared/ui/components/shadcn/separator';
 import { Slider } from '@/shared/ui/components/shadcn/slider';
 import { Switch } from '@/shared/ui/components/shadcn/switch';
 import { useFormContext } from 'react-hook-form';
-import { format } from 'date-fns';
 import { z } from 'zod';
 import type { taskFormSchema } from '../api/task-form-schema';
 
@@ -29,9 +29,6 @@ export const TaskForm = ({
   ...props
 }: React.ComponentProps<'form'>) => {
   const form = useFormContext<z.infer<typeof taskFormSchema>>();
-
-  // datepickerで使うため
-  const isAllDay = form.watch('isAllDay');
 
   return (
     <form
@@ -67,17 +64,10 @@ export const TaskForm = ({
               <FormLabel>
                 <ClockIcon className="shrink-0" />
               </FormLabel>
-              <DatePicker
-                className="w-full"
-                withTime={!isAllDay}
-                onChange={(e) => {
-                  field.onChange(new Date(e.target.value));
-                }}
-                value={format(
-                  field.value,
-                  isAllDay ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm:ss'
-                )}
-              />
+              <div className="flex">
+                <DatePicker {...field} />
+                <TimePicker {...field} />
+              </div>
               <FormMessage />
             </FormItem>
           )}
