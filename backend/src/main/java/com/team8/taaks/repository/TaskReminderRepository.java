@@ -57,5 +57,6 @@ public interface TaskReminderRepository extends JpaRepository<TaskReminder, Long
    * @param scheduledAt The ZonedDateTime to compare against the scheduled_at field.
    * @return A list of TaskReminder entities that have not been notified and are due.
    */
-  List<TaskReminder> findByNotifiedAtIsNullAndScheduledAtBefore(ZonedDateTime scheduledAt);
+  List<TaskReminder> findByNotifiedAtIsNullAndScheduledAtBetween(
+      ZonedDateTime startTime, ZonedDateTime endTime);
 }

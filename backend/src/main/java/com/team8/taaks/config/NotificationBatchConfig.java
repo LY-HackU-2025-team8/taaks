@@ -55,8 +55,8 @@ public class NotificationBatchConfig {
             (contribution, chunkContext) -> {
               System.out.println("Starting notification task...");
               List<TaskReminder> notificationTasks =
-                  taskReminderRepository.findByNotifiedAtIsNullAndScheduledAtBefore(
-                      ZonedDateTime.now());
+                  taskReminderRepository.findByNotifiedAtIsNullAndScheduledAtBetween(
+                      ZonedDateTime.now().minusMinutes(2), ZonedDateTime.now());
               if (notificationTasks.isEmpty()) {
                 System.out.println("No tasks to notify at this time.");
                 return RepeatStatus.FINISHED;
